@@ -1,0 +1,20 @@
+<mgl-map
+	logoPosition="bottom-right"
+	[attributionControl]="false"
+	[minZoom]="minZoom"
+	[style]="'mapbox://styles/elliotleelewis/ckj1w9ro12g8h19mqhvsgcbkg'"
+	[zoom]="[minZoom]"
+>
+	<mgl-vector-source
+		id="countries"
+		url="mapbox://mapbox.country-boundaries-v1"
+	></mgl-vector-source>
+	<mgl-layer
+		id="visited-countries"
+		type="fill"
+		source="countries"
+		sourceLayer="country_boundaries"
+		[filter]="filter"
+		[paint]="{ 'fill-color': '#fd7e14', 'fill-opacity': 0.7 }"
+	></mgl-layer>
+</mgl-map>
