@@ -8,10 +8,7 @@ import { AppComponent } from './app.component';
 
 @NgModule({
 	declarations: [AppComponent],
-	imports: [
-		BrowserModule,
-		NgxMapboxGLModule,
-	],
+	imports: [BrowserModule, NgxMapboxGLModule],
 	providers: [
 		{
 			provide: MAPBOX_API_KEY,
