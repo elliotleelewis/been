@@ -29,7 +29,9 @@ jobs:
           node-version: 14.x
       - run: yarn install --frozen-lockfile
       - run: yarn build
+        env:
+          API_KEY_MAPBOX: ${{ secrets.API_KEY_MAPBOX }}
       - uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./public
+          publish_dir: ./dist
