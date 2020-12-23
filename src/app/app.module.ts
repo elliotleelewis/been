@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { NgxMapboxGLModule } from 'ngx-mapbox-gl';
+import { MAPBOX_API_KEY, NgxMapboxGLModule } from 'ngx-mapbox-gl';
 
 import { environment } from '../environments/environment';
 
@@ -10,9 +10,13 @@ import { AppComponent } from './app.component';
 	declarations: [AppComponent],
 	imports: [
 		BrowserModule,
-		NgxMapboxGLModule.withConfig({
-			accessToken: environment.apiKeyMapbox,
-		}),
+		NgxMapboxGLModule,
+	],
+	providers: [
+		{
+			provide: MAPBOX_API_KEY,
+			useValue: environment.apiKeyMapbox,
+		},
 	],
 	bootstrap: [AppComponent],
 })

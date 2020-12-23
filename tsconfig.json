@@ -12,7 +12,6 @@
     "experimentalDecorators": true,
     "importHelpers": true,
     "lib": ["es2018", "dom"],
-    "types": ["node"],
     "forceConsistentCasingInFileNames": true,
     "strict": true,
     "noImplicitReturns": true,
