@@ -7,5 +7,5 @@ module.exports = (cfg) => {
 		}),
 	);
 
-	return cfg
+	return cfg;
 };

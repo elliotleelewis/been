@@ -9,7 +9,7 @@ import { environment as prodEnvironment } from './environment.prod';
 export const environment: Environment = {
 	...prodEnvironment,
 	production: false,
-}
+};
 
 /*
  * For easier debugging in development mode, you can import the following file
