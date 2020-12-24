@@ -24,6 +24,7 @@
     "mapbox-gl": "~1.11.0",
     "ngx-mapbox-gl": "^4.0.0",
     "rxjs": "~6.6.0",
+    "subsink": "^1.0.0",
     "tslib": "^2.0.0",
     "zone.js": "^0.11.0"
   },

@@ -14,7 +14,8 @@
 		type="fill"
 		source="countries"
 		sourceLayer="country_boundaries"
+		[before]="'landcover'"
 		[filter]="filter"
-		[paint]="{ 'fill-color': '#fd7e14', 'fill-opacity': 0.7 }"
+		[paint]="{ 'fill-color': '#fd7e14' }"
 	></mgl-layer>
 </mgl-map>
