@@ -3,4 +3,27 @@
 		<h1 class="navbar-brand m-0">been</h1>
 	</div>
 </div>
-<p>Hello world!</p>
+<ul
+	class="list-group list-group-flush"
+	style="max-height: calc(100vh - 40px); overflow: auto"
+>
+	<ng-container *ngFor="let region of regions; trackBy: getRegionName">
+		<li class="list-group-item list-group-item-secondary">
+			{{ region.name || 'Other' }}
+		</li>
+		<li
+			class="list-group-item"
+			*ngFor="let country of region.values; trackBy: getCountryCode"
+		>
+			<label class="stretched-link d-flex align-items-center">
+				<input
+					class="form-check-input my-0 me-3 flex-shrink-0"
+					type="checkbox"
+					[ngModel]="country.selected"
+					(ngModelChange)="toggleCountry(country)"
+				/>
+				<span>{{ country.name }}</span>
+			</label>
+		</li>
+	</ng-container>
+</ul>
