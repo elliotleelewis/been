@@ -22,7 +22,7 @@
     "@angular/router": "^11.0.0",
     "bootstrap": "~5.0.0-beta1",
     "mapbox-gl": "~1.13.0",
-    "ngx-mapbox-gl": "^4.0.0",
+    "ngx-mapbox-gl": "^5.0.0",
     "rxjs": "~6.6.0",
     "subsink": "^1.0.0",
     "tslib": "^2.0.0",
