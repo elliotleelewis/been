@@ -19,4 +19,4 @@ export const environment: Environment = {
  * on performance if an error is thrown.
  */
 // tslint:disable-next-line:ordered-imports
-import 'zone.js/dist/zone-error';
+import 'zone.js/plugins/zone-error';
