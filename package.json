@@ -30,8 +30,8 @@
   },
   "devDependencies": {
     "@angular-builders/custom-webpack": "~12.1.0",
-    "@angular-devkit/build-angular": "~12.1.0",
-    "@angular/cli": "~12.1.0",
+    "@angular-devkit/build-angular": "~12.2.0",
+    "@angular/cli": "~12.2.0",
     "@angular/compiler-cli": "~12.2.0",
     "@types/jasmine": "^3.0.0",
     "@types/mapbox-gl": "~2.3.0",
