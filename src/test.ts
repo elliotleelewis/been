@@ -1,8 +1,8 @@
 // This file is required by karma.conf.js and loads recursively all the .spec and framework files
 
 import 'zone.js/testing';
-// tslint:disable-next-line:ordered-imports
 import { getTestBed } from '@angular/core/testing';
+import { ɵDomSharedStylesHost } from '@angular/platform-browser';
 import {
 	BrowserDynamicTestingModule,
 	platformBrowserDynamicTesting,
@@ -14,8 +14,8 @@ declare const require: {
 		deep?: boolean,
 		filter?: RegExp,
 	): {
-		keys(): string[];
 		<T>(id: string): T;
+		keys(): string[];
 	};
 };
 
@@ -23,9 +23,16 @@ declare const require: {
 getTestBed().initTestEnvironment(
 	BrowserDynamicTestingModule,
 	platformBrowserDynamicTesting(),
-	{ teardown: { destroyAfterEach: true } },
+	{
+		teardown: { destroyAfterEach: true },
+	},
 );
 // Then we find all the tests.
 const context = require.context('./', true, /\.spec\.ts$/);
 // And load the modules.
 context.keys().map(context);
+
+// https://github.com/angular/angular/issues/31834
+afterEach(() => {
+	getTestBed().inject(ɵDomSharedStylesHost).ngOnDestroy();
+});

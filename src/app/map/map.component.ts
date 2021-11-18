@@ -13,12 +13,12 @@ export class MapComponent implements OnInit, OnDestroy {
 
 	filter = ['in', 'iso_3166_1'];
 
-	private subs = new SubSink();
+	private _subs = new SubSink();
 
 	constructor(private countriesService: CountriesService) {}
 
 	ngOnInit(): void {
-		this.subs.sink = this.countriesService.countries$.subscribe(
+		this._subs.sink = this.countriesService.countries$.subscribe(
 			(countries) => {
 				this.filter = [
 					'in',
@@ -32,6 +32,6 @@ export class MapComponent implements OnInit, OnDestroy {
 	}
 
 	ngOnDestroy(): void {
-		this.subs.unsubscribe();
+		this._subs.unsubscribe();
 	}
 }
