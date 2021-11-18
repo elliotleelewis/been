@@ -14,7 +14,7 @@ import { LocalStorageRef } from '../refs/local-storage.ref';
 export class CountriesService {
 	static readonly COUNTRIES_STORAGE_KEY = 'APP_COUNTRIES';
 
-	private _countries$ = new BehaviorSubject<string[]>(this._countries);
+	private _countries$ = new BehaviorSubject<string[]>(this.countries);
 
 	constructor(private localStorageRef: LocalStorageRef) {}
 
@@ -35,14 +35,14 @@ export class CountriesService {
 		);
 	}
 
-	private get _countries(): string[] {
+	private get countries(): string[] {
 		const item = this.localStorageRef.localStorage.getItem(
 			CountriesService.COUNTRIES_STORAGE_KEY,
 		);
-		return JSON.parse(String(item)) ?? [];
+		return (JSON.parse(String(item)) as string[]) ?? [];
 	}
 
-	private set _countries(value: string[]) {
+	private set countries(value: string[]) {
 		const item = JSON.stringify(value);
 		this.localStorageRef.localStorage.setItem(
 			CountriesService.COUNTRIES_STORAGE_KEY,
@@ -52,23 +52,23 @@ export class CountriesService {
 	}
 
 	addCountry(countryCode: string): void {
-		const countries = this._countries;
+		const countries = this.countries;
 		if (!countries.includes(countryCode)) {
 			countries.push(countryCode);
 		}
-		this._countries = countries;
+		this.countries = countries;
 	}
 
 	removeCountry(countryCode: string): void {
-		const countries = this._countries;
+		const countries = this.countries;
 		const countryIndex = countries.indexOf(countryCode);
 		if (countryIndex > -1) {
 			countries.splice(countryIndex, 1);
 		}
-		this._countries = countries;
+		this.countries = countries;
 	}
 
 	clearCountries(): void {
-		this._countries = [];
+		this.countries = [];
 	}
 }

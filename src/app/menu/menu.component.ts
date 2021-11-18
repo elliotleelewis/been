@@ -13,18 +13,18 @@ import { CountriesService } from '../services/countries.service';
 export class MenuComponent implements OnInit, OnDestroy {
 	regions: Region[] = [];
 
-	private subs = new SubSink();
+	private _subs = new SubSink();
 
 	constructor(private countriesService: CountriesService) {}
 
 	ngOnInit(): void {
-		this.subs.sink = this.countriesService.regions$.subscribe(
+		this._subs.sink = this.countriesService.regions$.subscribe(
 			(regions) => (this.regions = regions),
 		);
 	}
 
 	ngOnDestroy(): void {
-		this.subs.unsubscribe();
+		this._subs.unsubscribe();
 	}
 
 	toggleCountry(country: Country): void {
@@ -35,11 +35,11 @@ export class MenuComponent implements OnInit, OnDestroy {
 		}
 	}
 
-	getCountryCode(i: number, country: Country): string {
+	getCountryCode(_: number, country: Country): string {
 		return country.iso3166;
 	}
 
-	getRegionName(i: number, region: Region): string {
+	getRegionName(_: number, region: Region): string {
 		return region.name;
 	}
 }
