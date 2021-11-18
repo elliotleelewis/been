@@ -3,7 +3,7 @@ import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { MAPBOX_API_KEY, NgxMapboxGLModule } from 'ngx-mapbox-gl';
 
-import { environment } from '../environments/environment';
+import { ENVIRONMENT } from '../environments/environment';
 
 import { AppComponent } from './app.component';
 import { MapComponent } from './map/map.component';
@@ -15,7 +15,7 @@ import { MenuComponent } from './menu/menu.component';
 	providers: [
 		{
 			provide: MAPBOX_API_KEY,
-			useValue: environment.apiKeyMapbox,
+			useValue: ENVIRONMENT.apiKeyMapbox,
 		},
 	],
 	bootstrap: [AppComponent],

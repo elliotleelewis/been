@@ -1,6 +1,6 @@
 import { Environment } from '../app/models/environment';
 
-export const environment: Environment = {
+export const ENVIRONMENT: Environment = {
 	production: true,
 	apiKeyMapbox: process.env.API_KEY_MAPBOX ?? '',
 };
