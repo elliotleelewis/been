@@ -1,0 +1,28 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`MenuComponent should render 1`] = `
+<app-menu
+  __ngContext__={[Function LRootView]}
+  _subs={[Function SubSink]}
+  countriesService={[Function CountriesService]}
+  regions={[Function Array]}
+>
+  <div
+    class="navbar navbar-dark bg-primary"
+  >
+    <div
+      class="container-fluid justify-content-center"
+    >
+      <h1
+        class="navbar-brand m-0"
+      >
+        been
+      </h1>
+    </div>
+  </div><ul
+    class="list-group list-group-flush overflow-auto"
+    style="max-height: calc(100vh - 3.125rem);"
+  >
+  </ul>
+</app-menu>
+`;
