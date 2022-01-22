@@ -1,0 +1,26 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`MapComponent should render 1`] = `
+<app-map
+  __ngContext__={[Function LRootView]}
+  _subs={[Function SubSink]}
+  countriesService={[Function CountriesService]}
+  filter={[Function Array]}
+  minZoom={[Function Number]}
+>
+  <mgl-map
+    logoposition="bottom-right"
+  >
+    <mgl-vector-source
+      id="countries"
+      url="mapbox://mapbox.country-boundaries-v1"
+    />
+    <mgl-layer
+      id="visited-countries"
+      source="countries"
+      sourcelayer="country_boundaries"
+      type="fill"
+    />
+  </mgl-map>
+</app-map>
+`;

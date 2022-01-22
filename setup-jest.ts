@@ -18,3 +18,6 @@ console.error = (message?: unknown, ...optionalParams: unknown[]): void => {
 };
 
 ngMocks.autoSpy('jest');
+
+// Polyfill needed by MapBoxGL
+window.URL.createObjectURL = jest.fn();
