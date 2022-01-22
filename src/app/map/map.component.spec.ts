@@ -1,5 +1,9 @@
-import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { MockModule, MockProvider } from 'ng-mocks';
+import { NgxMapboxGLModule } from 'ngx-mapbox-gl';
+import { of } from 'rxjs';
+
+import { CountriesService } from '../services/countries.service';
 
 import { MapComponent } from './map.component';
 
@@ -10,7 +14,12 @@ describe('MapComponent', () => {
 	beforeEach(async () => {
 		await TestBed.configureTestingModule({
 			declarations: [MapComponent],
-			schemas: [CUSTOM_ELEMENTS_SCHEMA],
+			imports: [MockModule(NgxMapboxGLModule)],
+			providers: [
+				MockProvider(CountriesService, {
+					countries$: of([]),
+				}),
+			],
 		}).compileComponents();
 	});
 
@@ -22,5 +31,9 @@ describe('MapComponent', () => {
 
 	it('should create', () => {
 		expect(component).toBeTruthy();
+	});
+
+	it('should render', () => {
+		expect(fixture).toMatchSnapshot();
 	});
 });
