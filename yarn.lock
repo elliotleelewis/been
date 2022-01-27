@@ -7773,10 +7773,10 @@ neo-async@^2.6.2:
   resolved "https://registry.yarnpkg.com/neo-async/-/neo-async-2.6.2.tgz#b4aafb93e3aeb2d8174ca53cf163ab7d7308305f"
   integrity sha512-Yd3UES5mWCSqR+qNT93S3UoYUkqAZ9lLg8a7g9rimsWmYGK8cVToA4/sF3RrshdyV3sAGMXVUmpMYOw+dLpOuw==
 
-ng-mocks@13.0.0-alpha.6:
-  version "13.0.0-alpha.6"
-  resolved "https://registry.yarnpkg.com/ng-mocks/-/ng-mocks-13.0.0-alpha.6.tgz#cf95fdf476891e143a778bee57ce0ceb30511cc5"
-  integrity sha512-wVq5EnYxsADXLTDzwhNaZAevfZBNeKwAj00TFKfbOn+WyWiW25uVFmju3Lt752S5SNZbtgN4TF9BN54mpHd/HA==
+ng-mocks@^13.0.0:
+  version "13.0.0"
+  resolved "https://registry.yarnpkg.com/ng-mocks/-/ng-mocks-13.0.0.tgz#e640eaff76df88118576e1b8ac37a7e00665e23c"
+  integrity sha512-fmoVN0x6aEgR7GrEQQIv+20mtFl5vFt6N2XBtat4yTNowLM7w0gT83uTOgX+Bi6+6sHy8ux7UfFhxfrfzVksFQ==
 
 ngx-mapbox-gl@^7.0.0:
   version "7.1.2"
