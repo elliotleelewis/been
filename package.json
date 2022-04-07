@@ -21,7 +21,7 @@
     "@angular/platform-browser-dynamic": "~13.3.0",
     "@angular/router": "~13.3.0",
     "bootstrap": "~5.1.0",
-    "mapbox-gl": "~2.7.0",
+    "mapbox-gl": "~2.8.0",
     "ngx-mapbox-gl": "^7.0.0",
     "rxjs": "~7.5.0",
     "subsink": "^1.0.0",
