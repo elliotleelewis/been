@@ -1,4 +1,10 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import type { OnDestroy, OnInit } from '@angular/core';
+import {
+	ChangeDetectionStrategy,
+	ChangeDetectorRef,
+	Component,
+	Inject,
+} from '@angular/core';
 import { SubSink } from 'subsink';
 
 import { CountriesService } from '../services/countries.service';
@@ -7,6 +13,7 @@ import { CountriesService } from '../services/countries.service';
 	selector: 'app-map',
 	templateUrl: './map.component.html',
 	styleUrls: ['./map.component.scss'],
+	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MapComponent implements OnInit, OnDestroy {
 	minZoom = 1;
@@ -15,7 +22,10 @@ export class MapComponent implements OnInit, OnDestroy {
 
 	private _subs = new SubSink();
 
-	constructor(private countriesService: CountriesService) {}
+	constructor(
+		@Inject(ChangeDetectorRef) private changeDetectorRef: ChangeDetectorRef,
+		@Inject(CountriesService) private countriesService: CountriesService,
+	) {}
 
 	ngOnInit(): void {
 		this._subs.sink = this.countriesService.countries$.subscribe(
@@ -27,6 +37,7 @@ export class MapComponent implements OnInit, OnDestroy {
 						.filter((c) => c.selected)
 						.map((c) => c.iso3166),
 				];
+				this.changeDetectorRef.detectChanges();
 			},
 		);
 	}

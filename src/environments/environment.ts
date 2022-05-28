@@ -1,4 +1,4 @@
-import { Environment } from '../app/models/environment';
+import type { Environment } from '../app/models/environment';
 
 import { ENVIRONMENT as prodEnvironment } from './environment.prod';
 
