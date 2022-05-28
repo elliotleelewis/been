@@ -1,5 +1,5 @@
-import { Country } from '../models/country';
-import { Region } from '../models/region';
+import type { Country } from '../models/country';
+import type { Region } from '../models/region';
 
 export const regionalizer = (arr: Country[]): Region[] =>
 	arr.reduce((prev: Region[], current) => {
