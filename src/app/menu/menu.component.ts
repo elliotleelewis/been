@@ -1,21 +1,24 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import type { OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Inject } from '@angular/core';
 import { SubSink } from 'subsink';
 
-import { Country } from '../models/country';
-import { Region } from '../models/region';
+import type { Country } from '../models/country';
+import type { Region } from '../models/region';
 import { CountriesService } from '../services/countries.service';
 
 @Component({
 	selector: 'app-menu',
 	templateUrl: './menu.component.html',
-	styleUrls: ['./menu.component.scss'],
+	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MenuComponent implements OnInit, OnDestroy {
 	regions: Region[] = [];
 
 	private _subs = new SubSink();
 
-	constructor(private countriesService: CountriesService) {}
+	constructor(
+		@Inject(CountriesService) private countriesService: CountriesService,
+	) {}
 
 	ngOnInit(): void {
 		this._subs.sink = this.countriesService.regions$.subscribe(

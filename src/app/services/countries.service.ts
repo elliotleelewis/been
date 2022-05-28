@@ -1,11 +1,12 @@
-import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { Inject, Injectable } from '@angular/core';
+import type { Observable } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import data from '../data/countries.json';
 import { regionalizer } from '../helpers';
-import { Country } from '../models/country';
-import { Region } from '../models/region';
+import type { Country } from '../models/country';
+import type { Region } from '../models/region';
 import { LocalStorageRef } from '../refs/local-storage.ref';
 
 @Injectable({
@@ -16,7 +17,9 @@ export class CountriesService {
 
 	private _countries$ = new BehaviorSubject<string[]>(this.countries);
 
-	constructor(private localStorageRef: LocalStorageRef) {}
+	constructor(
+		@Inject(LocalStorageRef) private localStorageRef: LocalStorageRef,
+	) {}
 
 	get countries$(): Observable<Country[]> {
 		return this._countries$.pipe(
