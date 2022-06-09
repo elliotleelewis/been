@@ -2,7 +2,7 @@
 
 exports[`MenuComponent should render 1`] = `
 <app-menu
-  __ngContext__={[Function LRootView]}
+  __ngContext__={[Function Number]}
   _subs={[Function SubSink]}
   countriesService={[Function CountriesService]}
   regions={[Function Array]}
