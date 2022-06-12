@@ -7834,12 +7834,12 @@ ng-mocks@^13.0.0:
   resolved "https://registry.yarnpkg.com/ng-mocks/-/ng-mocks-13.5.2.tgz#e0d16c4810623b4b096ede31209966e628620d28"
   integrity sha512-mn9qkef166cKmg5k1/jY4AlXEGEPx/cdWXKDdSrs/Fett+nLEAx70uD1LJrpQ35PY6k0v6AUd4fbZX5OaoFNRg==
 
-ngx-mapbox-gl@^7.0.0:
-  version "7.1.2"
-  resolved "https://registry.yarnpkg.com/ngx-mapbox-gl/-/ngx-mapbox-gl-7.1.2.tgz#1d672d5e7ad81f03209505017830d4f11c36ca7c"
-  integrity sha512-ArjXOGp3YENZMOTvEGDhcIL2n3GYp4OX1V+Q6GtopxMxTybrTNAkRYMlE1pCKfuVQcdZ6b6ORuuOCf5RGFCFuA==
+ngx-mapbox-gl@^8.0.0:
+  version "8.0.0"
+  resolved "https://registry.yarnpkg.com/ngx-mapbox-gl/-/ngx-mapbox-gl-8.0.0.tgz#baccc5496c2bb89139e599faf0b40544943dca5a"
+  integrity sha512-DuzzTY6SNWt/TRkITEX2XxJZcxrx4aPuFv31hJJh0o+ghYaKzKAWfWMHAnTtSMXGBckap5WGGoAecYM8Tt6o1A==
   dependencies:
-    tslib "^2.1.0"
+    tslib "^2.3.0"
 
 nice-napi@^1.0.2:
   version "1.0.2"
