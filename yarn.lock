@@ -7404,10 +7404,10 @@ ng-mocks@^14.0.0:
   resolved "https://registry.yarnpkg.com/ng-mocks/-/ng-mocks-14.1.0.tgz#2549ab2c1f90648b870396f353da119c85a25dd7"
   integrity sha512-t++PjeIXeEGXDLbN5IpIP6QVrsEt8SUG+/iP8eyH3HxoVr5KyD8/wWzjLahukpEHpc5QiBIsDemnRznGLMzF2A==
 
-ngx-mapbox-gl@^8.0.0:
-  version "8.0.1"
-  resolved "https://registry.yarnpkg.com/ngx-mapbox-gl/-/ngx-mapbox-gl-8.0.1.tgz#f653879433f4b57a827ca44035a19101abc8186c"
-  integrity sha512-U+hoiiuF6ZG2x5Pq9LUfMpoikYtK1kB/rNFCA/njUn6FCHsTPGvbRFmbj1llynTxE+gvEJr6d5tETxGMYzP0hg==
+ngx-mapbox-gl@^9.0.0:
+  version "9.0.0"
+  resolved "https://registry.yarnpkg.com/ngx-mapbox-gl/-/ngx-mapbox-gl-9.0.0.tgz#40827a7119ec29ab9653fd0fcd268f6cb6dd97c9"
+  integrity sha512-5ClGuwfNF8BbzkcxF+/vvB6p58/kOls9Whf65LV/SIgbqHBil9YWrGh4D26hHX2sYt/+2Hb2v7OEvTdRbm+7iA==
   dependencies:
     tslib "^2.3.0"
 
