@@ -23,6 +23,9 @@
             "customWebpackConfig": {
               "path": "./webpack.config.js"
             },
+            "stylePreprocessorOptions": {
+              "includePaths": ["./node_modules"]
+            },
             "outputPath": "dist",
             "index": "src/index.html",
             "main": "src/main.ts",
