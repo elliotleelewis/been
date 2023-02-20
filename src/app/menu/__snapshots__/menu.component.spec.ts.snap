@@ -21,7 +21,7 @@ exports[`MenuComponent should render 1`] = `
     </div>
   </div><ul
     class="list-group list-group-flush overflow-auto"
-    style="max-height: calc(100vh - 3.125rem);"
+    style="max-block-size: calc(100vh - 3.125rem);"
   >
   </ul>
 </app-menu>
