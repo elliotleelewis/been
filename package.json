@@ -12,53 +12,53 @@
     "prettier:fix": "prettier --write \"**/*.{md,ts,js,scss,html,json,yml}\" --ignore-path .gitignore"
   },
   "dependencies": {
-    "@angular/animations": "~15.2.0",
-    "@angular/common": "~15.2.0",
-    "@angular/compiler": "~15.2.0",
-    "@angular/core": "~15.2.0",
-    "@angular/forms": "~15.2.0",
-    "@angular/platform-browser": "~15.2.0",
-    "@angular/platform-browser-dynamic": "~15.2.0",
-    "@angular/router": "~15.2.0",
+    "@angular/animations": "~16.2.0",
+    "@angular/common": "~16.2.0",
+    "@angular/compiler": "~16.2.0",
+    "@angular/core": "~16.2.0",
+    "@angular/forms": "~16.2.0",
+    "@angular/platform-browser": "~16.2.0",
+    "@angular/platform-browser-dynamic": "~16.2.0",
+    "@angular/router": "~16.2.0",
     "bootstrap": "~5.3.0",
     "mapbox-gl": "~2.15.0",
-    "ngx-mapbox-gl": "^9.0.0",
+    "ngx-mapbox-gl": "^10.0.0",
     "rxjs": "~7.8.0",
     "subsink": "^1.0.0",
     "tslib": "^2.0.0",
-    "zone.js": "^0.13.0"
+    "zone.js": "^0.14.0"
   },
   "devDependencies": {
-    "@angular-builders/custom-webpack": "~15.0.0",
-    "@angular-builders/jest": "~15.0.0",
-    "@angular-devkit/build-angular": "~15.2.0",
-    "@angular-eslint/builder": "~15.2.0",
-    "@angular-eslint/eslint-plugin": "~15.2.0",
-    "@angular-eslint/eslint-plugin-template": "~15.2.0",
-    "@angular-eslint/schematics": "~15.2.0",
-    "@angular-eslint/template-parser": "~15.2.0",
-    "@angular/cli": "~15.2.0",
-    "@angular/compiler-cli": "~15.2.0",
+    "@angular-builders/custom-webpack": "~16.0.0",
+    "@angular-builders/jest": "~16.0.0",
+    "@angular-devkit/build-angular": "~16.2.0",
+    "@angular-eslint/builder": "~16.3.0",
+    "@angular-eslint/eslint-plugin": "~16.3.0",
+    "@angular-eslint/eslint-plugin-template": "~16.3.0",
+    "@angular-eslint/schematics": "~16.3.0",
+    "@angular-eslint/template-parser": "~16.3.0",
+    "@angular/cli": "~16.2.0",
+    "@angular/compiler-cli": "~16.2.0",
     "@types/jest": "^29.0.0",
     "@types/mapbox-gl": "~2.7.0",
     "@types/mapbox__mapbox-gl-geocoder": "^4.0.0",
     "@types/node": "^18.0.0",
-    "@typescript-eslint/eslint-plugin": "^5.0.0",
-    "@typescript-eslint/parser": "^5.0.0",
+    "@typescript-eslint/eslint-plugin": "^6.0.0",
+    "@typescript-eslint/parser": "^6.0.0",
     "dotenv-webpack": "^8.0.0",
     "eslint": "^8.0.0",
-    "eslint-config-prettier": "^8.0.0",
+    "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-eslint-comments": "^3.0.0",
     "eslint-plugin-file-progress": "^1.0.0",
     "eslint-plugin-import": "^2.0.0",
     "eslint-plugin-jest": "^27.0.0",
-    "eslint-plugin-jsdoc": "^41.0.0",
+    "eslint-plugin-jsdoc": "^46.9.1",
     "eslint-plugin-prefer-arrow": "^1.0.0",
     "jest": "^29.0.0",
     "ng-mocks": "^14.0.0",
     "postcss": "^8.0.0",
     "postcss-html": "^1.0.0",
-    "prettier": "~2.8.0",
+    "prettier": "~3.1.0",
     "stylelint": "^15.0.0",
     "stylelint-config-rational-order": "^0.1.0",
     "stylelint-config-standard-scss": "^10.0.0",
@@ -107,6 +107,7 @@
         },
         "plugins": [
           "file-progress",
+          "import",
           "jest",
           "jsdoc"
         ],
@@ -116,8 +117,7 @@
           "plugin:jest/recommended",
           "plugin:@typescript-eslint/recommended",
           "plugin:@typescript-eslint/recommended-requiring-type-checking",
-          "plugin:@angular-eslint/ng-cli-compat",
-          "plugin:@angular-eslint/ng-cli-compat--formatting-add-on",
+          "plugin:@angular-eslint/recommended",
           "prettier"
         ],
         "rules": {
@@ -299,8 +299,14 @@
               ]
             }
           ],
-          "jsdoc/newline-after-description": "error",
           "jsdoc/no-types": "error",
+          "jsdoc/tag-lines": [
+            "error",
+            "any",
+            {
+              "startLines": 1
+            }
+          ],
           "curly": "error",
           "eqeqeq": [
             "error",
@@ -348,15 +354,13 @@
           "plugin:@angular-eslint/template/recommended"
         ],
         "rules": {
-          "@angular-eslint/template/accessibility-alt-text": "error",
-          "@angular-eslint/template/accessibility-elements-content": "error",
-          "@angular-eslint/template/accessibility-label-for": "error",
-          "@angular-eslint/template/accessibility-table-scope": "error",
-          "@angular-eslint/template/accessibility-valid-aria": "error",
+          "@angular-eslint/template/alt-text": "error",
           "@angular-eslint/template/banana-in-box": "error",
           "@angular-eslint/template/click-events-have-key-events": "error",
           "@angular-eslint/template/conditional-complexity": "error",
           "@angular-eslint/template/cyclomatic-complexity": "error",
+          "@angular-eslint/template/elements-content": "error",
+          "@angular-eslint/template/label-has-associated-control": "error",
           "@angular-eslint/template/mouse-events-have-key-events": "error",
           "@angular-eslint/template/no-any": "error",
           "@angular-eslint/template/no-autofocus": "error",
@@ -364,7 +368,9 @@
           "@angular-eslint/template/no-distracting-elements": "error",
           "@angular-eslint/template/no-negated-async": "error",
           "@angular-eslint/template/no-positive-tabindex": "error",
-          "@angular-eslint/template/use-track-by-function": "error"
+          "@angular-eslint/template/table-scope": "error",
+          "@angular-eslint/template/use-track-by-function": "error",
+          "@angular-eslint/template/valid-aria": "error"
         }
       }
     ]
