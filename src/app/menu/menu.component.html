@@ -7,23 +7,22 @@
 	class="list-group list-group-flush overflow-auto"
 	style="max-block-size: calc(100vh - 3.125rem)"
 >
-	<ng-container *ngFor="let region of regions; trackBy: getRegionName">
+	@for (region of regions; track region.name) {
 		<li class="list-group-item list-group-item-secondary">
 			{{ region.name || 'Other' }}
 		</li>
-		<li
-			class="list-group-item"
-			*ngFor="let country of region.values; trackBy: getCountryCode"
-		>
-			<label class="stretched-link d-flex align-items-center">
-				<input
-					class="form-check-input my-0 me-3 flex-shrink-0"
-					type="checkbox"
-					[ngModel]="country.selected"
-					(ngModelChange)="toggleCountry(country)"
-				/>
-				<span>{{ country.name }}</span>
-			</label>
-		</li>
-	</ng-container>
+		@for (country of region.values; track country.iso3166) {
+			<li class="list-group-item">
+				<label class="stretched-link d-flex align-items-center">
+					<input
+						class="form-check-input my-0 me-3 flex-shrink-0"
+						type="checkbox"
+						[ngModel]="country.selected"
+						(ngModelChange)="toggleCountry(country)"
+					/>
+					<span>{{ country.name }}</span>
+				</label>
+			</li>
+		}
+	}
 </ul>
