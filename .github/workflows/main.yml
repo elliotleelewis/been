@@ -9,18 +9,18 @@ jobs:
   commit-message:
     name: semantic-pull-request
     if: contains(fromJson('["pull_request", "pull_request_target"]'), github.event_name)
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     steps:
       - uses: amannn/action-semantic-pull-request@v5
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   build:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-node@v3
+      - uses: actions/setup-node@v4
         with:
-          node-version: 16.x
+          node-version: 18.x
       - run: yarn install --frozen-lockfile
       - run: yarn lint
       - run: yarn stylelint
@@ -28,13 +28,13 @@ jobs:
       - run: yarn build
       - run: yarn test
   deploy:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     if: github.ref == 'refs/heads/main'
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-node@v3
+      - uses: actions/setup-node@v4
         with:
-          node-version: 16.x
+          node-version: 18.x
       - run: yarn install --frozen-lockfile
       - run: yarn build --deploy-url=/been/ --base-href=/been/
         env:
