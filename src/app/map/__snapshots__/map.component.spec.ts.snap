@@ -2,7 +2,6 @@
 
 exports[`MapComponent should render 1`] = `
 <app-map
-  __ngContext__={[Function Number]}
   _subs={[Function SubSink]}
   changeDetectorRef={[Function ViewRef$1]}
   countriesService={[Function CountriesService]}

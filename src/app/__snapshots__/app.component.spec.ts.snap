@@ -1,9 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`AppComponent should render 1`] = `
-<app-root
-  __ngContext__={[Function Number]}
->
+<app-root>
   <div
     class="row g-0 h-100"
   >
