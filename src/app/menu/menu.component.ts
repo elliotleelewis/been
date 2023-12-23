@@ -37,12 +37,4 @@ export class MenuComponent implements OnInit, OnDestroy {
 			this.countriesService.addCountry(country.iso3166);
 		}
 	}
-
-	getCountryCode(_: number, country: Country): string {
-		return country.iso3166;
-	}
-
-	getRegionName(_: number, region: Region): string {
-		return region.name;
-	}
 }
