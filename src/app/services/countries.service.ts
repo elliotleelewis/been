@@ -26,7 +26,7 @@ export class CountriesService {
 			map((countries) =>
 				data.map((c) => ({
 					...c,
-					selected: countries.indexOf(c.iso3166) >= 0,
+					selected: countries.includes(c.iso3166),
 				})),
 			),
 		);
@@ -42,7 +42,7 @@ export class CountriesService {
 		const item = this.localStorageRef.localStorage.getItem(
 			CountriesService.COUNTRIES_STORAGE_KEY,
 		);
-		return (JSON.parse(String(item)) as string[]) ?? [];
+		return item ? (JSON.parse(item) as string[]) : [];
 	}
 
 	private set countries(value: string[]) {
