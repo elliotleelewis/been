@@ -2634,10 +2634,10 @@
   dependencies:
     "@types/geojson" "*"
 
-"@types/mapbox__mapbox-gl-geocoder@^4.0.0":
-  version "4.7.7"
-  resolved "https://registry.yarnpkg.com/@types/mapbox__mapbox-gl-geocoder/-/mapbox__mapbox-gl-geocoder-4.7.7.tgz#390e6e33f2a001bf7f664a870462dcb44d3efc08"
-  integrity sha512-RFUDSDnFoCBapQWfGdgNGkB76drJ2kVG9tH0ottQtDpTW3KPtdQobw0lvvJK4VIMDEKIt/ssEyyLvY1Tja7MSw==
+"@types/mapbox__mapbox-gl-geocoder@^5.0.0":
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/@types/mapbox__mapbox-gl-geocoder/-/mapbox__mapbox-gl-geocoder-5.0.0.tgz#2431b1974f7b19e33162e3942331375586d5f159"
+  integrity sha512-eGBWdFiP2QgmwndPyhwK6eBeOfyB8vRscp2C6Acqasx5dH8FvTo/VgXWCrCKFR3zkWek/H4w4/CwmBFOs7OLBA==
   dependencies:
     "@types/geojson" "*"
     "@types/mapbox-gl" "*"
