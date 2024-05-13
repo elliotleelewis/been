@@ -18,25 +18,29 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v4
+      - run: corepack enable
       - uses: actions/setup-node@v4
         with:
-          node-version: 18.x
-      - run: yarn install --frozen-lockfile
-      - run: yarn lint
-      - run: yarn stylelint
-      - run: yarn prettier
-      - run: yarn build
-      - run: yarn test
+          node-version: 20.x
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm lint
+      - run: pnpm stylelint
+      - run: pnpm prettier
+      - run: pnpm build
+      - run: pnpm test
   deploy:
     runs-on: ubuntu-22.04
     if: github.ref == 'refs/heads/main'
     steps:
       - uses: actions/checkout@v4
+      - run: corepack enable
       - uses: actions/setup-node@v4
         with:
-          node-version: 18.x
-      - run: yarn install --frozen-lockfile
-      - run: yarn build --deploy-url=/been/ --base-href=/been/
+          node-version: 20.x
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm build --deploy-url=/been/ --base-href=/been/
         env:
           API_KEY_MAPBOX: ${{ secrets.API_KEY_MAPBOX }}
       - uses: peaceiris/actions-gh-pages@v4
