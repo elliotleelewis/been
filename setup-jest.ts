@@ -1,5 +1,10 @@
+import { TextDecoder } from 'node:util';
+
 import 'jest-preset-angular/setup-jest';
 import { ngMocks } from 'ng-mocks';
+
+// Polyfill TextDecoder
+global.TextDecoder = TextDecoder as typeof global.TextDecoder;
 
 /**
  * Monkey patch console warn and error to fail if a test makes calls to console.warn or console.error.
