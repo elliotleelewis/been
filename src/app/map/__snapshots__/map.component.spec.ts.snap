@@ -2,10 +2,7 @@
 
 exports[`MapComponent should render 1`] = `
 <app-map
-  _subs={[Function SubSink]}
-  changeDetectorRef={[Function ViewRef$1]}
   countriesService={[Function CountriesService]}
-  filter={[Function Array]}
   minZoom={[Function Number]}
 >
   <mgl-map
@@ -14,6 +11,15 @@ exports[`MapComponent should render 1`] = `
     <mgl-vector-source
       id="countries"
       url="mapbox://mapbox.country-boundaries-v1"
+    />
+    <mgl-control
+      mglnavigation=""
+    />
+    <mgl-layer
+      id="3d-buildings"
+      source="composite"
+      sourcelayer="building"
+      type="fill-extrusion"
     />
     <mgl-layer
       id="visited-countries"
