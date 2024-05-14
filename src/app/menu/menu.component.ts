@@ -26,7 +26,7 @@ import { CountriesService } from '../services/countries.service';
 })
 export class MenuComponent {
 	@HostBinding('class')
-	class = 'flex flex-col';
+	class = 'flex flex-col overflow-auto';
 
 	searchControl = new FormControl('', { nonNullable: true });
 
@@ -34,7 +34,7 @@ export class MenuComponent {
 		@Inject(CountriesService) private countriesService: CountriesService,
 	) {}
 
-	get filteredRegions$(): Observable<Region[]> {
+	get filteredRegions$(): Observable<readonly Region[]> {
 		return concat(
 			defer(() => of(this.searchControl.value)),
 			this.searchControl.valueChanges,

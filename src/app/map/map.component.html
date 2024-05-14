@@ -1,10 +1,15 @@
+<div class="flex items-center justify-center bg-primary text-white sm:hidden">
+	<h1 class="p-3 text-xl font-bold tracking-wide">been</h1>
+</div>
 <mgl-map
 	logoPosition="bottom-right"
 	[attributionControl]="false"
 	[minZoom]="minZoom"
 	[style]="'mapbox://styles/mapbox/light-v11'"
+	[center]="center"
 	[zoom]="[minZoom]"
 	[antialias]
+	(mapLoad)="onMapLoad($event.target)"
 >
 	<mgl-vector-source
 		id="countries"

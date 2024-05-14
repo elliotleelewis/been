@@ -7,7 +7,7 @@ exports[`MenuComponent should render 1`] = `
   searchControl={[Function FormControl2]}
 >
   <div
-    class="flex items-center justify-center bg-primary text-white"
+    class="hidden items-center justify-center bg-primary text-white sm:flex"
   >
     <h1
       class="p-3 text-xl font-bold tracking-wide"
@@ -15,7 +15,7 @@ exports[`MenuComponent should render 1`] = `
       been
     </h1>
   </div><form
-    class="ng-untouched ng-pristine ng-valid"
+    class="border-t-2 border-slate-200 sm:border-t-0 ng-untouched ng-pristine ng-valid"
     novalidate=""
   >
     <label

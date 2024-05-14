@@ -15,15 +15,17 @@ import { LocalStorageRef } from '../refs/local-storage.ref';
 export class CountriesService {
 	static readonly COUNTRIES_STORAGE_KEY = 'APP_COUNTRIES';
 
-	focus = new Subject<string>();
+	private _countries$ = new BehaviorSubject<readonly string[]>(
+		this.countries,
+	);
 
-	private _countries$ = new BehaviorSubject<string[]>(this.countries);
+	private _focus$ = new Subject<string>();
 
 	constructor(
 		@Inject(LocalStorageRef) private localStorageRef: LocalStorageRef,
 	) {}
 
-	get countries$(): Observable<Country[]> {
+	get countries$(): Observable<readonly Country[]> {
 		return this._countries$.pipe(
 			map((countries) =>
 				data.map((c) => ({
@@ -34,20 +36,24 @@ export class CountriesService {
 		);
 	}
 
-	get regions$(): Observable<Region[]> {
+	get focus$(): Observable<string> {
+		return this._focus$.asObservable();
+	}
+
+	get regions$(): Observable<readonly Region[]> {
 		return this.countries$.pipe(
 			map((countries) => regionalizer(countries)),
 		);
 	}
 
-	private get countries(): string[] {
+	private get countries(): readonly string[] {
 		const item = this.localStorageRef.localStorage.getItem(
 			CountriesService.COUNTRIES_STORAGE_KEY,
 		);
 		return item ? (JSON.parse(item) as string[]) : [];
 	}
 
-	private set countries(value: string[]) {
+	private set countries(value: readonly string[]) {
 		const item = JSON.stringify(value);
 		this.localStorageRef.localStorage.setItem(
 			CountriesService.COUNTRIES_STORAGE_KEY,
@@ -57,17 +63,16 @@ export class CountriesService {
 	}
 
 	addCountry(countryCode: string): void {
-		const countries = this.countries;
+		const countries = [...this.countries];
 		if (!countries.includes(countryCode)) {
 			countries.push(countryCode);
+			this._focus$.next(countryCode);
 		}
 		this.countries = countries;
-
-		this.focus.next(countryCode);
 	}
 
 	removeCountry(countryCode: string): void {
-		const countries = this.countries;
+		const countries = [...this.countries];
 		const countryIndex = countries.indexOf(countryCode);
 		if (countryIndex > -1) {
 			countries.splice(countryIndex, 1);

@@ -3,7 +3,7 @@
 exports[`AppComponent should render 1`] = `
 <app-root>
   <div
-    class="flex h-full"
+    class="flex h-full flex-col-reverse sm:flex-row"
   >
     <app-menu
       class="basis-1/3"
