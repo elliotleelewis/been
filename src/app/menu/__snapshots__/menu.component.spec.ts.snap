@@ -3,24 +3,20 @@
 exports[`MenuComponent should render 1`] = `
 <app-menu
   _subs={[Function SubSink]}
+  class={[Function String]}
   countriesService={[Function CountriesService]}
   regions={[Function Array]}
 >
   <div
-    class="navbar navbar-dark bg-primary"
+    class="flex items-center justify-center bg-primary text-white"
   >
-    <div
-      class="container-fluid justify-content-center"
+    <h1
+      class="p-3 text-xl font-bold tracking-wide"
     >
-      <h1
-        class="navbar-brand m-0"
-      >
-        been
-      </h1>
-    </div>
+      been
+    </h1>
   </div><ul
-    class="list-group list-group-flush overflow-auto"
-    style="max-block-size: calc(100vh - 3.125rem);"
+    class="h-full overflow-auto"
   >
   </ul>
 </app-menu>

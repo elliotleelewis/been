@@ -3,13 +3,13 @@
 exports[`AppComponent should render 1`] = `
 <app-root>
   <div
-    class="row g-0 h-100"
+    class="flex h-full"
   >
     <app-menu
-      class="col-3"
+      class="basis-1/3"
     />
     <app-map
-      class="col"
+      class="basis-2/3"
     />
   </div>
 </app-root>
