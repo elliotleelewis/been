@@ -2,10 +2,20 @@
 
 exports[`MapComponent should render 1`] = `
 <app-map
+  _subs={[Function SubSink]}
+  class={[Function String]}
   countriesService={[Function CountriesService]}
   minZoom={[Function Number]}
 >
-  <mgl-map
+  <div
+    class="flex items-center justify-center bg-primary text-white sm:hidden"
+  >
+    <h1
+      class="p-3 text-xl font-bold tracking-wide"
+    >
+      been
+    </h1>
+  </div><mgl-map
     logoposition="bottom-right"
   >
     <mgl-vector-source
