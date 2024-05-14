@@ -1,5 +1,10 @@
 import type { OnDestroy, OnInit } from '@angular/core';
-import { ChangeDetectionStrategy, Component, Inject } from '@angular/core';
+import {
+	ChangeDetectionStrategy,
+	Component,
+	HostBinding,
+	Inject,
+} from '@angular/core';
 import { SubSink } from 'subsink';
 
 import type { Country } from '../models/country';
@@ -12,6 +17,9 @@ import { CountriesService } from '../services/countries.service';
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MenuComponent implements OnInit, OnDestroy {
+	@HostBinding('class')
+	class = 'flex flex-col';
+
 	regions: Region[] = [];
 
 	private _subs = new SubSink();
