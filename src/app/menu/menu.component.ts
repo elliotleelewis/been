@@ -4,7 +4,16 @@ import {
 	HostBinding,
 	Inject,
 } from '@angular/core';
-import type { Observable } from 'rxjs';
+import { FormControl } from '@angular/forms';
+import {
+	type Observable,
+	concat,
+	defer,
+	distinctUntilChanged,
+	map,
+	of,
+	switchMap,
+} from 'rxjs';
 
 import type { Country } from '../models/country';
 import type { Region } from '../models/region';
@@ -19,12 +28,34 @@ export class MenuComponent {
 	@HostBinding('class')
 	class = 'flex flex-col';
 
+	searchControl = new FormControl('', { nonNullable: true });
+
 	constructor(
 		@Inject(CountriesService) private countriesService: CountriesService,
 	) {}
 
-	get regions$(): Observable<Region[]> {
-		return this.countriesService.regions$;
+	get filteredRegions$(): Observable<Region[]> {
+		return concat(
+			defer(() => of(this.searchControl.value)),
+			this.searchControl.valueChanges,
+		).pipe(
+			distinctUntilChanged(),
+			map((search) => search.trim().toLowerCase()),
+			switchMap((search) =>
+				this.countriesService.regions$.pipe(
+					map((regions) =>
+						search
+							? regions.map((region) => ({
+									...region,
+									values: region.values.filter(({ name }) =>
+										name.toLowerCase().includes(search),
+									),
+								}))
+							: regions,
+					),
+				),
+			),
+		);
 	}
 
 	toggleCountry(country: Country): void {

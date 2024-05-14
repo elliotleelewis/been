@@ -1,6 +1,6 @@
 import { Inject, Injectable } from '@angular/core';
 import type { Observable } from 'rxjs';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Subject } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import data from '../data/countries.json';
@@ -14,6 +14,8 @@ import { LocalStorageRef } from '../refs/local-storage.ref';
 })
 export class CountriesService {
 	static readonly COUNTRIES_STORAGE_KEY = 'APP_COUNTRIES';
+
+	focus = new Subject<string>();
 
 	private _countries$ = new BehaviorSubject<string[]>(this.countries);
 
@@ -60,6 +62,8 @@ export class CountriesService {
 			countries.push(countryCode);
 		}
 		this.countries = countries;
+
+		this.focus.next(countryCode);
 	}
 
 	removeCountry(countryCode: string): void {

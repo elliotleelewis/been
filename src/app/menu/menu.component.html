@@ -1,8 +1,18 @@
 <div class="flex items-center justify-center bg-primary text-white">
 	<h1 class="p-3 text-xl font-bold tracking-wide">been</h1>
 </div>
+<form>
+	<label for="search" class="sr-only">Search</label>
+	<input
+		id="search"
+		class="w-full border-none px-4 py-2 focus:ring-2 focus:ring-inset focus:ring-primary/50"
+		type="text"
+		placeholder="Search..."
+		[formControl]="searchControl"
+	/>
+</form>
 <ul class="h-full overflow-auto">
-	@for (region of (regions$ | async) ?? []; track region.name) {
+	@for (region of filteredRegions$ | async; track region.name) {
 		<li>
 			<h2 class="bg-slate-200 p-4 font-medium">
 				{{ region.name || 'Other' }}
@@ -12,7 +22,7 @@
 					<li class="hover:bg-slate-50">
 						<label class="flex items-center px-4 py-1">
 							<input
-								class="my-0 me-2 size-4 rounded border-slate-400 bg-slate-50 text-primary focus:ring-2 focus:ring-primary"
+								class="my-0 me-2 size-4 rounded border-slate-400 bg-slate-50 text-primary focus:ring-2 focus:ring-primary/50 active:ring-primary"
 								type="checkbox"
 								[ngModel]="country.selected"
 								(ngModelChange)="toggleCountry(country)"
