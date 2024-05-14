@@ -26,7 +26,7 @@ import { CountriesService } from '../services/countries.service';
 })
 export class MenuComponent {
 	@HostBinding('class')
-	class = 'flex flex-col overflow-auto';
+	class = 'flex flex-col overflow-auto dark:bg-zinc-900 dark:text-white';
 
 	searchControl = new FormControl('', { nonNullable: true });
 
@@ -45,12 +45,19 @@ export class MenuComponent {
 				this.countriesService.regions$.pipe(
 					map((regions) =>
 						search
-							? regions.map((region) => ({
-									...region,
-									values: region.values.filter(({ name }) =>
-										name.toLowerCase().includes(search),
-									),
-								}))
+							? regions
+									.map((region) => ({
+										...region,
+										values: region.values.filter(
+											({ name }) =>
+												name
+													.toLowerCase()
+													.includes(search),
+										),
+									}))
+									.filter(
+										(region) => region.values.length > 0,
+									)
 							: regions,
 					),
 				),
