@@ -72,14 +72,14 @@
         "serve": {
           "builder": "@angular-builders/custom-webpack:dev-server",
           "options": {
-            "browserTarget": "been:build"
+            "buildTarget": "been:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "been:build:production"
+              "buildTarget": "been:build:production"
             },
             "development": {
-              "browserTarget": "been:build:development"
+              "buildTarget": "been:build:development"
             }
           },
           "defaultConfiguration": "development"

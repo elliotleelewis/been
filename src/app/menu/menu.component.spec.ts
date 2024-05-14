@@ -1,6 +1,6 @@
 import type { ComponentFixture } from '@angular/core/testing';
 import { TestBed } from '@angular/core/testing';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MockProvider } from 'ng-mocks';
 import { of } from 'rxjs';
 
@@ -15,7 +15,7 @@ describe('MenuComponent', () => {
 	beforeEach(async () => {
 		await TestBed.configureTestingModule({
 			declarations: [MenuComponent],
-			imports: [FormsModule],
+			imports: [FormsModule, ReactiveFormsModule],
 			providers: [
 				MockProvider(CountriesService, {
 					regions$: of([]),

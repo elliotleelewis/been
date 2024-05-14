@@ -2,10 +2,9 @@
 
 exports[`MenuComponent should render 1`] = `
 <app-menu
-  _subs={[Function SubSink]}
   class={[Function String]}
   countriesService={[Function CountriesService]}
-  regions={[Function Array]}
+  searchControl={[Function FormControl2]}
 >
   <div
     class="flex items-center justify-center bg-primary text-white"
@@ -15,7 +14,23 @@ exports[`MenuComponent should render 1`] = `
     >
       been
     </h1>
-  </div><ul
+  </div><form
+    class="ng-untouched ng-pristine ng-valid"
+    novalidate=""
+  >
+    <label
+      class="sr-only"
+      for="search"
+    >
+      Search
+    </label>
+    <input
+      class="w-full border-none px-4 py-2 focus:ring-2 focus:ring-inset focus:ring-primary/50 ng-untouched ng-pristine ng-valid"
+      id="search"
+      placeholder="Search..."
+      type="text"
+    />
+  </form><ul
     class="h-full overflow-auto"
   >
   </ul>
