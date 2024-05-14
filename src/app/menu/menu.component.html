@@ -1,28 +1,26 @@
-<div class="hidden items-center justify-center bg-primary text-white sm:flex">
-	<h1 class="p-3 text-xl font-bold tracking-wide">been</h1>
-</div>
-<form class="border-t-2 border-slate-200 sm:border-t-0">
+<app-header show="tablet" />
+<form class="border-t-2 border-zinc-200 sm:border-t-0 dark:border-zinc-700">
 	<label for="search" class="sr-only">Search</label>
 	<input
 		id="search"
-		class="w-full border-none px-4 py-2 focus:ring-2 focus:ring-inset focus:ring-primary/50"
+		class="w-full border-none bg-white px-4 py-2 text-zinc-900 focus:ring-2 focus:ring-inset focus:ring-primary/50 dark:bg-zinc-900 dark:text-white"
 		type="text"
 		placeholder="Search..."
 		[formControl]="searchControl"
 	/>
 </form>
-<ul class="h-full overflow-auto">
+<ul class="h-full overflow-auto dark:bg-zinc-900 dark:text-white">
 	@for (region of filteredRegions$ | async; track region.name) {
 		<li>
-			<h2 class="bg-slate-200 p-4 font-medium">
+			<h2 class="bg-zinc-200 p-4 font-medium dark:bg-zinc-800">
 				{{ region.name || 'Other' }}
 			</h2>
-			<ul class="divide-y divide-slate-100">
+			<ul class="divide-y divide-zinc-100 dark:divide-zinc-800">
 				@for (country of region.values; track country.iso3166) {
-					<li class="hover:bg-slate-50">
+					<li class="hover:bg-zinc-50 dark:hover:bg-zinc-800">
 						<label class="flex items-center px-4 py-1">
 							<input
-								class="my-0 me-2 size-4 rounded border-slate-400 bg-slate-50 text-primary focus:ring-2 focus:ring-primary/50 active:ring-primary"
+								class="my-0 me-2 size-4 rounded border-zinc-400 bg-zinc-50 text-primary focus:ring-2 focus:ring-primary/50 active:ring-primary dark:border-zinc-600 dark:bg-zinc-900"
 								type="checkbox"
 								[ngModel]="country.selected"
 								(ngModelChange)="toggleCountry(country)"

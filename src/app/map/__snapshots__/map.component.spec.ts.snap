@@ -5,17 +5,12 @@ exports[`MapComponent should render 1`] = `
   _subs={[Function SubSink]}
   class={[Function String]}
   countriesService={[Function CountriesService]}
+  darkThemeUrl={[Function String]}
+  lightThemeUrl={[Function String]}
   minZoom={[Function Number]}
+  prefersDark="false"
 >
-  <div
-    class="flex items-center justify-center bg-primary text-white sm:hidden"
-  >
-    <h1
-      class="p-3 text-xl font-bold tracking-wide"
-    >
-      been
-    </h1>
-  </div><mgl-map
+  <app-header /><mgl-map
     logoposition="bottom-right"
   >
     <mgl-vector-source

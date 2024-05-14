@@ -1,0 +1,17 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`HeaderComponent should render 1`] = `
+<app-header
+  show={[Function String]}
+>
+  <div
+    class="items-center justify-center bg-primary text-white sm:hidden dark:bg-zinc-950 dark:text-primary flex"
+  >
+    <h1
+      class="p-3 text-xl font-bold tracking-wide"
+    >
+      been
+    </h1>
+  </div>
+</app-header>
+`;

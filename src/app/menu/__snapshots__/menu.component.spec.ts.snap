@@ -6,16 +6,10 @@ exports[`MenuComponent should render 1`] = `
   countriesService={[Function CountriesService]}
   searchControl={[Function FormControl2]}
 >
-  <div
-    class="hidden items-center justify-center bg-primary text-white sm:flex"
-  >
-    <h1
-      class="p-3 text-xl font-bold tracking-wide"
-    >
-      been
-    </h1>
-  </div><form
-    class="border-t-2 border-slate-200 sm:border-t-0 ng-untouched ng-pristine ng-valid"
+  <app-header
+    show="tablet"
+  /><form
+    class="border-t-2 border-zinc-200 sm:border-t-0 dark:border-zinc-700 ng-untouched ng-pristine ng-valid"
     novalidate=""
   >
     <label
@@ -25,13 +19,13 @@ exports[`MenuComponent should render 1`] = `
       Search
     </label>
     <input
-      class="w-full border-none px-4 py-2 focus:ring-2 focus:ring-inset focus:ring-primary/50 ng-untouched ng-pristine ng-valid"
+      class="w-full border-none bg-white px-4 py-2 text-zinc-900 focus:ring-2 focus:ring-inset focus:ring-primary/50 dark:bg-zinc-900 dark:text-white ng-untouched ng-pristine ng-valid"
       id="search"
       placeholder="Search..."
       type="text"
     />
   </form><ul
-    class="h-full overflow-auto"
+    class="h-full overflow-auto dark:bg-zinc-900 dark:text-white"
   >
   </ul>
 </app-menu>
