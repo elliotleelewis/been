@@ -1,9 +1,10 @@
 import type { ComponentFixture } from '@angular/core/testing';
 import { TestBed } from '@angular/core/testing';
-import { MockModule, MockProvider } from 'ng-mocks';
+import { MockComponent, MockModule, MockProvider } from 'ng-mocks';
 import { NgxMapboxGLModule } from 'ngx-mapbox-gl';
 import { NEVER, of } from 'rxjs';
 
+import { HeaderComponent } from '../header/header.component';
 import { CountriesService } from '../services/countries.service';
 
 import { MapComponent } from './map.component';
@@ -14,7 +15,7 @@ describe('MapComponent', () => {
 
 	beforeEach(async () => {
 		await TestBed.configureTestingModule({
-			declarations: [MapComponent],
+			declarations: [MapComponent, MockComponent(HeaderComponent)],
 			imports: [MockModule(NgxMapboxGLModule)],
 			providers: [
 				MockProvider(CountriesService, {

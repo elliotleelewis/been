@@ -1,9 +1,10 @@
 import type { ComponentFixture } from '@angular/core/testing';
 import { TestBed } from '@angular/core/testing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MockProvider } from 'ng-mocks';
+import { MockComponent, MockProvider } from 'ng-mocks';
 import { of } from 'rxjs';
 
+import { HeaderComponent } from '../header/header.component';
 import { CountriesService } from '../services/countries.service';
 
 import { MenuComponent } from './menu.component';
@@ -14,7 +15,7 @@ describe('MenuComponent', () => {
 
 	beforeEach(async () => {
 		await TestBed.configureTestingModule({
-			declarations: [MenuComponent],
+			declarations: [MenuComponent, MockComponent(HeaderComponent)],
 			imports: [FormsModule, ReactiveFormsModule],
 			providers: [
 				MockProvider(CountriesService, {

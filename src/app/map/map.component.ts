@@ -7,7 +7,7 @@ import {
 	type OnInit,
 } from '@angular/core';
 import { type Map } from 'mapbox-gl';
-import { type Observable, map } from 'rxjs';
+import { type Observable, distinctUntilChanged, fromEvent, map } from 'rxjs';
 import { SubSink } from 'subsink';
 
 import {
@@ -27,8 +27,12 @@ export class MapComponent implements OnInit, OnDestroy {
 	@HostBinding('class')
 	class = 'flex flex-col';
 
-	map?: Map;
+	readonly darkThemeUrl = 'mapbox://styles/mapbox/dark-v11';
+	readonly lightThemeUrl = 'mapbox://styles/mapbox/light-v11';
+	readonly prefersDark = window.matchMedia('(prefers-color-scheme: dark)')
+		.matches;
 
+	map?: Map;
 	center?: Coordinate;
 	minZoom = 1.8;
 
@@ -37,6 +41,16 @@ export class MapComponent implements OnInit, OnDestroy {
 	constructor(
 		@Inject(CountriesService) private countriesService: CountriesService,
 	) {}
+
+	static get prefersDark$(): Observable<boolean> {
+		return fromEvent<MediaQueryListEvent>(
+			window.matchMedia('(prefers-color-scheme: dark)'),
+			'change',
+		).pipe(
+			map((event) => event.matches),
+			distinctUntilChanged(),
+		);
+	}
 
 	get countriesSelected$(): Observable<string[]> {
 		return this.countriesService.countries$.pipe(
@@ -61,6 +75,12 @@ export class MapComponent implements OnInit, OnDestroy {
 					this.center = getCoordsCenter(coordinates);
 				}
 			}
+		});
+
+		this._subs.sink = MapComponent.prefersDark$.subscribe((prefersDark) => {
+			this.map?.setStyle(
+				prefersDark ? this.darkThemeUrl : this.lightThemeUrl,
+			);
 		});
 	}
 
