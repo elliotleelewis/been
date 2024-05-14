@@ -2,20 +2,65 @@
 	logoPosition="bottom-right"
 	[attributionControl]="false"
 	[minZoom]="minZoom"
-	[style]="'mapbox://styles/elliotleelewis/ckj1w9ro12g8h19mqhvsgcbkg'"
+	[style]="'mapbox://styles/mapbox/light-v11'"
 	[zoom]="[minZoom]"
+	[antialias]
 >
 	<mgl-vector-source
 		id="countries"
 		url="mapbox://mapbox.country-boundaries-v1"
 	></mgl-vector-source>
+	<mgl-control mglNavigation></mgl-control>
+	<mgl-layer
+		id="3d-buildings"
+		type="fill-extrusion"
+		source="composite"
+		sourceLayer="building"
+		[minzoom]="15"
+		[filter]="['==', 'extrude', 'true']"
+		[paint]="{
+			'fill-extrusion-color': [
+				'case',
+				[
+					'in',
+					['get', 'iso_3166_1'],
+					['literal', (countriesSelected$ | async) ?? []]
+				],
+				'#fd7e14',
+				'#aaa'
+			],
+			'fill-extrusion-height': [
+				'interpolate',
+				['linear'],
+				['zoom'],
+				15,
+				0,
+				15.05,
+				['get', 'height']
+			],
+			'fill-extrusion-base': [
+				'interpolate',
+				['linear'],
+				['zoom'],
+				15,
+				0,
+				15.05,
+				['get', 'min_height']
+			],
+			'fill-extrusion-opacity': 0.6
+		}"
+	></mgl-layer>
 	<mgl-layer
 		id="visited-countries"
 		type="fill"
 		source="countries"
 		sourceLayer="country_boundaries"
-		[before]="'landcover'"
-		[filter]="filter"
-		[paint]="{ 'fill-color': '#fd7e14' }"
+		[before]="'national-park'"
+		[filter]="[
+			'in',
+			['get', 'iso_3166_1'],
+			['literal', (countriesSelected$ | async) ?? []]
+		]"
+		[paint]="{ 'fill-color': '#fd7e14', 'fill-opacity': 0.6 }"
 	></mgl-layer>
 </mgl-map>
