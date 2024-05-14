@@ -1,28 +1,27 @@
-<div class="navbar navbar-dark bg-primary">
-	<div class="container-fluid justify-content-center">
-		<h1 class="navbar-brand m-0">been</h1>
-	</div>
+<div class="flex items-center justify-center bg-primary text-white">
+	<h1 class="p-3 text-xl font-bold tracking-wide">been</h1>
 </div>
-<ul
-	class="list-group list-group-flush overflow-auto"
-	style="max-block-size: calc(100vh - 3.125rem)"
->
+<ul class="h-full overflow-auto">
 	@for (region of regions; track region.name) {
-		<li class="list-group-item list-group-item-secondary">
-			{{ region.name || 'Other' }}
+		<li>
+			<h2 class="bg-slate-200 p-4 font-medium">
+				{{ region.name || 'Other' }}
+			</h2>
+			<ul class="divide-y divide-slate-100">
+				@for (country of region.values; track country.iso3166) {
+					<li class="hover:bg-slate-50">
+						<label class="flex items-center px-4 py-1">
+							<input
+								class="my-0 me-2 size-4 rounded border-slate-400 bg-slate-50 text-primary focus:ring-2 focus:ring-primary"
+								type="checkbox"
+								[ngModel]="country.selected"
+								(ngModelChange)="toggleCountry(country)"
+							/>
+							<span>{{ country.name }}</span>
+						</label>
+					</li>
+				}
+			</ul>
 		</li>
-		@for (country of region.values; track country.iso3166) {
-			<li class="list-group-item">
-				<label class="stretched-link d-flex align-items-center">
-					<input
-						class="form-check-input my-0 me-3 flex-shrink-0"
-						type="checkbox"
-						[ngModel]="country.selected"
-						(ngModelChange)="toggleCountry(country)"
-					/>
-					<span>{{ country.name }}</span>
-				</label>
-			</li>
-		}
 	}
 </ul>
