@@ -1,11 +1,10 @@
-import type { OnDestroy, OnInit } from '@angular/core';
 import {
 	ChangeDetectionStrategy,
 	Component,
 	HostBinding,
 	Inject,
 } from '@angular/core';
-import { SubSink } from 'subsink';
+import type { Observable } from 'rxjs';
 
 import type { Country } from '../models/country';
 import type { Region } from '../models/region';
@@ -16,26 +15,16 @@ import { CountriesService } from '../services/countries.service';
 	templateUrl: './menu.component.html',
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class MenuComponent implements OnInit, OnDestroy {
+export class MenuComponent {
 	@HostBinding('class')
 	class = 'flex flex-col';
-
-	regions: Region[] = [];
-
-	private _subs = new SubSink();
 
 	constructor(
 		@Inject(CountriesService) private countriesService: CountriesService,
 	) {}
 
-	ngOnInit(): void {
-		this._subs.sink = this.countriesService.regions$.subscribe(
-			(regions) => (this.regions = regions),
-		);
-	}
-
-	ngOnDestroy(): void {
-		this._subs.unsubscribe();
+	get regions$(): Observable<Region[]> {
+		return this.countriesService.regions$;
 	}
 
 	toggleCountry(country: Country): void {

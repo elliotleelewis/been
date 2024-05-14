@@ -2,7 +2,7 @@
 	<h1 class="p-3 text-xl font-bold tracking-wide">been</h1>
 </div>
 <ul class="h-full overflow-auto">
-	@for (region of regions; track region.name) {
+	@for (region of (regions$ | async) ?? []; track region.name) {
 		<li>
 			<h2 class="bg-slate-200 p-4 font-medium">
 				{{ region.name || 'Other' }}
