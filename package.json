@@ -1,6 +1,6 @@
 {
   "private": true,
-  "packageManager": "pnpm@9.1.1",
+  "packageManager": "pnpm@9.1.4",
   "scripts": {
     "start": "ng serve --host 0.0.0.0",
     "build": "ng build",
