@@ -18,18 +18,16 @@
       "prefix": "app",
       "architect": {
         "build": {
-          "builder": "@angular-builders/custom-webpack:browser",
+          "builder": "@angular-builders/custom-esbuild:application",
           "options": {
-            "customWebpackConfig": {
-              "path": "./webpack.config.js"
-            },
+            "plugins": ["./.esbuild/plugin.js"],
             "stylePreprocessorOptions": {
               "includePaths": ["./node_modules"]
             },
             "outputPath": "dist",
             "index": "src/index.html",
-            "main": "src/main.ts",
-            "polyfills": "src/polyfills.ts",
+            "browser": "src/main.ts",
+            "polyfills": ["src/polyfills.ts"],
             "tsConfig": "tsconfig.app.json",
             "inlineStyleLanguage": "scss",
             "assets": ["src/favicon.ico", "src/assets"],
@@ -70,19 +68,10 @@
           "defaultConfiguration": "production"
         },
         "serve": {
-          "builder": "@angular-builders/custom-webpack:dev-server",
+          "builder": "@angular-builders/custom-esbuild:dev-server",
           "options": {
             "buildTarget": "been:build"
-          },
-          "configurations": {
-            "production": {
-              "buildTarget": "been:build:production"
-            },
-            "development": {
-              "buildTarget": "been:build:development"
-            }
-          },
-          "defaultConfiguration": "development"
+          }
         },
         "test": {
           "builder": "@angular-builders/jest:run",
