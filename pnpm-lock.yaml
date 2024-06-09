@@ -117,6 +117,9 @@ importers:
       dotenv:
         specifier: ^16.0.0
         version: 16.3.2
+      esbuild:
+        specifier: ^0.21.0
+        version: 0.21.3
       eslint:
         specifier: ^8.0.0
         version: 8.57.0
@@ -10724,10 +10727,10 @@ snapshots:
       jest-environment-jsdom: 29.7.0
       jest-util: 29.7.0
       pretty-format: 29.7.0
-      ts-jest: 29.1.4(@babel/core@7.24.6)(@jest/transform@29.7.0)(@jest/types@29.6.3)(babel-jest@29.7.0(@babel/core@7.24.6))(esbuild@0.20.2)(jest@29.7.0(@types/node@20.14.0)(ts-node@10.9.2(@types/node@20.14.0)(typescript@5.4.5)))(typescript@5.4.5)
+      ts-jest: 29.1.4(@babel/core@7.24.6)(@jest/transform@29.7.0)(@jest/types@29.6.3)(babel-jest@29.7.0(@babel/core@7.24.6))(esbuild@0.21.3)(jest@29.7.0(@types/node@20.14.0)(ts-node@10.9.2(@types/node@20.14.0)(typescript@5.4.5)))(typescript@5.4.5)
       typescript: 5.4.5
     optionalDependencies:
-      esbuild: 0.20.2
+      esbuild: 0.21.3
     transitivePeerDependencies:
       - '@babel/core'
       - '@jest/transform'
@@ -12719,7 +12722,7 @@ snapshots:
 
   ts-interface-checker@0.1.13: {}
 
-  ts-jest@29.1.4(@babel/core@7.24.6)(@jest/transform@29.7.0)(@jest/types@29.6.3)(babel-jest@29.7.0(@babel/core@7.24.6))(esbuild@0.20.2)(jest@29.7.0(@types/node@20.14.0)(ts-node@10.9.2(@types/node@20.14.0)(typescript@5.4.5)))(typescript@5.4.5):
+  ts-jest@29.1.4(@babel/core@7.24.6)(@jest/transform@29.7.0)(@jest/types@29.6.3)(babel-jest@29.7.0(@babel/core@7.24.6))(esbuild@0.21.3)(jest@29.7.0(@types/node@20.14.0)(ts-node@10.9.2(@types/node@20.14.0)(typescript@5.4.5)))(typescript@5.4.5):
     dependencies:
       bs-logger: 0.2.6
       fast-json-stable-stringify: 2.1.0
@@ -12736,7 +12739,7 @@ snapshots:
       '@jest/transform': 29.7.0
       '@jest/types': 29.6.3
       babel-jest: 29.7.0(@babel/core@7.24.6)
-      esbuild: 0.20.2
+      esbuild: 0.21.3
 
   ts-node@10.9.2(@types/node@20.14.0)(typescript@5.4.5):
     dependencies:
