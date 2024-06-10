@@ -1,0 +1,14 @@
+diff --git a/fesm2022/ngx-mapbox-gl.mjs b/fesm2022/ngx-mapbox-gl.mjs
+index 93baf256d9e5a316786d7b63d5e55a69982a8334..4aaa30b5b9657a0f46de16302a619ada101deab2 100644
+--- a/fesm2022/ngx-mapbox-gl.mjs
++++ b/fesm2022/ngx-mapbox-gl.mjs
+@@ -30,9 +30,6 @@ class MapService {
+             //   'accessToken',
+             //   options.accessToken || this.MAPBOX_API_KEY
+             // );
+-            if (options.customMapboxApiUrl) {
+-                MapboxGl.baseApiUrl = options.customMapboxApiUrl;
+-            }
+             this.createMap({
+                 ...options.mapOptions,
+                 accessToken: options.accessToken || this.MAPBOX_API_KEY || '',
