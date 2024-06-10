@@ -9,16 +9,13 @@ const plugin: Plugin = {
 	setup: (build: PluginBuild) => {
 		const { define } = build.initialOptions;
 		if (define) {
-			console.log(
-				Object.keys(process.env)
-					.filter((v) => v === v.toUpperCase())
-					.sort(),
-			);
 			envVars.forEach((envVar) => {
 				if (process.env[envVar]) {
 					define[`process.env.${envVar}`] = JSON.stringify(
 						process.env[envVar],
 					);
+				} else {
+					console.warn('Missing ENV Variable:', envVar);
 				}
 			});
 		}

@@ -3,7 +3,7 @@
   "packageManager": "pnpm@9.2.0",
   "scripts": {
     "start": "ng serve --host 0.0.0.0",
-    "build": "ng build --verbose",
+    "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
     "lint:fix": "ng lint --fix",
