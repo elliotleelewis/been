@@ -63,11 +63,11 @@ importers:
         version: 0.14.7
     devDependencies:
       '@angular-builders/custom-esbuild':
-        specifier: ~18.0.0-beta.3
-        version: 18.0.0-beta.3(@angular/compiler-cli@18.0.3(@angular/compiler@18.0.3(@angular/core@18.0.3(rxjs@7.8.1)(zone.js@0.14.7)))(typescript@5.4.5))(@types/node@20.14.2)(chokidar@3.6.0)(jest-environment-jsdom@29.7.0)(jest@29.7.0(@types/node@20.14.2)(ts-node@10.9.2(@types/node@20.14.2)(typescript@5.4.5)))(tailwindcss@3.4.4(ts-node@10.9.2(@types/node@20.14.2)(typescript@5.4.5)))(typescript@5.4.5)
+        specifier: ~18.0.0
+        version: 18.0.0(@angular/compiler-cli@18.0.3(@angular/compiler@18.0.3(@angular/core@18.0.3(rxjs@7.8.1)(zone.js@0.14.7)))(typescript@5.4.5))(@types/node@20.14.2)(chokidar@3.6.0)(jest-environment-jsdom@29.7.0)(jest@29.7.0(@types/node@20.14.2)(ts-node@10.9.2(@types/node@20.14.2)(typescript@5.4.5)))(tailwindcss@3.4.4(ts-node@10.9.2(@types/node@20.14.2)(typescript@5.4.5)))(typescript@5.4.5)
       '@angular-builders/jest':
-        specifier: ~18.0.0-beta.3
-        version: 18.0.0-beta.3(r63jcdkfegmupmolsrquxvilti)
+        specifier: ~18.0.0
+        version: 18.0.0(r63jcdkfegmupmolsrquxvilti)
       '@angular-devkit/core':
         specifier: ~18.0.0
         version: 18.0.4(chokidar@3.6.0)
@@ -116,9 +116,6 @@ importers:
       '@typescript-eslint/parser':
         specifier: ^7.0.0
         version: 7.13.0(eslint@8.57.0)(typescript@5.4.5)
-      '@typescript-eslint/utils':
-        specifier: ^8.0.0-alpha.24
-        version: 8.0.0-alpha.30(eslint@8.57.0)(typescript@5.4.5)
       dotenv:
         specifier: ^16.0.0
         version: 16.4.5
@@ -196,18 +193,18 @@ packages:
     resolution: {integrity: sha512-30iZtAPgz+LTIYoeivqYo853f02jBYSd5uGnGpkFV0M3xOt9aN73erkgYAmZU43x4VfqcnLxW9Kpg3R5LC4YYw==}
     engines: {node: '>=6.0.0'}
 
-  '@angular-builders/common@2.0.0-beta.1':
-    resolution: {integrity: sha512-pP1CHmmYHrh+sd4I+7sQgre9HQiuf3nJE8mrIzgEbt6PjS8S2u+6vVqNDGYuBS+0sy3qeC8rvcfEnupsqOhZjg==}
+  '@angular-builders/common@2.0.0':
+    resolution: {integrity: sha512-O5YJc++DtJVJhqA/OomRKN2jGYzvU/YXtfrPAqcA9Is3Ob5jvV0L0JHSAjSw/KaLvk/FjBIqoRVcYdLp5LKddA==}
     engines: {node: ^14.20.0 || ^16.13.0 || >=18.10.0}
 
-  '@angular-builders/custom-esbuild@18.0.0-beta.3':
-    resolution: {integrity: sha512-jpbNlA163i/HlNnRUYr5QqsSZxUH139I+OAjaI0qtOrINcV2Ck8HIG6E2Q4xa0Bxrmk9tlGjqRpSuCrpBBoo1A==}
+  '@angular-builders/custom-esbuild@18.0.0':
+    resolution: {integrity: sha512-SdAGatJMJJjPYrdkUupdRazid3xe1sIj/CAHDdDVP094vZ9CrZs6fgcsOF17waAo6uMxrQCWmPDrTjNgR3CvMQ==}
     engines: {node: ^14.20.0 || ^16.13.0 || >=18.10.0}
     peerDependencies:
       '@angular/compiler-cli': ^18.0.0
 
-  '@angular-builders/jest@18.0.0-beta.3':
-    resolution: {integrity: sha512-J2WyUR7jMni5Ta0xBp26eqI89mjbKJPzA6yL4jtbTAnGvoytRahwHi2usq9al+JL1paD0bLRG2Vu8/xhHpou8A==}
+  '@angular-builders/jest@18.0.0':
+    resolution: {integrity: sha512-nPNWMlV1ryjir6CC8dY8f6yaNe0lM1VJwbvYM99HmJSeRo+1IwouQQGUjRM/2Dx4OMAmL4EAPh7Ud2nr3Gj/FA==}
     engines: {node: ^14.20.0 || ^16.13.0 || >=18.10.0}
     peerDependencies:
       '@angular-devkit/build-angular': ^18.0.0
@@ -6312,7 +6309,7 @@ snapshots:
       '@jridgewell/gen-mapping': 0.3.5
       '@jridgewell/trace-mapping': 0.3.25
 
-  '@angular-builders/common@2.0.0-beta.1(@types/node@20.14.2)(chokidar@3.6.0)(typescript@5.4.5)':
+  '@angular-builders/common@2.0.0(@types/node@20.14.2)(chokidar@3.6.0)(typescript@5.4.5)':
     dependencies:
       '@angular-devkit/core': 18.0.4(chokidar@3.6.0)
       ts-node: 10.9.2(@types/node@20.14.2)(typescript@5.4.5)
@@ -6324,9 +6321,9 @@ snapshots:
       - chokidar
       - typescript
 
-  '@angular-builders/custom-esbuild@18.0.0-beta.3(@angular/compiler-cli@18.0.3(@angular/compiler@18.0.3(@angular/core@18.0.3(rxjs@7.8.1)(zone.js@0.14.7)))(typescript@5.4.5))(@types/node@20.14.2)(chokidar@3.6.0)(jest-environment-jsdom@29.7.0)(jest@29.7.0(@types/node@20.14.2)(ts-node@10.9.2(@types/node@20.14.2)(typescript@5.4.5)))(tailwindcss@3.4.4(ts-node@10.9.2(@types/node@20.14.2)(typescript@5.4.5)))(typescript@5.4.5)':
+  '@angular-builders/custom-esbuild@18.0.0(@angular/compiler-cli@18.0.3(@angular/compiler@18.0.3(@angular/core@18.0.3(rxjs@7.8.1)(zone.js@0.14.7)))(typescript@5.4.5))(@types/node@20.14.2)(chokidar@3.6.0)(jest-environment-jsdom@29.7.0)(jest@29.7.0(@types/node@20.14.2)(ts-node@10.9.2(@types/node@20.14.2)(typescript@5.4.5)))(tailwindcss@3.4.4(ts-node@10.9.2(@types/node@20.14.2)(typescript@5.4.5)))(typescript@5.4.5)':
     dependencies:
-      '@angular-builders/common': 2.0.0-beta.1(@types/node@20.14.2)(chokidar@3.6.0)(typescript@5.4.5)
+      '@angular-builders/common': 2.0.0(@types/node@20.14.2)(chokidar@3.6.0)(typescript@5.4.5)
       '@angular-devkit/architect': 0.1800.4(chokidar@3.6.0)
       '@angular-devkit/build-angular': 18.0.4(@angular/compiler-cli@18.0.3(@angular/compiler@18.0.3(@angular/core@18.0.3(rxjs@7.8.1)(zone.js@0.14.7)))(typescript@5.4.5))(@types/node@20.14.2)(chokidar@3.6.0)(jest-environment-jsdom@29.7.0)(jest@29.7.0(@types/node@20.14.2)(ts-node@10.9.2(@types/node@20.14.2)(typescript@5.4.5)))(tailwindcss@3.4.4(ts-node@10.9.2(@types/node@20.14.2)(typescript@5.4.5)))(typescript@5.4.5)
       '@angular-devkit/core': 18.0.4(chokidar@3.6.0)
@@ -6362,9 +6359,9 @@ snapshots:
       - utf-8-validate
       - webpack-cli
 
-  '@angular-builders/jest@18.0.0-beta.3(r63jcdkfegmupmolsrquxvilti)':
+  '@angular-builders/jest@18.0.0(r63jcdkfegmupmolsrquxvilti)':
     dependencies:
-      '@angular-builders/common': 2.0.0-beta.1(@types/node@20.14.2)(chokidar@3.6.0)(typescript@5.4.5)
+      '@angular-builders/common': 2.0.0(@types/node@20.14.2)(chokidar@3.6.0)(typescript@5.4.5)
       '@angular-devkit/architect': 0.1800.4(chokidar@3.6.0)
       '@angular-devkit/build-angular': 18.0.4(@angular/compiler-cli@18.0.3(@angular/compiler@18.0.3(@angular/core@18.0.3(rxjs@7.8.1)(zone.js@0.14.7)))(typescript@5.4.5))(@types/node@20.14.2)(chokidar@3.6.0)(jest-environment-jsdom@29.7.0)(jest@29.7.0(@types/node@20.14.2)(ts-node@10.9.2(@types/node@20.14.2)(typescript@5.4.5)))(tailwindcss@3.4.4(ts-node@10.9.2(@types/node@20.14.2)(typescript@5.4.5)))(typescript@5.4.5)
       '@angular-devkit/core': 18.0.4(chokidar@3.6.0)
