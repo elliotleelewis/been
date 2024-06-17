@@ -31,8 +31,8 @@
     "zone.js": "^0.14.0"
   },
   "devDependencies": {
-    "@angular-builders/custom-esbuild": "~18.0.0-beta.3",
-    "@angular-builders/jest": "~18.0.0-beta.3",
+    "@angular-builders/custom-esbuild": "~18.0.0",
+    "@angular-builders/jest": "~18.0.0",
     "@angular-devkit/core": "~18.0.0",
     "@angular-devkit/schematics": "~18.0.0",
     "@angular-eslint/builder": "~18.0.0",
@@ -49,7 +49,6 @@
     "@types/node": "^20.0.0",
     "@typescript-eslint/eslint-plugin": "^7.0.0",
     "@typescript-eslint/parser": "^7.0.0",
-    "@typescript-eslint/utils": "^8.0.0-alpha.24",
     "dotenv": "^16.0.0",
     "esbuild": "^0.21.0",
     "eslint": "^8.0.0",
