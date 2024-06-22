@@ -7,11 +7,15 @@ export type NestedCoordinates = Coordinate | NestedCoordinates[];
  * @param nestedCoords The nested array of coordinates.
  * @returns A flat array of coordinates.
  */
-const flattenCoordinates = (nestedCoords: NestedCoordinates): Coordinate[] => {
+export const flattenCoordinates = (
+	nestedCoords: NestedCoordinates,
+): Coordinate[] => {
 	const result: Coordinate[] = [];
 
 	const flatten = (coords: NestedCoordinates) => {
-		if (Array.isArray(coords[0])) {
+		if (!coords[0]) {
+			return;
+		} else if (Array.isArray(coords[0])) {
 			for (const coord of coords as NestedCoordinates[]) {
 				flatten(coord);
 			}
@@ -30,7 +34,7 @@ const flattenCoordinates = (nestedCoords: NestedCoordinates): Coordinate[] => {
  * @param polygon A flat array of coordinates representing a polygon.
  * @returns The centroid coordinate of the polygon.
  */
-const calculatePolygonCentroid = (polygon: Coordinate[]): Coordinate => {
+export const calculatePolygonCentroid = (polygon: Coordinate[]): Coordinate => {
 	let xSum = 0;
 	let ySum = 0;
 	let areaSum = 0;
@@ -60,7 +64,11 @@ const calculatePolygonCentroid = (polygon: Coordinate[]): Coordinate => {
  * @param coordinates A flat array of coordinates.
  * @returns The center coordinate.
  */
-const calculateCenter = (coordinates: Coordinate[]): Coordinate => {
+export const calculateCenter = (coordinates: Coordinate[]): Coordinate => {
+	if (coordinates.length === 0) {
+		return [0, 0];
+	}
+
 	const total = coordinates.reduce(
 		(acc, [lat, lon]) => {
 			acc[0] += lat;
@@ -89,10 +97,10 @@ export const getCoordsCenter = (
 		if (Array.isArray(coords[0])) {
 			for (const coord of coords as NestedCoordinates[]) {
 				if (Array.isArray(coord[0])) {
+					const flat = flattenCoordinates(coord);
+					const centroid = calculatePolygonCentroid(flat);
 					// This is a shape (polygon)
-					flatCoords.push(
-						calculatePolygonCentroid(flattenCoordinates(coord)),
-					);
+					flatCoords.push(centroid);
 				} else {
 					// This is a point
 					flatCoords.push(coord as Coordinate);

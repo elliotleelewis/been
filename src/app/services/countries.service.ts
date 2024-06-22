@@ -1,12 +1,11 @@
 import { Inject, Injectable } from '@angular/core';
-import type { Observable } from 'rxjs';
-import { BehaviorSubject, Subject } from 'rxjs';
+import { BehaviorSubject, type Observable, Subject } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import data from '../data/countries.json';
 import { regionalizer } from '../helpers';
-import type { Country } from '../models/country';
-import type { Region } from '../models/region';
+import { type Country } from '../models/country';
+import { type Region } from '../models/region';
 import { LocalStorageRef } from '../refs/local-storage.ref';
 
 @Injectable({

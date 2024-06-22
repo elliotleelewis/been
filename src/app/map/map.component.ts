@@ -15,6 +15,7 @@ import {
 	type NestedCoordinates,
 	getCoordsCenter,
 } from '../helpers';
+import { WindowRef } from '../refs/window.ref';
 import { CountriesService } from '../services/countries.service';
 
 @Component({
@@ -29,8 +30,9 @@ export class MapComponent implements OnInit, OnDestroy {
 
 	readonly darkThemeUrl = 'mapbox://styles/mapbox/dark-v11';
 	readonly lightThemeUrl = 'mapbox://styles/mapbox/light-v11';
-	readonly prefersDark = window.matchMedia('(prefers-color-scheme: dark)')
-		.matches;
+	readonly prefersDark = this.windowRef.window.matchMedia(
+		'(prefers-color-scheme: dark)',
+	).matches;
 
 	map?: Map;
 	center?: Coordinate;
@@ -40,23 +42,24 @@ export class MapComponent implements OnInit, OnDestroy {
 
 	constructor(
 		@Inject(CountriesService) private countriesService: CountriesService,
+		@Inject(WindowRef) private windowRef: WindowRef,
 	) {}
-
-	static get prefersDark$(): Observable<boolean> {
-		return fromEvent<MediaQueryListEvent>(
-			window.matchMedia('(prefers-color-scheme: dark)'),
-			'change',
-		).pipe(
-			map((event) => event.matches),
-			distinctUntilChanged(),
-		);
-	}
 
 	get countriesSelected$(): Observable<string[]> {
 		return this.countriesService.countries$.pipe(
 			map((countries) =>
 				countries.filter((c) => c.selected).map((c) => c.iso3166),
 			),
+		);
+	}
+
+	get prefersDark$(): Observable<boolean> {
+		return fromEvent<MediaQueryListEvent>(
+			this.windowRef.window.matchMedia('(prefers-color-scheme: dark)'),
+			'change',
+		).pipe(
+			map((event) => event.matches),
+			distinctUntilChanged(),
 		);
 	}
 
@@ -77,7 +80,7 @@ export class MapComponent implements OnInit, OnDestroy {
 			}
 		});
 
-		this._subs.sink = MapComponent.prefersDark$.subscribe((prefersDark) => {
+		this._subs.sink = this.prefersDark$.subscribe((prefersDark) => {
 			this.map?.setStyle(
 				prefersDark ? this.darkThemeUrl : this.lightThemeUrl,
 			);

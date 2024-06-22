@@ -1,5 +1,4 @@
-import type { ComponentFixture } from '@angular/core/testing';
-import { TestBed } from '@angular/core/testing';
+import { type ComponentFixture, TestBed } from '@angular/core/testing';
 import { MockComponent, MockModule, MockProvider } from 'ng-mocks';
 import { NgxMapboxGLModule } from 'ngx-mapbox-gl';
 import { NEVER, of } from 'rxjs';
