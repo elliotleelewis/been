@@ -6,9 +6,7 @@ exports[`MenuComponent should render 1`] = `
   countriesService={[Function CountriesService]}
   searchControl={[Function FormControl2]}
 >
-  <app-header
-    show="tablet"
-  /><form
+  <form
     class="border-t-2 border-zinc-200 sm:border-t-0 dark:border-zinc-700 ng-untouched ng-pristine ng-valid"
     novalidate=""
   >

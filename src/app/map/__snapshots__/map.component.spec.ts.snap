@@ -10,7 +10,7 @@ exports[`MapComponent should render 1`] = `
   minZoom={[Function Number]}
   prefersDark="false"
 >
-  <app-header /><mgl-map
+  <mgl-map
     logoposition="bottom-right"
   >
     <mgl-vector-source

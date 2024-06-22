@@ -1,9 +1,10 @@
 import type { ComponentFixture } from '@angular/core/testing';
 import { TestBed } from '@angular/core/testing';
-import { MockComponents } from 'ng-mocks';
+import { MockComponents, MockModule } from 'ng-mocks';
 
 import { AppComponent } from './app.component';
-import { MapComponent } from './map/map.component';
+import { HeaderComponent } from './header/header.component';
+import { MapModule } from './map/map.module';
 import { MenuComponent } from './menu/menu.component';
 
 describe('AppComponent', () => {
@@ -14,8 +15,9 @@ describe('AppComponent', () => {
 		await TestBed.configureTestingModule({
 			declarations: [
 				AppComponent,
-				MockComponents(MapComponent, MenuComponent),
+				MockComponents(HeaderComponent, MenuComponent),
 			],
+			imports: [MockModule(MapModule)],
 		}).compileComponents();
 	});
 
