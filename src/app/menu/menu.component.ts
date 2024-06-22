@@ -15,8 +15,8 @@ import {
 	switchMap,
 } from 'rxjs';
 
-import type { Country } from '../models/country';
-import type { Region } from '../models/region';
+import { type Country } from '../models/country';
+import { type Region } from '../models/region';
 import { CountriesService } from '../services/countries.service';
 
 @Component({
