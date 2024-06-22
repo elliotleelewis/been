@@ -9,6 +9,7 @@ exports[`MapComponent should render 1`] = `
   lightThemeUrl={[Function String]}
   minZoom={[Function Number]}
   prefersDark="false"
+  windowRef={[Function WindowRef]}
 >
   <mgl-map
     logoposition="bottom-right"
