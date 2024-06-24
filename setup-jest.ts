@@ -1,6 +1,5 @@
 import { TextDecoder } from 'node:util';
 
-import 'jest-preset-angular/setup-jest';
 import { ngMocks } from 'ng-mocks';
 
 // Polyfill TextDecoder
