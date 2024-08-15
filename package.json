@@ -215,7 +215,6 @@
           "@typescript-eslint/array-type": "error",
           "@typescript-eslint/ban-ts-comment": "error",
           "@typescript-eslint/ban-tslint-comment": "error",
-          "@typescript-eslint/ban-types": "error",
           "@typescript-eslint/consistent-type-imports": "error",
           "@typescript-eslint/dot-notation": "error",
           "@typescript-eslint/explicit-member-accessibility": [
