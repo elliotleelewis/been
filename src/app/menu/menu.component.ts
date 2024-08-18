@@ -2,7 +2,7 @@ import {
 	ChangeDetectionStrategy,
 	Component,
 	HostBinding,
-	Inject,
+	inject,
 } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import {
@@ -25,14 +25,12 @@ import { CountriesService } from '../services/countries.service';
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MenuComponent {
+	private readonly countriesService = inject(CountriesService);
+
 	@HostBinding('class')
 	class = 'flex flex-col overflow-auto dark:bg-zinc-900 dark:text-white';
 
 	searchControl = new FormControl('', { nonNullable: true });
-
-	constructor(
-		@Inject(CountriesService) private countriesService: CountriesService,
-	) {}
 
 	get filteredRegions$(): Observable<readonly Region[]> {
 		return concat(

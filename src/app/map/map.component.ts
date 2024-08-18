@@ -2,9 +2,9 @@ import {
 	ChangeDetectionStrategy,
 	Component,
 	HostBinding,
-	Inject,
 	type OnDestroy,
 	type OnInit,
+	inject,
 } from '@angular/core';
 import { type Map } from 'mapbox-gl';
 import { type Observable, distinctUntilChanged, fromEvent, map } from 'rxjs';
@@ -21,10 +21,13 @@ import { CountriesService } from '../services/countries.service';
 @Component({
 	selector: 'app-map',
 	templateUrl: './map.component.html',
-	styleUrls: ['./map.component.scss'],
+	styleUrl: './map.component.scss',
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MapComponent implements OnInit, OnDestroy {
+	private readonly countriesService = inject(CountriesService);
+	private readonly windowRef = inject(WindowRef);
+
 	@HostBinding('class')
 	class = 'flex flex-col';
 
@@ -39,11 +42,6 @@ export class MapComponent implements OnInit, OnDestroy {
 	minZoom = 1.8;
 
 	private _subs = new SubSink();
-
-	constructor(
-		@Inject(CountriesService) private countriesService: CountriesService,
-		@Inject(WindowRef) private windowRef: WindowRef,
-	) {}
 
 	get countriesSelected$(): Observable<string[]> {
 		return this.countriesService.countries$.pipe(

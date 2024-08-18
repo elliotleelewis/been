@@ -9,7 +9,7 @@ import { MenuComponent } from './menu/menu.component';
 
 @NgModule({
 	declarations: [AppComponent, HeaderComponent, MenuComponent],
-	imports: [BrowserModule, FormsModule, ReactiveFormsModule, MapModule],
+	imports: [BrowserModule, FormsModule, MapModule, ReactiveFormsModule],
 	bootstrap: [AppComponent],
 })
 export class AppModule {}
