@@ -1,4 +1,4 @@
-import { Inject, Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { BehaviorSubject, type Observable, Subject } from 'rxjs';
 import { map } from 'rxjs/operators';
 
@@ -12,6 +12,8 @@ import { LocalStorageRef } from '../refs/local-storage.ref';
 	providedIn: 'root',
 })
 export class CountriesService {
+	private readonly localStorageRef = inject(LocalStorageRef);
+
 	static readonly COUNTRIES_STORAGE_KEY = 'APP_COUNTRIES';
 
 	private _countries$ = new BehaviorSubject<readonly string[]>(
@@ -19,10 +21,6 @@ export class CountriesService {
 	);
 
 	private _focus$ = new Subject<string>();
-
-	constructor(
-		@Inject(LocalStorageRef) private localStorageRef: LocalStorageRef,
-	) {}
 
 	get countries$(): Observable<readonly Country[]> {
 		return this._countries$.pipe(
