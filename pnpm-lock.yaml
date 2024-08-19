@@ -4,11 +4,6 @@ settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
 
-patchedDependencies:
-  ngx-mapbox-gl@10.0.0:
-    hash: t6f23yb36f77nypr35rqbff5lm
-    path: patches/ngx-mapbox-gl@10.0.0.patch
-
 importers:
 
   .:
@@ -44,8 +39,8 @@ importers:
         specifier: ~3.4.0
         version: 3.4.0
       ngx-mapbox-gl:
-        specifier: ^10.0.0
-        version: 10.0.0(patch_hash=t6f23yb36f77nypr35rqbff5lm)(@angular/common@18.2.0(@angular/core@18.2.0(rxjs@7.8.1)(zone.js@0.14.10))(rxjs@7.8.1))(@angular/core@18.2.0(rxjs@7.8.1)(zone.js@0.14.10))(mapbox-gl@3.4.0)(rxjs@7.8.1)
+        specifier: ^11.0.0
+        version: 11.0.1(@angular/common@18.2.0(@angular/core@18.2.0(rxjs@7.8.1)(zone.js@0.14.10))(rxjs@7.8.1))(@angular/core@18.2.0(rxjs@7.8.1)(zone.js@0.14.10))(mapbox-gl@3.4.0)(rxjs@7.8.1)
       rxjs:
         specifier: ~7.8.0
         version: 7.8.1
@@ -4624,11 +4619,11 @@ packages:
       '@angular/forms': 5.0.0-alpha - 5 || 6.0.0-alpha - 6 || 7.0.0-alpha - 7 || 8.0.0-alpha - 8 || 9.0.0-alpha - 9 || 10.0.0-alpha - 10 || 11.0.0-alpha - 11 || 12.0.0-alpha - 12 || 13.0.0-alpha - 13 || 14.0.0-alpha - 14 || 15.0.0-alpha - 15 || 16.0.0-alpha - 16 || 17.0.0-alpha - 17 || 18.0.0-alpha - 18
       '@angular/platform-browser': 5.0.0-alpha - 5 || 6.0.0-alpha - 6 || 7.0.0-alpha - 7 || 8.0.0-alpha - 8 || 9.0.0-alpha - 9 || 10.0.0-alpha - 10 || 11.0.0-alpha - 11 || 12.0.0-alpha - 12 || 13.0.0-alpha - 13 || 14.0.0-alpha - 14 || 15.0.0-alpha - 15 || 16.0.0-alpha - 16 || 17.0.0-alpha - 17 || 18.0.0-alpha - 18
 
-  ngx-mapbox-gl@10.0.0:
-    resolution: {integrity: sha512-MEdlbN3RxlVfpGpH9zCQzSIj/R0dEgLHU0vXCEJEPtenWalHijWApq+2ncBus0sHO4JRvbMu3HWkcKV80lDOhA==}
+  ngx-mapbox-gl@11.0.1:
+    resolution: {integrity: sha512-3aMXRD+z18N37gdqUjzMrhzvEe22eowraZ72RRhSNa9gc6sPZu5sHdCOPfWx0/dZRDunH7j624wYyqYCAyZ0vQ==}
     peerDependencies:
-      '@angular/common': ^16.0.0 || ^17.0.0
-      '@angular/core': ^16.0.0 || ^17.0.0
+      '@angular/common': ^18.0.0 || ^19.0.0
+      '@angular/core': ^18.0.0 || ^19.0.0
       mapbox-gl: ^2.9.0
       rxjs: ^7.8.0
 
@@ -11486,7 +11481,7 @@ snapshots:
       '@angular/forms': 18.2.0(@angular/common@18.2.0(@angular/core@18.2.0(rxjs@7.8.1)(zone.js@0.14.10))(rxjs@7.8.1))(@angular/core@18.2.0(rxjs@7.8.1)(zone.js@0.14.10))(@angular/platform-browser@18.2.0(@angular/animations@18.2.0(@angular/core@18.2.0(rxjs@7.8.1)(zone.js@0.14.10)))(@angular/common@18.2.0(@angular/core@18.2.0(rxjs@7.8.1)(zone.js@0.14.10))(rxjs@7.8.1))(@angular/core@18.2.0(rxjs@7.8.1)(zone.js@0.14.10)))(rxjs@7.8.1)
       '@angular/platform-browser': 18.2.0(@angular/animations@18.2.0(@angular/core@18.2.0(rxjs@7.8.1)(zone.js@0.14.10)))(@angular/common@18.2.0(@angular/core@18.2.0(rxjs@7.8.1)(zone.js@0.14.10))(rxjs@7.8.1))(@angular/core@18.2.0(rxjs@7.8.1)(zone.js@0.14.10))
 
-  ngx-mapbox-gl@10.0.0(patch_hash=t6f23yb36f77nypr35rqbff5lm)(@angular/common@18.2.0(@angular/core@18.2.0(rxjs@7.8.1)(zone.js@0.14.10))(rxjs@7.8.1))(@angular/core@18.2.0(rxjs@7.8.1)(zone.js@0.14.10))(mapbox-gl@3.4.0)(rxjs@7.8.1):
+  ngx-mapbox-gl@11.0.1(@angular/common@18.2.0(@angular/core@18.2.0(rxjs@7.8.1)(zone.js@0.14.10))(rxjs@7.8.1))(@angular/core@18.2.0(rxjs@7.8.1)(zone.js@0.14.10))(mapbox-gl@3.4.0)(rxjs@7.8.1):
     dependencies:
       '@angular/common': 18.2.0(@angular/core@18.2.0(rxjs@7.8.1)(zone.js@0.14.10))(rxjs@7.8.1)
       '@angular/core': 18.2.0(rxjs@7.8.1)(zone.js@0.14.10)
