@@ -51,7 +51,7 @@
     "@typescript-eslint/parser": "^8.0.0",
     "dotenv": "^16.0.0",
     "esbuild": "^0.23.0",
-    "eslint": "^8.0.0",
+    "eslint": "^9.0.0",
     "eslint-config-prettier": "^9.0.0",
     "eslint-import-resolver-typescript": "^3.0.0",
     "eslint-plugin-eslint-comments": "^3.0.0",
