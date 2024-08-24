@@ -3,7 +3,6 @@ export type NestedCoordinates = Coordinate | NestedCoordinates[];
 
 /**
  * Flattens a deeply nested array of coordinates.
- *
  * @param nestedCoords The nested array of coordinates.
  * @returns A flat array of coordinates.
  */
@@ -30,7 +29,6 @@ export const flattenCoordinates = (
 
 /**
  * Calculates the centroid of a polygon.
- *
  * @param polygon A flat array of coordinates representing a polygon.
  * @returns The centroid coordinate of the polygon.
  */
@@ -60,7 +58,6 @@ export const calculatePolygonCentroid = (polygon: Coordinate[]): Coordinate => {
 
 /**
  * Calculates the center of a set of coordinates or shapes.
- *
  * @param coordinates A flat array of coordinates.
  * @returns The center coordinate.
  */
@@ -84,7 +81,6 @@ export const calculateCenter = (coordinates: Coordinate[]): Coordinate => {
 
 /**
  * Processes nested coordinates and calculates the combined center of mass.
- *
  * @param nestedCoords The nested array of coordinates or shapes.
  * @returns The center of mass coordinate.
  */

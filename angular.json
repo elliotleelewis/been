@@ -20,7 +20,7 @@
         "build": {
           "builder": "@angular-builders/custom-esbuild:application",
           "options": {
-            "plugins": ["./.esbuild/plugin.ts"],
+            "plugins": ["./.esbuild/plugin.mjs"],
             "stylePreprocessorOptions": {
               "includePaths": ["./node_modules"]
             },
