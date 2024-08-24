@@ -1,12 +1,12 @@
-import type { Plugin, PluginBuild } from 'esbuild';
+import dotenv from 'dotenv';
 
-require('dotenv').config();
+dotenv.config();
 
 const envVars = ['API_KEY_MAPBOX'];
 
-const plugin: Plugin = {
+export default {
 	name: 'define-vars',
-	setup: (build: PluginBuild) => {
+	setup: (build) => {
 		const { define } = build.initialOptions;
 		if (define) {
 			envVars.forEach((envVar) => {
@@ -21,5 +21,3 @@ const plugin: Plugin = {
 		}
 	},
 };
-
-module.exports = plugin;

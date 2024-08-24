@@ -5,9 +5,7 @@ import { ngMocks } from 'ng-mocks';
 // Polyfill TextDecoder
 global.TextDecoder = TextDecoder as typeof global.TextDecoder;
 
-/**
- * Monkey patch console warn and error to fail if a test makes calls to console.warn or console.error.
- */
+// Monkey patch console warn and error to fail if a test makes calls to console.warn or console.error.
 console.warn = (message?: unknown, ...optionalParams: unknown[]): void => {
 	const params =
 		optionalParams.length > 0 ? `\nParams: ${String(optionalParams)}` : '';
