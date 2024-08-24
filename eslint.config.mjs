@@ -12,6 +12,7 @@ import jest from 'eslint-plugin-jest';
 import jsdoc from 'eslint-plugin-jsdoc';
 import tailwind from 'eslint-plugin-tailwindcss';
 import unicorn from 'eslint-plugin-unicorn';
+import globals from 'globals';
 import tseslint from 'typescript-eslint';
 
 const __filename = fileURLToPath(import.meta.url);
@@ -23,6 +24,14 @@ const compat = new FlatCompat({
 
 export default tseslint.config(
 	includeIgnoreFile(path.resolve(__dirname, '.gitignore')),
+	{
+		extends: [eslint.configs.recommended],
+		languageOptions: {
+			globals: {
+				...globals.node,
+			},
+		},
+	},
 	{
 		files: ['**/*.ts'],
 		ignores: ['.angular/', 'coverage/', 'dist/'],
