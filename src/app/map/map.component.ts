@@ -25,15 +25,15 @@ import { CountriesService } from '../services/countries.service';
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MapComponent implements OnInit, OnDestroy {
-	private readonly countriesService = inject(CountriesService);
-	private readonly windowRef = inject(WindowRef);
+	private readonly _countriesService = inject(CountriesService);
+	private readonly _windowRef = inject(WindowRef);
 
 	@HostBinding('class')
 	class = 'flex flex-col';
 
 	readonly darkThemeUrl = 'mapbox://styles/mapbox/dark-v11';
 	readonly lightThemeUrl = 'mapbox://styles/mapbox/light-v11';
-	readonly prefersDark = this.windowRef.window.matchMedia(
+	readonly prefersDark = this._windowRef.window.matchMedia(
 		'(prefers-color-scheme: dark)',
 	).matches;
 
@@ -44,7 +44,7 @@ export class MapComponent implements OnInit, OnDestroy {
 	private _subs = new SubSink();
 
 	get countriesSelected$(): Observable<string[]> {
-		return this.countriesService.countries$.pipe(
+		return this._countriesService.countries$.pipe(
 			map((countries) =>
 				countries.filter((c) => c.selected).map((c) => c.iso3166),
 			),
@@ -53,7 +53,7 @@ export class MapComponent implements OnInit, OnDestroy {
 
 	get prefersDark$(): Observable<boolean> {
 		return fromEvent<MediaQueryListEvent>(
-			this.windowRef.window.matchMedia('(prefers-color-scheme: dark)'),
+			this._windowRef.window.matchMedia('(prefers-color-scheme: dark)'),
 			'change',
 		).pipe(
 			map((event) => event.matches),
@@ -62,7 +62,7 @@ export class MapComponent implements OnInit, OnDestroy {
 	}
 
 	ngOnInit(): void {
-		this._subs.sink = this.countriesService.focus$.subscribe((country) => {
+		this._subs.sink = this._countriesService.focus$.subscribe((country) => {
 			const query = this.map?.querySourceFeatures('countries', {
 				sourceLayer: 'country_boundaries',
 				filter: ['==', ['get', 'iso_3166_1'], country],

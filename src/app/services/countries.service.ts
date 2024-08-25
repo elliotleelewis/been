@@ -12,7 +12,7 @@ import { LocalStorageRef } from '../refs/local-storage.ref';
 	providedIn: 'root',
 })
 export class CountriesService {
-	private readonly localStorageRef = inject(LocalStorageRef);
+	private readonly _localStorageRef = inject(LocalStorageRef);
 
 	static readonly COUNTRIES_STORAGE_KEY = 'APP_COUNTRIES';
 
@@ -44,7 +44,7 @@ export class CountriesService {
 	}
 
 	private get countries(): readonly string[] {
-		const item = this.localStorageRef.localStorage.getItem(
+		const item = this._localStorageRef.localStorage.getItem(
 			CountriesService.COUNTRIES_STORAGE_KEY,
 		);
 		return item ? (JSON.parse(item) as string[]) : [];
@@ -52,7 +52,7 @@ export class CountriesService {
 
 	private set countries(value: readonly string[]) {
 		const item = JSON.stringify(value);
-		this.localStorageRef.localStorage.setItem(
+		this._localStorageRef.localStorage.setItem(
 			CountriesService.COUNTRIES_STORAGE_KEY,
 			item,
 		);
