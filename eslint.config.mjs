@@ -183,7 +183,6 @@ export default tseslint.config(
 			...angular.configs.templateAccessibility,
 			...tailwind.configs['flat/recommended'],
 		],
-		rules: {},
 	},
 	configPrettier,
 );
