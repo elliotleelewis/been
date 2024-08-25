@@ -34,7 +34,6 @@ export default tseslint.config(
 	},
 	{
 		files: ['**/*.ts'],
-		ignores: ['.angular/', 'coverage/', 'dist/'],
 		extends: [
 			eslint.configs.recommended,
 			...angular.configs.tsAll,
@@ -65,6 +64,53 @@ export default tseslint.config(
 		rules: {
 			'@angular-eslint/prefer-standalone': 'off',
 			'@angular-eslint/prefer-standalone-component': 'off',
+			'@typescript-eslint/naming-convention': [
+				'error',
+				{
+					selector: 'default',
+					format: ['camelCase'],
+					leadingUnderscore: 'forbid',
+					trailingUnderscore: 'forbid',
+				},
+				{
+					selector: 'typeLike',
+					format: ['PascalCase'],
+					leadingUnderscore: 'forbid',
+					trailingUnderscore: 'forbid',
+				},
+				{
+					selector: 'enumMember',
+					format: ['PascalCase'],
+				},
+				{
+					selector: 'parameter',
+					modifiers: ['unused'],
+					format: ['camelCase'],
+					leadingUnderscore: 'require',
+				},
+				{
+					selector: 'property',
+					modifiers: ['readonly', 'static'],
+					format: ['UPPER_CASE'],
+				},
+				{
+					selector: 'property',
+					modifiers: ['private'],
+					format: ['camelCase'],
+					leadingUnderscore: 'require',
+				},
+				{
+					selector: 'variable',
+					modifiers: ['const', 'exported'],
+					format: ['UPPER_CASE'],
+				},
+				{
+					selector: 'variable',
+					modifiers: ['const', 'exported'],
+					types: ['function'],
+					format: ['camelCase'],
+				},
+			],
 			'@typescript-eslint/no-extraneous-class': 'off',
 			'import/consistent-type-specifier-style': [
 				'error',
@@ -95,6 +141,7 @@ export default tseslint.config(
 				},
 			],
 			'unicorn/no-array-reduce': 'off',
+			'unicorn/no-null': 'off',
 			'unicorn/prefer-top-level-await': 'off',
 			'unicorn/prevent-abbreviations': 'off',
 			curly: 'error',

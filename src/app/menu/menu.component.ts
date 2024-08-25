@@ -25,7 +25,7 @@ import { CountriesService } from '../services/countries.service';
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MenuComponent {
-	private readonly countriesService = inject(CountriesService);
+	private readonly _countriesService = inject(CountriesService);
 
 	@HostBinding('class')
 	class = 'flex flex-col overflow-auto dark:bg-zinc-900 dark:text-white';
@@ -40,7 +40,7 @@ export class MenuComponent {
 			distinctUntilChanged(),
 			map((search) => search.trim().toLowerCase()),
 			switchMap((search) =>
-				this.countriesService.regions$.pipe(
+				this._countriesService.regions$.pipe(
 					map((regions) =>
 						search
 							? regions
@@ -65,9 +65,9 @@ export class MenuComponent {
 
 	toggleCountry(country: Country): void {
 		if (country.selected) {
-			this.countriesService.removeCountry(country.iso3166);
+			this._countriesService.removeCountry(country.iso3166);
 		} else {
-			this.countriesService.addCountry(country.iso3166);
+			this._countriesService.addCountry(country.iso3166);
 		}
 	}
 }
