@@ -2,14 +2,14 @@
 
 exports[`MapComponent should render 1`] = `
 <app-map
+  _countriesService={[Function CountriesService]}
   _subs={[Function SubSink]}
+  _windowRef={[Function WindowRef]}
   class={[Function String]}
-  countriesService={[Function CountriesService]}
   darkThemeUrl={[Function String]}
   lightThemeUrl={[Function String]}
   minZoom={[Function Number]}
   prefersDark="false"
-  windowRef={[Function WindowRef]}
 >
   <mgl-map
     logoposition="bottom-right"

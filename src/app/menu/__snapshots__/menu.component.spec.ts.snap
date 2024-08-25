@@ -2,8 +2,8 @@
 
 exports[`MenuComponent should render 1`] = `
 <app-menu
+  _countriesService={[Function CountriesService]}
   class={[Function String]}
-  countriesService={[Function CountriesService]}
   searchControl={[Function FormControl2]}
 >
   <form
