@@ -1,4 +1,5 @@
 {
+  "repositories": ["elliotleelewis/been"],
   "extends": ["config:recommended", ":preserveSemverRanges"],
   "lockFileMaintenance": {
     "enabled": true
