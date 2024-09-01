@@ -16,7 +16,7 @@ import {
 	getCoordsCenter,
 } from '../helpers';
 import { WindowRef } from '../refs/window.ref';
-import { CountriesService } from '../services/countries.service';
+import { CountriesService } from '../hooks/countries.service';
 
 @Component({
 	selector: 'app-map',

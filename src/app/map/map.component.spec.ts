@@ -4,7 +4,7 @@ import { NgxMapboxGLModule } from 'ngx-mapbox-gl';
 import { NEVER, of } from 'rxjs';
 
 import { HeaderComponent } from '../header/header.component';
-import { CountriesService } from '../services/countries.service';
+import { CountriesService } from '../hooks/countries.service';
 
 import { MapComponent } from './map.component';
 

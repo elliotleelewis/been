@@ -5,10 +5,10 @@ import { includeIgnoreFile } from '@eslint/compat';
 import { FlatCompat } from '@eslint/eslintrc';
 import eslint from '@eslint/js';
 import comments from '@eslint-community/eslint-plugin-eslint-comments/configs';
-import angular from 'angular-eslint';
 import configPrettier from 'eslint-config-prettier';
-import jest from 'eslint-plugin-jest';
 import jsdoc from 'eslint-plugin-jsdoc';
+import react from 'eslint-plugin-react';
+import reactHooks from 'eslint-plugin-react-hooks';
 import tailwind from 'eslint-plugin-tailwindcss';
 import unicorn from 'eslint-plugin-unicorn';
 import globals from 'globals';
@@ -27,27 +27,30 @@ export default tseslint.config(
 		extends: [eslint.configs.recommended],
 		languageOptions: {
 			globals: {
-				...globals.node,
+				...globals.serviceworker,
+				...globals.browser,
 			},
 		},
 	},
 	{
-		files: ['**/*.ts'],
+		files: ['**/*.{ts,tsx}'],
+		...react.configs.flat.recommended,
+		plugins: {
+			'react-hooks': reactHooks,
+		},
 		extends: [
 			eslint.configs.recommended,
-			...angular.configs.tsAll,
 			...tseslint.configs.strictTypeChecked,
 			...tseslint.configs.stylisticTypeChecked,
 			comments.recommended,
 			...compat.extends('plugin:import/recommended'),
 			...compat.extends('plugin:import/typescript'),
-			jest.configs['flag/recommended'],
 			jsdoc.configs['flat/recommended-typescript-error'],
 			...tailwind.configs['flat/recommended'],
 			unicorn.configs['flat/recommended'],
 		],
-		processor: angular.processInlineTemplates,
 		languageOptions: {
+			...react.configs.flat.recommended.languageOptions,
 			parserOptions: {
 				project: './tsconfig.json',
 			},
@@ -61,8 +64,7 @@ export default tseslint.config(
 			},
 		},
 		rules: {
-			'@angular-eslint/prefer-standalone': 'off',
-			'@angular-eslint/prefer-standalone-component': 'off',
+			...reactHooks.configs.recommended.rules,
 			'@typescript-eslint/naming-convention': [
 				'error',
 				{
@@ -174,14 +176,6 @@ export default tseslint.config(
 			'import/no-named-as-default': 'off',
 			'import/no-named-as-default-member': 'off',
 		},
-	},
-	{
-		files: ['**/*.html'],
-		extends: [
-			...angular.configs.templateRecommended,
-			...angular.configs.templateAccessibility,
-			...tailwind.configs['flat/recommended'],
-		],
 	},
 	configPrettier,
 );
