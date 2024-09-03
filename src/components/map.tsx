@@ -49,19 +49,11 @@ export const Map: FC<Props> = ({ header }) => {
 		}
 	}, [focus, mapRef]);
 
-	if (!apiKeyMapbox) {
-		return (
-			<div className="flex size-full items-center justify-center bg-primary text-white dark:bg-zinc-950 dark:text-primary">
-				<div>Whoops, something has gone wrong.</div>
-			</div>
-		);
-	}
-
 	return (
 		<>
 			{header}
 			<ReactMapGL
-				mapboxAccessToken={apiKeyMapbox}
+				mapboxAccessToken={apiKeyMapbox ?? ''}
 				mapStyle={prefersDark ? darkThemeUrl : lightThemeUrl}
 				antialias
 				attributionControl={false}
