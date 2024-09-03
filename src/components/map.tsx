@@ -57,6 +57,7 @@ export const Map: FC<Props> = ({ header }) => {
 				mapStyle={prefersDark ? darkThemeUrl : lightThemeUrl}
 				antialias
 				attributionControl={false}
+				logoPosition="bottom-right"
 				minZoom={minZoom}
 				ref={mapRef}
 			>
