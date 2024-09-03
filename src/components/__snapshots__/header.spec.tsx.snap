@@ -1,0 +1,15 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Header > it should render 1`] = `
+<DocumentFragment>
+  <div
+    class="items-center justify-center bg-primary text-white dark:bg-zinc-950 dark:text-primary flex sm:hidden"
+  >
+    <h1
+      class="p-3 text-xl font-bold tracking-wide"
+    >
+      been
+    </h1>
+  </div>
+</DocumentFragment>
+`;

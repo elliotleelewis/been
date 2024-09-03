@@ -1,0 +1,61 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`App > it should render 1`] = `
+<DocumentFragment>
+  <div
+    class="flex h-full flex-col-reverse sm:flex-row"
+  >
+    <div
+      class="flex basis-1/3 flex-col overflow-auto dark:bg-zinc-900 dark:text-white"
+    >
+      <div
+        class="items-center justify-center bg-primary text-white dark:bg-zinc-950 dark:text-primary hidden sm:flex"
+      >
+        <h1
+          class="p-3 text-xl font-bold tracking-wide"
+        >
+          been
+        </h1>
+      </div>
+      <form
+        class="border-t-2 border-zinc-200 sm:border-t-0 dark:border-zinc-700"
+      >
+        <label
+          class="sr-only"
+          for="search"
+        >
+          Search
+        </label>
+        <input
+          class="w-full border-none bg-white px-4 py-2 text-zinc-900 focus:ring-2 focus:ring-inset focus:ring-primary/50 dark:bg-zinc-900 dark:text-white"
+          id="search"
+          placeholder="Search..."
+          type="text"
+          value=""
+        />
+      </form>
+      <div
+        class="m-4 h-full text-center font-medium"
+      >
+        No results!
+      </div>
+    </div>
+    <div
+      class="basis-2/3"
+    >
+      <div
+        class="items-center justify-center bg-primary text-white dark:bg-zinc-950 dark:text-primary flex sm:hidden"
+      >
+        <h1
+          class="p-3 text-xl font-bold tracking-wide"
+        >
+          been
+        </h1>
+      </div>
+      <div
+        style="position: relative; width: 100%; height: 100%;"
+      />
+    </div>
+  </div>
+</DocumentFragment>
+`;
