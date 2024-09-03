@@ -9,10 +9,10 @@ import {
 } from 'react';
 
 import data from '../data/countries.json';
-import { regionalizer } from '../utils/regionalizer';
 import { useLocalStorage } from '../hooks/use-local-storage';
 import { type Country } from '../models/country';
 import { type Region } from '../models/region';
+import { regionalizer } from '../utils/regionalizer';
 
 const COUNTRIES_STORAGE_KEY = 'APP_COUNTRIES';
 

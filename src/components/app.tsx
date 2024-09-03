@@ -1,9 +1,9 @@
 import { type FC } from 'react';
 
-import { CountriesProvider } from './contexts/countries-context';
-import { Header } from './header/header';
-import { Map } from './map/map';
-import { Menu } from './menu/menu';
+import { CountriesProvider } from '../contexts/countries-context';
+import { Header } from './header';
+import { Map } from './map';
+import { Menu } from './menu';
 
 export const App: FC = () => {
 	return (
