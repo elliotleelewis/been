@@ -62,7 +62,7 @@ export const CountriesProvider: FC<Props> = ({ data, children }) => {
 			...c,
 			selected: selectedCountries.includes(c.iso3166),
 		}));
-	}, [selectedCountries]);
+	}, [data, selectedCountries]);
 
 	const regions = useMemo((): readonly Region[] => {
 		return regionalizer(countries);

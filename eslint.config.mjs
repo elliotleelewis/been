@@ -1,13 +1,14 @@
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
-import { includeIgnoreFile } from '@eslint/compat';
+import { includeIgnoreFile, fixupPluginRules } from '@eslint/compat';
 import { FlatCompat } from '@eslint/eslintrc';
 import eslint from '@eslint/js';
 import comments from '@eslint-community/eslint-plugin-eslint-comments/configs';
 import configPrettier from 'eslint-config-prettier';
 import jsdoc from 'eslint-plugin-jsdoc';
 import react from 'eslint-plugin-react';
+import reactHooks from 'eslint-plugin-react-hooks';
 import tailwind from 'eslint-plugin-tailwindcss';
 import unicorn from 'eslint-plugin-unicorn';
 import vitest from 'eslint-plugin-vitest';
@@ -35,6 +36,9 @@ export default tseslint.config(
 	{
 		files: ['**/*.{ts,tsx}'],
 		...react.configs.flat.recommended,
+		plugins: {
+			'react-hooks': fixupPluginRules(reactHooks),
+		},
 		extends: [
 			eslint.configs.recommended,
 			...tseslint.configs.strictTypeChecked,
@@ -43,7 +47,6 @@ export default tseslint.config(
 			...compat.extends('plugin:import/recommended'),
 			...compat.extends('plugin:import/typescript'),
 			jsdoc.configs['flat/recommended-typescript-error'],
-			...compat.extends('plugin:react-hooks/recommended'),
 			...tailwind.configs['flat/recommended'],
 			unicorn.configs['flat/recommended'],
 			vitest.configs.recommended,
@@ -63,6 +66,7 @@ export default tseslint.config(
 			},
 		},
 		rules: {
+			...reactHooks.configs.recommended.rules,
 			'@typescript-eslint/naming-convention': [
 				'error',
 				{
