@@ -1,7 +1,7 @@
-import { type FC, ReactNode, useCallback, useMemo, useState } from 'react';
+import { type FC, type ReactNode, useCallback, useMemo, useState } from 'react';
 
 import { useCountries } from '../contexts/countries-context';
-import { Country } from '../models/country';
+import { type Country } from '../models/country';
 
 interface Props {
 	header: ReactNode;
