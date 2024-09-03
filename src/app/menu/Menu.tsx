@@ -1,13 +1,13 @@
 import { type FC, ReactNode, useCallback, useMemo, useState } from 'react';
 
-import { useCountries } from '../hooks/useCountries';
+import { useCountries } from '../contexts/CountriesContext';
 import { Country } from '../models/country';
 
 interface Props {
-	children: ReactNode;
+	header: ReactNode;
 }
 
-export const Menu: FC<Props> = ({ children }) => {
+export const Menu: FC<Props> = ({ header }) => {
 	const { regions, addCountry, removeCountry } = useCountries();
 
 	const [search, setSearch] = useState('');
@@ -40,7 +40,7 @@ export const Menu: FC<Props> = ({ children }) => {
 
 	return (
 		<>
-			{children}
+			{header}
 			<form className="border-t-2 border-zinc-200 sm:border-t-0 dark:border-zinc-700">
 				<label htmlFor="search" className="sr-only">
 					Search

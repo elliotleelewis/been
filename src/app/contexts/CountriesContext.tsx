@@ -1,17 +1,47 @@
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import {
+	ReactNode,
+	createContext,
+	useCallback,
+	useContext,
+	useEffect,
+	useMemo,
+	useState,
+} from 'react';
 
 import data from '../data/countries.json';
-import { regionalizer } from '../helpers';
+import { regionalizer } from '../helpers/regionalizer';
+import { useLocalStorage } from '../hooks/useLocalStorage';
 import { type Country } from '../models/country';
 import { type Region } from '../models/region';
-import { useLocalStorage } from './useLocalStorage';
 
 const COUNTRIES_STORAGE_KEY = 'APP_COUNTRIES';
 
-export const useCountries = () => {
-	const localStorage = useLocalStorage();
+interface CountriesContextType {
+	countries: readonly Country[];
+	regions: readonly Region[];
+	focus: string | null;
+	addCountry: (countryCode: string) => void;
+	removeCountry: (countryCode: string) => void;
+	clearCountries: () => void;
+}
 
-	const [selectedCountries, setSelectedCountries] = useState(() => {
+const CountriesContext = createContext<CountriesContextType | undefined>(
+	undefined,
+);
+
+export const useCountries = (): CountriesContextType => {
+	const context = useContext(CountriesContext);
+	if (!context) {
+		throw new Error('useCountries must be used within a CountriesProvider');
+	}
+	return context;
+};
+
+export const CountriesProvider: React.FC<{ children: ReactNode }> = ({
+	children,
+}) => {
+	const localStorage = useLocalStorage();
+	const [selectedCountries, setSelectedCountries] = useState<string[]>(() => {
 		const item = localStorage.getItem(COUNTRIES_STORAGE_KEY);
 		return item ? (JSON.parse(item) as string[]) : [];
 	});
@@ -22,7 +52,7 @@ export const useCountries = () => {
 			COUNTRIES_STORAGE_KEY,
 			JSON.stringify(selectedCountries),
 		);
-	}, [selectedCountries]);
+	}, [selectedCountries, localStorage]);
 
 	const countries = useMemo((): readonly Country[] => {
 		return data.map((c) => ({
@@ -58,12 +88,21 @@ export const useCountries = () => {
 		setSelectedCountries([]);
 	}, []);
 
-	return {
-		countries,
-		regions,
-		focus,
-		addCountry,
-		removeCountry,
-		clearCountries,
-	};
+	const value = useMemo(
+		() => ({
+			countries,
+			regions,
+			focus,
+			addCountry,
+			removeCountry,
+			clearCountries,
+		}),
+		[countries, regions, focus, addCountry, removeCountry, clearCountries],
+	);
+
+	return (
+		<CountriesContext.Provider value={value}>
+			{children}
+		</CountriesContext.Provider>
+	);
 };

@@ -10,5 +10,6 @@ export default defineConfig(({ command }) => ({
 		assetsDir: './',
 		sourcemap: command === 'serve',
 	},
+	envDir: '../',
 	plugins: [react()],
 }));

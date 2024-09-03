@@ -2,5 +2,9 @@
   "extends": [
     "@tsconfig/strictest/tsconfig.json",
     "@tsconfig/vite-react/tsconfig.json"
-  ]
+  ],
+  "files": ["./src/index.tsx"],
+  "compilerOptions": {
+    "types": ["vite/client"]
+  }
 }
