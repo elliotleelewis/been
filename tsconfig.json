@@ -5,6 +5,7 @@
   ],
   "include": ["src/**/*"],
   "compilerOptions": {
-    "types": ["vite/client"]
+    "types": ["vite/client"],
+    "verbatimModuleSyntax": true
   }
 }

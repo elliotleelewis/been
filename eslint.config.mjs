@@ -67,6 +67,7 @@ export default tseslint.config(
 		},
 		rules: {
 			...reactHooks.configs.recommended.rules,
+			'@typescript-eslint/consistent-type-imports': 'error',
 			'@typescript-eslint/naming-convention': [
 				'error',
 				{
@@ -90,7 +91,6 @@ export default tseslint.config(
 					format: ['PascalCase'],
 				},
 			],
-			'@typescript-eslint/no-extraneous-class': 'off',
 			'import/consistent-type-specifier-style': [
 				'error',
 				'prefer-inline',
@@ -125,22 +125,7 @@ export default tseslint.config(
 			'unicorn/prevent-abbreviations': 'off',
 			curly: 'error',
 			eqeqeq: ['error', 'always'],
-			'lines-between-class-members': [
-				'error',
-				'always',
-				{
-					exceptAfterSingleLine: true,
-				},
-			],
-			'max-classes-per-file': ['error', 1],
 			'no-empty': 'error',
-			'no-restricted-imports': [
-				'error',
-				{
-					paths: ['rxjs/Rx', 'subsink/dist/subsink'],
-					patterns: ['app/*', 'rxjs/internal/*'],
-				},
-			],
 			'sort-imports': [
 				'error',
 				{

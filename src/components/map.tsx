@@ -1,8 +1,8 @@
 import { centerOfMass, featureCollection } from '@turf/turf';
-import { type FC, ReactNode, useEffect, useMemo, useRef } from 'react';
+import { type FC, type ReactNode, useEffect, useMemo, useRef } from 'react';
 import {
 	Layer,
-	MapRef,
+	type MapRef,
 	NavigationControl,
 	Map as ReactMapGL,
 	Source,

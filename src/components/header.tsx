@@ -1,5 +1,5 @@
 import classnames from 'classnames';
-import { FC, useMemo } from 'react';
+import { type FC, useMemo } from 'react';
 
 interface Props {
 	show?: 'mobile' | 'tablet';

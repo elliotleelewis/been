@@ -2,7 +2,7 @@ import { type FC } from 'react';
 
 import { CountriesProvider } from '../contexts/countries-context';
 import countriesJson from '../data/countries.json';
-import { Country } from '../models/country';
+import { type Country } from '../models/country';
 
 import { Header } from './header';
 import { Map } from './map';
