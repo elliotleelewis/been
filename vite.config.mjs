@@ -12,4 +12,10 @@ export default defineConfig(({ command }) => ({
 	},
 	envDir: '../',
 	plugins: [react()],
+	test: {
+		environment: 'jsdom',
+		coverage: {
+			reportsDirectory: '../coverage',
+		},
+	},
 }));

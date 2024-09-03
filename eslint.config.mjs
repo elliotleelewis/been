@@ -10,6 +10,7 @@ import jsdoc from 'eslint-plugin-jsdoc';
 import react from 'eslint-plugin-react';
 import tailwind from 'eslint-plugin-tailwindcss';
 import unicorn from 'eslint-plugin-unicorn';
+import vitest from 'eslint-plugin-vitest';
 import globals from 'globals';
 import tseslint from 'typescript-eslint';
 
@@ -45,6 +46,7 @@ export default tseslint.config(
 			...compat.extends('plugin:react-hooks/recommended'),
 			...tailwind.configs['flat/recommended'],
 			unicorn.configs['flat/recommended'],
+			vitest.configs.recommended,
 		],
 		languageOptions: {
 			...react.configs.flat.recommended.languageOptions,

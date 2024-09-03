@@ -1,5 +1,6 @@
 import {
-	ReactNode,
+	type FC,
+	type ReactNode,
 	createContext,
 	useCallback,
 	useContext,
@@ -25,7 +26,7 @@ interface CountriesContextType {
 	clearCountries: () => void;
 }
 
-const CountriesContext = createContext<CountriesContextType | undefined>(
+export const CountriesContext = createContext<CountriesContextType | undefined>(
 	undefined,
 );
 
@@ -37,9 +38,11 @@ export const useCountries = (): CountriesContextType => {
 	return context;
 };
 
-export const CountriesProvider: React.FC<{ children: ReactNode }> = ({
-	children,
-}) => {
+interface Props {
+	children: ReactNode;
+}
+
+export const CountriesProvider: FC<Props> = ({ children }) => {
 	const localStorage = useLocalStorage();
 	const [selectedCountries, setSelectedCountries] = useState<string[]>(() => {
 		const item = localStorage.getItem(COUNTRIES_STORAGE_KEY);
