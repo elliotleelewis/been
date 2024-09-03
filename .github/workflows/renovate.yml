@@ -2,8 +2,6 @@ on:
   pull_request:
     types:
       - edited
-    branches:
-      - 'renovate/**'
   push:
     branches:
       - main
