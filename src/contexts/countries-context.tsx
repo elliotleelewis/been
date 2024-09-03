@@ -80,6 +80,7 @@ export const CountriesProvider: FC<Props> = ({ data, children }) => {
 
 	const removeCountry = useCallback((countryCode: string) => {
 		setSelectedCountries((prevCountries) => {
+			setFocus(null);
 			const newCountries = prevCountries.filter(
 				(code) => code !== countryCode,
 			);
