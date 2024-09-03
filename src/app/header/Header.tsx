@@ -17,12 +17,8 @@ export const Header: FC<Props> = ({ show = 'mobile' }) => {
 			'text-white',
 			'dark:bg-zinc-950',
 			'dark:text-primary',
-			{
-				flex: showMobile,
-				'sm:hidden': showMobile,
-				hidden: showTablet,
-				'sm:flex': showTablet,
-			},
+			showMobile && ['flex', 'sm:hidden'],
+			showTablet && ['hidden', 'sm:flex'],
 		);
 	}, [showMobile, showTablet]);
 

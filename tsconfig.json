@@ -3,7 +3,7 @@
     "@tsconfig/strictest/tsconfig.json",
     "@tsconfig/vite-react/tsconfig.json"
   ],
-  "files": ["./src/index.tsx"],
+  "include": ["src/**/*"],
   "compilerOptions": {
     "types": ["vite/client"]
   }

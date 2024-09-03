@@ -8,7 +8,6 @@ import comments from '@eslint-community/eslint-plugin-eslint-comments/configs';
 import configPrettier from 'eslint-config-prettier';
 import jsdoc from 'eslint-plugin-jsdoc';
 import react from 'eslint-plugin-react';
-import reactHooks from 'eslint-plugin-react-hooks';
 import tailwind from 'eslint-plugin-tailwindcss';
 import unicorn from 'eslint-plugin-unicorn';
 import globals from 'globals';
@@ -35,9 +34,6 @@ export default tseslint.config(
 	{
 		files: ['**/*.{ts,tsx}'],
 		...react.configs.flat.recommended,
-		plugins: {
-			'react-hooks': reactHooks,
-		},
 		extends: [
 			eslint.configs.recommended,
 			...tseslint.configs.strictTypeChecked,
@@ -46,6 +42,7 @@ export default tseslint.config(
 			...compat.extends('plugin:import/recommended'),
 			...compat.extends('plugin:import/typescript'),
 			jsdoc.configs['flat/recommended-typescript-error'],
+			...compat.extends('plugin:react-hooks/recommended'),
 			...tailwind.configs['flat/recommended'],
 			unicorn.configs['flat/recommended'],
 		],
@@ -64,52 +61,27 @@ export default tseslint.config(
 			},
 		},
 		rules: {
-			...reactHooks.configs.recommended.rules,
 			'@typescript-eslint/naming-convention': [
 				'error',
 				{
 					selector: 'default',
 					format: ['camelCase'],
-					leadingUnderscore: 'forbid',
-					trailingUnderscore: 'forbid',
+					leadingUnderscore: 'allow',
+					trailingUnderscore: 'allow',
+				},
+				{
+					selector: 'import',
+					format: ['camelCase', 'PascalCase'],
+				},
+				{
+					selector: 'variable',
+					format: ['camelCase', 'PascalCase', 'UPPER_CASE'],
+					leadingUnderscore: 'allow',
+					trailingUnderscore: 'allow',
 				},
 				{
 					selector: 'typeLike',
 					format: ['PascalCase'],
-					leadingUnderscore: 'forbid',
-					trailingUnderscore: 'forbid',
-				},
-				{
-					selector: 'enumMember',
-					format: ['PascalCase'],
-				},
-				{
-					selector: 'parameter',
-					modifiers: ['unused'],
-					format: ['camelCase'],
-					leadingUnderscore: 'require',
-				},
-				{
-					selector: 'property',
-					modifiers: ['readonly', 'static'],
-					format: ['UPPER_CASE'],
-				},
-				{
-					selector: 'property',
-					modifiers: ['private'],
-					format: ['camelCase'],
-					leadingUnderscore: 'require',
-				},
-				{
-					selector: 'variable',
-					modifiers: ['const', 'exported'],
-					format: ['UPPER_CASE'],
-				},
-				{
-					selector: 'variable',
-					modifiers: ['const', 'exported'],
-					types: ['function'],
-					format: ['camelCase'],
 				},
 			],
 			'@typescript-eslint/no-extraneous-class': 'off',

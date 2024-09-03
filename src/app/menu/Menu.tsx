@@ -1,6 +1,6 @@
 import { type FC, ReactNode, useCallback, useMemo, useState } from 'react';
 
-import { useCountries } from '../contexts/CountriesContext';
+import { useCountries } from '../contexts/countries-context';
 import { Country } from '../models/country';
 
 interface Props {

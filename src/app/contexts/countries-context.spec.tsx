@@ -1,5 +1,5 @@
 import { describe } from 'vitest';
 
-describe('Header', () => {
+describe('CountriesContext', () => {
 	// TODO
 });

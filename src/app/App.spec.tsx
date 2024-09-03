@@ -1,1 +1,5 @@
-// TODO
+import { describe } from 'vitest';
+
+describe('App', () => {
+	// TODO
+});
