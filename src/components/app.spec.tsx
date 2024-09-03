@@ -16,7 +16,7 @@ describe('App', () => {
 	});
 
 	test('it should render', () => {
-		const result = render(<App />);
+		const result = render(<App data={[]} />);
 
 		expect(result).toMatchSnapshot();
 	});

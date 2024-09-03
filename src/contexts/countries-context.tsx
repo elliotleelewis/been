@@ -9,7 +9,6 @@ import {
 	useState,
 } from 'react';
 
-import data from '../data/countries.json';
 import { useLocalStorage } from '../hooks/use-local-storage';
 import { type Country } from '../models/country';
 import { type Region } from '../models/region';
@@ -39,10 +38,11 @@ export const useCountries = (): CountriesContextType => {
 };
 
 interface Props {
+	data: readonly Country[];
 	children: ReactNode;
 }
 
-export const CountriesProvider: FC<Props> = ({ children }) => {
+export const CountriesProvider: FC<Props> = ({ data, children }) => {
 	const localStorage = useLocalStorage();
 	const [selectedCountries, setSelectedCountries] = useState<string[]>(() => {
 		const item = localStorage.getItem(COUNTRIES_STORAGE_KEY);

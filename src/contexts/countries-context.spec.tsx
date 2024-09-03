@@ -6,7 +6,7 @@ import { CountriesProvider } from './countries-context';
 describe('CountriesContext', () => {
 	test('it should render provider', () => {
 		const result = render(
-			<CountriesProvider>Hello world!</CountriesProvider>,
+			<CountriesProvider data={[]}>Hello world!</CountriesProvider>,
 		);
 
 		expect(result).toMatchSnapshot();
