@@ -18,6 +18,6 @@ describe('App', () => {
 	test('it should render', () => {
 		const result = render(<App data={[]} />);
 
-		expect(result).toMatchSnapshot();
+		expect(result.asFragment()).toMatchSnapshot();
 	});
 });

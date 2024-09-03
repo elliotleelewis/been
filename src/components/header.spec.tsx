@@ -7,6 +7,6 @@ describe('Header', () => {
 	test('it should render', () => {
 		const result = render(<Header />);
 
-		expect(result).toMatchSnapshot();
+		expect(result.asFragment()).toMatchSnapshot();
 	});
 });

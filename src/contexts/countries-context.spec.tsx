@@ -9,6 +9,6 @@ describe('CountriesContext', () => {
 			<CountriesProvider data={[]}>Hello world!</CountriesProvider>,
 		);
 
-		expect(result).toMatchSnapshot();
+		expect(result.asFragment()).toMatchSnapshot();
 	});
 });

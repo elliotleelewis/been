@@ -22,6 +22,6 @@ describe('Menu', () => {
 			</CountriesContext.Provider>,
 		);
 
-		expect(result).toMatchSnapshot();
+		expect(result.asFragment()).toMatchSnapshot();
 	});
 });
