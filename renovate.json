@@ -1,5 +1,6 @@
 {
   "repositories": ["elliotleelewis/been"],
+  "gitAuthor": "Renovate Bot <bot@renovateapp.com>",
   "extends": ["config:recommended", ":preserveSemverRanges"],
   "lockFileMaintenance": {
     "enabled": true
