@@ -35,11 +35,6 @@
     "region": "Africa"
   },
   {
-    "name": "Anguilla",
-    "iso3166": "AI",
-    "region": "Americas"
-  },
-  {
     "name": "Antarctica",
     "iso3166": "AQ",
     "region": ""
@@ -150,19 +145,9 @@
     "region": "Africa"
   },
   {
-    "name": "Bouvet Island",
-    "iso3166": "BV",
-    "region": "Americas"
-  },
-  {
     "name": "Brazil",
     "iso3166": "BR",
     "region": "Americas"
-  },
-  {
-    "name": "British Indian Ocean Territory",
-    "iso3166": "IO",
-    "region": "Africa"
   },
   {
     "name": "Brunei",
@@ -235,11 +220,6 @@
     "region": "Oceania"
   },
   {
-    "name": "Cocos (Keeling) Islands",
-    "iso3166": "CC",
-    "region": "Oceania"
-  },
-  {
     "name": "Colombia",
     "iso3166": "CO",
     "region": "Americas"
@@ -253,11 +233,6 @@
     "name": "Congo",
     "iso3166": "CG",
     "region": "Africa"
-  },
-  {
-    "name": "Cook Islands",
-    "iso3166": "CK",
-    "region": "Oceania"
   },
   {
     "name": "Costa Rica",
@@ -425,11 +400,6 @@
     "region": "Africa"
   },
   {
-    "name": "Gibraltar",
-    "iso3166": "GI",
-    "region": "Europe"
-  },
-  {
     "name": "Greece",
     "iso3166": "GR",
     "region": "Europe"
@@ -488,11 +458,6 @@
     "name": "Heard Island and McDonald Islands",
     "iso3166": "HM",
     "region": "Oceania"
-  },
-  {
-    "name": "Holy See",
-    "iso3166": "VA",
-    "region": "Europe"
   },
   {
     "name": "Honduras",
@@ -665,11 +630,6 @@
     "region": "Asia"
   },
   {
-    "name": "Maldives",
-    "iso3166": "MV",
-    "region": "Asia"
-  },
-  {
     "name": "Mali",
     "iso3166": "ML",
     "region": "Africa"
@@ -715,11 +675,6 @@
     "region": "Europe"
   },
   {
-    "name": "Monaco",
-    "iso3166": "MC",
-    "region": "Europe"
-  },
-  {
     "name": "Mongolia",
     "iso3166": "MN",
     "region": "Asia"
@@ -728,11 +683,6 @@
     "name": "Montenegro",
     "iso3166": "ME",
     "region": "Europe"
-  },
-  {
-    "name": "Montserrat",
-    "iso3166": "MS",
-    "region": "Americas"
   },
   {
     "name": "Morocco",
@@ -753,11 +703,6 @@
     "name": "Namibia",
     "iso3166": "NA",
     "region": "Africa"
-  },
-  {
-    "name": "Nauru",
-    "iso3166": "NR",
-    "region": "Oceania"
   },
   {
     "name": "Nepal",
@@ -797,11 +742,6 @@
   {
     "name": "Niue",
     "iso3166": "NU",
-    "region": "Oceania"
-  },
-  {
-    "name": "Norfolk Island",
-    "iso3166": "NF",
     "region": "Oceania"
   },
   {
@@ -870,11 +810,6 @@
     "region": "Asia"
   },
   {
-    "name": "Pitcairn",
-    "iso3166": "PN",
-    "region": "Oceania"
-  },
-  {
     "name": "Poland",
     "iso3166": "PL",
     "region": "Europe"
@@ -915,16 +850,6 @@
     "region": "Africa"
   },
   {
-    "name": "Saint Barthélemy",
-    "iso3166": "BL",
-    "region": "Americas"
-  },
-  {
-    "name": "Saint Helena, Ascension and Tristan da Cunha",
-    "iso3166": "SH",
-    "region": "Africa"
-  },
-  {
     "name": "Saint Kitts and Nevis",
     "iso3166": "KN",
     "region": "Americas"
@@ -932,11 +857,6 @@
   {
     "name": "Saint Lucia",
     "iso3166": "LC",
-    "region": "Americas"
-  },
-  {
-    "name": "Saint Martin",
-    "iso3166": "MF",
     "region": "Americas"
   },
   {
@@ -953,11 +873,6 @@
     "name": "Samoa",
     "iso3166": "WS",
     "region": "Oceania"
-  },
-  {
-    "name": "San Marino",
-    "iso3166": "SM",
-    "region": "Europe"
   },
   {
     "name": "Sao Tome and Principe",
@@ -993,11 +908,6 @@
     "name": "Singapore",
     "iso3166": "SG",
     "region": "Asia"
-  },
-  {
-    "name": "Sint Maarten",
-    "iso3166": "SX",
-    "region": "Americas"
   },
   {
     "name": "Slovakia",
@@ -1105,11 +1015,6 @@
     "region": "Africa"
   },
   {
-    "name": "Tokelau",
-    "iso3166": "TK",
-    "region": "Oceania"
-  },
-  {
     "name": "Tonga",
     "iso3166": "TO",
     "region": "Oceania"
@@ -1140,11 +1045,6 @@
     "region": "Americas"
   },
   {
-    "name": "Tuvalu",
-    "iso3166": "TV",
-    "region": "Oceania"
-  },
-  {
     "name": "Uganda",
     "iso3166": "UG",
     "region": "Africa"
@@ -1168,11 +1068,6 @@
     "name": "United States of America",
     "iso3166": "US",
     "region": "Americas"
-  },
-  {
-    "name": "United States Minor Outlying Islands",
-    "iso3166": "UM",
-    "region": "Oceania"
   },
   {
     "name": "Uruguay",
@@ -1208,11 +1103,6 @@
     "name": "Virgin Islands (U.S.)",
     "iso3166": "VI",
     "region": "Americas"
-  },
-  {
-    "name": "Wallis and Futuna",
-    "iso3166": "WF",
-    "region": "Oceania"
   },
   {
     "name": "Western Sahara",

@@ -24,6 +24,7 @@ jobs:
           node-version: 20.x
           cache: pnpm
       - run: pnpm install --frozen-lockfile
+      - run: pnpm exec playwright install chromium
       - run: pnpm run lint
       - run: pnpm run stylelint
       - run: pnpm run format

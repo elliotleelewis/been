@@ -1,6 +1,6 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`Menu > it should render 1`] = `
+exports[`Menu > should render 1`] = `
 <DocumentFragment>
   <div>
     Header!
@@ -27,5 +27,61 @@ exports[`Menu > it should render 1`] = `
   >
     No results!
   </div>
+</DocumentFragment>
+`;
+
+exports[`Menu > should render with a country 1`] = `
+<DocumentFragment>
+  <div>
+    Header!
+  </div>
+  <form
+    class="border-t-2 border-zinc-200 sm:border-t-0 dark:border-zinc-700"
+  >
+    <label
+      class="sr-only"
+      for="search"
+    >
+      Search
+    </label>
+    <input
+      class="w-full border-none bg-white px-4 py-2 text-zinc-900 focus:ring-2 focus:ring-inset focus:ring-primary/50 dark:bg-zinc-900 dark:text-white"
+      id="search"
+      placeholder="Search..."
+      type="text"
+      value=""
+    />
+  </form>
+  <ul
+    class="h-full overflow-y-auto"
+  >
+    <li>
+      <h2
+        class="bg-zinc-200 p-4 font-medium dark:bg-zinc-800"
+      >
+        Europe
+      </h2>
+      <ul
+        class="divide-y divide-zinc-100 dark:divide-zinc-800"
+      >
+        <li
+          class="hover:bg-zinc-50 dark:hover:bg-zinc-800"
+        >
+          <label
+            class="flex items-center px-4 py-1"
+          >
+            <input
+              class="my-0 me-2 size-4 rounded border-zinc-400 bg-zinc-50 text-primary focus:ring-2 focus:ring-primary/50 active:ring-primary dark:border-zinc-600 dark:bg-zinc-900"
+              id="GB"
+              type="checkbox"
+            />
+            <span>
+              United Kingdom
+            </span>
+          </label>
+        </li>
+      </ul>
+    </li>
+  </ul>
 </DocumentFragment>
 `;

@@ -1,6 +1,6 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`App > it should render 1`] = `
+exports[`App > should render 1`] = `
 <DocumentFragment>
   <div
     class="flex h-full flex-col-reverse sm:flex-row"

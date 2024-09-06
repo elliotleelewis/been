@@ -1,9 +1,13 @@
 import { useEffect, useState } from 'react';
 
-export const useMatchMedia = (query: string) => {
-	const getInitialMatches = () => window.matchMedia(query).matches;
+import { useWindow } from './use-window';
 
-	const [matches, setMatches] = useState<boolean>(getInitialMatches);
+export const useMatchMedia = (query: string) => {
+	const window = useWindow();
+
+	const [matches, setMatches] = useState<boolean>(
+		() => window.matchMedia(query).matches,
+	);
 
 	useEffect(() => {
 		const handleChange = (event: MediaQueryListEvent) => {
@@ -17,7 +21,7 @@ export const useMatchMedia = (query: string) => {
 		return () => {
 			mediaQueryList.removeEventListener('change', handleChange);
 		};
-	}, [query]);
+	}, [window, query]);
 
 	return matches;
 };
