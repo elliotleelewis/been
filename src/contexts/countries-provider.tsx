@@ -3,7 +3,6 @@ import {
 	type ReactNode,
 	memo,
 	useCallback,
-	useEffect,
 	useMemo,
 	useState,
 } from 'react';
@@ -16,6 +15,7 @@ import { regionalizer } from '../utils/regionalizer';
 import { CountriesContext } from './countries-context';
 
 const COUNTRIES_STORAGE_KEY = 'APP_COUNTRIES';
+const COUNTRIES_STORAGE_INITIAL_VALUE = [] as const;
 
 interface Props {
 	data: readonly Country[];
@@ -23,19 +23,10 @@ interface Props {
 }
 
 export const CountriesProvider: FC<Props> = memo(({ data, children }) => {
-	const localStorage = useLocalStorage();
-	const [selectedCountries, setSelectedCountries] = useState<string[]>(() => {
-		const item = localStorage.getItem(COUNTRIES_STORAGE_KEY);
-		return item ? (JSON.parse(item) as string[]) : [];
-	});
+	const [selectedCountries, setSelectedCountries] = useLocalStorage<
+		readonly string[]
+	>(COUNTRIES_STORAGE_KEY, COUNTRIES_STORAGE_INITIAL_VALUE);
 	const [focus, setFocus] = useState<string | null>(null);
-
-	useEffect(() => {
-		localStorage.setItem(
-			COUNTRIES_STORAGE_KEY,
-			JSON.stringify(selectedCountries),
-		);
-	}, [selectedCountries, localStorage]);
 
 	const countries = useMemo((): readonly Country[] => {
 		return data.map((c) => ({
@@ -48,29 +39,35 @@ export const CountriesProvider: FC<Props> = memo(({ data, children }) => {
 		return regionalizer(countries);
 	}, [countries]);
 
-	const addCountry = useCallback((countryCode: string) => {
-		setSelectedCountries((prevCountries) => {
-			if (!prevCountries.includes(countryCode)) {
-				setFocus(countryCode);
-				return [...prevCountries, countryCode];
-			}
-			return prevCountries;
-		});
-	}, []);
+	const addCountry = useCallback(
+		(countryCode: string) => {
+			setSelectedCountries((prevCountries) => {
+				if (!prevCountries.includes(countryCode)) {
+					setFocus(countryCode);
+					return [...prevCountries, countryCode];
+				}
+				return prevCountries;
+			});
+		},
+		[setSelectedCountries],
+	);
 
-	const removeCountry = useCallback((countryCode: string) => {
-		setSelectedCountries((prevCountries) => {
-			setFocus(null);
-			const newCountries = prevCountries.filter(
-				(code) => code !== countryCode,
-			);
-			return newCountries;
-		});
-	}, []);
+	const removeCountry = useCallback(
+		(countryCode: string) => {
+			setSelectedCountries((prevCountries) => {
+				setFocus(null);
+				const newCountries = prevCountries.filter(
+					(code) => code !== countryCode,
+				);
+				return newCountries;
+			});
+		},
+		[setSelectedCountries],
+	);
 
 	const clearCountries = useCallback(() => {
 		setSelectedCountries([]);
-	}, []);
+	}, [setSelectedCountries]);
 
 	const value = useMemo(
 		() => ({
