@@ -1,21 +1,15 @@
-import {
-	type FC,
-	type ReactNode,
-	memo,
-	useCallback,
-	useMemo,
-	useState,
-} from 'react';
+import { type FC, type ReactNode, memo, useMemo, useState } from 'react';
 
 import { useCountries } from '../contexts/countries-context';
-import { type Country } from '../models/country';
+
+import { MenuItem } from './menu-item';
 
 interface Props {
 	header: ReactNode;
 }
 
 export const Menu: FC<Props> = memo(({ header }) => {
-	const { regions, addCountry, removeCountry } = useCountries();
+	const { regions } = useCountries();
 
 	const [search, setSearch] = useState('');
 
@@ -33,17 +27,6 @@ export const Menu: FC<Props> = memo(({ header }) => {
 			}))
 			.filter((region) => region.values.length > 0);
 	}, [search, regions]);
-
-	const toggleCountry = useCallback(
-		(country: Country) => {
-			if (country.selected) {
-				removeCountry(country.iso3166);
-			} else {
-				addCountry(country.iso3166);
-			}
-		},
-		[addCountry, removeCountry],
-	);
 
 	return (
 		<>
@@ -76,23 +59,10 @@ export const Menu: FC<Props> = memo(({ header }) => {
 							</h2>
 							<ul className="divide-y divide-zinc-100 dark:divide-zinc-800">
 								{region.values.map((country) => (
-									<li
+									<MenuItem
 										key={country.iso3166}
-										className="hover:bg-zinc-50 dark:hover:bg-zinc-800"
-									>
-										<label className="flex items-center px-4 py-1">
-											<input
-												id={country.iso3166}
-												className="my-0 me-2 size-4 rounded border-zinc-400 bg-zinc-50 text-primary focus:ring-2 focus:ring-primary/50 active:ring-primary dark:border-zinc-600 dark:bg-zinc-900"
-												type="checkbox"
-												checked={country.selected}
-												onChange={() => {
-													toggleCountry(country);
-												}}
-											/>
-											<span>{country.name}</span>
-										</label>
-									</li>
+										country={country}
+									/>
 								))}
 							</ul>
 						</li>
