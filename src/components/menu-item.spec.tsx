@@ -1,12 +1,12 @@
 import { render } from '@testing-library/react';
-import { describe, expect, test, vi } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 
 import { CountriesContext } from '../contexts/countries-context';
 
 import { MenuItem } from './menu-item';
 
 describe('MenuItem', () => {
-	test('it should render', () => {
+	it('should render', () => {
 		const result = render(
 			<CountriesContext.Provider
 				value={{

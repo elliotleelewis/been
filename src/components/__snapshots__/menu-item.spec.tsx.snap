@@ -1,6 +1,6 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`MenuItem > it should render 1`] = `
+exports[`MenuItem > should render 1`] = `
 <DocumentFragment>
   <li
     class="hover:bg-zinc-50 dark:hover:bg-zinc-800"

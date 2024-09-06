@@ -1,6 +1,12 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`CountriesContext > it should render provider 1`] = `
+exports[`CountriesContext > should render provider 1`] = `
+<DocumentFragment>
+  Hello world!
+</DocumentFragment>
+`;
+
+exports[`CountriesContext > should render provider with data 1`] = `
 <DocumentFragment>
   Hello world!
 </DocumentFragment>

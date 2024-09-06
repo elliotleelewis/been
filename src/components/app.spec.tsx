@@ -1,5 +1,5 @@
 import { render } from '@testing-library/react';
-import { beforeAll, describe, expect, test, vi } from 'vitest';
+import { beforeAll, describe, expect, it, vi } from 'vitest';
 
 import { App } from './app';
 
@@ -15,7 +15,7 @@ describe('App', () => {
 		);
 	});
 
-	test('it should render', () => {
+	it('should render', () => {
 		const result = render(<App data={[]} />);
 
 		expect(result.asFragment()).toMatchSnapshot();

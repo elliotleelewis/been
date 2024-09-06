@@ -13,9 +13,19 @@ export default defineConfig(({ command }) => ({
 	envDir: '../',
 	plugins: [react()],
 	test: {
-		environment: 'jsdom',
-		coverage: {
-			reportsDirectory: '../coverage',
+		browser: {
+			enabled: true,
+			provider: 'playwright',
+			name: 'chromium',
+			headless: true,
+			screenshotFailures: false,
 		},
+		coverage: {
+			provider: 'istanbul',
+			reportsDirectory: '../coverage',
+			exclude: ['./index.tsx'],
+		},
+		setupFiles: './vitest-setup.ts',
+		clearMocks: true,
 	},
 }));
