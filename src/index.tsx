@@ -1,3 +1,4 @@
+/* v8 ignore start */
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 
@@ -17,3 +18,5 @@ root.render(
 		<App />
 	</StrictMode>,
 );
+
+/* v8 ignore end */
