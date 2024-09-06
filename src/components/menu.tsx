@@ -1,4 +1,11 @@
-import { type FC, type ReactNode, useCallback, useMemo, useState } from 'react';
+import {
+	type FC,
+	type ReactNode,
+	memo,
+	useCallback,
+	useMemo,
+	useState,
+} from 'react';
 
 import { useCountries } from '../contexts/countries-context';
 import { type Country } from '../models/country';
@@ -7,7 +14,7 @@ interface Props {
 	header: ReactNode;
 }
 
-export const Menu: FC<Props> = ({ header }) => {
+export const Menu: FC<Props> = memo(({ header }) => {
 	const { regions, addCountry, removeCountry } = useCountries();
 
 	const [search, setSearch] = useState('');
@@ -94,4 +101,4 @@ export const Menu: FC<Props> = ({ header }) => {
 			)}
 		</>
 	);
-};
+});

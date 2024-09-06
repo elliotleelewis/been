@@ -1,17 +1,21 @@
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
+import reactUseMemo from '@arthurgeron/eslint-plugin-react-usememo';
 import { includeIgnoreFile, fixupPluginRules } from '@eslint/compat';
 import { FlatCompat } from '@eslint/eslintrc';
 import eslint from '@eslint/js';
 import comments from '@eslint-community/eslint-plugin-eslint-comments/configs';
+import vitest from '@vitest/eslint-plugin';
 import configPrettier from 'eslint-config-prettier';
 import jsdoc from 'eslint-plugin-jsdoc';
+import jsxA11y from 'eslint-plugin-jsx-a11y';
 import react from 'eslint-plugin-react';
+import reactCompiler from 'eslint-plugin-react-compiler';
 import reactHooks from 'eslint-plugin-react-hooks';
+import reactRefresh from 'eslint-plugin-react-refresh';
 import tailwind from 'eslint-plugin-tailwindcss';
 import unicorn from 'eslint-plugin-unicorn';
-import vitest from 'eslint-plugin-vitest';
 import globals from 'globals';
 import tseslint from 'typescript-eslint';
 
@@ -37,7 +41,10 @@ export default tseslint.config(
 		files: ['**/*.{ts,tsx}'],
 		...react.configs.flat.recommended,
 		plugins: {
+			'@arthurgeron/react-usememo': fixupPluginRules(reactUseMemo),
+			'react-compiler': reactCompiler,
 			'react-hooks': fixupPluginRules(reactHooks),
+			'react-refresh': reactRefresh,
 		},
 		extends: [
 			eslint.configs.recommended,
@@ -47,6 +54,7 @@ export default tseslint.config(
 			...compat.extends('plugin:import/recommended'),
 			...compat.extends('plugin:import/typescript'),
 			jsdoc.configs['flat/recommended-typescript-error'],
+			jsxA11y.flatConfigs.strict,
 			...tailwind.configs['flat/recommended'],
 			unicorn.configs['flat/recommended'],
 			vitest.configs.recommended,
@@ -67,6 +75,8 @@ export default tseslint.config(
 		},
 		rules: {
 			...reactHooks.configs.recommended.rules,
+			'@arthurgeron/react-usememo/require-memo': 'error',
+			'@arthurgeron/react-usememo/require-usememo': 'error',
 			'@typescript-eslint/consistent-type-imports': 'error',
 			'@typescript-eslint/naming-convention': [
 				'error',
@@ -119,6 +129,8 @@ export default tseslint.config(
 					pathGroupsExcludedImportTypes: ['builtin'],
 				},
 			],
+			'react-compiler/react-compiler': 'error',
+			'react-refresh/only-export-components': 'error',
 			'unicorn/no-array-reduce': 'off',
 			'unicorn/no-null': 'off',
 			'unicorn/prefer-top-level-await': 'off',
@@ -138,6 +150,12 @@ export default tseslint.config(
 			'import/newline-after-import': 'off',
 			'import/no-named-as-default': 'off',
 			'import/no-named-as-default-member': 'off',
+		},
+	},
+	{
+		files: ['**/*.spec.{ts,tsx}'],
+		rules: {
+			'@arthurgeron/react-usememo/require-usememo': 'off',
 		},
 	},
 	configPrettier,
