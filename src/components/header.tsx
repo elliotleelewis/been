@@ -28,3 +28,4 @@ export const Header: FC<Props> = memo(({ show = 'mobile' }) => {
 		</div>
 	);
 });
+Header.displayName = 'Header';

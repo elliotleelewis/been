@@ -102,3 +102,4 @@ export const Menu: FC<Props> = memo(({ header }) => {
 		</>
 	);
 });
+Menu.displayName = 'Menu';

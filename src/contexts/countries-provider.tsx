@@ -90,3 +90,4 @@ export const CountriesProvider: FC<Props> = memo(({ data, children }) => {
 		</CountriesContext.Provider>
 	);
 });
+CountriesProvider.displayName = 'CountriesProvider';

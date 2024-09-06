@@ -39,7 +39,6 @@ export default tseslint.config(
 	},
 	{
 		files: ['**/*.{ts,tsx}'],
-		...react.configs.flat.recommended,
 		plugins: {
 			'@arthurgeron/react-usememo': fixupPluginRules(reactUseMemo),
 			'react-compiler': reactCompiler,
@@ -55,12 +54,13 @@ export default tseslint.config(
 			...compat.extends('plugin:import/typescript'),
 			jsdoc.configs['flat/recommended-typescript-error'],
 			jsxA11y.flatConfigs.strict,
+			react.configs.flat.recommended,
+			react.configs.flat['jsx-runtime'],
 			...tailwind.configs['flat/recommended'],
 			unicorn.configs['flat/recommended'],
 			vitest.configs.recommended,
 		],
 		languageOptions: {
-			...react.configs.flat.recommended.languageOptions,
 			parserOptions: {
 				project: './tsconfig.json',
 			},
@@ -71,6 +71,9 @@ export default tseslint.config(
 					alwaysTryTypes: true,
 					project: './tsconfig.json',
 				},
+			},
+			react: {
+				version: 'detect',
 			},
 		},
 		rules: {
@@ -131,6 +134,7 @@ export default tseslint.config(
 			],
 			'react-compiler/react-compiler': 'error',
 			'react-refresh/only-export-components': 'error',
+			'react/prop-types': 'off',
 			'unicorn/no-array-reduce': 'off',
 			'unicorn/no-null': 'off',
 			'unicorn/prefer-top-level-await': 'off',
