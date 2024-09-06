@@ -145,3 +145,4 @@ export const Map: FC<Props> = memo(({ header }) => {
 		</>
 	);
 });
+Map.displayName = 'Map';

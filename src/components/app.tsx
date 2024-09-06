@@ -29,3 +29,4 @@ export const App: FC<Props> = memo(({ data = countriesJson }) => {
 		</CountriesProvider>
 	);
 });
+App.displayName = 'App';
