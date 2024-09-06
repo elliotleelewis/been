@@ -1,7 +1,7 @@
 import { render } from '@testing-library/react';
 import { describe, expect, test } from 'vitest';
 
-import { CountriesProvider } from './countries-context';
+import { CountriesProvider } from './countries-provider';
 
 describe('CountriesContext', () => {
 	test('it should render provider', () => {

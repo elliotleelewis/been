@@ -1,9 +1,8 @@
 import {
 	type FC,
 	type ReactNode,
-	createContext,
+	memo,
 	useCallback,
-	useContext,
 	useEffect,
 	useMemo,
 	useState,
@@ -14,35 +13,16 @@ import { type Country } from '../models/country';
 import { type Region } from '../models/region';
 import { regionalizer } from '../utils/regionalizer';
 
+import { CountriesContext } from './countries-context';
+
 const COUNTRIES_STORAGE_KEY = 'APP_COUNTRIES';
-
-interface CountriesContextType {
-	countries: readonly Country[];
-	regions: readonly Region[];
-	focus: string | null;
-	addCountry: (countryCode: string) => void;
-	removeCountry: (countryCode: string) => void;
-	clearCountries: () => void;
-}
-
-export const CountriesContext = createContext<CountriesContextType | undefined>(
-	undefined,
-);
-
-export const useCountries = (): CountriesContextType => {
-	const context = useContext(CountriesContext);
-	if (!context) {
-		throw new Error('useCountries must be used within a CountriesProvider');
-	}
-	return context;
-};
 
 interface Props {
 	data: readonly Country[];
 	children: ReactNode;
 }
 
-export const CountriesProvider: FC<Props> = ({ data, children }) => {
+export const CountriesProvider: FC<Props> = memo(({ data, children }) => {
 	const localStorage = useLocalStorage();
 	const [selectedCountries, setSelectedCountries] = useState<string[]>(() => {
 		const item = localStorage.getItem(COUNTRIES_STORAGE_KEY);
@@ -109,4 +89,4 @@ export const CountriesProvider: FC<Props> = ({ data, children }) => {
 			{children}
 		</CountriesContext.Provider>
 	);
-};
+});

@@ -1,11 +1,11 @@
 import classnames from 'classnames';
-import { type FC, useMemo } from 'react';
+import { type FC, memo, useMemo } from 'react';
 
 interface Props {
 	show?: 'mobile' | 'tablet';
 }
 
-export const Header: FC<Props> = ({ show = 'mobile' }) => {
+export const Header: FC<Props> = memo(({ show = 'mobile' }) => {
 	const showMobile = show === 'mobile';
 	const showTablet = show === 'tablet';
 
@@ -27,4 +27,4 @@ export const Header: FC<Props> = ({ show = 'mobile' }) => {
 			<h1 className="p-3 text-xl font-bold tracking-wide">been</h1>
 		</div>
 	);
-};
+});
