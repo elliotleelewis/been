@@ -73,6 +73,43 @@ describe('regionalizer', () => {
 		expect(result).toEqual(expected);
 	});
 
+	it('should sort the regions', () => {
+		const countries: readonly Country[] = [
+			{ name: 'Country A', iso3166: 'A', region: 'Region 2' },
+			{ name: 'Country B', iso3166: 'B', region: 'Region 3' },
+			{ name: 'Country C', iso3166: 'C', region: 'Region 1' },
+		];
+
+		const result = regionalizer(countries);
+		expect(result[0]?.name).toBe('Region 1');
+		expect(result[1]?.name).toBe('Region 2');
+		expect(result[2]?.name).toBe('Region 3');
+	});
+
+	it('should sort an empty region name', () => {
+		const countriesA: readonly Country[] = [
+			{ name: 'Country A', iso3166: 'A', region: 'Region 2' },
+			{ name: 'Country B', iso3166: 'B', region: '' },
+			{ name: 'Country C', iso3166: 'C', region: 'Region 1' },
+		];
+
+		const resultA = regionalizer(countriesA);
+		expect(resultA[0]?.name).toBe('Region 1');
+		expect(resultA[1]?.name).toBe('Region 2');
+		expect(resultA[2]?.name).toBe('');
+
+		const countriesB: readonly Country[] = [
+			{ name: 'Country A', iso3166: 'A', region: '' },
+			{ name: 'Country B', iso3166: 'B', region: 'Region 1' },
+			{ name: 'Country C', iso3166: 'C', region: 'Region 2' },
+		];
+
+		const resultB = regionalizer(countriesB);
+		expect(resultB[0]?.name).toBe('Region 1');
+		expect(resultB[1]?.name).toBe('Region 2');
+		expect(resultB[2]?.name).toBe('');
+	});
+
 	it('should not mutate the original array', () => {
 		const countries: readonly Country[] = [
 			{ name: 'Country A', iso3166: 'A', region: 'Region 1' },

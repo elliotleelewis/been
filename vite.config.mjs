@@ -23,7 +23,7 @@ export default defineConfig(({ command }) => ({
 		coverage: {
 			provider: 'istanbul',
 			reportsDirectory: '../coverage',
-			exclude: ['./index.tsx'],
+			exclude: ['./index.tsx', '**/*.spec.{ts,tsx}'],
 		},
 		setupFiles: './vitest-setup.ts',
 		clearMocks: true,

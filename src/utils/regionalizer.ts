@@ -12,11 +12,13 @@ export const regionalizer = (arr: readonly Country[]): readonly Region[] =>
 			}
 			return prev;
 		}, [])
+		.map(({ name, values }) => ({
+			name,
+			values: values.sort(({ name: aName }, { name: bName }) =>
+				aName.localeCompare(bName),
+			),
+		}))
 		.sort(({ name: aName }, { name: bName }) => {
-			if (aName === '' && bName === '') {
-				return 0;
-			}
-
 			if (aName === '') {
 				return 1;
 			}
