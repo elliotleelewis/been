@@ -1,4 +1,3 @@
-import { centerOfMass, featureCollection } from '@turf/turf';
 import { type FillExtrusionPaint, type FillPaint } from 'mapbox-gl';
 import {
 	type ReactNode,
@@ -72,22 +71,11 @@ export const Map = memo(
 		);
 
 		useEffect(() => {
-			if (!focus || !internalRef.current) {
+			if (!focus?.bounds || !internalRef.current) {
 				return;
 			}
 			const { current: map } = internalRef;
-			const features = map.querySourceFeatures(
-				MapboxSourceKeys.countries,
-				{
-					sourceLayer: 'country_boundaries',
-					filter: ['==', ['get', 'iso_3166_1'], focus],
-				},
-			);
-			if (features.length > 0) {
-				const { geometry } = centerOfMass(featureCollection(features));
-				const [lat = 0, lon = 0] = geometry.coordinates;
-				map.flyTo({ center: [lat, lon], zoom: minZoom });
-			}
+			map.fitBounds(focus.bounds);
 		}, [focus, internalRef]);
 
 		const beenFilter = useMemo(

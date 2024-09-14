@@ -1,62 +1,60 @@
 import { render } from '@testing-library/react';
-import { describe, expect, it, vi } from 'vitest';
+import {
+	type MockInstance,
+	beforeEach,
+	describe,
+	expect,
+	it,
+	vi,
+} from 'vitest';
 
-import { CountriesContext } from '../contexts/countries-context';
+import { useCountries } from '../contexts/countries-context';
 
 import { Menu } from './menu';
 
 describe('Menu', () => {
+	beforeEach(() => {
+		vi.mock(import('../contexts/countries-context'), () => ({
+			useCountries: vi.fn(() => ({
+				countries: [],
+				regions: [],
+				focus: null,
+				addCountry: vi.fn(),
+				removeCountry: vi.fn(),
+				clearCountries: vi.fn(),
+			})) satisfies MockInstance<typeof useCountries>,
+		}));
+	});
+
 	it('should render', () => {
-		const result = render(
-			<CountriesContext.Provider
-				value={{
-					countries: [],
-					regions: [],
-					focus: null,
-					addCountry: vi.fn(),
-					removeCountry: vi.fn(),
-					clearCountries: vi.fn(),
-				}}
-			>
-				<Menu header={<div>Header!</div>} />
-			</CountriesContext.Provider>,
-		);
+		const result = render(<Menu header={<div>Header!</div>} />);
 
 		expect(result.asFragment()).toMatchSnapshot();
 	});
 
 	it('should render with a country', () => {
-		const result = render(
-			<CountriesContext.Provider
-				value={{
-					countries: [
+		vi.mocked(useCountries, { partial: true }).mockReturnValue({
+			countries: [
+				{
+					name: 'United Kingdom',
+					iso3166: 'GB',
+					region: 'Europe',
+				},
+			],
+			regions: [
+				{
+					name: 'Europe',
+					values: [
 						{
 							name: 'United Kingdom',
 							iso3166: 'GB',
 							region: 'Europe',
 						},
 					],
-					regions: [
-						{
-							name: 'Europe',
-							values: [
-								{
-									name: 'United Kingdom',
-									iso3166: 'GB',
-									region: 'Europe',
-								},
-							],
-						},
-					],
-					focus: null,
-					addCountry: vi.fn(),
-					removeCountry: vi.fn(),
-					clearCountries: vi.fn(),
-				}}
-			>
-				<Menu header={<div>Header!</div>} />
-			</CountriesContext.Provider>,
-		);
+				},
+			],
+		});
+		const result = render(<Menu header={<div>Header!</div>} />);
 
 		expect(result.asFragment()).toMatchSnapshot();
 	});

@@ -1,9 +1,10 @@
 import { render } from '@testing-library/react';
+import { bbox, featureCollection } from '@turf/turf';
 import { createRef } from 'react';
 import { beforeAll, describe, expect, it, vi } from 'vitest';
 
 import { CountriesContext } from '../contexts/countries-context';
-import countriesJson from '../data/countries.json';
+import { countries } from '../data/countries';
 import { MapboxSourceKeys } from '../models/enums';
 
 import { Map, type MapForwardedRef } from './map';
@@ -85,7 +86,7 @@ describe('Map', () => {
 		);
 
 		expect(map.current?.querySourceFeatures).toBeTruthy();
-		for (const { iso3166, name } of countriesJson) {
+		for (const { iso3166, name, bounds } of countries) {
 			const features = map.current?.querySourceFeatures(
 				MapboxSourceKeys.countries,
 				{
@@ -94,6 +95,9 @@ describe('Map', () => {
 				},
 			);
 			expect.soft(features?.length, name).toBeGreaterThanOrEqual(1);
+			expect
+				.soft(bounds, name)
+				.toEqual(bbox(featureCollection(features ?? [])));
 		}
 	});
 });

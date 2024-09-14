@@ -13,14 +13,11 @@ import { useMatchMedia } from './use-match-media';
 describe('useMatchMedia', () => {
 	let mockMatchMedia: MockInstance<typeof window.matchMedia>;
 	beforeEach(() => {
-		mockMatchMedia = vi.spyOn(window, 'matchMedia').mockImplementation(
-			() =>
-				({
-					matches: false,
-					addEventListener: vi.fn(),
-					removeEventListener: vi.fn(),
-				}) satisfies Partial<MediaQueryList> as unknown as MediaQueryList,
-		);
+		mockMatchMedia = vi.spyOn(window, 'matchMedia').mockReturnValue({
+			matches: false,
+			addEventListener: vi.fn(),
+			removeEventListener: vi.fn(),
+		} satisfies Partial<MediaQueryList> as unknown as MediaQueryList);
 	});
 
 	it('should initialise', () => {
