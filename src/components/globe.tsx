@@ -11,9 +11,9 @@ import {
 } from 'react';
 import {
 	Layer,
+	Map,
 	type MapRef,
 	NavigationControl,
-	Map as ReactMapGL,
 	Source,
 } from 'react-map-gl';
 import { useCountries } from '../contexts/countries-context';
@@ -69,11 +69,11 @@ export const Globe = memo(
 		);
 
 		useEffect(() => {
-			if (!focus?.bounds || !internalRef.current) {
+			if (!focus?.bounds) {
 				return;
 			}
 			const { current: map } = internalRef;
-			map.fitBounds(focus.bounds);
+			map?.fitBounds(focus.bounds);
 		}, [focus]);
 
 		const beenFilter = useMemo(
@@ -127,10 +127,10 @@ export const Globe = memo(
 		return (
 			<>
 				{header}
-				<ReactMapGL
+				<Map
 					mapboxAccessToken={apiKeyMapbox ?? ''}
 					mapStyle={prefersDark ? darkThemeUrl : lightThemeUrl}
-					antialias
+					antialias={true}
 					attributionControl={false}
 					logoPosition="bottom-right"
 					minZoom={minZoom}
@@ -139,21 +139,21 @@ export const Globe = memo(
 				>
 					<NavigationControl />
 					<Source
-						id={MapboxSourceKeys.countries}
+						id={MapboxSourceKeys.Countries}
 						type="vector"
 						url="mapbox://mapbox.country-boundaries-v1"
 					/>
 					<Layer
-						id={MapboxLayerKeys.been}
+						id={MapboxLayerKeys.Been}
 						type="fill"
-						source={MapboxSourceKeys.countries}
+						source={MapboxSourceKeys.Countries}
 						source-layer="country_boundaries"
 						beforeId="national-park"
 						filter={beenFilter}
 						paint={beenPaint}
 					/>
 					<Layer
-						id={MapboxLayerKeys.buildings}
+						id={MapboxLayerKeys.Buildings}
 						type="fill-extrusion"
 						source="composite"
 						source-layer="building"
@@ -161,7 +161,7 @@ export const Globe = memo(
 						filter={buildingsFilter}
 						paint={buildingsPaint}
 					/>
-				</ReactMapGL>
+				</Map>
 			</>
 		);
 	}),

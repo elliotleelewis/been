@@ -1,8 +1,8 @@
 export enum MapboxSourceKeys {
-	countries = 'countries',
+	Countries = 'countries',
 }
 
 export enum MapboxLayerKeys {
-	been = 'been',
-	buildings = 'buildings',
+	Been = 'been',
+	Buildings = 'buildings',
 }

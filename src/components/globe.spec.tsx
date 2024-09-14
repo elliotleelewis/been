@@ -77,7 +77,7 @@ describe('Globe', () => {
 		);
 
 		await vi.waitUntil(
-			() => map.current?.isSourceLoaded(MapboxSourceKeys.countries),
+			() => map.current?.isSourceLoaded(MapboxSourceKeys.Countries),
 			{
 				timeout: 5000,
 			},
@@ -86,7 +86,7 @@ describe('Globe', () => {
 		expect(map.current?.querySourceFeatures).toBeTruthy();
 		for (const { iso3166, name, bounds } of countries) {
 			const features = map.current?.querySourceFeatures(
-				MapboxSourceKeys.countries,
+				MapboxSourceKeys.Countries,
 				{
 					sourceLayer: 'country_boundaries',
 					filter: ['==', ['get', 'iso_3166_1'], iso3166],
