@@ -1,4 +1,4 @@
-import type { Country } from './country.ts';
+import type { Country } from './country';
 
 export interface Region {
 	name: string;
