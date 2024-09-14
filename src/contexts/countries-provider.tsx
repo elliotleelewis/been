@@ -6,11 +6,11 @@ import {
 	useMemo,
 	useState,
 } from 'react';
-import { useLocalStorage } from '../hooks/use-local-storage';
-import type { Country } from '../models/country';
-import type { Region } from '../models/region';
-import { regionalizer } from '../utils/regionalizer';
-import { CountriesContext } from './countries-context';
+import { useLocalStorage } from '../hooks/use-local-storage.ts';
+import type { Country } from '../models/country.ts';
+import type { Region } from '../models/region.ts';
+import { regionalizer } from '../utils/regionalizer.ts';
+import { CountriesContext } from './countries-context.ts';
 
 const COUNTRIES_STORAGE_KEY = 'APP_COUNTRIES';
 const COUNTRIES_STORAGE_INITIAL_VALUE = [] as const;

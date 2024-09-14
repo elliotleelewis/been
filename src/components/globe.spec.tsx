@@ -2,10 +2,10 @@ import { render } from '@testing-library/react';
 import { bbox, featureCollection } from '@turf/turf';
 import { createRef } from 'react';
 import { beforeAll, describe, expect, it, vi } from 'vitest';
-import { CountriesContext } from '../contexts/countries-context';
-import { countries } from '../data/countries';
-import { MapboxSourceKeys } from '../models/enums';
-import { Globe, type MapForwardedRef } from './globe';
+import { CountriesContext } from '../contexts/countries-context.ts';
+import { countries } from '../data/countries.ts';
+import { MapboxSourceKeys } from '../models/enums.ts';
+import { Globe, type MapForwardedRef } from './globe.ts';
 
 describe('Globe', () => {
 	beforeAll(() => {
@@ -77,7 +77,7 @@ describe('Globe', () => {
 		);
 
 		await vi.waitUntil(
-			() => map.current?.isSourceLoaded(MapboxSourceKeys.countries),
+			() => map.current?.isSourceLoaded(MapboxSourceKeys.Countries),
 			{
 				timeout: 5000,
 			},
@@ -86,7 +86,7 @@ describe('Globe', () => {
 		expect(map.current?.querySourceFeatures).toBeTruthy();
 		for (const { iso3166, name, bounds } of countries) {
 			const features = map.current?.querySourceFeatures(
-				MapboxSourceKeys.countries,
+				MapboxSourceKeys.Countries,
 				{
 					sourceLayer: 'country_boundaries',
 					filter: ['==', ['get', 'iso_3166_1'], iso3166],

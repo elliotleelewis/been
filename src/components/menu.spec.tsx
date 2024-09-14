@@ -7,12 +7,12 @@ import {
 	it,
 	vi,
 } from 'vitest';
-import type { useCountries } from '../contexts/countries-context';
-import { Menu } from './menu';
+import type { useCountries } from '../contexts/countries-context.ts';
+import { Menu } from './menu.ts';
 
 describe('Menu', () => {
 	beforeEach(() => {
-		vi.mock(import('../contexts/countries-context'), () => ({
+		vi.mock(import('../contexts/countries-context.ts'), () => ({
 			useCountries: vi.fn(() => ({
 				countries: [
 					{

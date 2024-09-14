@@ -1,5 +1,5 @@
-import type { Country } from '../models/country';
-import type { Region } from '../models/region';
+import type { Country } from '../models/country.ts';
+import type { Region } from '../models/region.ts';
 
 export const regionalizer = (arr: readonly Country[]): readonly Region[] =>
 	arr

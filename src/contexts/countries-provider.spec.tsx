@@ -1,11 +1,11 @@
 import { render } from '@testing-library/react';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
-import type { Country } from '../models/country';
+import type { Country } from '../models/country.ts';
 import {
 	CountriesContext,
 	type CountriesContextType,
-} from './countries-context';
-import { CountriesProvider } from './countries-provider';
+} from './countries-context.ts';
+import { CountriesProvider } from './countries-provider.ts';
 
 const mockCountries = {
 	['CA']: { name: 'Country A', iso3166: 'CA', region: 'Region 1' },
@@ -14,7 +14,7 @@ const mockCountries = {
 
 describe('CountriesContext', () => {
 	beforeEach(() => {
-		vi.mock(import('../hooks/use-local-storage'), () => ({
+		vi.mock(import('../hooks/use-local-storage.ts'), () => ({
 			useLocalStorage: vi.fn(() => [[], vi.fn()] as const),
 		}));
 	});

@@ -1,9 +1,9 @@
 import { type FC, memo, useEffect, useMemo, useState } from 'react';
-import { CountriesProvider } from '../contexts/countries-provider';
-import type { Country } from '../models/country';
-import { Globe } from './globe';
-import { Header } from './header';
-import { Menu } from './menu';
+import { CountriesProvider } from '../contexts/countries-provider.ts';
+import type { Country } from '../models/country.ts';
+import { Globe } from './globe.ts';
+import { Header } from './header.ts';
+import { Menu } from './menu.ts';
 
 export const App: FC = memo(() => {
 	const [countries, setCountries] = useState<Record<string, Country>>({});
@@ -12,7 +12,7 @@ export const App: FC = memo(() => {
 	const mapHeader = useMemo(() => <Header />, []);
 
 	useEffect(() => {
-		void import('../data/countries').then(({ countries }) => {
+		import('../data/countries.ts').then(({ countries }) => {
 			const countryMap = Object.fromEntries(
 				countries.map((c) => [c.iso3166, c]),
 			);

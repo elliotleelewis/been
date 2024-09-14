@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useWindow } from './use-window';
+import { useWindow } from './use-window.ts';
 
 export const useMatchMedia = (query: string) => {
 	const window = useWindow();
