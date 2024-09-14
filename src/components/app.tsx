@@ -1,23 +1,29 @@
-import { type FC, memo, useMemo } from 'react';
+import { type FC, memo, useEffect, useMemo, useState } from 'react';
 
 import { CountriesProvider } from '../contexts/countries-provider';
-import countriesJson from '../data/countries.json';
 import { type Country } from '../models/country';
 
 import { Header } from './header';
 import { Map } from './map';
 import { Menu } from './menu';
 
-interface Props {
-	data?: readonly Country[];
-}
+export const App: FC = memo(() => {
+	const [countries, setCountries] = useState<Record<string, Country>>({});
 
-export const App: FC<Props> = memo(({ data = countriesJson }) => {
 	const menuHeader = useMemo(() => <Header show="tablet" />, []);
 	const mapHeader = useMemo(() => <Header />, []);
 
+	useEffect(() => {
+		void import('../data/countries').then(({ countries }) => {
+			const countryMap = Object.fromEntries(
+				countries.map((c) => [c.iso3166, c]),
+			);
+			setCountries(countryMap);
+		});
+	}, []);
+
 	return (
-		<CountriesProvider data={data}>
+		<CountriesProvider data={countries}>
 			<div className="flex h-full flex-col-reverse sm:flex-row">
 				<div className="flex basis-1/3 flex-col overflow-auto dark:bg-zinc-900 dark:text-white">
 					<Menu header={menuHeader} />

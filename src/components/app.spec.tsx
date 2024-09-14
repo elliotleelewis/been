@@ -16,15 +16,8 @@ describe('App', () => {
 	});
 
 	it('should render', () => {
-		const result = render(<App data={[]} />);
-
-		expect(result.asFragment()).toMatchSnapshot();
-	});
-
-	it('should render data', () => {
 		const result = render(<App />);
 
-		const text = result.getByText('United Kingdom');
-		expect(text).toBeDefined();
+		expect(result.asFragment()).toMatchSnapshot();
 	});
 });

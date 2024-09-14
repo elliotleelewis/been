@@ -3,10 +3,10 @@ import { createContext, useContext } from 'react';
 import { type Country } from '../models/country';
 import { type Region } from '../models/region';
 
-interface CountriesContextType {
+export interface CountriesContextType {
 	countries: readonly Country[];
 	regions: readonly Region[];
-	focus: string | null;
+	focus: Country | null;
 	addCountry: (countryCode: string) => void;
 	removeCountry: (countryCode: string) => void;
 	clearCountries: () => void;

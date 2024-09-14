@@ -18,7 +18,7 @@ const COUNTRIES_STORAGE_KEY = 'APP_COUNTRIES';
 const COUNTRIES_STORAGE_INITIAL_VALUE = [] as const;
 
 interface Props {
-	data: readonly Country[];
+	data: Record<string, Country>;
 	children: ReactNode;
 }
 
@@ -26,10 +26,10 @@ export const CountriesProvider: FC<Props> = memo(({ data, children }) => {
 	const [selectedCountries, setSelectedCountries] = useLocalStorage<
 		readonly string[]
 	>(COUNTRIES_STORAGE_KEY, COUNTRIES_STORAGE_INITIAL_VALUE);
-	const [focus, setFocus] = useState<string | null>(null);
+	const [focus, setFocus] = useState<Country | null>(null);
 
 	const countries = useMemo((): readonly Country[] => {
-		return data.map((c) => ({
+		return Object.values(data).map((c) => ({
 			...c,
 			selected: selectedCountries.includes(c.iso3166),
 		}));
@@ -43,13 +43,13 @@ export const CountriesProvider: FC<Props> = memo(({ data, children }) => {
 		(countryCode: string) => {
 			setSelectedCountries((prevCountries) => {
 				if (!prevCountries.includes(countryCode)) {
-					setFocus(countryCode);
+					setFocus(data[countryCode] ?? null);
 					return [...prevCountries, countryCode];
 				}
 				return prevCountries;
 			});
 		},
-		[setSelectedCountries],
+		[setSelectedCountries, data],
 	);
 
 	const removeCountry = useCallback(
