@@ -22,36 +22,6 @@ exports[`Menu > should render 1`] = `
       value=""
     />
   </form>
-  <div
-    class="m-4 h-full text-center font-medium"
-  >
-    No results!
-  </div>
-</DocumentFragment>
-`;
-
-exports[`Menu > should render with a country 1`] = `
-<DocumentFragment>
-  <div>
-    Header!
-  </div>
-  <form
-    class="border-t-2 border-zinc-200 sm:border-t-0 dark:border-zinc-700"
-  >
-    <label
-      class="sr-only"
-      for="search"
-    >
-      Search
-    </label>
-    <input
-      class="w-full border-none bg-white px-4 py-2 text-zinc-900 focus:ring-2 focus:ring-inset focus:ring-primary/50 dark:bg-zinc-900 dark:text-white"
-      id="search"
-      placeholder="Search..."
-      type="text"
-      value=""
-    />
-  </form>
   <ul
     class="h-full overflow-y-auto"
   >
