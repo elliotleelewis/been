@@ -4,8 +4,8 @@
   "scripts": {
     "start": "vite",
     "build": "tsc --noEmit && vite build",
-    "test": "vitest --coverage",
-    "lint": "biome check"
+    "lint": "biome check",
+    "test": "vitest --coverage"
   },
   "dependencies": {
     "@tailwindcss/forms": "^0.5.0",
