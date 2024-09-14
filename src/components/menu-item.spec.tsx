@@ -1,7 +1,7 @@
 import { render } from '@testing-library/react';
 import { describe, expect, it, vi } from 'vitest';
-import { CountriesContext } from '../contexts/countries-context.ts';
-import { MenuItem } from './menu-item.ts';
+import { CountriesContext } from '../contexts/countries-context';
+import { MenuItem } from './menu-item';
 
 describe('MenuItem', () => {
 	it('should render', () => {

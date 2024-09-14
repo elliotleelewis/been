@@ -1,6 +1,6 @@
 import { renderHook } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
-import { useLocalStorage } from './use-local-storage.ts';
+import { useLocalStorage } from './use-local-storage';
 
 describe('useLocalStorage', () => {
 	it('should initialise', () => {

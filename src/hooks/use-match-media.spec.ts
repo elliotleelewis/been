@@ -7,7 +7,7 @@ import {
 	it,
 	vi,
 } from 'vitest';
-import { useMatchMedia } from './use-match-media.ts';
+import { useMatchMedia } from './use-match-media';
 
 describe('useMatchMedia', () => {
 	let mockMatchMedia: MockInstance<typeof window.matchMedia>;

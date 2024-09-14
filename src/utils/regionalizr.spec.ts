@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
-import type { Country } from '../models/country.ts';
-import type { Region } from '../models/region.ts';
-import { regionalizer } from './regionalizer.ts';
+import type { Country } from '../models/country';
+import type { Region } from '../models/region';
+import { regionalizer } from './regionalizer';
 
 describe('regionalizer', () => {
 	it('should correctly group countries by region', () => {
