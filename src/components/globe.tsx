@@ -1,4 +1,5 @@
 import type { FillExtrusionPaint, FillPaint } from 'mapbox-gl';
+import 'mapbox-gl/dist/mapbox-gl.css';
 import {
 	type ReactNode,
 	forwardRef,
