@@ -1,4 +1,4 @@
-import { type FillExtrusionPaint, type FillPaint } from 'mapbox-gl';
+import type { FillExtrusionPaint, FillPaint } from 'mapbox-gl';
 import {
 	type ReactNode,
 	forwardRef,
@@ -15,11 +15,10 @@ import {
 	Map as ReactMapGL,
 	Source,
 } from 'react-map-gl';
-
 import { useCountries } from '../contexts/countries-context';
 import { useMatchMedia } from '../hooks/use-match-media';
 import { MapboxLayerKeys, MapboxSourceKeys } from '../models/enums';
-import { type ForwardedRefFunction } from '../types/utils';
+import type { ForwardedRefFunction } from '../types/utils';
 
 const apiKeyMapbox = import.meta.env['VITE_API_KEY_MAPBOX'] as
 	| string
@@ -39,7 +38,7 @@ interface Props {
 	header: ReactNode;
 }
 
-export const Map = memo(
+export const Globe = memo(
 	forwardRef<MapForwardedRef, Props>(({ header }, ref) => {
 		const internalRef = useRef<MapRef>(null);
 
@@ -52,7 +51,6 @@ export const Map = memo(
 		}, [countries]);
 
 		useImperativeHandle(
-			/* eslint-disable react-compiler/react-compiler -- This is a bug with the ESLint plugin, this is correct behaviour according to the React docs (see here: https://react.dev/reference/react/useImperativeHandle#exposing-a-custom-ref-handle-to-the-parent-component). */
 			ref,
 			() => ({
 				isSourceLoaded: (
@@ -66,7 +64,6 @@ export const Map = memo(
 					return internalRef.current?.querySourceFeatures(...params);
 				},
 			}),
-			/* eslint-enable react-compiler/react-compiler */
 			[],
 		);
 
@@ -76,7 +73,7 @@ export const Map = memo(
 			}
 			const { current: map } = internalRef;
 			map.fitBounds(focus.bounds);
-		}, [focus, internalRef]);
+		}, [focus]);
 
 		const beenFilter = useMemo(
 			() => ['in', ['get', 'iso_3166_1'], ['literal', selectedCountries]],
@@ -84,10 +81,8 @@ export const Map = memo(
 		);
 		const beenPaint: FillPaint = useMemo(
 			() => ({
-				/* eslint-disable @typescript-eslint/naming-convention -- mapbox-gl has specific property names we must use */
 				'fill-color': '#fd7e14',
 				'fill-opacity': 0.6,
-				/* eslint-enable @typescript-eslint/naming-convention */
 			}),
 			[],
 		);
@@ -95,7 +90,6 @@ export const Map = memo(
 		const buildingsFilter = useMemo(() => ['==', 'extrude', 'true'], []);
 		const buildingsPaint: FillExtrusionPaint = useMemo(
 			() => ({
-				/* eslint-disable @typescript-eslint/naming-convention -- mapbox-gl has specific property names we must use */
 				'fill-extrusion-color': [
 					'case',
 					[
@@ -125,7 +119,6 @@ export const Map = memo(
 					['get', 'min_height'],
 				],
 				'fill-extrusion-opacity': 0.6,
-				/* eslint-enable @typescript-eslint/naming-convention */
 			}),
 			[selectedCountries],
 		);
@@ -172,4 +165,4 @@ export const Map = memo(
 		);
 	}),
 );
-Map.displayName = 'Map';
+Globe.displayName = 'Map';

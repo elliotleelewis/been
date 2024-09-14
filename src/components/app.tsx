@@ -1,10 +1,8 @@
 import { type FC, memo, useEffect, useMemo, useState } from 'react';
-
 import { CountriesProvider } from '../contexts/countries-provider';
-import { type Country } from '../models/country';
-
+import type { Country } from '../models/country';
+import { Globe } from './globe';
 import { Header } from './header';
-import { Map } from './map';
 import { Menu } from './menu';
 
 export const App: FC = memo(() => {
@@ -29,7 +27,7 @@ export const App: FC = memo(() => {
 					<Menu header={menuHeader} />
 				</div>
 				<div className="basis-2/3">
-					<Map header={mapHeader} />
+					<Globe header={mapHeader} />
 				</div>
 			</div>
 		</CountriesProvider>

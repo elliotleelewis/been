@@ -2,14 +2,12 @@ import { render } from '@testing-library/react';
 import { bbox, featureCollection } from '@turf/turf';
 import { createRef } from 'react';
 import { beforeAll, describe, expect, it, vi } from 'vitest';
-
 import { CountriesContext } from '../contexts/countries-context';
 import { countries } from '../data/countries';
 import { MapboxSourceKeys } from '../models/enums';
+import { Globe, type MapForwardedRef } from './globe';
 
-import { Map, type MapForwardedRef } from './map';
-
-describe('Map', () => {
+describe('Globe', () => {
 	beforeAll(() => {
 		vi.spyOn(window, 'matchMedia').mockImplementation(
 			() =>
@@ -33,7 +31,7 @@ describe('Map', () => {
 					clearCountries: vi.fn(),
 				}}
 			>
-				<Map header={<div>Header!</div>} />
+				<Globe header={<div>Header!</div>} />
 			</CountriesContext.Provider>,
 		);
 
@@ -53,7 +51,7 @@ describe('Map', () => {
 					clearCountries: vi.fn(),
 				}}
 			>
-				<Map ref={map} header={<div>Header!</div>} />
+				<Globe ref={map} header={<div>Header!</div>} />
 			</CountriesContext.Provider>,
 		);
 
@@ -74,7 +72,7 @@ describe('Map', () => {
 					clearCountries: vi.fn(),
 				}}
 			>
-				<Map ref={map} header={<div>Header!</div>} />
+				<Globe ref={map} header={<div>Header!</div>} />
 			</CountriesContext.Provider>,
 		);
 

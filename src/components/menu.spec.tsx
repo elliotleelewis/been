@@ -7,9 +7,7 @@ import {
 	it,
 	vi,
 } from 'vitest';
-
 import { useCountries } from '../contexts/countries-context';
-
 import { Menu } from './menu';
 
 describe('Menu', () => {

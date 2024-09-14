@@ -1,8 +1,6 @@
 import { describe, expect, it } from 'vitest';
-
-import { type Country } from '../models/country';
-import { type Region } from '../models/region';
-
+import type { Country } from '../models/country';
+import type { Region } from '../models/region';
 import { regionalizer } from './regionalizer';
 
 describe('regionalizer', () => {

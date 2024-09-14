@@ -7,7 +7,6 @@ import {
 	it,
 	vi,
 } from 'vitest';
-
 import { useMatchMedia } from './use-match-media';
 
 describe('useMatchMedia', () => {
