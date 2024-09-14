@@ -1,7 +1,7 @@
 import react from '@vitejs/plugin-react';
 import { defineConfig } from 'vite';
 
-// https://vitejs.dev/config/
+// biome-ignore lint/style/noDefaultExport: Required structure for Vite
 export default defineConfig(({ command }) => ({
 	root: './src',
 	build: {

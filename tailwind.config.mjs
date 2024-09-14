@@ -1,6 +1,6 @@
 import forms from '@tailwindcss/forms';
 
-/** @type {import('tailwindcss').Config} */
+// biome-ignore lint/style/noDefaultExport: Required structure for TailwindCSS
 export default {
 	content: ['./src/index.html', './src/**/*.{html,ts,tsx}'],
 	theme: {
