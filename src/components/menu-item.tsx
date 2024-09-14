@@ -1,6 +1,6 @@
 import { type FC, memo, useCallback } from 'react';
-import { useCountries } from '../contexts/countries-context';
-import type { Country } from '../models/country';
+import { useCountries } from '../contexts/countries-context.ts';
+import type { Country } from '../models/country.ts';
 
 interface Props {
 	country: Country;
