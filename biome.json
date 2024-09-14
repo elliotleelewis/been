@@ -23,6 +23,9 @@
       "complexity": {
         "useLiteralKeys": "off"
       },
+      "correctness": {
+        "useImportExtensions": "off"
+      },
       "suspicious": {
         "noConsole": "off",
         "noReactSpecificProps": "off",
