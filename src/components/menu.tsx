@@ -1,7 +1,5 @@
 import { type FC, type ReactNode, memo, useMemo, useState } from 'react';
-
 import { useCountries } from '../contexts/countries-context';
-
 import { MenuItem } from './menu-item';
 
 interface Props {

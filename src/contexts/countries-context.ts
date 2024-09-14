@@ -1,7 +1,7 @@
 import { createContext, useContext } from 'react';
 
-import { type Country } from '../models/country';
-import { type Region } from '../models/region';
+import type { Country } from '../models/country';
+import type { Region } from '../models/region';
 
 export interface CountriesContextType {
 	countries: readonly Country[];

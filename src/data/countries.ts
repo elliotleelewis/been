@@ -1,6 +1,5 @@
-import { type Country } from '../models/country';
+import type { Country } from '../models/country';
 
-/* eslint-disable unicorn/numeric-separators-style -- Coordinates */
 export const countries: Country[] = [
 	{
 		name: 'Afghanistan',

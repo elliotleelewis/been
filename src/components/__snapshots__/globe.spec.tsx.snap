@@ -1,6 +1,6 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`Map > should accept a ref 1`] = `
+exports[`Globe > should accept a ref 1`] = `
 <DocumentFragment>
   <div>
     Header!
@@ -11,7 +11,7 @@ exports[`Map > should accept a ref 1`] = `
 </DocumentFragment>
 `;
 
-exports[`Map > should render 1`] = `
+exports[`Globe > should render 1`] = `
 <DocumentFragment>
   <div>
     Header!
