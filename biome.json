@@ -19,15 +19,14 @@
   "linter": {
     "enabled": true,
     "rules": {
-      "recommended": true,
+      "all": true,
       "complexity": {
         "useLiteralKeys": "off"
       },
-      "correctness": {
-        "useImportExtensions": "off"
-      },
       "suspicious": {
-        "noReactSpecificProps": "off"
+        "noConsole": "off",
+        "noReactSpecificProps": "off",
+        "noShadowRestrictedNames": "off"
       }
     }
   },
