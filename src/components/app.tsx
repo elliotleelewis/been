@@ -12,7 +12,7 @@ export const App: FC = memo(() => {
 	const mapHeader = useMemo(() => <Header />, []);
 
 	useEffect(() => {
-		void import('../data/countries').then(({ countries }) => {
+		import('../data/countries').then(({ countries }) => {
 			const countryMap = Object.fromEntries(
 				countries.map((c) => [c.iso3166, c]),
 			);
