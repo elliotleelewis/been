@@ -1,11 +1,9 @@
-// Imports
-@import 'mapbox-gl/dist/mapbox-gl.css';
-
+/* Imports */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-// Styles
+/* Styles */
 html,
 body {
 	inline-size: 100%;
