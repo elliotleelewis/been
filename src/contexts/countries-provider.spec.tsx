@@ -15,7 +15,7 @@ const mockCountries = {
 describe('CountriesContext', () => {
 	beforeEach(() => {
 		vi.mock(import('../hooks/use-local-storage'), () => ({
-			useLocalStorage: vi.fn(() => [[], vi.fn()] as const),
+			useLocalStorage: vi.fn((_, val) => [val, vi.fn()] as const),
 		}));
 	});
 
