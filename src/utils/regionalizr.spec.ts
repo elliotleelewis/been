@@ -19,6 +19,7 @@ describe('regionalizer', () => {
 					{ name: 'Country A', iso3166: 'A', region: 'Region 1' },
 					{ name: 'Country C', iso3166: 'C', region: 'Region 1' },
 				],
+				complete: 0,
 			},
 			{
 				name: 'Region 2',
@@ -26,6 +27,7 @@ describe('regionalizer', () => {
 					{ name: 'Country B', iso3166: 'B', region: 'Region 2' },
 					{ name: 'Country D', iso3166: 'D', region: 'Region 2' },
 				],
+				complete: 0,
 			},
 		];
 
@@ -52,18 +54,21 @@ describe('regionalizer', () => {
 				values: [
 					{ name: 'Country A', iso3166: 'A', region: 'Region 1' },
 				],
+				complete: 0,
 			},
 			{
 				name: 'Region 2',
 				values: [
 					{ name: 'Country B', iso3166: 'B', region: 'Region 2' },
 				],
+				complete: 0,
 			},
 			{
 				name: 'Region 3',
 				values: [
 					{ name: 'Country C', iso3166: 'C', region: 'Region 3' },
 				],
+				complete: 0,
 			},
 		];
 

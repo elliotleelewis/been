@@ -17,6 +17,7 @@ export const regionalizer = (arr: readonly Country[]): readonly Region[] =>
 			values: values.sort(({ name: aName }, { name: bName }) =>
 				aName.localeCompare(bName),
 			),
+			complete: values.filter((c) => c.selected).length / values.length,
 		}))
 		.sort(({ name: aName }, { name: bName }) => {
 			if (aName === '') {
