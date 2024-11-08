@@ -1,6 +1,7 @@
 import { type FC, type ReactNode, memo, useMemo, useState } from 'react';
 import { useCountries } from '../contexts/countries-context';
 import { MenuItem } from './menu-item';
+import { Progress } from './progress';
 
 interface Props {
 	header: ReactNode;
@@ -52,9 +53,10 @@ export const Menu: FC<Props> = memo(({ header }) => {
 				<ul className="h-full overflow-y-auto">
 					{filteredRegions.map((region) => (
 						<li key={region.name}>
-							<h2 className="bg-zinc-200 p-4 font-medium dark:bg-zinc-800">
-								{region.name || 'Other'}
-							</h2>
+							<div className="flex items-center justify-between sticky top-0 bg-zinc-200 p-4 font-medium dark:bg-zinc-800">
+								<h2>{region.name || 'Other'}</h2>
+								<Progress complete={region.complete ?? 0} />
+							</div>
 							<ul className="divide-y divide-zinc-100 dark:divide-zinc-800">
 								{region.values.map((country) => (
 									<MenuItem

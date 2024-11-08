@@ -1,0 +1,38 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Progress > should render 1`] = `
+<DocumentFragment>
+  <div
+    class="relative size-5"
+  >
+    <svg
+      class="size-full -rotate-90"
+      viewBox="0 0 36 36"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <title>
+        0% complete.
+      </title>
+      <circle
+        class="stroke-current text-gray-200 dark:text-neutral-500"
+        cx="18"
+        cy="18"
+        fill="none"
+        r="16"
+        stroke-width="4"
+      />
+      <circle
+        class="stroke-current text-primary dark:text-primary"
+        cx="18"
+        cy="18"
+        fill="none"
+        r="16"
+        stroke-dasharray="100"
+        stroke-dashoffset="100"
+        stroke-linecap="round"
+        stroke-width="4"
+      />
+    </svg>
+  </div>
+</DocumentFragment>
+`;

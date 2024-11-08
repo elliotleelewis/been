@@ -26,11 +26,45 @@ exports[`Menu > should render 1`] = `
     class="h-full overflow-y-auto"
   >
     <li>
-      <h2
-        class="bg-zinc-200 p-4 font-medium dark:bg-zinc-800"
+      <div
+        class="flex items-center justify-between sticky top-0 bg-zinc-200 p-4 font-medium dark:bg-zinc-800"
       >
-        Europe
-      </h2>
+        <h2>
+          Europe
+        </h2>
+        <div
+          class="relative size-5"
+        >
+          <svg
+            class="size-full -rotate-90"
+            viewBox="0 0 36 36"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <title>
+              0% complete.
+            </title>
+            <circle
+              class="stroke-current text-gray-200 dark:text-neutral-500"
+              cx="18"
+              cy="18"
+              fill="none"
+              r="16"
+              stroke-width="4"
+            />
+            <circle
+              class="stroke-current text-primary dark:text-primary"
+              cx="18"
+              cy="18"
+              fill="none"
+              r="16"
+              stroke-dasharray="100"
+              stroke-dashoffset="100"
+              stroke-linecap="round"
+              stroke-width="4"
+            />
+          </svg>
+        </div>
+      </div>
       <ul
         class="divide-y divide-zinc-100 dark:divide-zinc-800"
       >
