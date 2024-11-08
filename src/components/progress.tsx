@@ -7,7 +7,7 @@ interface Props {
 export const Progress: FC<Props> = memo(({ complete }) => (
 	<div className="relative size-5">
 		<svg
-			className="size-full -rotate-90"
+			className="-rotate-90 size-full"
 			viewBox="0 0 36 36"
 			xmlns="http://www.w3.org/2000/svg"
 		>
@@ -34,3 +34,4 @@ export const Progress: FC<Props> = memo(({ complete }) => (
 		</svg>
 	</div>
 ));
+Progress.displayName = 'Progress';

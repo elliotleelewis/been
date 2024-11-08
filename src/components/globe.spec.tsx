@@ -31,7 +31,7 @@ describe('Globe', () => {
 					clearCountries: vi.fn(),
 				}}
 			>
-				<Globe header={<div>Header!</div>} />
+				<Globe />
 			</CountriesContext.Provider>,
 		);
 
@@ -51,7 +51,7 @@ describe('Globe', () => {
 					clearCountries: vi.fn(),
 				}}
 			>
-				<Globe ref={map} header={<div>Header!</div>} />
+				<Globe ref={map} />
 			</CountriesContext.Provider>,
 		);
 
@@ -72,7 +72,7 @@ describe('Globe', () => {
 					clearCountries: vi.fn(),
 				}}
 			>
-				<Globe ref={map} header={<div>Header!</div>} />
+				<Globe ref={map} />
 			</CountriesContext.Provider>,
 		);
 

@@ -26,6 +26,9 @@
       "correctness": {
         "useImportExtensions": "off"
       },
+      "nursery": {
+        "useSortedClasses": "error"
+      },
       "suspicious": {
         "noConsole": "off",
         "noReactSpecificProps": "off",
