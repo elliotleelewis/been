@@ -12,6 +12,9 @@ export default defineConfig(({ command }) => ({
 	},
 	envDir: '../',
 	plugins: [react()],
+	optimizeDeps: {
+		exclude: ['chromium-bidi', 'fsevents'],
+	},
 	test: {
 		browser: {
 			enabled: true,
@@ -25,6 +28,7 @@ export default defineConfig(({ command }) => ({
 			reportsDirectory: '../coverage',
 			exclude: ['./index.tsx', '**/*.spec.{ts,tsx}'],
 		},
+		exclude: ['**/__e2e-test__/**'],
 		setupFiles: './vitest-setup.ts',
 		clearMocks: true,
 	},

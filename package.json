@@ -5,8 +5,10 @@
   "scripts": {
     "start": "vite",
     "build": "tsc --noEmit && vite build",
-    "lint": "biome check",
-    "test": "vitest --coverage"
+    "preview": "vite preview",
+    "test": "vitest --coverage",
+    "e2e": "playwright test",
+    "lint": "biome check"
   },
   "dependencies": {
     "@tailwindcss/forms": "^0.5.0",
@@ -20,6 +22,7 @@
   },
   "devDependencies": {
     "@biomejs/biome": "~1.9.0",
+    "@playwright/test": "~1.48.0",
     "@testing-library/jest-dom": "^6.0.0",
     "@testing-library/react": "^16.0.0",
     "@tsconfig/strictest": "^2.0.0",
