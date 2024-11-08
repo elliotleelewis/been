@@ -3,9 +3,9 @@
   "packageManager": "pnpm@9.12.3",
   "type": "module",
   "scripts": {
-    "start": "vite",
+    "start": "vite --host",
     "build": "tsc --noEmit && vite build",
-    "preview": "vite preview",
+    "preview": "vite preview --host",
     "test": "vitest --coverage",
     "e2e": "playwright test",
     "lint": "biome check"
