@@ -1,7 +1,9 @@
-import type { FillExtrusionPaint, FillPaint } from 'mapbox-gl';
+import type {
+	FillExtrusionLayerSpecification,
+	FillLayerSpecification,
+} from 'mapbox-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import {
-	type ReactNode,
 	forwardRef,
 	memo,
 	useEffect,
@@ -35,12 +37,8 @@ export interface MapForwardedRef {
 	querySourceFeatures: ForwardedRefFunction<MapRef['querySourceFeatures']>;
 }
 
-interface Props {
-	header: ReactNode;
-}
-
 export const Globe = memo(
-	forwardRef<MapForwardedRef, Props>(({ header }, ref) => {
+	forwardRef<MapForwardedRef>((_, ref) => {
 		const internalRef = useRef<MapRef>(null);
 
 		const prefersDark = useMatchMedia('(prefers-color-scheme: dark)');
@@ -80,7 +78,7 @@ export const Globe = memo(
 			() => ['in', ['get', 'iso_3166_1'], ['literal', selectedCountries]],
 			[selectedCountries],
 		);
-		const beenPaint: FillPaint = useMemo(
+		const beenPaint: FillLayerSpecification['paint'] = useMemo(
 			() => ({
 				'fill-color': '#fd7e14',
 				'fill-opacity': 0.6,
@@ -89,81 +87,79 @@ export const Globe = memo(
 		);
 
 		const buildingsFilter = useMemo(() => ['==', 'extrude', 'true'], []);
-		const buildingsPaint: FillExtrusionPaint = useMemo(
-			() => ({
-				'fill-extrusion-color': [
-					'case',
-					[
-						'in',
-						['get', 'iso_3166_1'],
-						['literal', selectedCountries],
+		const buildingsPaint: FillExtrusionLayerSpecification['paint'] =
+			useMemo(
+				() => ({
+					'fill-extrusion-color': [
+						'case',
+						[
+							'in',
+							['get', 'iso_3166_1'],
+							['literal', selectedCountries],
+						],
+						'#fd7e14',
+						'#fd7e14',
 					],
-					'#fd7e14',
-					'#fd7e14',
-				],
-				'fill-extrusion-height': [
-					'interpolate',
-					['linear'],
-					['zoom'],
-					15,
-					0,
-					15.05,
-					['get', 'height'],
-				],
-				'fill-extrusion-base': [
-					'interpolate',
-					['linear'],
-					['zoom'],
-					15,
-					0,
-					15.05,
-					['get', 'min_height'],
-				],
-				'fill-extrusion-opacity': 0.6,
-			}),
-			[selectedCountries],
-		);
+					'fill-extrusion-height': [
+						'interpolate',
+						['linear'],
+						['zoom'],
+						15,
+						0,
+						15.05,
+						['get', 'height'],
+					],
+					'fill-extrusion-base': [
+						'interpolate',
+						['linear'],
+						['zoom'],
+						15,
+						0,
+						15.05,
+						['get', 'min_height'],
+					],
+					'fill-extrusion-opacity': 0.6,
+				}),
+				[selectedCountries],
+			);
 
 		return (
-			<>
-				{header}
-				<Map
-					mapboxAccessToken={apiKeyMapbox ?? ''}
-					mapStyle={prefersDark ? darkThemeUrl : lightThemeUrl}
-					antialias={true}
-					attributionControl={false}
-					logoPosition="bottom-right"
-					minZoom={minZoom}
-					ref={internalRef}
-					testMode={testMode}
-				>
-					<NavigationControl />
-					<Source
-						id={MapboxSourceKeys.Countries}
-						type="vector"
-						url="mapbox://mapbox.country-boundaries-v1"
-					/>
-					<Layer
-						id={MapboxLayerKeys.Been}
-						type="fill"
-						source={MapboxSourceKeys.Countries}
-						source-layer="country_boundaries"
-						beforeId="national-park"
-						filter={beenFilter}
-						paint={beenPaint}
-					/>
-					<Layer
-						id={MapboxLayerKeys.Buildings}
-						type="fill-extrusion"
-						source="composite"
-						source-layer="building"
-						minzoom={15}
-						filter={buildingsFilter}
-						paint={buildingsPaint}
-					/>
-				</Map>
-			</>
+			<Map
+				mapboxAccessToken={apiKeyMapbox ?? ''}
+				mapStyle={prefersDark ? darkThemeUrl : lightThemeUrl}
+				antialias={true}
+				attributionControl={false}
+				logoPosition="bottom-right"
+				minZoom={minZoom}
+				ref={internalRef}
+				testMode={testMode}
+			>
+				<NavigationControl showCompass={false} />
+				<Source
+					id={MapboxSourceKeys.Countries}
+					type="vector"
+					url="mapbox://mapbox.country-boundaries-v1"
+				/>
+				<Layer
+					id={MapboxLayerKeys.Been}
+					type="fill"
+					source={MapboxSourceKeys.Countries}
+					source-layer="country_boundaries"
+					beforeId="national-park"
+					filter={beenFilter}
+					paint={beenPaint}
+				/>
+				<Layer
+					id={MapboxLayerKeys.Buildings}
+					type="fill-extrusion"
+					source="composite"
+					source-layer="building"
+					minzoom={15}
+					filter={buildingsFilter}
+					paint={buildingsPaint}
+				/>
+			</Map>
 		);
 	}),
 );
-Globe.displayName = 'Map';
+Globe.displayName = 'Globe';

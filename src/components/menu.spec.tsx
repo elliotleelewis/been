@@ -42,7 +42,7 @@ describe('Menu', () => {
 	});
 
 	it('should render', () => {
-		const result = render(<Menu header={<div>Header!</div>} />);
+		const result = render(<Menu />);
 
 		expect(result.asFragment()).toMatchSnapshot();
 	});

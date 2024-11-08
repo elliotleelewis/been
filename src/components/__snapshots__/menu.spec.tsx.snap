@@ -2,11 +2,8 @@
 
 exports[`Menu > should render 1`] = `
 <DocumentFragment>
-  <div>
-    Header!
-  </div>
   <form
-    class="border-t-2 border-zinc-200 sm:border-t-0 dark:border-zinc-700"
+    class="border-zinc-200 border-t-2 sm:border-t-0 dark:border-zinc-700"
   >
     <label
       class="sr-only"
@@ -15,7 +12,7 @@ exports[`Menu > should render 1`] = `
       Search
     </label>
     <input
-      class="w-full border-none bg-white px-4 py-2 text-zinc-900 focus:ring-2 focus:ring-inset focus:ring-primary/50 dark:bg-zinc-900 dark:text-white"
+      class="w-full border-none bg-white px-4 py-2 text-zinc-900 focus:ring-2 focus:ring-primary/50 focus:ring-inset dark:bg-zinc-900 dark:text-white"
       id="search"
       placeholder="Search..."
       type="text"
@@ -27,7 +24,7 @@ exports[`Menu > should render 1`] = `
   >
     <li>
       <div
-        class="flex items-center justify-between sticky top-0 bg-zinc-200 p-4 font-medium dark:bg-zinc-800"
+        class="sticky top-0 flex items-center justify-between bg-zinc-200 p-4 font-medium dark:bg-zinc-800"
       >
         <h2>
           Europe
@@ -36,7 +33,7 @@ exports[`Menu > should render 1`] = `
           class="relative size-5"
         >
           <svg
-            class="size-full -rotate-90"
+            class="-rotate-90 size-full"
             viewBox="0 0 36 36"
             xmlns="http://www.w3.org/2000/svg"
           >
@@ -44,7 +41,7 @@ exports[`Menu > should render 1`] = `
               0% complete.
             </title>
             <circle
-              class="stroke-current text-gray-200 dark:text-neutral-500"
+              class="stroke-current text-gray-500 dark:text-neutral-500"
               cx="18"
               cy="18"
               fill="none"

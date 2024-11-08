@@ -1,15 +1,11 @@
-import { type FC, memo, useEffect, useMemo, useState } from 'react';
+import { type FC, memo, useEffect, useState } from 'react';
 import { CountriesProvider } from '../contexts/countries-provider';
 import type { Country } from '../models/country';
 import { Globe } from './globe';
-import { Header } from './header';
 import { Menu } from './menu';
 
 export const App: FC = memo(() => {
 	const [countries, setCountries] = useState<Record<string, Country>>({});
-
-	const menuHeader = useMemo(() => <Header show="tablet" />, []);
-	const mapHeader = useMemo(() => <Header />, []);
 
 	useEffect(() => {
 		import('../data/countries').then(({ countries }) => {
@@ -22,12 +18,15 @@ export const App: FC = memo(() => {
 
 	return (
 		<CountriesProvider data={countries}>
-			<div className="flex h-full flex-col-reverse sm:flex-row">
-				<div className="flex basis-1/3 flex-col overflow-auto dark:bg-zinc-900 dark:text-white">
-					<Menu header={menuHeader} />
+			<div className="grid size-full grid-rows-[auto,1fr,auto] md:grid-cols-3 md:grid-rows-[auto,1fr] dark:bg-zinc-900 dark:text-white">
+				<div className="flex items-center justify-center bg-primary p-3 text-white md:col-span-1 dark:bg-zinc-950 dark:text-primary">
+					<h1 className="font-bold text-xl tracking-wide">been</h1>
 				</div>
-				<div className="basis-2/3">
-					<Globe header={mapHeader} />
+				<div className="order-3 flex flex-col overflow-auto md:order-2 md:col-span-1 md:row-start-2">
+					<Menu />
+				</div>
+				<div className="order-2 min-h-[60vh] md:order-3 md:col-span-2 md:row-span-2">
+					<Globe />
 				</div>
 			</div>
 		</CountriesProvider>
