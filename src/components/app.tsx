@@ -6,14 +6,21 @@ import { Menu } from './menu';
 
 export const App: FC = memo(() => {
 	const [countries, setCountries] = useState<Record<string, Country>>({});
+	const [loading, setLoading] = useState(true);
 
 	useEffect(() => {
-		import('../data/countries').then(({ countries }) => {
-			const countryMap = Object.fromEntries(
-				countries.map((c) => [c.iso3166, c]),
-			);
-			setCountries(countryMap);
-		});
+		import('../data/countries')
+			.then(({ countries }) => {
+				const countryMap = Object.fromEntries(
+					countries.map((c) => [c.iso3166, c]),
+				);
+				setCountries(countryMap);
+				setLoading(false);
+			})
+			.catch((e) => {
+				// TODO - Error handling
+				console.error(e);
+			});
 	}, []);
 
 	return (
@@ -23,7 +30,7 @@ export const App: FC = memo(() => {
 					<h1 className="font-bold text-xl tracking-wide">been</h1>
 				</div>
 				<div className="order-3 flex flex-col overflow-auto md:order-2 md:col-span-1 md:row-start-2">
-					<Menu />
+					<Menu loading={loading} />
 				</div>
 				<div className="order-2 min-h-[60vh] md:order-3 md:col-span-2 md:row-span-2">
 					<Globe />

@@ -8,7 +8,8 @@
     "preview": "vite preview --host",
     "test": "vitest --coverage",
     "e2e": "playwright test",
-    "lint": "biome check"
+    "lint": "biome check",
+    "lint:fix": "biome check --fix --unsafe"
   },
   "dependencies": {
     "@tailwindcss/forms": "^0.5.0",
