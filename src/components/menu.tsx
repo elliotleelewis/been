@@ -3,7 +3,11 @@ import { useCountries } from '../contexts/countries-context';
 import { MenuItem } from './menu-item';
 import { Progress } from './progress';
 
-export const Menu: FC = memo(() => {
+interface Props {
+	loading?: boolean;
+}
+
+export const Menu: FC<Props> = memo(({ loading = false }) => {
 	const { regions } = useCountries();
 
 	const [search, setSearch] = useState('');
@@ -31,16 +35,41 @@ export const Menu: FC = memo(() => {
 				</label>
 				<input
 					id="search"
-					className="w-full border-none bg-white px-4 py-2 text-zinc-900 focus:ring-2 focus:ring-primary/50 focus:ring-inset dark:bg-zinc-900 dark:text-white"
+					className="w-full border-none bg-white px-4 py-2 text-zinc-900 focus:ring-2 focus:ring-primary/50 focus:ring-inset disabled:hover:cursor-not-allowed dark:bg-zinc-900 dark:text-white"
 					type="text"
 					placeholder="Search..."
 					value={search}
 					onChange={(e) => {
 						setSearch(e.target.value);
 					}}
+					disabled={loading}
 				/>
 			</form>
-			{filteredRegions.length === 0 ? (
+			{loading ? (
+				<div className="flex size-full items-center justify-center">
+					<svg
+						className="size-5 animate-spin text-neutral-800 dark:text-white"
+						xmlns="http://www.w3.org/2000/svg"
+						fill="none"
+						viewBox="0 0 24 24"
+					>
+						<title>Loading!</title>
+						<circle
+							className="opacity-25"
+							cx="12"
+							cy="12"
+							r="10"
+							stroke="currentColor"
+							strokeWidth="4"
+						/>
+						<path
+							className="opacity-75"
+							fill="currentColor"
+							d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+						/>
+					</svg>
+				</div>
+			) : filteredRegions.length === 0 ? (
 				<div className="m-4 h-full text-center font-medium">
 					No results!
 				</div>
