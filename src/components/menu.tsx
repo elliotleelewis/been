@@ -1,5 +1,6 @@
+import { useAtomValue } from 'jotai';
 import { type FC, memo, useMemo, useState } from 'react';
-import { useCountries } from '../contexts/countries-context';
+import { regionsAtom } from '../state/atoms.ts';
 import { MenuItem } from './menu-item';
 import { Progress } from './progress';
 
@@ -8,7 +9,7 @@ interface Props {
 }
 
 export const Menu: FC<Props> = memo(({ loading = false }) => {
-	const { regions } = useCountries();
+	const regions = useAtomValue(regionsAtom);
 
 	const [search, setSearch] = useState('');
 

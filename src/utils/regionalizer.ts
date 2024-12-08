@@ -1,31 +1,32 @@
 import type { Country } from '../models/country';
 import type { Region } from '../models/region';
 
-export const regionalizer = (arr: readonly Country[]): readonly Region[] =>
-	arr
-		.reduce((prev: Region[], current) => {
-			const item = prev.find((i) => i.name === current.region);
-			if (item) {
-				item.values.push(current);
-			} else {
-				prev.push({ name: current.region, values: [current] });
-			}
-			return prev;
-		}, [])
-		.map(({ name, values }) => ({
-			name,
-			values: values.sort(({ name: aName }, { name: bName }) =>
-				aName.localeCompare(bName),
-			),
+export const regionalizer = (
+	countries: readonly Country[],
+): readonly Region[] => {
+	const regionMap = new Map<string, Country[]>();
+	for (const country of countries) {
+		if (regionMap.has(country.region)) {
+			regionMap.get(country.region)?.push(country);
+		} else {
+			regionMap.set(country.region, [country]);
+		}
+	}
+
+	return Array.from(regionMap.entries())
+		.map(([regionName, values]) => ({
+			name: regionName,
+			values: values.sort((a, b) => a.name.localeCompare(b.name)),
 			complete: values.filter((c) => c.selected).length / values.length,
 		}))
-		.sort(({ name: aName }, { name: bName }) => {
-			if (aName === '') {
+		.sort((a, b) => {
+			if (a.name === '') {
 				return 1;
 			}
-			if (bName === '') {
+			if (b.name === '') {
 				return -1;
 			}
 
-			return aName.localeCompare(bName);
+			return a.name.localeCompare(b.name);
 		});
+};

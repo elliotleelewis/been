@@ -1,3 +1,4 @@
+import { useAtomValue } from 'jotai';
 import type {
 	FillExtrusionLayerSpecification,
 	FillLayerSpecification,
@@ -18,9 +19,9 @@ import {
 	NavigationControl,
 	Source,
 } from 'react-map-gl';
-import { useCountries } from '../contexts/countries-context';
 import { useMatchMedia } from '../hooks/use-match-media';
 import { MapboxLayerKeys, MapboxSourceKeys } from '../models/enums';
+import { countriesAtom, focusAtom } from '../state/atoms.ts';
 import type { ForwardedRefFunction } from '../types/utils';
 
 const apiKeyMapbox = import.meta.env['VITE_API_KEY_MAPBOX'] as
@@ -43,7 +44,8 @@ export const Globe = memo(
 
 		const prefersDark = useMatchMedia('(prefers-color-scheme: dark)');
 
-		const { countries, focus } = useCountries();
+		const countries = useAtomValue(countriesAtom);
+		const focus = useAtomValue(focusAtom);
 
 		const selectedCountries = useMemo(() => {
 			return countries.filter((c) => c.selected).map((c) => c.iso3166);

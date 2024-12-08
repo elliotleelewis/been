@@ -1,48 +1,30 @@
 import { render } from '@testing-library/react';
-import {
-	type MockInstance,
-	beforeEach,
-	describe,
-	expect,
-	it,
-	vi,
-} from 'vitest';
-import type { useCountries } from '../contexts/countries-context';
+import { Provider } from 'jotai';
+import { describe, expect, it } from 'vitest';
+import type { Country } from '../models/country.ts';
+import { rawCountriesAtom } from '../state/atoms.ts';
+import { HydrateAtoms } from '../utils/test.ts';
 import { Menu } from './menu';
 
-describe('Menu', () => {
-	beforeEach(() => {
-		vi.mock(import('../contexts/countries-context'), () => ({
-			useCountries: vi.fn(() => ({
-				countries: [
-					{
-						name: 'United Kingdom',
-						iso3166: 'GB',
-						region: 'Europe',
-					},
-				],
-				regions: [
-					{
-						name: 'Europe',
-						values: [
-							{
-								name: 'United Kingdom',
-								iso3166: 'GB',
-								region: 'Europe',
-							},
-						],
-					},
-				],
-				focus: null,
-				addCountry: vi.fn(),
-				removeCountry: vi.fn(),
-				clearCountries: vi.fn(),
-			})) satisfies MockInstance<typeof useCountries>,
-		}));
-	});
+const country: Country = {
+	name: 'United Kingdom',
+	iso3166: 'GB',
+	region: 'Europe',
+};
 
+describe('Menu', () => {
 	it('should render', () => {
-		const result = render(<Menu />);
+		const result = render(
+			<Provider>
+				<HydrateAtoms
+					initialValues={[
+						[rawCountriesAtom, { [country.iso3166]: country }],
+					]}
+				>
+					<Menu />
+				</HydrateAtoms>
+			</Provider>,
+		);
 
 		expect(result.asFragment()).toMatchSnapshot();
 	});
