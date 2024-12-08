@@ -1,3 +1,4 @@
+import classNames from 'classnames';
 import { useSetAtom } from 'jotai';
 import { type FC, memo, useCallback, useEffect, useState } from 'react';
 import { rawCountriesAtom } from '../state/atoms.ts';
@@ -8,6 +9,8 @@ export const App: FC = memo(() => {
 	const setRawCountries = useSetAtom(rawCountriesAtom);
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState<Error | null>(null);
+
+	const [menuFullscreen, setMenuFullscreen] = useState(false);
 
 	useEffect(() => {
 		import('../data/countries')
@@ -27,6 +30,10 @@ export const App: FC = memo(() => {
 		location.reload();
 	}, []);
 
+	const toggleMenuFullscreen = useCallback(() => {
+		setMenuFullscreen((val) => !val);
+	}, []);
+
 	return (
 		<div className="grid size-full grid-rows-[auto,1fr,auto] md:grid-cols-3 md:grid-rows-[auto,1fr] dark:bg-zinc-900 dark:text-white">
 			<div className="flex items-center justify-center bg-primary p-3 text-white md:col-span-1 dark:bg-zinc-950 dark:text-primary">
@@ -34,7 +41,12 @@ export const App: FC = memo(() => {
 					been
 				</h1>
 			</div>
-			<div className="order-3 flex flex-col overflow-auto md:order-2 md:col-span-1 md:row-start-2">
+			<div
+				className={classNames(
+					'z-10 order-3 flex flex-col overflow-auto md:order-2 md:col-span-1 md:row-start-2 dark:bg-zinc-900 dark:text-white',
+					menuFullscreen && '-mt-[60vh] md:mt-0',
+				)}
+			>
 				{error ? (
 					<div className="flex size-full flex-col items-center justify-center gap-2 px-2 text-center text-lg">
 						<span>
@@ -50,7 +62,11 @@ export const App: FC = memo(() => {
 						</button>
 					</div>
 				) : (
-					<Menu loading={loading} />
+					<Menu
+						loading={loading}
+						fullscreen={menuFullscreen}
+						toggleFullscreen={toggleMenuFullscreen}
+					/>
 				)}
 			</div>
 			<div className="order-2 min-h-[60vh] md:order-3 md:col-span-2 md:row-span-2">
