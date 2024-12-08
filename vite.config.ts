@@ -28,6 +28,8 @@ export default defineConfig(({ command }) => ({
 			reportsDirectory: '../coverage',
 			exclude: ['./index.tsx', '**/*.spec.{ts,tsx}'],
 		},
+		reporters: ['default', 'junit'],
+		outputFile: '../reports/test.xml',
 		exclude: ['**/__e2e-test__/**'],
 		setupFiles: './vitest-setup.ts',
 		clearMocks: true,

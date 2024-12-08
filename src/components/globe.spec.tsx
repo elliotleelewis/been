@@ -2,7 +2,6 @@ import { render } from '@testing-library/react';
 import { bbox, featureCollection } from '@turf/turf';
 import { createRef } from 'react';
 import { beforeAll, describe, expect, it, vi } from 'vitest';
-import { CountriesContext } from '../contexts/countries-context';
 import { countries } from '../data/countries';
 import { MapboxSourceKeys } from '../models/enums';
 import { Globe, type MapForwardedRef } from './globe';
@@ -20,40 +19,14 @@ describe('Globe', () => {
 	});
 
 	it('should render', () => {
-		const result = render(
-			<CountriesContext.Provider
-				value={{
-					countries: [],
-					regions: [],
-					focus: null,
-					addCountry: vi.fn(),
-					removeCountry: vi.fn(),
-					clearCountries: vi.fn(),
-				}}
-			>
-				<Globe />
-			</CountriesContext.Provider>,
-		);
+		const result = render(<Globe />);
 
 		expect(result.asFragment()).toMatchSnapshot();
 	});
 
 	it('should accept a ref', () => {
 		const map = createRef<MapForwardedRef>();
-		const result = render(
-			<CountriesContext.Provider
-				value={{
-					countries: [],
-					regions: [],
-					focus: null,
-					addCountry: vi.fn(),
-					removeCountry: vi.fn(),
-					clearCountries: vi.fn(),
-				}}
-			>
-				<Globe ref={map} />
-			</CountriesContext.Provider>,
-		);
+		const result = render(<Globe ref={map} />);
 
 		expect(map.current).toBeTruthy();
 		expect(result.asFragment()).toMatchSnapshot();
@@ -61,20 +34,7 @@ describe('Globe', () => {
 
 	it('should have geojson data for every country in dataset', async () => {
 		const map = createRef<MapForwardedRef>();
-		render(
-			<CountriesContext.Provider
-				value={{
-					countries: [],
-					regions: [],
-					focus: null,
-					addCountry: vi.fn(),
-					removeCountry: vi.fn(),
-					clearCountries: vi.fn(),
-				}}
-			>
-				<Globe ref={map} />
-			</CountriesContext.Provider>,
-		);
+		render(<Globe ref={map} />);
 
 		await vi.waitUntil(
 			() => map.current?.isSourceLoaded(MapboxSourceKeys.Countries),

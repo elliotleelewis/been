@@ -1,13 +1,15 @@
+import { useSetAtom } from 'jotai';
 import { type FC, memo, useCallback } from 'react';
-import { useCountries } from '../contexts/countries-context';
 import type { Country } from '../models/country';
+import { addCountryAtom, removeCountryAtom } from '../state/atoms.ts';
 
 interface Props {
 	country: Country;
 }
 
 export const MenuItem: FC<Props> = memo(({ country }) => {
-	const { addCountry, removeCountry } = useCountries();
+	const addCountry = useSetAtom(addCountryAtom);
+	const removeCountry = useSetAtom(removeCountryAtom);
 
 	const toggleCountry = useCallback(() => {
 		if (country.selected) {
