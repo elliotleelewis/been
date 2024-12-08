@@ -7,7 +7,7 @@ import { Menu } from './menu';
 export const App: FC = memo(() => {
 	const setRawCountries = useSetAtom(rawCountriesAtom);
 	const [loading, setLoading] = useState(true);
-	const [error, setError] = useState<Error | null>(new Error('hello'));
+	const [error, setError] = useState<Error | null>(null);
 
 	useEffect(() => {
 		import('../data/countries')
