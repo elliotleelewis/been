@@ -21,7 +21,7 @@ import {
 } from 'react-map-gl';
 import { useMatchMedia } from '../hooks/use-match-media';
 import { MapboxLayerKeys, MapboxSourceKeys } from '../models/enums';
-import { countriesAtom, focusAtom } from '../state/atoms.ts';
+import { focusAtom, selectedCountriesAtom } from '../state/atoms.ts';
 import type { ForwardedRefFunction } from '../types/utils';
 
 const apiKeyMapbox = import.meta.env['VITE_API_KEY_MAPBOX'] as
@@ -44,12 +44,8 @@ export const Globe = memo(
 
 		const prefersDark = useMatchMedia('(prefers-color-scheme: dark)');
 
-		const countries = useAtomValue(countriesAtom);
+		const selectedCountries = useAtomValue(selectedCountriesAtom);
 		const focus = useAtomValue(focusAtom);
-
-		const selectedCountries = useMemo(() => {
-			return countries.filter((c) => c.selected).map((c) => c.iso3166);
-		}, [countries]);
 
 		useImperativeHandle(
 			ref,
@@ -76,7 +72,7 @@ export const Globe = memo(
 			map?.fitBounds(focus.bounds);
 		}, [focus]);
 
-		const beenFilter = useMemo(
+		const beenFilter: FillExtrusionLayerSpecification['filter'] = useMemo(
 			() => ['in', ['get', 'iso_3166_1'], ['literal', selectedCountries]],
 			[selectedCountries],
 		);
@@ -88,7 +84,8 @@ export const Globe = memo(
 			[],
 		);
 
-		const buildingsFilter = useMemo(() => ['==', 'extrude', 'true'], []);
+		const buildingsFilter: FillExtrusionLayerSpecification['filter'] =
+			useMemo(() => ['==', 'extrude', 'true'], []);
 		const buildingsPaint: FillExtrusionLayerSpecification['paint'] =
 			useMemo(
 				() => ({
