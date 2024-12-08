@@ -21,7 +21,10 @@ describe('Menu', () => {
 						[rawCountriesAtom, { [country.iso3166]: country }],
 					]}
 				>
-					<Menu />
+					<Menu
+						fullscreen={false}
+						toggleFullscreen={() => undefined}
+					/>
 				</HydrateAtoms>
 			</Provider>,
 		);
