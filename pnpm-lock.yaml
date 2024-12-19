@@ -21,8 +21,8 @@ importers:
         specifier: ^2.0.0
         version: 2.10.3(@types/react@19.0.1)(react@19.0.0)
       mapbox-gl:
-        specifier: ~3.8.0
-        version: 3.8.0
+        specifier: ~3.9.0
+        version: 3.9.0
       react:
         specifier: ^19.0.0
         version: 19.0.0
@@ -31,7 +31,7 @@ importers:
         version: 19.0.0(react@19.0.0)
       react-map-gl:
         specifier: ^7.0.0
-        version: 7.1.7(mapbox-gl@3.8.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
+        version: 7.1.7(mapbox-gl@3.9.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
       tailwindcss:
         specifier: ^3.0.0
         version: 3.4.16
@@ -2004,8 +2004,8 @@ packages:
     resolution: {integrity: sha512-hXdUTZYIVOt1Ex//jAQi+wTZZpUpwBj/0QsOzqegb3rGMMeJiSEu5xLHnYfBrRV4RH2+OCSOO95Is/7x1WJ4bw==}
     engines: {node: '>=10'}
 
-  mapbox-gl@3.8.0:
-    resolution: {integrity: sha512-7iQ6wxAf8UedbNYTzNsyr2J25ozIBA4vmKY0xUDXQlHEokulzPENwjjmLxHQGRylDpOmR0c8kPEbtHCaQE2eMw==}
+  mapbox-gl@3.9.0:
+    resolution: {integrity: sha512-QKAxLHcbdoqobXuhu2PP6HJDSy0/GhfZuO5O8BrmwfR0ihZbA5ihYD/u0wGqu2QTDWi/DbgCWJIlV2mXh2Sekg==}
 
   marchingsquares@1.3.3:
     resolution: {integrity: sha512-gz6nNQoVK7Lkh2pZulrT4qd4347S/toG9RXH2pyzhLgkL5mLkBoqgv4EvAGXcV0ikDW72n/OQb3Xe8bGagQZCg==}
@@ -5330,7 +5330,7 @@ snapshots:
     dependencies:
       semver: 7.6.3
 
-  mapbox-gl@3.8.0:
+  mapbox-gl@3.9.0:
     dependencies:
       '@mapbox/jsonlint-lines-primitives': 2.0.2
       '@mapbox/mapbox-gl-supported': 3.0.0
@@ -5593,14 +5593,14 @@ snapshots:
 
   react-is@17.0.2: {}
 
-  react-map-gl@7.1.7(mapbox-gl@3.8.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0):
+  react-map-gl@7.1.7(mapbox-gl@3.9.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0):
     dependencies:
       '@maplibre/maplibre-gl-style-spec': 19.3.3
       '@types/mapbox-gl': 3.4.1
       react: 19.0.0
       react-dom: 19.0.0(react@19.0.0)
     optionalDependencies:
-      mapbox-gl: 3.8.0
+      mapbox-gl: 3.9.0
 
   react-refresh@0.14.2: {}
 
