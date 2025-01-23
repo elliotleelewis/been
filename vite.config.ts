@@ -1,4 +1,5 @@
 import react from '@vitejs/plugin-react';
+import tailwindcss from '@tailwindcss/vite';
 import { defineConfig } from 'vite';
 
 // biome-ignore lint/style/noDefaultExport: Required structure for Vite
@@ -11,7 +12,7 @@ export default defineConfig(({ command }) => ({
 		sourcemap: command === 'serve',
 	},
 	envDir: '../',
-	plugins: [react()],
+	plugins: [react(), tailwindcss()],
 	optimizeDeps: {
 		exclude: ['chromium-bidi', 'fsevents'],
 	},
