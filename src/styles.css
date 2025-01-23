@@ -1,7 +1,10 @@
-/* Imports */
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+/* TailwindCSS */
+@import "tailwindcss";
+
+@plugin "@tailwindcss/forms";
+@theme {
+	--color-primary: oklch(0.73 0.225 48);
+}
 
 /* Styles */
 html,
