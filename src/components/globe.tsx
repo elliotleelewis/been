@@ -18,7 +18,7 @@ import {
 	type MapRef,
 	NavigationControl,
 	Source,
-} from 'react-map-gl';
+} from 'react-map-gl/mapbox';
 import { useMatchMedia } from '../hooks/use-match-media';
 import { MapboxLayerKeys, MapboxSourceKeys } from '../models/enums';
 import { focusAtom, selectedCountriesAtom } from '../state/atoms.ts';
