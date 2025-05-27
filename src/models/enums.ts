@@ -1,8 +1,8 @@
-export enum MapboxSourceKeys {
-	Countries = 'countries',
-}
+export const MapboxSourceKeys = {
+	Countries: 'countries',
+} as const;
 
-export enum MapboxLayerKeys {
-	Been = 'been',
-	Buildings = 'buildings',
-}
+export const MapboxLayerKeys = {
+	Been: 'been',
+	Buildings: 'buildings',
+} as const;
