@@ -6,20 +6,21 @@
     "useIgnoreFile": true
   },
   "files": {
-    "ignoreUnknown": false,
-    "ignore": []
+    "ignoreUnknown": false
   },
   "formatter": {
     "enabled": true,
     "useEditorconfig": true
   },
-  "organizeImports": {
-    "enabled": true
-  },
   "linter": {
     "enabled": true,
+    "domains": {
+      "react": "all",
+      "test": "all",
+      "project": "all"
+    },
     "rules": {
-      "all": true,
+      "recommended": true,
       "complexity": {
         "useLiteralKeys": "off"
       },
