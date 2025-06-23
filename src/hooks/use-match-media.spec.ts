@@ -1,10 +1,10 @@
 import { renderHook } from '@testing-library/react';
 import {
-	type MockInstance,
 	beforeEach,
 	describe,
 	expect,
 	it,
+	type MockInstance,
 	vi,
 } from 'vitest';
 import { useMatchMedia } from './use-match-media';

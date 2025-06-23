@@ -1,5 +1,5 @@
 import { useAtomValue } from 'jotai';
-import { type FC, memo, useMemo, useState } from 'react';
+import { type FC, memo, useId, useMemo, useState } from 'react';
 import { regionsAtom } from '../state/atoms.ts';
 import { MenuItem } from './menu-item';
 import { Progress } from './progress';
@@ -12,6 +12,7 @@ interface Props {
 
 export const Menu: FC<Props> = memo(
 	({ loading = false, fullscreen, toggleFullscreen }) => {
+		const searchId = useId();
 		const regions = useAtomValue(regionsAtom);
 
 		const [search, setSearch] = useState('');
@@ -34,11 +35,11 @@ export const Menu: FC<Props> = memo(
 			<>
 				<div className="flex border-zinc-200 border-t-2 sm:border-t-0 dark:border-zinc-700">
 					<form className="w-full">
-						<label htmlFor="search" className="sr-only">
+						<label htmlFor={searchId} className="sr-only">
 							Search
 						</label>
 						<input
-							id="search"
+							id={searchId}
 							className="w-full border-none bg-white px-4 py-2 text-zinc-900 focus:ring-2 focus:ring-primary/50 focus:ring-inset disabled:hover:cursor-not-allowed dark:bg-zinc-900 dark:text-white"
 							type="text"
 							placeholder="Search..."
