@@ -2,7 +2,6 @@ import tailwindcss from '@tailwindcss/vite';
 import react from '@vitejs/plugin-react';
 import { defineConfig } from 'vite';
 
-// biome-ignore lint/style/noDefaultExport: Required structure for Vite
 export default defineConfig(({ command }) => ({
 	root: './src',
 	build: {
