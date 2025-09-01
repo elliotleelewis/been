@@ -2,17 +2,21 @@ import type { WritableAtom } from 'jotai/index';
 import { useHydrateAtoms } from 'jotai/utils';
 import type { PropsWithChildren } from 'react';
 
-type AnyWritableAtom = WritableAtom<unknown, never[], unknown>;
+// biome-ignore lint/suspicious/noExplicitAny: Any is required to allow any atom type. Unfortunately cannot be `unknown`.
+type AnyWritableAtom = WritableAtom<unknown, any[], unknown>;
+
 type InferAtomTuples<T> = {
-	[K in keyof T]: T[K] extends readonly [infer A, unknown]
-		? A extends WritableAtom<unknown, infer Args, infer _Result>
-			? readonly [A, Args[0]]
-			: T[K]
+	[K in keyof T]: T[K] extends readonly [infer A, ...infer Rest]
+		? A extends WritableAtom<unknown, infer Args extends unknown[], unknown>
+			? Rest extends Args
+				? readonly [A, ...Rest]
+				: never
+			: never
 		: never;
 };
 
 export const HydrateAtoms = <
-	T extends (readonly [AnyWritableAtom, unknown])[],
+	T extends readonly (readonly [AnyWritableAtom, ...unknown[]])[],
 >({
 	initialValues,
 	children,
