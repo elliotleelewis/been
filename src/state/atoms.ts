@@ -19,10 +19,11 @@ export const countriesAtom = atom<readonly Country[]>((get) => {
 	const rawCountries = get(rawCountriesAtom);
 	const selectedCountries = get(selectedCountriesAtom);
 
-	return Object.values(rawCountries).map((c) => ({
-		...c,
-		selected: selectedCountries.includes(c.iso3166),
-	}));
+	return Object.values(rawCountries).map((c) =>
+		Object.assign(c, {
+			selected: selectedCountries.includes(c.iso3166),
+		}),
+	);
 });
 export const regionsAtom = atom<readonly Region[]>((get) => {
 	const countries = get(countriesAtom);

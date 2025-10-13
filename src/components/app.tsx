@@ -27,7 +27,7 @@ export const App: FC = memo(() => {
 	}, [setRawCountries]);
 
 	const reload = useCallback(() => {
-		location.reload();
+		window.location.reload();
 	}, []);
 
 	const toggleMenuFullscreen = useCallback(() => {

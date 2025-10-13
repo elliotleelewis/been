@@ -1,7 +1,7 @@
 import { useSetAtom } from 'jotai';
 import { type FC, memo, useCallback } from 'react';
 import type { Country } from '../models/country';
-import { addCountryAtom, removeCountryAtom } from '../state/atoms.ts';
+import { addCountryAtom, removeCountryAtom } from '../state/atoms';
 
 interface Props {
 	country: Country;
