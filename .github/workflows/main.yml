@@ -37,7 +37,7 @@ jobs:
       - uses: test-summary/action@v2
         if: always()
         with:
-          paths: 'reports/*.xml'
+          paths: "reports/*.xml"
   deploy:
     runs-on: ubuntu-24.04
     steps:

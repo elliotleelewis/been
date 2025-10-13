@@ -1,5 +1,5 @@
-import type { Country } from '../models/country';
-import type { Region } from '../models/region';
+import type { Country } from "../models/country";
+import type { Region } from "../models/region";
 
 export const regionalizer = (
 	countries: readonly Country[],
@@ -20,10 +20,10 @@ export const regionalizer = (
 			complete: values.filter((c) => c.selected).length / values.length,
 		}))
 		.sort((a, b) => {
-			if (a.name === '') {
+			if (a.name === "") {
 				return 1;
 			}
-			if (b.name === '') {
+			if (b.name === "") {
 				return -1;
 			}
 
