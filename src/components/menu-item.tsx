@@ -1,5 +1,6 @@
 import { useSetAtom } from 'jotai';
-import { type FC, memo, useCallback } from 'react';
+import { memo, useCallback } from 'react';
+import type { FC } from 'react';
 import type { Country } from '../models/country';
 import { addCountryAtom, removeCountryAtom } from '../state/atoms';
 

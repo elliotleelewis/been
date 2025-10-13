@@ -1,5 +1,6 @@
 import { useAtomValue } from 'jotai';
-import { type FC, memo, useId, useMemo, useState } from 'react';
+import { memo, useId, useMemo, useState } from 'react';
+import type { FC } from 'react';
 import { regionsAtom } from '../state/atoms.ts';
 import { MenuItem } from './menu-item';
 import { Progress } from './progress';
@@ -114,7 +115,7 @@ export const Menu: FC<Props> = memo(
 							/>
 						</svg>
 					</div>
-				) : filteredRegions.length === 0 ? (
+				) : (filteredRegions.length === 0 ? (
 					<div className="m-4 h-full text-center font-medium">
 						No results!
 					</div>
@@ -137,7 +138,7 @@ export const Menu: FC<Props> = memo(
 							</li>
 						))}
 					</ul>
-				)}
+				))}
 			</>
 		);
 	},

@@ -1,4 +1,5 @@
-import { type FC, memo } from 'react';
+import { memo } from 'react';
+import type { FC } from 'react';
 
 interface Props {
 	complete: number;

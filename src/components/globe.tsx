@@ -12,13 +12,8 @@ import {
 	useMemo,
 	useRef,
 } from 'react';
-import {
-	Layer,
-	Map,
-	type MapRef,
-	NavigationControl,
-	Source,
-} from 'react-map-gl/mapbox';
+import { Layer, Map, NavigationControl, Source } from 'react-map-gl/mapbox';
+import type { MapRef } from 'react-map-gl/mapbox';
 import { useMatchMedia } from '../hooks/use-match-media';
 import { MapboxLayerKeys, MapboxSourceKeys } from '../models/enums';
 import { focusAtom, selectedCountriesAtom } from '../state/atoms.ts';
@@ -89,25 +84,6 @@ export const Globe = memo(
 		const buildingsPaint: FillExtrusionLayerSpecification['paint'] =
 			useMemo(
 				() => ({
-					'fill-extrusion-color': [
-						'case',
-						[
-							'in',
-							['get', 'iso_3166_1'],
-							['literal', selectedCountries],
-						],
-						'#fd7e14',
-						'#fd7e14',
-					],
-					'fill-extrusion-height': [
-						'interpolate',
-						['linear'],
-						['zoom'],
-						15,
-						0,
-						15.05,
-						['get', 'height'],
-					],
 					'fill-extrusion-base': [
 						'interpolate',
 						['linear'],
@@ -116,8 +92,24 @@ export const Globe = memo(
 						0,
 						15.05,
 						['get', 'min_height'],
-					],
-					'fill-extrusion-opacity': 0.6,
+					], 'fill-extrusion-color': [
+						'case',
+						[
+							'in',
+							['get', 'iso_3166_1'],
+							['literal', selectedCountries],
+						],
+						'#fd7e14',
+						'#fd7e14',
+					], 'fill-extrusion-height': [
+						'interpolate',
+						['linear'],
+						['zoom'],
+						15,
+						0,
+						15.05,
+						['get', 'height'],
+					], 'fill-extrusion-opacity': 0.6,
 				}),
 				[selectedCountries],
 			);
@@ -126,7 +118,7 @@ export const Globe = memo(
 			<Map
 				mapboxAccessToken={apiKeyMapbox ?? ''}
 				mapStyle={prefersDark ? darkThemeUrl : lightThemeUrl}
-				antialias={true}
+				antialias
 				attributionControl={false}
 				logoPosition="bottom-right"
 				minZoom={minZoom}

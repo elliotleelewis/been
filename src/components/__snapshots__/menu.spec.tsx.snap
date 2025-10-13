@@ -1,6 +1,6 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`Menu > should render 1`] = `
+exports[`menu > should render 1`] = `
 <DocumentFragment>
   <div
     class="flex border-zinc-200 border-t-2 sm:border-t-0 dark:border-zinc-700"
