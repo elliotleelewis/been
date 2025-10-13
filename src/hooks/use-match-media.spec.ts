@@ -1,20 +1,14 @@
 import { renderHook } from "@testing-library/react";
-import {
-	beforeEach,
-	describe,
-	expect,
-	it,
-	type MockInstance,
-	vi,
-} from "vitest";
+import { beforeEach, describe, expect, it, vi } from "vitest";
+import type { MockInstance } from "vitest";
 import { useMatchMedia } from "./use-match-media";
 
 describe("useMatchMedia", () => {
 	let mockMatchMedia: MockInstance<typeof window.matchMedia>;
 	beforeEach(() => {
 		mockMatchMedia = vi.spyOn(window, "matchMedia").mockReturnValue({
-			matches: false,
 			addEventListener: vi.fn(),
+			matches: false,
 			removeEventListener: vi.fn(),
 		} satisfies Partial<MediaQueryList> as unknown as MediaQueryList);
 	});
@@ -24,7 +18,7 @@ describe("useMatchMedia", () => {
 			useMatchMedia("(max-width: 1024px)"),
 		);
 
-		expect(result.current).toBe(false);
+		expect(result.current).toBeFalsy();
 		expect(mockMatchMedia).toHaveBeenCalledTimes(2);
 	});
 });

@@ -13,13 +13,13 @@ export const regionalizer = (
 		}
 	}
 
-	return Array.from(regionMap.entries())
+	return [...regionMap.entries()]
 		.map(([regionName, values]) => ({
-			name: regionName,
-			values: values.sort((a, b) => a.name.localeCompare(b.name)),
 			complete: values.filter((c) => c.selected).length / values.length,
+			name: regionName,
+			values: values.toSorted((a, b) => a.name.localeCompare(b.name)),
 		}))
-		.sort((a, b) => {
+		.toSorted((a, b) => {
 			if (a.name === "") {
 				return 1;
 			}

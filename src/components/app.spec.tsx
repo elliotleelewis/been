@@ -2,14 +2,12 @@ import { render } from '@testing-library/react';
 import { beforeAll, describe, expect, it, vi } from 'vitest';
 import { App } from './app';
 
-describe('App', () => {
+describe('app', () => {
 	beforeAll(() => {
 		vi.spyOn(window, 'matchMedia').mockImplementation(
 			() =>
 				({
-					matches: false,
-					addEventListener: vi.fn(),
-					removeEventListener: vi.fn(),
+					addEventListener: vi.fn(), matches: false, removeEventListener: vi.fn(),
 				}) satisfies Partial<MediaQueryList> as unknown as MediaQueryList,
 		);
 	});

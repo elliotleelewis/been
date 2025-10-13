@@ -26,7 +26,13 @@
     "window": "readonly"
   },
   "rules": {
+    "eslint/max-lines-per-function": "off",
+    "eslint/no-magic-numbers": "off",
+    "eslint/no-ternary": "off",
     "eslint/no-undefined": "off",
+    "import/exports-last": "off",
+    "import/no-named-export": "off",
+    "import/prefer-default-export": "off",
     "oxc/no-async-await": "off",
     "oxc/no-optional-chaining": "off",
     "react/jsx-filename-extension": [

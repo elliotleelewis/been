@@ -7,12 +7,10 @@ import { HydrateAtoms } from '../utils/test.ts';
 import { Menu } from './menu';
 
 const country: Country = {
-	name: 'United Kingdom',
-	iso3166: 'GB',
-	region: 'Europe',
+	iso3166: 'GB', name: 'United Kingdom', region: 'Europe',
 };
 
-describe('Menu', () => {
+describe('menu', () => {
 	it('should render', () => {
 		const result = render(
 			<Provider>
@@ -23,7 +21,7 @@ describe('Menu', () => {
 				>
 					<Menu
 						fullscreen={false}
-						toggleFullscreen={() => undefined}
+						toggleFullscreen={() => {}}
 					/>
 				</HydrateAtoms>
 			</Provider>,

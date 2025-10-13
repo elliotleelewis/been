@@ -4,16 +4,15 @@ import { createRef } from 'react';
 import { beforeAll, describe, expect, it, vi } from 'vitest';
 import { countries } from '../data/countries';
 import { MapboxSourceKeys } from '../models/enums';
-import { Globe, type MapForwardedRef } from './globe';
+import { Globe } from './globe';
+import type { MapForwardedRef } from './globe';
 
-describe('Globe', () => {
+describe('globe', () => {
 	beforeAll(() => {
 		vi.spyOn(window, 'matchMedia').mockImplementation(
 			() =>
 				({
-					matches: false,
-					addEventListener: vi.fn(),
-					removeEventListener: vi.fn(),
+					addEventListener: vi.fn(), matches: false, removeEventListener: vi.fn(),
 				}) satisfies Partial<MediaQueryList> as unknown as MediaQueryList,
 		);
 	});
@@ -48,8 +47,7 @@ describe('Globe', () => {
 			const features = map.current?.querySourceFeatures(
 				MapboxSourceKeys.Countries,
 				{
-					sourceLayer: 'country_boundaries',
-					filter: ['==', ['get', 'iso_3166_1'], iso3166],
+					filter: ['==', ['get', 'iso_3166_1'], iso3166], sourceLayer: 'country_boundaries',
 				},
 			);
 			expect.soft(features?.length, name).toBeGreaterThanOrEqual(1);

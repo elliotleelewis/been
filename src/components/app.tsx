@@ -1,6 +1,7 @@
 import classNames from 'classnames';
 import { useSetAtom } from 'jotai';
-import { type FC, memo, useCallback, useEffect, useState } from 'react';
+import { memo, useCallback, useEffect, useState } from 'react';
+import type { FC } from 'react';
 import { rawCountriesAtom } from '../state/atoms.ts';
 import { Globe } from './globe';
 import { Menu } from './menu';
@@ -8,7 +9,7 @@ import { Menu } from './menu';
 export const App: FC = memo(() => {
 	const setRawCountries = useSetAtom(rawCountriesAtom);
 	const [loading, setLoading] = useState(true);
-	const [error, setError] = useState<Error | null>(null);
+	const [error, setError] = useState<Error | null>();
 
 	const [menuFullscreen, setMenuFullscreen] = useState(false);
 
@@ -21,8 +22,8 @@ export const App: FC = memo(() => {
 				setRawCountries(countryMap);
 				setLoading(false);
 			})
-			.catch((e: Error) => {
-				setError(e);
+			.catch((error) => {
+				setError(error);
 			});
 	}, [setRawCountries]);
 
