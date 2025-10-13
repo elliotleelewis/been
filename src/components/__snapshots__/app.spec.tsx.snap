@@ -25,14 +25,14 @@ exports[`App > should render 1`] = `
         >
           <label
             class="sr-only"
-            for="«r0»"
+            for="_r_0_"
           >
             Search
           </label>
           <input
             class="w-full border-none bg-white px-4 py-2 text-zinc-900 focus:ring-2 focus:ring-primary/50 focus:ring-inset disabled:hover:cursor-not-allowed dark:bg-zinc-900 dark:text-white"
             disabled=""
-            id="«r0»"
+            id="_r_0_"
             placeholder="Search..."
             type="text"
             value=""
