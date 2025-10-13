@@ -9,5 +9,30 @@
     "typescript",
     "unicorn",
     "vitest"
-  ]
+  ],
+  "categories": {
+    "correctness": "error",
+    "nursery": "error",
+    "pedantic": "warn",
+    "perf": "error",
+    "restriction": "warn",
+    "style": "warn",
+    "suspicious": "warn"
+  },
+  "globals": {
+    "console": "readonly",
+    "document": "readonly",
+    "process": "readonly",
+    "window": "readonly"
+  },
+  "rules": {
+    "eslint/no-undefined": "off",
+    "oxc/no-async-await": "off",
+    "oxc/no-optional-chaining": "off",
+    "react/jsx-filename-extension": [
+      "error",
+      { "extensions": [".jsx", ".tsx"] }
+    ],
+    "react/react-in-jsx-scope": "off"
+  }
 }

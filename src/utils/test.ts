@@ -1,8 +1,8 @@
+import type { PropsWithChildren, ReactNode } from "react";
 import type { WritableAtom } from "jotai/index";
 import { useHydrateAtoms } from "jotai/utils";
-import type { PropsWithChildren } from "react";
 
-// biome-ignore lint/suspicious/noExplicitAny: Any is required to allow any atom type. Unfortunately cannot be `unknown`.
+// oxlint-disable-next-line no-explicit-any -- Any is required to allow any atom type. Unfortunately cannot be `unknown`.
 type AnyWritableAtom = WritableAtom<unknown, any[], unknown>;
 
 type InferAtomTuples<T> = {
@@ -15,6 +15,7 @@ type InferAtomTuples<T> = {
 		: never;
 };
 
+// oxlint-disable-next-line no-export -- This is a test utility file.
 export const HydrateAtoms = <
 	T extends readonly (readonly [AnyWritableAtom, ...unknown[]])[],
 >({
@@ -22,7 +23,7 @@ export const HydrateAtoms = <
 	children,
 }: PropsWithChildren<{
 	initialValues: InferAtomTuples<T>;
-}>) => {
+}>): ReactNode => {
 	useHydrateAtoms(initialValues);
 	return children;
 };
