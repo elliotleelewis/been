@@ -28,6 +28,7 @@ jobs:
       - run: pnpm install --frozen-lockfile
       - run: pnpm exec playwright install chromium
       - run: pnpm run lint
+      - run: pnpm run format
       - run: pnpm run build
         env:
           VITE_API_KEY_MAPBOX: ${{ secrets.API_KEY_MAPBOX }}
@@ -37,7 +38,7 @@ jobs:
       - uses: test-summary/action@v2
         if: always()
         with:
-          paths: 'reports/*.xml'
+          paths: "reports/*.xml"
   deploy:
     runs-on: ubuntu-24.04
     steps:

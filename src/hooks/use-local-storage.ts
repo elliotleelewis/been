@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react';
-import { useWindow } from './use-window';
+import { useEffect, useState } from "react";
+import { useWindow } from "./use-window";
 
 export const useLocalStorage = <T>(key: string, initialValue: T) => {
 	const window = useWindow();

@@ -1,6 +1,6 @@
-import type { WritableAtom } from 'jotai/index';
-import { useHydrateAtoms } from 'jotai/utils';
-import type { PropsWithChildren } from 'react';
+import type { WritableAtom } from "jotai/index";
+import { useHydrateAtoms } from "jotai/utils";
+import type { PropsWithChildren } from "react";
 
 // biome-ignore lint/suspicious/noExplicitAny: Any is required to allow any atom type. Unfortunately cannot be `unknown`.
 type AnyWritableAtom = WritableAtom<unknown, any[], unknown>;

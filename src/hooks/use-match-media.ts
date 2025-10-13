@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react';
-import { useWindow } from './use-window';
+import { useEffect, useState } from "react";
+import { useWindow } from "./use-window";
 
 export const useMatchMedia = (query: string) => {
 	const window = useWindow();
@@ -16,9 +16,9 @@ export const useMatchMedia = (query: string) => {
 		const mediaQueryList = window.matchMedia(query);
 		setMatches(mediaQueryList.matches);
 
-		mediaQueryList.addEventListener('change', handleChange);
+		mediaQueryList.addEventListener("change", handleChange);
 		return () => {
-			mediaQueryList.removeEventListener('change', handleChange);
+			mediaQueryList.removeEventListener("change", handleChange);
 		};
 	}, [window, query]);
 

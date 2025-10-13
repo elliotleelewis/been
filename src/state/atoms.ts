@@ -1,10 +1,10 @@
-import { atom } from 'jotai';
-import { atomWithStorage } from 'jotai/utils';
-import type { Country } from '../models/country.ts';
-import type { Region } from '../models/region.ts';
-import { regionalizer } from '../utils/regionalizer.ts';
+import { atom } from "jotai";
+import { atomWithStorage } from "jotai/utils";
+import type { Country } from "../models/country.ts";
+import type { Region } from "../models/region.ts";
+import { regionalizer } from "../utils/regionalizer.ts";
 
-const COUNTRIES_STORAGE_KEY = 'APP_COUNTRIES';
+const COUNTRIES_STORAGE_KEY = "APP_COUNTRIES";
 
 export const rawCountriesAtom = atom<Record<string, Country>>({});
 export const selectedCountriesAtom = atomWithStorage<readonly string[]>(
