@@ -6,6 +6,7 @@
 /docs
 /tmp
 /out-tsc
+/src/node_modules
 # Only exists if Bazel was run
 /bazel-out
 
