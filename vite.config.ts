@@ -1,6 +1,6 @@
 import tailwindcss from "@tailwindcss/vite";
 import react from "@vitejs/plugin-react";
-import { playwright } from '@vitest/browser-playwright'
+import { playwright } from "@vitest/browser-playwright";
 import { defineConfig } from "vite";
 
 export default defineConfig(({ command }) => ({
@@ -22,9 +22,7 @@ export default defineConfig(({ command }) => ({
 			headless: true,
 			provider: playwright(),
 			screenshotFailures: false,
-			instances: [
-				{ browser: "chromium" },
-			],
+			instances: [{ browser: "chromium" }],
 		},
 		clearMocks: true,
 		coverage: {
