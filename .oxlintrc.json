@@ -26,6 +26,9 @@
     "window": "readonly"
   },
   "rules": {
+    "@typescript-eslint/dot-notation": "off",
+    "@typescript-eslint/prefer-readonly-parameter-types": "warn",
+    "@typescript-eslint/strict-void-return": "off",
     "eslint/max-lines-per-function": "off",
     "eslint/no-magic-numbers": "off",
     "eslint/no-ternary": "off",
