@@ -6,7 +6,7 @@ import { MenuItem } from './menu-item';
 import { Progress } from './progress';
 
 interface Props {
-	loading?: boolean;
+	loading?: boolean | undefined;
 	fullscreen: boolean;
 	toggleFullscreen: () => void;
 }
