@@ -1,5 +1,5 @@
-import { memo } from 'react';
-import type { FC } from 'react';
+import { memo } from "react";
+import type { FC } from "react";
 
 interface Props {
 	complete: number;
@@ -35,4 +35,4 @@ export const Progress: FC<Props> = memo(({ complete }) => (
 		</svg>
 	</div>
 ));
-Progress.displayName = 'Progress';
+Progress.displayName = "Progress";

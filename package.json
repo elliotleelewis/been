@@ -10,7 +10,7 @@
     "e2e": "playwright test",
     "lint": "oxlint -c=.oxlintrc.json --type-aware --quiet",
     "lint:fix": "pnpm run lint --fix",
-    "format": "prettier --check \"**/*.{md,ts,js,cjs,mjs,scss,html,json,yml}\" --ignore-path .gitignore",
+    "format": "prettier --check \"**/*.{md,ts,tsx,js,jsx,cjs,mjs,scss,html,json,yml}\" --ignore-path .gitignore",
     "format:fix": "pnpm run format --write"
   },
   "dependencies": {
