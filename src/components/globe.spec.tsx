@@ -1,29 +1,33 @@
-import { render } from '@testing-library/react';
-import { bbox, featureCollection } from '@turf/turf';
-import { createRef } from 'react';
-import { beforeAll, describe, expect, it, vi } from 'vitest';
-import { countries } from '../data/countries';
-import { MapboxSourceKeys } from '../models/enums';
-import { Globe } from './globe';
-import type { MapForwardedRef } from './globe';
+import { render } from "@testing-library/react";
+import { bbox, featureCollection } from "@turf/turf";
+import { createRef } from "react";
+import { beforeAll, describe, expect, it, vi } from "vitest";
+import { countries } from "../data/countries";
+import { MapboxSourceKeys } from "../models/enums";
+import { Globe } from "./globe";
+import type { MapForwardedRef } from "./globe";
 
-describe('globe', () => {
+describe("globe", () => {
 	beforeAll(() => {
-		vi.spyOn(window, 'matchMedia').mockImplementation(
+		vi.spyOn(window, "matchMedia").mockImplementation(
 			() =>
 				({
-					addEventListener: vi.fn(), matches: false, removeEventListener: vi.fn(),
+					addEventListener:
+						vi.fn<MediaQueryList["addEventListener"]>(),
+					matches: false,
+					removeEventListener:
+						vi.fn<MediaQueryList["removeEventListener"]>(),
 				}) satisfies Partial<MediaQueryList> as unknown as MediaQueryList,
 		);
 	});
 
-	it('should render', () => {
+	it("should render", () => {
 		const result = render(<Globe />);
 
 		expect(result.asFragment()).toMatchSnapshot();
 	});
 
-	it('should accept a ref', () => {
+	it("should accept a ref", () => {
 		const map = createRef<MapForwardedRef>();
 		const result = render(<Globe ref={map} />);
 
@@ -31,7 +35,7 @@ describe('globe', () => {
 		expect(result.asFragment()).toMatchSnapshot();
 	});
 
-	it('should have geojson data for every country in dataset', async () => {
+	it("should have geojson data for every country in dataset", async () => {
 		const map = createRef<MapForwardedRef>();
 		render(<Globe ref={map} />);
 
@@ -47,7 +51,8 @@ describe('globe', () => {
 			const features = map.current?.querySourceFeatures(
 				MapboxSourceKeys.Countries,
 				{
-					filter: ['==', ['get', 'iso_3166_1'], iso3166], sourceLayer: 'country_boundaries',
+					filter: ["==", ["get", "iso_3166_1"], iso3166],
+					sourceLayer: "country_boundaries",
 				},
 			);
 			expect.soft(features?.length, name).toBeGreaterThanOrEqual(1);

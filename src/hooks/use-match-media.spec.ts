@@ -7,9 +7,9 @@ describe("useMatchMedia", () => {
 	let mockMatchMedia: MockInstance<typeof window.matchMedia>;
 	beforeEach(() => {
 		mockMatchMedia = vi.spyOn(window, "matchMedia").mockReturnValue({
-			addEventListener: vi.fn(),
+			addEventListener: vi.fn<MediaQueryList["addEventListener"]>(),
 			matches: false,
-			removeEventListener: vi.fn(),
+			removeEventListener: vi.fn<MediaQueryList["removeEventListener"]>(),
 		} satisfies Partial<MediaQueryList> as unknown as MediaQueryList);
 	});
 

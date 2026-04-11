@@ -1,9 +1,9 @@
-import { useAtomValue } from 'jotai';
-import { memo, useId, useMemo, useState } from 'react';
-import type { FC } from 'react';
-import { regionsAtom } from '../state/atoms.ts';
-import { MenuItem } from './menu-item';
-import { Progress } from './progress';
+import { useAtomValue } from "jotai";
+import { memo, useId, useMemo, useState } from "react";
+import type { FC } from "react";
+import { regionsAtom } from "../state/atoms.ts";
+import { MenuItem } from "./menu-item";
+import { Progress } from "./progress";
 
 interface Props {
 	loading?: boolean | undefined;
@@ -16,7 +16,7 @@ export const Menu: FC<Props> = memo(
 		const searchId = useId();
 		const regions = useAtomValue(regionsAtom);
 
-		const [search, setSearch] = useState('');
+		const [search, setSearch] = useState("");
 		const filteredRegions = useMemo(() => {
 			const s = search.trim().toLowerCase();
 			if (!s) {
@@ -115,7 +115,7 @@ export const Menu: FC<Props> = memo(
 							/>
 						</svg>
 					</div>
-				) : (filteredRegions.length === 0 ? (
+				) : filteredRegions.length === 0 ? (
 					<div className="m-4 h-full text-center font-medium">
 						No results!
 					</div>
@@ -124,7 +124,7 @@ export const Menu: FC<Props> = memo(
 						{filteredRegions.map((region) => (
 							<li key={region.name}>
 								<div className="sticky top-0 flex items-center justify-between bg-zinc-200 p-4 font-medium dark:bg-zinc-800">
-									<h2>{region.name || 'Other'}</h2>
+									<h2>{region.name || "Other"}</h2>
 									<Progress complete={region.complete ?? 0} />
 								</div>
 								<ul className="divide-y divide-zinc-100 dark:divide-zinc-800">
@@ -138,9 +138,9 @@ export const Menu: FC<Props> = memo(
 							</li>
 						))}
 					</ul>
-				))}
+				)}
 			</>
 		);
 	},
 );
-Menu.displayName = 'Menu';
+Menu.displayName = "Menu";
