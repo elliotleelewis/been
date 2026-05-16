@@ -14,6 +14,7 @@ interface Props {
 export const Menu: FC<Props> = memo(
 	({ loading = false, fullscreen, toggleFullscreen }) => {
 		const searchId = useId();
+		const searchLabelId = useId();
 		const regions = useAtomValue(regionsAtom);
 
 		const [search, setSearch] = useState("");
@@ -36,7 +37,11 @@ export const Menu: FC<Props> = memo(
 			<>
 				<div className="flex border-zinc-200 border-t-2 sm:border-t-0 dark:border-zinc-700">
 					<form className="w-full">
-						<label htmlFor={searchId} className="sr-only">
+						<label
+							id={searchLabelId}
+							htmlFor={searchId}
+							className="sr-only"
+						>
 							Search
 						</label>
 						<input
@@ -49,6 +54,7 @@ export const Menu: FC<Props> = memo(
 								setSearch(e.target.value);
 							}}
 							disabled={loading}
+							aria-labelledby={searchLabelId}
 						/>
 					</form>
 					<button

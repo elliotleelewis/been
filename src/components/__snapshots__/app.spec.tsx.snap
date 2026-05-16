@@ -26,10 +26,12 @@ exports[`app > should render 1`] = `
           <label
             class="sr-only"
             for="_r_0_"
+            id="_r_1_"
           >
             Search
           </label>
           <input
+            aria-labelledby="_r_1_"
             class="w-full border-none bg-white px-4 py-2 text-zinc-900 focus:ring-2 focus:ring-primary/50 focus:ring-inset disabled:hover:cursor-not-allowed dark:bg-zinc-900 dark:text-white"
             disabled=""
             id="_r_0_"
