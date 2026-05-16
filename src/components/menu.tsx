@@ -37,7 +37,11 @@ export const Menu: FC<Props> = memo(
 			<>
 				<div className="flex border-zinc-200 border-t-2 sm:border-t-0 dark:border-zinc-700">
 					<form className="w-full">
-						<label id={searchLabelId} htmlFor={searchId} className="sr-only">
+						<label
+							id={searchLabelId}
+							htmlFor={searchId}
+							className="sr-only"
+						>
 							Search
 						</label>
 						<input
