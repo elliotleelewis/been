@@ -1,6 +1,6 @@
 {
   "private": true,
-  "packageManager": "pnpm@11.1.2",
+  "packageManager": "pnpm@11.2.2",
   "type": "module",
   "scripts": {
     "start": "vite --host",
