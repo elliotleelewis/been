@@ -1,7 +1,11 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "repositories": ["elliotleelewis/been"],
-  "extends": ["config:recommended", ":preserveSemverRanges"],
+  "extends": [
+    "config:recommended",
+    "security:minimumReleaseAgeNpm",
+    ":preserveSemverRanges"
+  ],
   "lockFileMaintenance": {
     "enabled": true
   }
