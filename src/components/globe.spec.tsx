@@ -12,11 +12,9 @@ describe("globe", () => {
 		vi.spyOn(window, "matchMedia").mockImplementation(
 			() =>
 				({
-					addEventListener:
-						vi.fn<MediaQueryList["addEventListener"]>(),
+					addEventListener: vi.fn<MediaQueryList["addEventListener"]>(),
 					matches: false,
-					removeEventListener:
-						vi.fn<MediaQueryList["removeEventListener"]>(),
+					removeEventListener: vi.fn<MediaQueryList["removeEventListener"]>(),
 				}) satisfies Partial<MediaQueryList> as unknown as MediaQueryList,
 		);
 	});
@@ -39,26 +37,18 @@ describe("globe", () => {
 		const map = createRef<MapForwardedRef>();
 		render(<Globe ref={map} />);
 
-		await vi.waitUntil(
-			() => map.current?.isSourceLoaded(MapboxSourceKeys.Countries),
-			{
-				timeout: 5000,
-			},
-		);
+		await vi.waitUntil(() => map.current?.isSourceLoaded(MapboxSourceKeys.Countries), {
+			timeout: 5000,
+		});
 
 		expect(map.current?.querySourceFeatures).toBeTruthy();
 		for (const { iso3166, name, bounds } of countries) {
-			const features = map.current?.querySourceFeatures(
-				MapboxSourceKeys.Countries,
-				{
-					filter: ["==", ["get", "iso_3166_1"], iso3166],
-					sourceLayer: "country_boundaries",
-				},
-			);
+			const features = map.current?.querySourceFeatures(MapboxSourceKeys.Countries, {
+				filter: ["==", ["get", "iso_3166_1"], iso3166],
+				sourceLayer: "country_boundaries",
+			});
 			expect.soft(features?.length, name).toBeGreaterThanOrEqual(1);
-			expect
-				.soft(bounds, name)
-				.toEqual(bbox(featureCollection(features ?? [])));
+			expect.soft(bounds, name).toEqual(bbox(featureCollection(features ?? [])));
 		}
 	});
 });

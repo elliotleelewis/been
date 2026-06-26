@@ -52,23 +52,17 @@ describe("regionalizer", () => {
 			{
 				complete: 0,
 				name: "Region 1",
-				values: [
-					{ iso3166: "A", name: "Country A", region: "Region 1" },
-				],
+				values: [{ iso3166: "A", name: "Country A", region: "Region 1" }],
 			},
 			{
 				complete: 0,
 				name: "Region 2",
-				values: [
-					{ iso3166: "B", name: "Country B", region: "Region 2" },
-				],
+				values: [{ iso3166: "B", name: "Country B", region: "Region 2" }],
 			},
 			{
 				complete: 0,
 				name: "Region 3",
-				values: [
-					{ iso3166: "C", name: "Country C", region: "Region 3" },
-				],
+				values: [{ iso3166: "C", name: "Country C", region: "Region 3" }],
 			},
 		];
 

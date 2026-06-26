@@ -16,11 +16,7 @@ describe("menu", () => {
 	it("should render", () => {
 		const result = render(
 			<Provider>
-				<HydrateAtoms
-					initialValues={[
-						[rawCountriesAtom, { [country.iso3166]: country }],
-					]}
-				>
+				<HydrateAtoms initialValues={[[rawCountriesAtom, { [country.iso3166]: country }]]}>
 					<Menu fullscreen={false} toggleFullscreen={() => {}} />
 				</HydrateAtoms>
 			</Provider>,

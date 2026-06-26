@@ -30,27 +30,20 @@ export const regionsAtom = atom<readonly Region[]>((get) => {
 	return regionalizer(countries);
 });
 
-export const addCountryAtom = atom(
-	undefined,
-	(get, set, countryCode: string) => {
-		const selectedCountries = get(selectedCountriesAtom);
-		if (!selectedCountries.includes(countryCode)) {
-			const countries = get(countriesAtom);
-			const focusCountry =
-				countries.find((c) => c.iso3166 === countryCode) ?? undefined;
-			set(focusAtom, focusCountry);
-			set(selectedCountriesAtom, [...selectedCountries, countryCode]);
-		}
-	},
-);
-export const removeCountryAtom = atom(
-	undefined,
-	(get, set, countryCode: string) => {
-		const selectedCountries = get(selectedCountriesAtom);
-		set(focusAtom, undefined);
-		set(
-			selectedCountriesAtom,
-			selectedCountries.filter((c) => c !== countryCode),
-		);
-	},
-);
+export const addCountryAtom = atom(undefined, (get, set, countryCode: string) => {
+	const selectedCountries = get(selectedCountriesAtom);
+	if (!selectedCountries.includes(countryCode)) {
+		const countries = get(countriesAtom);
+		const focusCountry = countries.find((c) => c.iso3166 === countryCode) ?? undefined;
+		set(focusAtom, focusCountry);
+		set(selectedCountriesAtom, [...selectedCountries, countryCode]);
+	}
+});
+export const removeCountryAtom = atom(undefined, (get, set, countryCode: string) => {
+	const selectedCountries = get(selectedCountriesAtom);
+	set(focusAtom, undefined);
+	set(
+		selectedCountriesAtom,
+		selectedCountries.filter((c) => c !== countryCode),
+	);
+});
