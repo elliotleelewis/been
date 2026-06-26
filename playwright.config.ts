@@ -14,8 +14,6 @@ export default defineConfig({
 		command: "pnpm run preview",
 		reuseExistingServer: !process.env["CI"],
 		timeout: 10 * 1000,
-		url: process.env["CI"]
-			? "http://127.0.0.1:4173"
-			: "http://127.0.0.1:5173",
+		url: process.env["CI"] ? "http://127.0.0.1:4173" : "http://127.0.0.1:5173",
 	},
 });

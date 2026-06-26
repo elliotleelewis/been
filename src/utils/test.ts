@@ -16,9 +16,7 @@ type InferAtomTuples<T> = {
 };
 
 // oxlint-disable-next-line no-export -- This is a test utility file.
-export const HydrateAtoms = <
-	T extends readonly (readonly [AnyWritableAtom, ...unknown[]])[],
->({
+export const HydrateAtoms = <T extends readonly (readonly [AnyWritableAtom, ...unknown[]])[]>({
 	initialValues,
 	children,
 }: PropsWithChildren<{

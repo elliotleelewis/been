@@ -1,17 +1,7 @@
 import { useAtomValue } from "jotai";
-import type {
-	FillExtrusionLayerSpecification,
-	FillLayerSpecification,
-} from "mapbox-gl";
+import type { FillExtrusionLayerSpecification, FillLayerSpecification } from "mapbox-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
-import {
-	forwardRef,
-	memo,
-	useEffect,
-	useImperativeHandle,
-	useMemo,
-	useRef,
-} from "react";
+import { forwardRef, memo, useEffect, useImperativeHandle, useMemo, useRef } from "react";
 import { Layer, Map, NavigationControl, Source } from "react-map-gl/mapbox";
 import type { MapRef } from "react-map-gl/mapbox";
 import { useMatchMedia } from "../hooks/use-match-media";
@@ -19,9 +9,7 @@ import { MapboxLayerKeys, MapboxSourceKeys } from "../models/enums";
 import { focusAtom, selectedCountriesAtom } from "../state/atoms.ts";
 import type { ForwardedRefFunction } from "../types/utils";
 
-const apiKeyMapbox = import.meta.env["VITE_API_KEY_MAPBOX"] as
-	| string
-	| undefined;
+const apiKeyMapbox = import.meta.env["VITE_API_KEY_MAPBOX"] as string | undefined;
 const testMode = import.meta.env.MODE === "test";
 const darkThemeUrl = "mapbox://styles/mapbox/dark-v11";
 const lightThemeUrl = "mapbox://styles/mapbox/light-v11";
@@ -45,14 +33,10 @@ export const Globe = memo(
 		useImperativeHandle(
 			ref,
 			() => ({
-				isSourceLoaded: (
-					...params: Parameters<MapRef["isSourceLoaded"]>
-				) => {
+				isSourceLoaded: (...params: Parameters<MapRef["isSourceLoaded"]>) => {
 					return internalRef.current?.isSourceLoaded(...params);
 				},
-				querySourceFeatures: (
-					...params: Parameters<MapRef["querySourceFeatures"]>
-				) => {
+				querySourceFeatures: (...params: Parameters<MapRef["querySourceFeatures"]>) => {
 					return internalRef.current?.querySourceFeatures(...params);
 				},
 			}),
@@ -79,43 +63,40 @@ export const Globe = memo(
 			[],
 		);
 
-		const buildingsFilter: FillExtrusionLayerSpecification["filter"] =
-			useMemo(() => ["==", "extrude", "true"], []);
-		const buildingsPaint: FillExtrusionLayerSpecification["paint"] =
-			useMemo(
-				() => ({
-					"fill-extrusion-base": [
-						"interpolate",
-						["linear"],
-						["zoom"],
-						15,
-						0,
-						15.05,
-						["get", "min_height"],
-					],
-					"fill-extrusion-color": [
-						"case",
-						[
-							"in",
-							["get", "iso_3166_1"],
-							["literal", selectedCountries],
-						],
-						"#fd7e14",
-						"#fd7e14",
-					],
-					"fill-extrusion-height": [
-						"interpolate",
-						["linear"],
-						["zoom"],
-						15,
-						0,
-						15.05,
-						["get", "height"],
-					],
-					"fill-extrusion-opacity": 0.6,
-				}),
-				[selectedCountries],
-			);
+		const buildingsFilter: FillExtrusionLayerSpecification["filter"] = useMemo(
+			() => ["==", "extrude", "true"],
+			[],
+		);
+		const buildingsPaint: FillExtrusionLayerSpecification["paint"] = useMemo(
+			() => ({
+				"fill-extrusion-base": [
+					"interpolate",
+					["linear"],
+					["zoom"],
+					15,
+					0,
+					15.05,
+					["get", "min_height"],
+				],
+				"fill-extrusion-color": [
+					"case",
+					["in", ["get", "iso_3166_1"], ["literal", selectedCountries]],
+					"#fd7e14",
+					"#fd7e14",
+				],
+				"fill-extrusion-height": [
+					"interpolate",
+					["linear"],
+					["zoom"],
+					15,
+					0,
+					15.05,
+					["get", "height"],
+				],
+				"fill-extrusion-opacity": 0.6,
+			}),
+			[selectedCountries],
+		);
 
 		return (
 			<Map

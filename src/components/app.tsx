@@ -16,9 +16,7 @@ export const App: FC = memo(() => {
 	useEffect(() => {
 		import("../data/countries")
 			.then(({ countries }) => {
-				const countryMap = Object.fromEntries(
-					countries.map((c) => [c.iso3166, c]),
-				);
+				const countryMap = Object.fromEntries(countries.map((c) => [c.iso3166, c]));
 				setRawCountries(countryMap);
 				setLoading(false);
 			})
@@ -38,9 +36,7 @@ export const App: FC = memo(() => {
 	return (
 		<div className="grid size-full grid-rows-[auto,1fr,auto] md:grid-cols-3 md:grid-rows-[auto,1fr] dark:bg-zinc-900 dark:text-white">
 			<div className="flex items-center justify-center bg-primary p-3 text-white md:col-span-1 dark:bg-zinc-950 dark:text-primary">
-				<h1 className="select-none font-bold text-xl tracking-wide">
-					been
-				</h1>
+				<h1 className="select-none font-bold text-xl tracking-wide">been</h1>
 			</div>
 			<div
 				className={classNames(
@@ -50,10 +46,7 @@ export const App: FC = memo(() => {
 			>
 				{error ? (
 					<div className="flex size-full flex-col items-center justify-center gap-2 px-2 text-center text-lg">
-						<span>
-							Oops! Something went wrong whilst loading the list
-							of countries.
-						</span>
+						<span>Oops! Something went wrong whilst loading the list of countries.</span>
 						<button
 							type="button"
 							className="items-center justify-center rounded-md border border-primary px-6 py-2 text-primary transition focus:ring-2 focus:ring-primary/50 active:ring-primary"

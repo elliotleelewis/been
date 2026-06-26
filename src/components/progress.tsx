@@ -7,11 +7,7 @@ interface Props {
 
 export const Progress: FC<Props> = memo(({ complete }) => (
 	<div className="relative size-5">
-		<svg
-			className="-rotate-90 size-full"
-			viewBox="0 0 36 36"
-			xmlns="http://www.w3.org/2000/svg"
-		>
+		<svg className="-rotate-90 size-full" viewBox="0 0 36 36" xmlns="http://www.w3.org/2000/svg">
 			<title>{Math.round(complete * 1000) / 10}% complete.</title>
 			<circle
 				cx="18"

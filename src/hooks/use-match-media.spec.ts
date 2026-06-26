@@ -14,9 +14,7 @@ describe("useMatchMedia", () => {
 	});
 
 	it("should initialise", () => {
-		const { result } = renderHook(() =>
-			useMatchMedia("(max-width: 1024px)"),
-		);
+		const { result } = renderHook(() => useMatchMedia("(max-width: 1024px)"));
 
 		expect(result.current).toBeFalsy();
 		expect(mockMatchMedia).toHaveBeenCalledTimes(2);

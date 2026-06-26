@@ -7,11 +7,9 @@ describe("app", () => {
 		vi.spyOn(window, "matchMedia").mockImplementation(
 			() =>
 				({
-					addEventListener:
-						vi.fn<MediaQueryList["addEventListener"]>(),
+					addEventListener: vi.fn<MediaQueryList["addEventListener"]>(),
 					matches: false,
-					removeEventListener:
-						vi.fn<MediaQueryList["removeEventListener"]>(),
+					removeEventListener: vi.fn<MediaQueryList["removeEventListener"]>(),
 				}) satisfies Partial<MediaQueryList> as unknown as MediaQueryList,
 		);
 	});
