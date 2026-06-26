@@ -1,23 +1,18 @@
-import { useEffect, useState } from "react";
+import { useSyncExternalStore } from "react";
 import { useWindow } from "./use-window";
 
 export const useMatchMedia = (query: string) => {
 	const window = useWindow();
-
-	const [matches, setMatches] = useState<boolean>(() => window.matchMedia(query).matches);
-
-	useEffect(() => {
-		const handleChange = (event: MediaQueryListEvent) => {
-			setMatches(event.matches);
-		};
-
+	
+	const subscribe = (onStoreChange: () => void) => {
 		const mediaQueryList = window.matchMedia(query);
-		mediaQueryList.addEventListener("change", handleChange);
-
+		mediaQueryList.addEventListener("change", onStoreChange);
 		return () => {
-			mediaQueryList.removeEventListener("change", handleChange);
+			mediaQueryList.removeEventListener("change", onStoreChange);
 		};
-	}, [window, query]);
-
-	return matches;
+	};
+	
+	const getSnapshot = () => window.matchMedia(query).matches;
+	
+	return useSyncExternalStore(subscribe, getSnapshot);
 };
