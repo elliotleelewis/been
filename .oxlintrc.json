@@ -1,15 +1,6 @@
 {
   "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "plugins": [
-    "import",
-    "jsdoc",
-    "jsx-a11y",
-    "oxc",
-    "react",
-    "typescript",
-    "unicorn",
-    "vitest"
-  ],
+  "plugins": ["import", "jsdoc", "jsx-a11y", "oxc", "react", "typescript", "unicorn", "vitest"],
   "categories": {
     "correctness": "error",
     "nursery": "error",
@@ -38,10 +29,7 @@
     "import/prefer-default-export": "off",
     "oxc/no-async-await": "off",
     "oxc/no-optional-chaining": "off",
-    "react/jsx-filename-extension": [
-      "error",
-      { "extensions": [".jsx", ".tsx"] }
-    ],
+    "react/jsx-filename-extension": ["error", { "extensions": [".jsx", ".tsx"] }],
     "react/react-in-jsx-scope": "off"
   }
 }

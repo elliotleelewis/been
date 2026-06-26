@@ -4,9 +4,7 @@ import { useWindow } from "./use-window";
 export const useMatchMedia = (query: string) => {
 	const window = useWindow();
 
-	const [matches, setMatches] = useState<boolean>(
-		() => window.matchMedia(query).matches,
-	);
+	const [matches, setMatches] = useState<boolean>(() => window.matchMedia(query).matches);
 
 	useEffect(() => {
 		const handleChange = (event: MediaQueryListEvent) => {

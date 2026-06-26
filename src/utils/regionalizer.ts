@@ -1,9 +1,7 @@
 import type { Country } from "../models/country";
 import type { Region } from "../models/region";
 
-export const regionalizer = (
-	countries: readonly Country[],
-): readonly Region[] => {
+export const regionalizer = (countries: readonly Country[]): readonly Region[] => {
 	const regionMap = new Map<string, Country[]>();
 	for (const country of countries) {
 		if (regionMap.has(country.region)) {
