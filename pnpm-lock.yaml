@@ -21,8 +21,8 @@ importers:
         specifier: ^2.0.0
         version: 2.20.1(@babel/core@7.29.7)(@babel/template@7.29.7)(@types/react@19.2.17)(react@19.2.7)
       mapbox-gl:
-        specifier: ~3.25.0
-        version: 3.25.0
+        specifier: ~3.26.0
+        version: 3.26.0
       react:
         specifier: ^19.0.0
         version: 19.2.7
@@ -31,7 +31,7 @@ importers:
         version: 19.2.7(react@19.2.7)
       react-map-gl:
         specifier: ^8.0.0
-        version: 8.1.1(mapbox-gl@3.25.0)(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
+        version: 8.1.1(mapbox-gl@3.26.0)(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
       tailwindcss:
         specifier: ^4.0.0
         version: 4.3.2
@@ -1944,8 +1944,8 @@ packages:
     resolution: {integrity: sha512-hXdUTZYIVOt1Ex//jAQi+wTZZpUpwBj/0QsOzqegb3rGMMeJiSEu5xLHnYfBrRV4RH2+OCSOO95Is/7x1WJ4bw==}
     engines: {node: '>=10'}
 
-  mapbox-gl@3.25.0:
-    resolution: {integrity: sha512-I+9oSkJVFu51xIAAQcjKophFe6zVAGWROHsszeRhX9E1OXEizgPH+8BkF7GaxmmLd9FbADdEfvULF8NxEFcB5w==}
+  mapbox-gl@3.26.0:
+    resolution: {integrity: sha512-N+Y8VmvpD6xDeP0hAbegPZeEMY5TtnLcV0gEUBZ/KHq3s/yUKQm0PVG9JEkId0QFMMe5/W+FEjoyV4NI3B/N7A==}
 
   min-indent@1.0.1:
     resolution: {integrity: sha512-I9jwMn07Sy/IwOj3zVkVik2JTvgpaykDZEigL6Rx6N9LbMywwUSMtxET+7lVoDLLd3O3IXwJwvuuns8UB/HeAg==}
@@ -4254,12 +4254,12 @@ snapshots:
   '@typescript/typescript-win32-x64@7.0.2':
     optional: true
 
-  '@vis.gl/react-mapbox@8.1.1(mapbox-gl@3.25.0)(react-dom@19.2.7(react@19.2.7))(react@19.2.7)':
+  '@vis.gl/react-mapbox@8.1.1(mapbox-gl@3.26.0)(react-dom@19.2.7(react@19.2.7))(react@19.2.7)':
     dependencies:
       react: 19.2.7
       react-dom: 19.2.7(react@19.2.7)
     optionalDependencies:
-      mapbox-gl: 3.25.0
+      mapbox-gl: 3.26.0
 
   '@vis.gl/react-maplibre@8.1.1(react-dom@19.2.7(react@19.2.7))(react@19.2.7)':
     dependencies:
@@ -4768,7 +4768,7 @@ snapshots:
     dependencies:
       semver: 7.8.5
 
-  mapbox-gl@3.25.0: {}
+  mapbox-gl@3.26.0: {}
 
   min-indent@1.0.1: {}
 
@@ -4931,14 +4931,14 @@ snapshots:
 
   react-is@17.0.2: {}
 
-  react-map-gl@8.1.1(mapbox-gl@3.25.0)(react-dom@19.2.7(react@19.2.7))(react@19.2.7):
+  react-map-gl@8.1.1(mapbox-gl@3.26.0)(react-dom@19.2.7(react@19.2.7))(react@19.2.7):
     dependencies:
-      '@vis.gl/react-mapbox': 8.1.1(mapbox-gl@3.25.0)(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
+      '@vis.gl/react-mapbox': 8.1.1(mapbox-gl@3.26.0)(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
       '@vis.gl/react-maplibre': 8.1.1(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
       react: 19.2.7
       react-dom: 19.2.7(react@19.2.7)
     optionalDependencies:
-      mapbox-gl: 3.25.0
+      mapbox-gl: 3.26.0
 
   react@19.2.7: {}
 
