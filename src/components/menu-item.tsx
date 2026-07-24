@@ -13,7 +13,7 @@ export const MenuItem: FC<Props> = memo(({ country }) => {
 	const removeCountry = useSetAtom(removeCountryAtom);
 
 	const toggleCountry = useCallback(() => {
-		if (country.selected) {
+		if (country.selected === true) {
 			removeCountry(country.iso3166);
 		} else {
 			addCountry(country.iso3166);

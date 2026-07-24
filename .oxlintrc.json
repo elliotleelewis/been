@@ -4,11 +4,11 @@
   "categories": {
     "correctness": "error",
     "nursery": "error",
-    "pedantic": "warn",
+    "pedantic": "error",
     "perf": "error",
-    "restriction": "warn",
+    "restriction": "error",
     "style": "warn",
-    "suspicious": "warn"
+    "suspicious": "error"
   },
   "globals": {
     "console": "readonly",
@@ -21,15 +21,38 @@
     "@typescript-eslint/prefer-readonly-parameter-types": "warn",
     "@typescript-eslint/strict-void-return": "off",
     "eslint/max-lines-per-function": "off",
+    "eslint/no-console": ["error", { "allow": ["warn", "error"] }],
     "eslint/no-magic-numbers": "off",
     "eslint/no-ternary": "off",
     "eslint/no-undefined": "off",
     "import/exports-last": "off",
     "import/no-named-export": "off",
+    "import/no-relative-parent-imports": "off",
+    "import/no-unassigned-import": ["error", { "allow": ["**/*.css", "**/jest-dom/vitest"] }],
     "import/prefer-default-export": "off",
     "oxc/no-async-await": "off",
     "oxc/no-optional-chaining": "off",
     "react/jsx-filename-extension": ["error", { "extensions": [".jsx", ".tsx"] }],
     "react/react-in-jsx-scope": "off"
-  }
+  },
+  "overrides": [
+    {
+      "files": ["*.config.ts"],
+      "rules": {
+        "import/no-default-export": "off"
+      }
+    },
+    {
+      "files": ["*.d.ts"],
+      "rules": {
+        "import/unambiguous": "off"
+      }
+    },
+    {
+      "files": ["src/data/**"],
+      "rules": {
+        "eslint/max-lines": "off"
+      }
+    }
+  ]
 }

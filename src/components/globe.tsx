@@ -9,7 +9,7 @@ import { MapboxLayerKeys, MapboxSourceKeys } from "../models/enums";
 import { focusAtom, selectedCountriesAtom } from "../state/atoms.ts";
 import type { ForwardedRefFunction } from "../types/utils";
 
-const apiKeyMapbox = import.meta.env["VITE_API_KEY_MAPBOX"] as string | undefined;
+const apiKeyMapbox = import.meta.env["VITE_API_KEY_MAPBOX"];
 const testMode = import.meta.env.MODE === "test";
 const darkThemeUrl = "mapbox://styles/mapbox/dark-v11";
 const lightThemeUrl = "mapbox://styles/mapbox/light-v11";
@@ -33,10 +33,14 @@ export const Globe = memo(
 		useImperativeHandle(
 			ref,
 			() => ({
-				isSourceLoaded: (...params: Parameters<MapRef["isSourceLoaded"]>) => {
+				isSourceLoaded: (
+					...params: Parameters<MapRef["isSourceLoaded"]>
+				): ReturnType<MapRef["isSourceLoaded"]> | undefined => {
 					return internalRef.current?.isSourceLoaded(...params);
 				},
-				querySourceFeatures: (...params: Parameters<MapRef["querySourceFeatures"]>) => {
+				querySourceFeatures: (
+					...params: Parameters<MapRef["querySourceFeatures"]>
+				): ReturnType<MapRef["querySourceFeatures"]> | undefined => {
 					return internalRef.current?.querySourceFeatures(...params);
 				},
 			}),

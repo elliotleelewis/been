@@ -33,13 +33,13 @@ describe("regionalizer", () => {
 
 		const result = regionalizer(countries);
 		expect(result).toStrictEqual(expected);
-	});
+	}, 5000);
 
 	it("should handle an empty array", () => {
 		const countries: readonly Country[] = [];
 		const result = regionalizer(countries);
 		expect(result).toStrictEqual([]);
-	});
+	}, 5000);
 
 	it("should correctly handle single country in each region", () => {
 		const countries: readonly Country[] = [
@@ -68,7 +68,7 @@ describe("regionalizer", () => {
 
 		const result = regionalizer(countries);
 		expect(result).toStrictEqual(expected);
-	});
+	}, 5000);
 
 	it("should sort the regions", () => {
 		const countries: readonly Country[] = [
@@ -81,7 +81,7 @@ describe("regionalizer", () => {
 		expect(result[0]?.name).toBe("Region 1");
 		expect(result[1]?.name).toBe("Region 2");
 		expect(result[2]?.name).toBe("Region 3");
-	});
+	}, 5000);
 
 	it("should sort an empty region name", () => {
 		const countriesA: readonly Country[] = [
@@ -105,7 +105,7 @@ describe("regionalizer", () => {
 		expect(resultB[0]?.name).toBe("Region 1");
 		expect(resultB[1]?.name).toBe("Region 2");
 		expect(resultB[2]?.name).toBe("");
-	});
+	}, 5000);
 
 	it("should not mutate the original array", () => {
 		const countries: readonly Country[] = [
@@ -118,5 +118,5 @@ describe("regionalizer", () => {
 			{ iso3166: "A", name: "Country A", region: "Region 1" },
 			{ iso3166: "B", name: "Country B", region: "Region 1" },
 		]);
-	});
+	}, 5000);
 });

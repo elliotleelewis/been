@@ -20,8 +20,8 @@ export const App: FC = memo(() => {
 				setRawCountries(countryMap);
 				setLoading(false);
 			})
-			.catch((error) => {
-				setError(error);
+			.catch((cause: unknown) => {
+				setError(cause instanceof Error ? cause : new Error("Failed to load countries", { cause }));
 			});
 	}, [setRawCountries]);
 
@@ -36,7 +36,7 @@ export const App: FC = memo(() => {
 	return (
 		<div className="grid size-full grid-rows-[auto,1fr,auto] md:grid-cols-3 md:grid-rows-[auto,1fr] dark:bg-zinc-900 dark:text-white">
 			<div className="flex items-center justify-center bg-primary p-3 text-white md:col-span-1 dark:bg-zinc-950 dark:text-primary">
-				<h1 className="select-none font-bold text-xl tracking-wide">been</h1>
+				<h1 className="select-none font-bold text-xl tracking-wide">{"been"}</h1>
 			</div>
 			<div
 				className={classNames(
