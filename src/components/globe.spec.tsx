@@ -2,9 +2,9 @@ import { render } from "@testing-library/react";
 import { bbox, featureCollection } from "@turf/turf";
 import { createRef } from "react";
 import { beforeAll, describe, expect, it, vi } from "vitest";
-import { countries } from "@/data/countries";
-import { MapboxSourceKeys } from "@/models/enums";
-import { assertDefined, mockMediaQueryList } from "@/utils/test";
+import { countries } from "../data/countries";
+import { MapboxSourceKeys } from "../models/enums";
+import { assertDefined, mockMediaQueryList } from "../utils/test";
 import { Globe } from "./globe";
 import type { MapForwardedRef } from "./globe";
 

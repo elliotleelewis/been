@@ -4,10 +4,10 @@ import "mapbox-gl/dist/mapbox-gl.css";
 import { forwardRef, memo, useEffect, useImperativeHandle, useMemo, useRef } from "react";
 import { Layer, Map, NavigationControl, Source } from "react-map-gl/mapbox";
 import type { MapRef } from "react-map-gl/mapbox";
-import { useMatchMedia } from "@/hooks/use-match-media";
-import { MapboxLayerKeys, MapboxSourceKeys } from "@/models/enums";
-import { focusAtom, selectedCountriesAtom } from "@/state/atoms";
-import type { ForwardedRefFunction } from "@/types/utils";
+import { useMatchMedia } from "../hooks/use-match-media";
+import { MapboxLayerKeys, MapboxSourceKeys } from "../models/enums";
+import { focusAtom, selectedCountriesAtom } from "../state/atoms.ts";
+import type { ForwardedRefFunction } from "../types/utils";
 
 const apiKeyMapbox = import.meta.env["VITE_API_KEY_MAPBOX"];
 const testMode = import.meta.env.MODE === "test";

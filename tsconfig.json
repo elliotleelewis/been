@@ -4,9 +4,6 @@
   "compilerOptions": {
     "types": ["vite/client"],
     "verbatimModuleSyntax": true,
-    "lib": ["ES2023", "DOM", "DOM.Iterable"],
-    "paths": {
-      "@/*": ["./src/*"]
-    }
+    "lib": ["ES2023", "DOM", "DOM.Iterable"]
   }
 }

@@ -1,9 +1,9 @@
 import { render } from "@testing-library/react";
 import { Provider } from "jotai";
 import { describe, expect, it, vi } from "vitest";
-import type { Country } from "@/models/country";
-import { rawCountriesAtom } from "@/state/atoms";
-import { HydrateAtoms } from "@/utils/test";
+import type { Country } from "../models/country.ts";
+import { rawCountriesAtom } from "../state/atoms.ts";
+import { HydrateAtoms } from "../utils/test.ts";
 import { Menu } from "./menu";
 
 const country: Country = {

@@ -1,8 +1,8 @@
 import { useSetAtom } from "jotai";
 import { memo, useCallback } from "react";
 import type { FC } from "react";
-import type { Country } from "@/models/country";
-import { addCountryAtom, removeCountryAtom } from "@/state/atoms";
+import type { Country } from "../models/country";
+import { addCountryAtom, removeCountryAtom } from "../state/atoms";
 
 interface Props {
 	country: Country;

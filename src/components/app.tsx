@@ -2,7 +2,7 @@ import classNames from "classnames";
 import { useSetAtom } from "jotai";
 import { memo, useCallback, useEffect, useState } from "react";
 import type { FC } from "react";
-import { rawCountriesAtom } from "@/state/atoms";
+import { rawCountriesAtom } from "../state/atoms.ts";
 import { Globe } from "./globe";
 import { Menu } from "./menu";
 
@@ -14,7 +14,7 @@ export const App: FC = memo(() => {
 	const [menuFullscreen, setMenuFullscreen] = useState(false);
 
 	useEffect(() => {
-		import("@/data/countries")
+		import("../data/countries")
 			.then(({ countries }) => {
 				const countryMap = Object.fromEntries(countries.map((c) => [c.iso3166, c]));
 				setRawCountries(countryMap);

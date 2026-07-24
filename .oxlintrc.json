@@ -14,7 +14,6 @@
     "console": "readonly",
     "document": "readonly",
     "process": "readonly",
-    "URL": "readonly",
     "window": "readonly"
   },
   "rules": {
@@ -28,6 +27,7 @@
     "eslint/no-undefined": "off",
     "import/exports-last": "off",
     "import/no-named-export": "off",
+    "import/no-relative-parent-imports": "off",
     "import/no-unassigned-import": ["error", { "allow": ["**/*.css", "**/jest-dom/vitest"] }],
     "import/prefer-default-export": "off",
     "oxc/no-async-await": "off",

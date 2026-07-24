@@ -1,7 +1,7 @@
 import { renderHook } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import type { MockInstance } from "vitest";
-import { mockMediaQueryList } from "@/utils/test";
+import { mockMediaQueryList } from "../utils/test";
 import { useMatchMedia } from "./use-match-media";
 
 describe("useMatchMedia", () => {
