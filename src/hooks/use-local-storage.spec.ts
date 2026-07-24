@@ -9,5 +9,5 @@ describe("useLocalStorage", () => {
 
 		expect(data).toBe("hello");
 		expect(setData).toBeDefined();
-	});
+	}, 5000);
 });

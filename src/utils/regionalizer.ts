@@ -13,7 +13,7 @@ export const regionalizer = (countries: readonly Country[]): readonly Region[] =
 
 	return [...regionMap.entries()]
 		.map(([regionName, values]) => ({
-			complete: values.filter((c) => c.selected).length / values.length,
+			complete: values.filter((c) => c.selected === true).length / values.length,
 			name: regionName,
 			values: values.toSorted((a, b) => a.name.localeCompare(b.name)),
 		}))
