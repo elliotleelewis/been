@@ -1,7 +1,8 @@
 import { useAtomValue } from "jotai";
 import { memo, useId, useMemo, useState } from "react";
 import type { FC } from "react";
-import { regionsAtom } from "../state/atoms.ts";
+import type { Region } from "@/models/region";
+import { regionsAtom } from "@/state/atoms";
 import { MenuItem } from "./menu-item";
 import { Progress } from "./progress";
 
@@ -23,10 +24,13 @@ export const Menu: FC<Props> = memo(({ loading = false, fullscreen, toggleFullsc
 			return regions;
 		}
 		return regions
-			.map((region) => ({
-				...region,
-				values: region.values.filter(({ name }) => name.toLowerCase().includes(s)),
-			}))
+			.map(
+				(region): Region => ({
+					complete: region.complete ?? 0,
+					name: region.name,
+					values: region.values.filter(({ name }) => name.toLowerCase().includes(s)),
+				}),
+			)
 			.filter((region) => region.values.length > 0);
 	}, [search, regions]);
 
@@ -35,7 +39,7 @@ export const Menu: FC<Props> = memo(({ loading = false, fullscreen, toggleFullsc
 			<div className="flex border-zinc-200 border-t-2 sm:border-t-0 dark:border-zinc-700">
 				<form className="w-full">
 					<label id={searchLabelId} htmlFor={searchId} className="sr-only">
-						Search
+						{"Search"}
 					</label>
 					<input
 						id={searchId}
@@ -56,14 +60,14 @@ export const Menu: FC<Props> = memo(({ loading = false, fullscreen, toggleFullsc
 							xmlns="http://www.w3.org/2000/svg"
 							fill="none"
 							viewBox="0 0 24 24"
-							stroke-width="1.5"
+							strokeWidth="1.5"
 							stroke="currentColor"
 							className="size-4"
 						>
 							<title>Contract</title>
 							<path
-								stroke-linecap="round"
-								stroke-linejoin="round"
+								strokeLinecap="round"
+								strokeLinejoin="round"
 								d="M9 9V4.5M9 9H4.5M9 9 3.75 3.75M9 15v4.5M9 15H4.5M9 15l-5.25 5.25M15 9h4.5M15 9V4.5M15 9l5.25-5.25M15 15h4.5M15 15v4.5m0-4.5 5.25 5.25"
 							/>
 						</svg>
@@ -72,14 +76,14 @@ export const Menu: FC<Props> = memo(({ loading = false, fullscreen, toggleFullsc
 							xmlns="http://www.w3.org/2000/svg"
 							fill="none"
 							viewBox="0 0 24 24"
-							stroke-width="1.5"
+							strokeWidth="1.5"
 							stroke="currentColor"
 							className="size-4"
 						>
 							<title>Expand</title>
 							<path
-								stroke-linecap="round"
-								stroke-linejoin="round"
+								strokeLinecap="round"
+								strokeLinejoin="round"
 								d="M3.75 3.75v4.5m0-4.5h4.5m-4.5 0L9 9M3.75 20.25v-4.5m0 4.5h4.5m-4.5 0L9 15M20.25 3.75h-4.5m4.5 0v4.5m0-4.5L15 9m5.25 11.25h-4.5m4.5 0v-4.5m0 4.5L15 15"
 							/>
 						</svg>

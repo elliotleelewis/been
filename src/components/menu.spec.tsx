@@ -1,9 +1,9 @@
 import { render } from "@testing-library/react";
 import { Provider } from "jotai";
-import { describe, expect, it } from "vitest";
-import type { Country } from "../models/country.ts";
-import { rawCountriesAtom } from "../state/atoms.ts";
-import { HydrateAtoms } from "../utils/test.ts";
+import { describe, expect, it, vi } from "vitest";
+import type { Country } from "@/models/country";
+import { rawCountriesAtom } from "@/state/atoms";
+import { HydrateAtoms } from "@/utils/test";
 import { Menu } from "./menu";
 
 const country: Country = {
@@ -17,11 +17,11 @@ describe("menu", () => {
 		const result = render(
 			<Provider>
 				<HydrateAtoms initialValues={[[rawCountriesAtom, { [country.iso3166]: country }]]}>
-					<Menu fullscreen={false} toggleFullscreen={() => {}} />
+					<Menu fullscreen={false} toggleFullscreen={vi.fn<() => void>()} />
 				</HydrateAtoms>
 			</Provider>,
 		);
 
 		expect(result.asFragment()).toMatchSnapshot();
-	});
+	}, 5000);
 });

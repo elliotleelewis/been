@@ -4,12 +4,12 @@ import "mapbox-gl/dist/mapbox-gl.css";
 import { forwardRef, memo, useEffect, useImperativeHandle, useMemo, useRef } from "react";
 import { Layer, Map, NavigationControl, Source } from "react-map-gl/mapbox";
 import type { MapRef } from "react-map-gl/mapbox";
-import { useMatchMedia } from "../hooks/use-match-media";
-import { MapboxLayerKeys, MapboxSourceKeys } from "../models/enums";
-import { focusAtom, selectedCountriesAtom } from "../state/atoms.ts";
-import type { ForwardedRefFunction } from "../types/utils";
+import { useMatchMedia } from "@/hooks/use-match-media";
+import { MapboxLayerKeys, MapboxSourceKeys } from "@/models/enums";
+import { focusAtom, selectedCountriesAtom } from "@/state/atoms";
+import type { ForwardedRefFunction } from "@/types/utils";
 
-const apiKeyMapbox = import.meta.env["VITE_API_KEY_MAPBOX"] as string | undefined;
+const apiKeyMapbox = import.meta.env["VITE_API_KEY_MAPBOX"];
 const testMode = import.meta.env.MODE === "test";
 const darkThemeUrl = "mapbox://styles/mapbox/dark-v11";
 const lightThemeUrl = "mapbox://styles/mapbox/light-v11";
@@ -33,10 +33,14 @@ export const Globe = memo(
 		useImperativeHandle(
 			ref,
 			() => ({
-				isSourceLoaded: (...params: Parameters<MapRef["isSourceLoaded"]>) => {
+				isSourceLoaded: (
+					...params: Parameters<MapRef["isSourceLoaded"]>
+				): ReturnType<MapRef["isSourceLoaded"]> | undefined => {
 					return internalRef.current?.isSourceLoaded(...params);
 				},
-				querySourceFeatures: (...params: Parameters<MapRef["querySourceFeatures"]>) => {
+				querySourceFeatures: (
+					...params: Parameters<MapRef["querySourceFeatures"]>
+				): ReturnType<MapRef["querySourceFeatures"]> | undefined => {
 					return internalRef.current?.querySourceFeatures(...params);
 				},
 			}),

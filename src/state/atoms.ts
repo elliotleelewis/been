@@ -1,8 +1,8 @@
 import { atom } from "jotai";
 import { atomWithStorage } from "jotai/utils";
-import type { Country } from "../models/country.ts";
-import type { Region } from "../models/region.ts";
-import { regionalizer } from "../utils/regionalizer.ts";
+import type { Country } from "@/models/country";
+import type { Region } from "@/models/region";
+import { regionalizer } from "@/utils/regionalizer";
 
 const COUNTRIES_STORAGE_KEY = "APP_COUNTRIES";
 

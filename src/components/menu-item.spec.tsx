@@ -15,5 +15,5 @@ describe("menuItem", () => {
 		);
 
 		expect(result.asFragment()).toMatchSnapshot();
-	});
+	}, 5000);
 });

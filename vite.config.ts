@@ -1,3 +1,4 @@
+import { fileURLToPath } from "node:url";
 import tailwindcss from "@tailwindcss/vite";
 import react from "@vitejs/plugin-react";
 import { playwright } from "@vitest/browser-playwright";
@@ -15,6 +16,11 @@ export default defineConfig(({ command }) => ({
 		exclude: ["chromium-bidi", "fsevents"],
 	},
 	plugins: [react(), tailwindcss()],
+	resolve: {
+		alias: {
+			"@": fileURLToPath(new URL("./src", import.meta.url)),
+		},
+	},
 	root: "./src",
 	test: {
 		browser: {

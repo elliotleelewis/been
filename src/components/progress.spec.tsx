@@ -7,5 +7,5 @@ describe("progress", () => {
 		const result = render(<Progress complete={0} />);
 
 		expect(result.asFragment()).toMatchSnapshot();
-	});
+	}, 5000);
 });

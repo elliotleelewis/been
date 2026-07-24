@@ -1,3 +1,3 @@
-export const useWindow = () => {
+export const useWindow = (): Window & typeof globalThis => {
 	return window;
 };
