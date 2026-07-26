@@ -19,8 +19,10 @@ export const countriesAtom = atom<readonly Country[]>((get) => {
 	const rawCountries = get(rawCountriesAtom);
 	const selectedCountries = get(selectedCountriesAtom);
 
+	// Assign onto a new object rather than onto `c`. Mutating `c` in place would keep the
+	// same object identity, so `memo`'d consumers such as `MenuItem` would never re-render.
 	return Object.values(rawCountries).map((c) =>
-		Object.assign(c, {
+		Object.assign({}, c, {
 			selected: selectedCountries.includes(c.iso3166),
 		}),
 	);
