@@ -8,6 +8,11 @@ import { assertDefined, mockMediaQueryList } from "../utils/test";
 import { Globe } from "./globe";
 import type { MapForwardedRef } from "./globe";
 
+// Mapbox derives latitudes from tile coordinates with `Math.atan(Math.exp(…))`, and engines are
+// free to differ in the last place on those calls, so bounds shift by ~1e-14 whenever the bundled
+// Chromium changes. Six decimal places (~5cm) absorbs that while still catching real data changes.
+const BOUNDS_PRECISION = 6;
+
 describe("globe", () => {
 	beforeAll(() => {
 		vi.spyOn(window, "matchMedia").mockImplementation(() => mockMediaQueryList());
@@ -44,8 +49,12 @@ describe("globe", () => {
 				}),
 				`No source features were queryable for ${name}.`,
 			);
+			const [west, south, east, north] = bbox(featureCollection(features));
 			expect.soft(features.length, name).toBeGreaterThanOrEqual(1);
-			expect.soft(bounds, name).toEqual(bbox(featureCollection(features)));
+			expect.soft(bounds?.[0], `${name} (west)`).toBeCloseTo(west, BOUNDS_PRECISION);
+			expect.soft(bounds?.[1], `${name} (south)`).toBeCloseTo(south, BOUNDS_PRECISION);
+			expect.soft(bounds?.[2], `${name} (east)`).toBeCloseTo(east, BOUNDS_PRECISION);
+			expect.soft(bounds?.[3], `${name} (north)`).toBeCloseTo(north, BOUNDS_PRECISION);
 		}
 	}, 30_000);
 });
