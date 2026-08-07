@@ -7,7 +7,7 @@
     "pedantic": "error",
     "perf": "error",
     "restriction": "error",
-    "style": "warn",
+    "style": "error",
     "suspicious": "error"
   },
   "globals": {
@@ -20,20 +20,41 @@
     "@typescript-eslint/dot-notation": "off",
     "@typescript-eslint/prefer-readonly-parameter-types": "warn",
     "@typescript-eslint/strict-void-return": "off",
+    "eslint/capitalized-comments": ["error", "always", { "ignoreConsecutiveComments": true }],
+    "eslint/id-length": ["error", { "checkGeneric": false }],
     "eslint/max-lines-per-function": "off",
     "eslint/no-console": ["error", { "allow": ["warn", "error"] }],
+    "eslint/no-duplicate-imports": ["error", { "allowSeparateTypeImports": true }],
     "eslint/no-magic-numbers": "off",
     "eslint/no-ternary": "off",
     "eslint/no-undefined": "off",
+    "eslint/sort-imports": ["error", { "ignoreDeclarationSort": true }],
     "import/exports-last": "off",
+    "import/group-exports": "off",
     "import/no-named-export": "off",
     "import/no-relative-parent-imports": "off",
     "import/no-unassigned-import": ["error", { "allow": ["**/*.css", "**/jest-dom/vitest"] }],
     "import/prefer-default-export": "off",
     "oxc/no-async-await": "off",
     "oxc/no-optional-chaining": "off",
+    "oxc/no-rest-spread-properties": "off",
+    "react/function-component-definition": [
+      "error",
+      { "namedComponents": "arrow-function", "unnamedComponents": "arrow-function" }
+    ],
+    "react/jsx-curly-brace-presence": "off",
     "react/jsx-filename-extension": ["error", { "extensions": [".jsx", ".tsx"] }],
-    "react/react-in-jsx-scope": "off"
+    "react/jsx-max-depth": ["error", { "max": 4 }],
+    "react/react-in-jsx-scope": "off",
+    "unicorn/catch-error-name": ["error", { "ignore": ["cause"] }],
+    "unicorn/no-nested-ternary": "off",
+    "unicorn/no-null": "off",
+    "vitest/consistent-test-filename": ["error", { "pattern": ".*\\.spec\\.[tj]sx?$" }],
+    "vitest/no-hooks": ["error", { "allow": ["beforeEach", "afterEach"] }],
+    "vitest/no-importing-vitest-globals": "off",
+    "vitest/prefer-called-times": "off",
+    "vitest/prefer-describe-function-title": "off",
+    "vitest/prefer-strict-boolean-matchers": "off"
   },
   "overrides": [
     {
@@ -52,6 +73,22 @@
       "files": ["src/data/**"],
       "rules": {
         "eslint/max-lines": "off"
+      }
+    },
+    {
+      "files": ["**/*.{ts,tsx}"],
+      "excludeFiles": ["**/*.spec.{ts,tsx}", "src/utils/test.ts", "src/vitest-setup.ts"],
+      "rules": {
+        "vitest/require-hook": "off"
+      }
+    },
+    {
+      "files": ["src/__e2e-test__/**"],
+      "rules": {
+        "vitest/consistent-test-filename": "off",
+        "vitest/no-hooks": "off",
+        "vitest/prefer-expect-assertions": "off",
+        "vitest/prefer-importing-vitest-globals": "off"
       }
     }
   ]

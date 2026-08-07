@@ -5,6 +5,8 @@ import { regionalizer } from "./regionalizer";
 
 describe("regionalizer", () => {
 	it("should correctly group countries by region", () => {
+		expect.hasAssertions();
+
 		const countries: readonly Country[] = [
 			{ iso3166: "A", name: "Country A", region: "Region 1" },
 			{ iso3166: "B", name: "Country B", region: "Region 2" },
@@ -36,12 +38,16 @@ describe("regionalizer", () => {
 	}, 5000);
 
 	it("should handle an empty array", () => {
+		expect.hasAssertions();
+
 		const countries: readonly Country[] = [];
 		const result = regionalizer(countries);
 		expect(result).toStrictEqual([]);
 	}, 5000);
 
 	it("should correctly handle single country in each region", () => {
+		expect.hasAssertions();
+
 		const countries: readonly Country[] = [
 			{ iso3166: "A", name: "Country A", region: "Region 1" },
 			{ iso3166: "B", name: "Country B", region: "Region 2" },
@@ -71,6 +77,8 @@ describe("regionalizer", () => {
 	}, 5000);
 
 	it("should sort the regions", () => {
+		expect.hasAssertions();
+
 		const countries: readonly Country[] = [
 			{ iso3166: "A", name: "Country A", region: "Region 2" },
 			{ iso3166: "B", name: "Country B", region: "Region 3" },
@@ -83,31 +91,39 @@ describe("regionalizer", () => {
 		expect(result[2]?.name).toBe("Region 3");
 	}, 5000);
 
-	it("should sort an empty region name", () => {
-		const countriesA: readonly Country[] = [
+	it("should sort an empty region name last", () => {
+		expect.hasAssertions();
+
+		const countries: readonly Country[] = [
 			{ iso3166: "A", name: "Country A", region: "Region 2" },
 			{ iso3166: "B", name: "Country B", region: "" },
 			{ iso3166: "C", name: "Country C", region: "Region 1" },
 		];
 
-		const resultA = regionalizer(countriesA);
-		expect(resultA[0]?.name).toBe("Region 1");
-		expect(resultA[1]?.name).toBe("Region 2");
-		expect(resultA[2]?.name).toBe("");
+		const result = regionalizer(countries);
+		expect(result[0]?.name).toBe("Region 1");
+		expect(result[1]?.name).toBe("Region 2");
+		expect(result[2]?.name).toBe("");
+	}, 5000);
 
-		const countriesB: readonly Country[] = [
+	it("should sort an empty region name last when it is encountered first", () => {
+		expect.hasAssertions();
+
+		const countries: readonly Country[] = [
 			{ iso3166: "A", name: "Country A", region: "" },
 			{ iso3166: "B", name: "Country B", region: "Region 1" },
 			{ iso3166: "C", name: "Country C", region: "Region 2" },
 		];
 
-		const resultB = regionalizer(countriesB);
-		expect(resultB[0]?.name).toBe("Region 1");
-		expect(resultB[1]?.name).toBe("Region 2");
-		expect(resultB[2]?.name).toBe("");
+		const result = regionalizer(countries);
+		expect(result[0]?.name).toBe("Region 1");
+		expect(result[1]?.name).toBe("Region 2");
+		expect(result[2]?.name).toBe("");
 	}, 5000);
 
 	it("should not mutate the original array", () => {
+		expect.hasAssertions();
+
 		const countries: readonly Country[] = [
 			{ iso3166: "A", name: "Country A", region: "Region 1" },
 			{ iso3166: "B", name: "Country B", region: "Region 1" },

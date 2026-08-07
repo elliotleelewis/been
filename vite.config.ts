@@ -20,9 +20,9 @@ export default defineConfig(({ command }) => ({
 		browser: {
 			enabled: true,
 			headless: true,
+			instances: [{ browser: "chromium" }],
 			provider: playwright(),
 			screenshotFailures: false,
-			instances: [{ browser: "chromium" }],
 		},
 		clearMocks: true,
 		coverage: {

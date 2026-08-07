@@ -20,13 +20,13 @@ export const countriesAtom = atom<readonly Country[]>((get) => {
 	const rawCountries = get(rawCountriesAtom);
 	const selectedCountries = get(selectedCountriesAtom);
 
-	// Assign onto a new object rather than onto `c`. Mutating `c` in place would keep the
-	// same object identity, so `memo`'d consumers such as `MenuItem` would never re-render.
-	return Object.values(rawCountries).map((c) =>
-		Object.assign({}, c, {
-			selected: selectedCountries.includes(c.iso3166),
-		}),
-	);
+	// Spread into a new object rather than mutating `country`. Mutating it in place would keep
+	// the same object identity, so `memo`'d consumers such as `MenuItem` would never re-render.
+	// oxlint-disable-next-line no-map-spread -- The in-place mutation it suggests is what the new object identity is avoiding.
+	return Object.values(rawCountries).map((country) => ({
+		...country,
+		selected: selectedCountries.includes(country.iso3166),
+	}));
 });
 export const regionsAtom = atom<readonly Region[]>((get) => {
 	const countries = get(countriesAtom);
@@ -37,8 +37,8 @@ export const addCountryAtom = atom(undefined, (get, set, countryCode: string) =>
 	const selectedCountries = get(selectedCountriesAtom);
 	if (!selectedCountries.includes(countryCode)) {
 		const countries = get(countriesAtom);
-		const focusCountry = countries.find((c) => c.iso3166 === countryCode);
-		set(focusAtom, focusCountry ? { type: "country", country: focusCountry } : null);
+		const focusCountry = countries.find((country) => country.iso3166 === countryCode);
+		set(focusAtom, focusCountry ? { country: focusCountry, type: "country" } : null);
 		set(selectedCountriesAtom, [...selectedCountries, countryCode]);
 	}
 });
@@ -53,6 +53,6 @@ export const removeCountryAtom = atom(undefined, (get, set, countryCode: string)
 	set(focusAtom, undo ? { type: "undo" } : null);
 	set(
 		selectedCountriesAtom,
-		selectedCountries.filter((c) => c !== countryCode),
+		selectedCountries.filter((code) => code !== countryCode),
 	);
 });

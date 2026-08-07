@@ -1,3 +1,1 @@
-export const useWindow = (): Window & typeof globalThis => {
-	return window;
-};
+export const useWindow = (): typeof globalThis => globalThis;

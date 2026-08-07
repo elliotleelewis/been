@@ -1,21 +1,10 @@
 import { useAtomValue } from "jotai";
-import type {
-	CameraOptions,
-	FillExtrusionLayerSpecification,
-	FillLayerSpecification,
-} from "mapbox-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
-import {
-	forwardRef,
-	memo,
-	useCallback,
-	useEffect,
-	useImperativeHandle,
-	useMemo,
-	useRef,
-} from "react";
+import { forwardRef, memo, useImperativeHandle, useRef } from "react";
 import { Layer, Map, NavigationControl, Source } from "react-map-gl/mapbox";
-import type { MapRef, ViewStateChangeEvent } from "react-map-gl/mapbox";
+import type { MapRef } from "react-map-gl/mapbox";
+import { useFocusCamera } from "../hooks/use-focus-camera";
+import { useGlobeLayers } from "../hooks/use-globe-layers";
 import { useMatchMedia } from "../hooks/use-match-media";
 import { MapboxLayerKeys, MapboxSourceKeys } from "../models/enums";
 import { focusAtom, selectedCountriesAtom } from "../state/atoms.ts";
@@ -34,7 +23,7 @@ export interface MapForwardedRef {
 }
 
 export const Globe = memo(
-	forwardRef<MapForwardedRef>((_, ref) => {
+	forwardRef<MapForwardedRef>((_props, ref) => {
 		const internalRef = useRef<MapRef>(null);
 
 		const prefersDark = useMatchMedia("(prefers-color-scheme: dark)");
@@ -47,105 +36,20 @@ export const Globe = memo(
 			() => ({
 				isSourceLoaded: (
 					...params: Parameters<MapRef["isSourceLoaded"]>
-				): ReturnType<MapRef["isSourceLoaded"]> | undefined => {
-					return internalRef.current?.isSourceLoaded(...params);
-				},
+				): ReturnType<MapRef["isSourceLoaded"]> | undefined =>
+					internalRef.current?.isSourceLoaded(...params),
 				querySourceFeatures: (
 					...params: Parameters<MapRef["querySourceFeatures"]>
-				): ReturnType<MapRef["querySourceFeatures"]> | undefined => {
-					return internalRef.current?.querySourceFeatures(...params);
-				},
+				): ReturnType<MapRef["querySourceFeatures"]> | undefined =>
+					internalRef.current?.querySourceFeatures(...params),
 			}),
 			[],
 		);
 
-		// Where the camera sat before the current focus moved it, so an unselect can undo that
-		// move. Held in a ref because it is a detail of this map instance, and reading it should
-		// never trigger a render.
-		const cameraBeforeFocus = useRef<CameraOptions | null>(null);
+		const handleMoveStart = useFocusCamera(internalRef, focus);
 
-		useEffect(() => {
-			const { current: map } = internalRef;
-			if (!map || !focus) {
-				return;
-			}
-			if (focus.type === "undo") {
-				const camera = cameraBeforeFocus.current;
-				// An undo is only good once, and only if we still have somewhere to go back to.
-				cameraBeforeFocus.current = null;
-				if (camera) {
-					map.easeTo(camera);
-				}
-				return;
-			}
-			const { bounds } = focus.country;
-			if (!bounds) {
-				return;
-			}
-			cameraBeforeFocus.current = {
-				bearing: map.getBearing(),
-				center: map.getCenter(),
-				pitch: map.getPitch(),
-				zoom: map.getZoom(),
-			};
-			map.fitBounds(bounds);
-		}, [focus]);
-
-		const handleMoveStart = useCallback((event: ViewStateChangeEvent) => {
-			// Only moves the user made themselves carry an `originalEvent`; the ones we make with
-			// `fitBounds`/`easeTo` do not. Once they have moved the map, they have a view they
-			// chose, and yanking it back to a camera they never asked for would be the surprise.
-			if ("originalEvent" in event && event.originalEvent !== undefined) {
-				cameraBeforeFocus.current = null;
-			}
-		}, []);
-
-		const beenFilter: FillExtrusionLayerSpecification["filter"] = useMemo(
-			() => ["in", ["get", "iso_3166_1"], ["literal", selectedCountries]],
-			[selectedCountries],
-		);
-		const beenPaint: FillLayerSpecification["paint"] = useMemo(
-			() => ({
-				"fill-color": "#fd7e14",
-				"fill-opacity": 0.6,
-			}),
-			[],
-		);
-
-		const buildingsFilter: FillExtrusionLayerSpecification["filter"] = useMemo(
-			() => ["==", "extrude", "true"],
-			[],
-		);
-		const buildingsPaint: FillExtrusionLayerSpecification["paint"] = useMemo(
-			() => ({
-				"fill-extrusion-base": [
-					"interpolate",
-					["linear"],
-					["zoom"],
-					15,
-					0,
-					15.05,
-					["get", "min_height"],
-				],
-				"fill-extrusion-color": [
-					"case",
-					["in", ["get", "iso_3166_1"], ["literal", selectedCountries]],
-					"#fd7e14",
-					"#fd7e14",
-				],
-				"fill-extrusion-height": [
-					"interpolate",
-					["linear"],
-					["zoom"],
-					15,
-					0,
-					15.05,
-					["get", "height"],
-				],
-				"fill-extrusion-opacity": 0.6,
-			}),
-			[selectedCountries],
-		);
+		const { beenFilter, beenPaint, buildingsFilter, buildingsPaint } =
+			useGlobeLayers(selectedCountries);
 
 		return (
 			<Map

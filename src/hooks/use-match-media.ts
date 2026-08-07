@@ -1,4 +1,4 @@
-import { useSyncExternalStore, useCallback, useMemo } from "react";
+import { useCallback, useMemo, useSyncExternalStore } from "react";
 import { useWindow } from "./use-window";
 
 export const useMatchMedia = (query: string): boolean => {
