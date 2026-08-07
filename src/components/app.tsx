@@ -16,7 +16,9 @@ export const App: FC = memo(() => {
 	useEffect(() => {
 		import("../data/countries")
 			.then(({ countries }) => {
-				const countryMap = Object.fromEntries(countries.map((c) => [c.iso3166, c]));
+				const countryMap = Object.fromEntries(
+					countries.map((country) => [country.iso3166, country]),
+				);
 				setRawCountries(countryMap);
 				setLoading(false);
 			})
@@ -26,7 +28,7 @@ export const App: FC = memo(() => {
 	}, [setRawCountries]);
 
 	const reload = useCallback(() => {
-		window.location.reload();
+		globalThis.location.reload();
 	}, []);
 
 	const toggleMenuFullscreen = useCallback(() => {

@@ -25,34 +25,40 @@ const createTestStore = (): ReturnType<typeof createStore> => {
 describe("atoms", () => {
 	// `selectedCountriesAtom` is backed by local storage, which outlives an individual store.
 	beforeEach(() => {
-		window.localStorage.clear();
+		globalThis.localStorage.clear();
 	});
 	afterEach(() => {
-		window.localStorage.clear();
+		globalThis.localStorage.clear();
 	});
 
 	it("should focus a country when it is selected", () => {
+		expect.hasAssertions();
+
 		const store = createTestStore();
 
 		store.set(addCountryAtom, unitedKingdom.iso3166);
 
 		// `countriesAtom` decorates the raw country with its selected state before the focus is set.
-		expect(store.get(focusAtom)).toEqual({
-			type: "country",
+		expect(store.get(focusAtom)).toStrictEqual({
 			country: Object.assign({}, unitedKingdom, { selected: false }),
+			type: "country",
 		});
 	}, 5000);
 
 	it("should undo the focus when the focused country is unselected", () => {
+		expect.hasAssertions();
+
 		const store = createTestStore();
 
 		store.set(addCountryAtom, unitedKingdom.iso3166);
 		store.set(removeCountryAtom, unitedKingdom.iso3166);
 
-		expect(store.get(focusAtom)).toEqual({ type: "undo" });
+		expect(store.get(focusAtom)).toStrictEqual({ type: "undo" });
 	}, 5000);
 
 	it("should not undo the focus when another country is unselected", () => {
+		expect.hasAssertions();
+
 		const store = createTestStore();
 
 		store.set(addCountryAtom, france.iso3166);
@@ -63,6 +69,8 @@ describe("atoms", () => {
 	}, 5000);
 
 	it("should only undo a focus once", () => {
+		expect.hasAssertions();
+
 		const store = createTestStore();
 
 		store.set(addCountryAtom, unitedKingdom.iso3166);

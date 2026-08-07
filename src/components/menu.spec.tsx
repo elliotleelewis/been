@@ -23,7 +23,7 @@ const renderMenu = (): ReturnType<typeof render> =>
 
 describe("menu", () => {
 	beforeEach(() => {
-		window.localStorage.clear();
+		globalThis.localStorage.clear();
 	});
 
 	// Auto-cleanup is not registered as the suite does not run with `globals`.
@@ -32,12 +32,16 @@ describe("menu", () => {
 	});
 
 	it("should render", () => {
+		expect.hasAssertions();
+
 		const result = renderMenu();
 
 		expect(result.asFragment()).toMatchSnapshot();
 	}, 5000);
 
 	it("should tick the checkbox when it is clicked", () => {
+		expect.hasAssertions();
+
 		const result = renderMenu();
 		const checkbox = result.getByLabelText("Visited");
 
@@ -49,6 +53,8 @@ describe("menu", () => {
 	}, 5000);
 
 	it("should untick the checkbox when it is clicked again", () => {
+		expect.hasAssertions();
+
 		const result = renderMenu();
 		const checkbox = result.getByLabelText("Visited");
 

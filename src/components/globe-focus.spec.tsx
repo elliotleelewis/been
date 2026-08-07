@@ -1,7 +1,7 @@
 import { act, render } from "@testing-library/react";
 import { Provider, createStore } from "jotai";
 import { Map as MapboxMap } from "mapbox-gl";
-import { afterEach, beforeAll, describe, expect, it, vi } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import type { MockInstance } from "vitest";
 import type { Country } from "../models/country";
 import { addCountryAtom, rawCountriesAtom, removeCountryAtom } from "../state/atoms";
@@ -48,20 +48,22 @@ const mapBehind = (spy: MockInstance, message: string): MapboxMap => {
 // Announces the move a user gesture would make. Mapbox tells its own camera calls apart from
 // gestures by giving only the latter an `originalEvent`, which is the signal the globe reads.
 const dragMap = (map: MapboxMap): void => {
-	map.fire("movestart", { originalEvent: new window.MouseEvent("mousemove", { buttons: 1 }) });
+	map.fire("movestart", { originalEvent: new globalThis.MouseEvent("mousemove", { buttons: 1 }) });
 };
 
 describe("globe focus", () => {
-	beforeAll(() => {
-		vi.spyOn(window, "matchMedia").mockImplementation(() => mockMediaQueryList());
+	beforeEach(() => {
+		vi.spyOn(globalThis, "matchMedia").mockReturnValue(mockMediaQueryList());
 	});
 
 	afterEach(() => {
 		// `selectedCountriesAtom` is backed by local storage, which outlives an individual store.
-		window.localStorage.clear();
+		globalThis.localStorage.clear();
 	});
 
 	it("should return to the previous camera when the focused country is unselected", async () => {
+		expect.hasAssertions();
+
 		const store = createTestStore();
 		const fitBounds = vi.spyOn(MapboxMap.prototype, "fitBounds");
 		const easeTo = vi.spyOn(MapboxMap.prototype, "easeTo");
@@ -85,6 +87,8 @@ describe("globe focus", () => {
 	}, 10_000);
 
 	it("should keep the camera the user chose when they have moved the map themselves", async () => {
+		expect.hasAssertions();
+
 		const store = createTestStore();
 		const fitBounds = vi.spyOn(MapboxMap.prototype, "fitBounds");
 		const easeTo = vi.spyOn(MapboxMap.prototype, "easeTo");

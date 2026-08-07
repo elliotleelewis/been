@@ -4,6 +4,8 @@ import { Progress } from "./progress";
 
 describe("progress", () => {
 	it("should render", () => {
+		expect.hasAssertions();
+
 		const result = render(<Progress complete={0} />);
 
 		expect(result.asFragment()).toMatchSnapshot();

@@ -4,6 +4,8 @@ import { MenuItem } from "./menu-item";
 
 describe("menuItem", () => {
 	it("should render", () => {
+		expect.hasAssertions();
+
 		const result = render(
 			<MenuItem
 				country={{

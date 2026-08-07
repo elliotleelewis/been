@@ -1,14 +1,16 @@
 import { render } from "@testing-library/react";
-import { beforeAll, describe, expect, it, vi } from "vitest";
+import { beforeEach, describe, expect, it, vi } from "vitest";
 import { mockMediaQueryList } from "../utils/test";
 import { App } from "./app";
 
 describe("app", () => {
-	beforeAll(() => {
-		vi.spyOn(window, "matchMedia").mockImplementation(() => mockMediaQueryList());
+	beforeEach(() => {
+		vi.spyOn(globalThis, "matchMedia").mockReturnValue(mockMediaQueryList());
 	});
 
 	it("should render", () => {
+		expect.hasAssertions();
+
 		const result = render(<App />);
 
 		expect(result.asFragment()).toMatchSnapshot();

@@ -7,42 +7,42 @@ import { regionalizer } from "../utils/regionalizer.ts";
 
 const COUNTRIES_STORAGE_KEY = "APP_COUNTRIES";
 
-export const rawCountriesAtom = atom<Record<string, Country>>({});
-export const selectedCountriesAtom = atomWithStorage<readonly string[]>(
+const rawCountriesAtom = atom<Record<string, Country>>({});
+const selectedCountriesAtom = atomWithStorage<readonly string[]>(
 	COUNTRIES_STORAGE_KEY,
 	[],
 	undefined,
 	{ getOnInit: true },
 );
-export const focusAtom = atom<Focus | null>(null);
+const focusAtom = atom<Focus | null>(null);
 
-export const countriesAtom = atom<readonly Country[]>((get) => {
+const countriesAtom = atom<readonly Country[]>((get) => {
 	const rawCountries = get(rawCountriesAtom);
 	const selectedCountries = get(selectedCountriesAtom);
 
 	// Assign onto a new object rather than onto `c`. Mutating `c` in place would keep the
 	// same object identity, so `memo`'d consumers such as `MenuItem` would never re-render.
-	return Object.values(rawCountries).map((c) =>
-		Object.assign({}, c, {
-			selected: selectedCountries.includes(c.iso3166),
+	return Object.values(rawCountries).map((country) =>
+		Object.assign({}, country, {
+			selected: selectedCountries.includes(country.iso3166),
 		}),
 	);
 });
-export const regionsAtom = atom<readonly Region[]>((get) => {
+const regionsAtom = atom<readonly Region[]>((get) => {
 	const countries = get(countriesAtom);
 	return regionalizer(countries);
 });
 
-export const addCountryAtom = atom(undefined, (get, set, countryCode: string) => {
+const addCountryAtom = atom(undefined, (get, set, countryCode: string) => {
 	const selectedCountries = get(selectedCountriesAtom);
 	if (!selectedCountries.includes(countryCode)) {
 		const countries = get(countriesAtom);
-		const focusCountry = countries.find((c) => c.iso3166 === countryCode);
-		set(focusAtom, focusCountry ? { type: "country", country: focusCountry } : null);
+		const focusCountry = countries.find((country) => country.iso3166 === countryCode);
+		set(focusAtom, focusCountry ? { country: focusCountry, type: "country" } : null);
 		set(selectedCountriesAtom, [...selectedCountries, countryCode]);
 	}
 });
-export const removeCountryAtom = atom(undefined, (get, set, countryCode: string) => {
+const removeCountryAtom = atom(undefined, (get, set, countryCode: string) => {
 	const selectedCountries = get(selectedCountriesAtom);
 	const focus = get(focusAtom);
 
@@ -53,6 +53,16 @@ export const removeCountryAtom = atom(undefined, (get, set, countryCode: string)
 	set(focusAtom, undo ? { type: "undo" } : null);
 	set(
 		selectedCountriesAtom,
-		selectedCountries.filter((c) => c !== countryCode),
+		selectedCountries.filter((code) => code !== countryCode),
 	);
 });
+
+export {
+	addCountryAtom,
+	countriesAtom,
+	focusAtom,
+	rawCountriesAtom,
+	regionsAtom,
+	removeCountryAtom,
+	selectedCountriesAtom,
+};

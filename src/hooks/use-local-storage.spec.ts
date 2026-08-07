@@ -4,6 +4,8 @@ import { useLocalStorage } from "./use-local-storage";
 
 describe("useLocalStorage", () => {
 	it("should initialise", () => {
+		expect.hasAssertions();
+
 		const { result } = renderHook(() => useLocalStorage("TEST", "hello"));
 		const [data, setData] = result.current;
 
