@@ -28,7 +28,6 @@
     "eslint/no-magic-numbers": "off",
     "eslint/no-ternary": "off",
     "eslint/no-undefined": "off",
-    "eslint/prefer-object-spread": "off",
     "eslint/sort-imports": ["error", { "ignoreDeclarationSort": true }],
     "import/exports-last": "off",
     "import/group-exports": "off",
@@ -38,6 +37,7 @@
     "import/prefer-default-export": "off",
     "oxc/no-async-await": "off",
     "oxc/no-optional-chaining": "off",
+    "oxc/no-rest-spread-properties": "off",
     "react/function-component-definition": [
       "error",
       { "namedComponents": "arrow-function", "unnamedComponents": "arrow-function" }

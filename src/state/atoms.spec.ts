@@ -40,7 +40,7 @@ describe("atoms", () => {
 
 		// `countriesAtom` decorates the raw country with its selected state before the focus is set.
 		expect(store.get(focusAtom)).toStrictEqual({
-			country: Object.assign({}, unitedKingdom, { selected: false }),
+			country: { ...unitedKingdom, selected: false },
 			type: "country",
 		});
 	}, 5000);

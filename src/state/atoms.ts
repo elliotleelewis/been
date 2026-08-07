@@ -20,13 +20,13 @@ export const countriesAtom = atom<readonly Country[]>((get) => {
 	const rawCountries = get(rawCountriesAtom);
 	const selectedCountries = get(selectedCountriesAtom);
 
-	// Assign onto a new object rather than onto `c`. Mutating `c` in place would keep the
-	// same object identity, so `memo`'d consumers such as `MenuItem` would never re-render.
-	return Object.values(rawCountries).map((country) =>
-		Object.assign({}, country, {
-			selected: selectedCountries.includes(country.iso3166),
-		}),
-	);
+	// Spread into a new object rather than mutating `country`. Mutating it in place would keep
+	// the same object identity, so `memo`'d consumers such as `MenuItem` would never re-render.
+	// oxlint-disable-next-line no-map-spread -- The in-place mutation it suggests is what the new object identity is avoiding.
+	return Object.values(rawCountries).map((country) => ({
+		...country,
+		selected: selectedCountries.includes(country.iso3166),
+	}));
 });
 export const regionsAtom = atom<readonly Region[]>((get) => {
 	const countries = get(countriesAtom);
