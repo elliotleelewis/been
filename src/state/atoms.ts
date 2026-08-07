@@ -1,6 +1,7 @@
 import { atom } from "jotai";
 import { atomWithStorage } from "jotai/utils";
 import type { Country } from "../models/country.ts";
+import type { Focus } from "../models/focus.ts";
 import type { Region } from "../models/region.ts";
 import { regionalizer } from "../utils/regionalizer.ts";
 
@@ -13,7 +14,7 @@ export const selectedCountriesAtom = atomWithStorage<readonly string[]>(
 	undefined,
 	{ getOnInit: true },
 );
-export const focusAtom = atom<Country | null>();
+export const focusAtom = atom<Focus | null>(null);
 
 export const countriesAtom = atom<readonly Country[]>((get) => {
 	const rawCountries = get(rawCountriesAtom);
@@ -36,14 +37,20 @@ export const addCountryAtom = atom(undefined, (get, set, countryCode: string) =>
 	const selectedCountries = get(selectedCountriesAtom);
 	if (!selectedCountries.includes(countryCode)) {
 		const countries = get(countriesAtom);
-		const focusCountry = countries.find((c) => c.iso3166 === countryCode) ?? undefined;
-		set(focusAtom, focusCountry);
+		const focusCountry = countries.find((c) => c.iso3166 === countryCode);
+		set(focusAtom, focusCountry ? { type: "country", country: focusCountry } : null);
 		set(selectedCountriesAtom, [...selectedCountries, countryCode]);
 	}
 });
 export const removeCountryAtom = atom(undefined, (get, set, countryCode: string) => {
 	const selectedCountries = get(selectedCountriesAtom);
-	set(focusAtom, undefined);
+	const focus = get(focusAtom);
+
+	// Unselecting the country the map is currently framing is an undo of that selection, so ask
+	// the map to go back to where it was rather than leaving the user stranded on a country they
+	// no longer have selected. Unselecting anything else just leaves the camera alone.
+	const undo = focus?.type === "country" && focus.country.iso3166 === countryCode;
+	set(focusAtom, undo ? { type: "undo" } : null);
 	set(
 		selectedCountriesAtom,
 		selectedCountries.filter((c) => c !== countryCode),

@@ -1,9 +1,21 @@
 import { useAtomValue } from "jotai";
-import type { FillExtrusionLayerSpecification, FillLayerSpecification } from "mapbox-gl";
+import type {
+	CameraOptions,
+	FillExtrusionLayerSpecification,
+	FillLayerSpecification,
+} from "mapbox-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
-import { forwardRef, memo, useEffect, useImperativeHandle, useMemo, useRef } from "react";
+import {
+	forwardRef,
+	memo,
+	useCallback,
+	useEffect,
+	useImperativeHandle,
+	useMemo,
+	useRef,
+} from "react";
 import { Layer, Map, NavigationControl, Source } from "react-map-gl/mapbox";
-import type { MapRef } from "react-map-gl/mapbox";
+import type { MapRef, ViewStateChangeEvent } from "react-map-gl/mapbox";
 import { useMatchMedia } from "../hooks/use-match-media";
 import { MapboxLayerKeys, MapboxSourceKeys } from "../models/enums";
 import { focusAtom, selectedCountriesAtom } from "../state/atoms.ts";
@@ -47,13 +59,46 @@ export const Globe = memo(
 			[],
 		);
 
+		// Where the camera sat before the current focus moved it, so an unselect can undo that
+		// move. Held in a ref because it is a detail of this map instance, and reading it should
+		// never trigger a render.
+		const cameraBeforeFocus = useRef<CameraOptions | null>(null);
+
 		useEffect(() => {
-			if (!focus?.bounds) {
+			const { current: map } = internalRef;
+			if (!map || !focus) {
 				return;
 			}
-			const { current: map } = internalRef;
-			map?.fitBounds(focus.bounds);
+			if (focus.type === "undo") {
+				const camera = cameraBeforeFocus.current;
+				// An undo is only good once, and only if we still have somewhere to go back to.
+				cameraBeforeFocus.current = null;
+				if (camera) {
+					map.easeTo(camera);
+				}
+				return;
+			}
+			const { bounds } = focus.country;
+			if (!bounds) {
+				return;
+			}
+			cameraBeforeFocus.current = {
+				bearing: map.getBearing(),
+				center: map.getCenter(),
+				pitch: map.getPitch(),
+				zoom: map.getZoom(),
+			};
+			map.fitBounds(bounds);
 		}, [focus]);
+
+		const handleMoveStart = useCallback((event: ViewStateChangeEvent) => {
+			// Only moves the user made themselves carry an `originalEvent`; the ones we make with
+			// `fitBounds`/`easeTo` do not. Once they have moved the map, they have a view they
+			// chose, and yanking it back to a camera they never asked for would be the surprise.
+			if ("originalEvent" in event && event.originalEvent !== undefined) {
+				cameraBeforeFocus.current = null;
+			}
+		}, []);
 
 		const beenFilter: FillExtrusionLayerSpecification["filter"] = useMemo(
 			() => ["in", ["get", "iso_3166_1"], ["literal", selectedCountries]],
@@ -110,6 +155,7 @@ export const Globe = memo(
 				attributionControl={false}
 				logoPosition="bottom-right"
 				minZoom={minZoom}
+				onMoveStart={handleMoveStart}
 				ref={internalRef}
 				testMode={testMode}
 			>
