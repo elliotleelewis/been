@@ -7,16 +7,16 @@ import { regionalizer } from "../utils/regionalizer.ts";
 
 const COUNTRIES_STORAGE_KEY = "APP_COUNTRIES";
 
-const rawCountriesAtom = atom<Record<string, Country>>({});
-const selectedCountriesAtom = atomWithStorage<readonly string[]>(
+export const rawCountriesAtom = atom<Record<string, Country>>({});
+export const selectedCountriesAtom = atomWithStorage<readonly string[]>(
 	COUNTRIES_STORAGE_KEY,
 	[],
 	undefined,
 	{ getOnInit: true },
 );
-const focusAtom = atom<Focus | null>(null);
+export const focusAtom = atom<Focus | null>(null);
 
-const countriesAtom = atom<readonly Country[]>((get) => {
+export const countriesAtom = atom<readonly Country[]>((get) => {
 	const rawCountries = get(rawCountriesAtom);
 	const selectedCountries = get(selectedCountriesAtom);
 
@@ -28,12 +28,12 @@ const countriesAtom = atom<readonly Country[]>((get) => {
 		}),
 	);
 });
-const regionsAtom = atom<readonly Region[]>((get) => {
+export const regionsAtom = atom<readonly Region[]>((get) => {
 	const countries = get(countriesAtom);
 	return regionalizer(countries);
 });
 
-const addCountryAtom = atom(undefined, (get, set, countryCode: string) => {
+export const addCountryAtom = atom(undefined, (get, set, countryCode: string) => {
 	const selectedCountries = get(selectedCountriesAtom);
 	if (!selectedCountries.includes(countryCode)) {
 		const countries = get(countriesAtom);
@@ -42,7 +42,7 @@ const addCountryAtom = atom(undefined, (get, set, countryCode: string) => {
 		set(selectedCountriesAtom, [...selectedCountries, countryCode]);
 	}
 });
-const removeCountryAtom = atom(undefined, (get, set, countryCode: string) => {
+export const removeCountryAtom = atom(undefined, (get, set, countryCode: string) => {
 	const selectedCountries = get(selectedCountriesAtom);
 	const focus = get(focusAtom);
 
@@ -56,13 +56,3 @@ const removeCountryAtom = atom(undefined, (get, set, countryCode: string) => {
 		selectedCountries.filter((code) => code !== countryCode),
 	);
 });
-
-export {
-	addCountryAtom,
-	countriesAtom,
-	focusAtom,
-	rawCountriesAtom,
-	regionsAtom,
-	removeCountryAtom,
-	selectedCountriesAtom,
-};

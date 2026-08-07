@@ -1,10 +1,8 @@
-const MapboxSourceKeys = {
+export const MapboxSourceKeys = {
 	Countries: "countries",
 } as const;
 
-const MapboxLayerKeys = {
+export const MapboxLayerKeys = {
 	Been: "been",
 	Buildings: "buildings",
 } as const;
-
-export { MapboxLayerKeys, MapboxSourceKeys };

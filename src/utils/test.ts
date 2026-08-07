@@ -16,7 +16,8 @@ type InferAtomTuples<T> = {
 		: never;
 };
 
-const HydrateAtoms = <T extends readonly (readonly [AnyWritableAtom, ...unknown[]])[]>({
+// oxlint-disable-next-line no-export -- This is a test utility file.
+export const HydrateAtoms = <T extends readonly (readonly [AnyWritableAtom, ...unknown[]])[]>({
 	initialValues,
 	children,
 }: PropsWithChildren<{
@@ -26,7 +27,8 @@ const HydrateAtoms = <T extends readonly (readonly [AnyWritableAtom, ...unknown[
 	return children;
 };
 
-const mockMediaQueryList = (matches = false): MediaQueryList => ({
+// oxlint-disable-next-line no-export -- This is a test utility file.
+export const mockMediaQueryList = (matches = false): MediaQueryList => ({
 	addEventListener: vi.fn<MediaQueryList["addEventListener"]>(),
 	// oxlint-disable-next-line no-deprecated -- Deprecated, but still required by the `MediaQueryList` type.
 	addListener: vi.fn<MediaQueryList["addListener"]>(),
@@ -39,12 +41,10 @@ const mockMediaQueryList = (matches = false): MediaQueryList => ({
 	removeListener: vi.fn<MediaQueryList["removeListener"]>(),
 });
 
-const assertDefined = <T>(value: T | null | undefined, message: string): T => {
+// oxlint-disable-next-line no-export -- This is a test utility file.
+export const assertDefined = <T>(value: T | null | undefined, message: string): T => {
 	if (value === null || value === undefined) {
 		throw new Error(message);
 	}
 	return value;
 };
-
-// oxlint-disable-next-line no-export -- This is a test utility file.
-export { HydrateAtoms, assertDefined, mockMediaQueryList };
