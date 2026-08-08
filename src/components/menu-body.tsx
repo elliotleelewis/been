@@ -1,5 +1,6 @@
 import { memo } from "react";
 import type { FC } from "react";
+
 import type { Region } from "../models/region";
 import { MenuItem } from "./menu-item";
 import { Progress } from "./progress";

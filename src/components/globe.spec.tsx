@@ -2,6 +2,7 @@ import { render } from "@testing-library/react";
 import { bbox, featureCollection } from "@turf/turf";
 import { createRef } from "react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
+
 import { countries } from "../data/countries";
 import type { Country } from "../models/country";
 import { MapboxSourceKeys } from "../models/enums";

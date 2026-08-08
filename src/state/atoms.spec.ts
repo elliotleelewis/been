@@ -1,5 +1,6 @@
 import { createStore } from "jotai";
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
+
 import type { Country } from "../models/country";
 import { addCountryAtom, focusAtom, rawCountriesAtom, removeCountryAtom } from "./atoms";
 

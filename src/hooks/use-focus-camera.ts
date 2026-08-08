@@ -1,7 +1,8 @@
+import type { CameraOptions } from "mapbox-gl";
 import { useCallback, useEffect, useRef } from "react";
 import type { RefObject } from "react";
-import type { CameraOptions } from "mapbox-gl";
 import type { MapRef, ViewStateChangeEvent } from "react-map-gl/mapbox";
+
 import type { Focus } from "../models/focus";
 
 // Frames the focused country, and returns the `onMoveStart` handler that lets the user's own

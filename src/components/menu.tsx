@@ -1,6 +1,7 @@
 import { useAtomValue } from "jotai";
 import { memo, useId, useMemo, useState } from "react";
 import type { FC } from "react";
+
 import type { Region } from "../models/region";
 import { regionsAtom } from "../state/atoms.ts";
 import { MenuBody } from "./menu-body";

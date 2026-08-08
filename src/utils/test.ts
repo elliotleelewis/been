@@ -1,6 +1,6 @@
-import type { PropsWithChildren, ReactNode } from "react";
 import type { WritableAtom } from "jotai/index";
 import { useHydrateAtoms } from "jotai/utils";
+import type { PropsWithChildren, ReactNode } from "react";
 import { vi } from "vitest";
 
 // oxlint-disable-next-line no-explicit-any -- Any is required to allow any atom type. Unfortunately cannot be `unknown`.
