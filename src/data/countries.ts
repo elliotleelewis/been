@@ -1,7 +1,7 @@
 // oxlint-disable max-lines -- A static dataset of every country, not code to be split up.
 import type { Country } from "../models/country";
 
-export const countries: Country[] = [
+export const countries: readonly Country[] = [
 	{
 		bounds: [60.5126953125, 29.382175075145284, 74.8828125, 38.47939467327646],
 		iso3166: "AF",

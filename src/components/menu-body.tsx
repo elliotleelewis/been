@@ -5,8 +5,8 @@ import { MenuItem } from "./menu-item";
 import { Progress } from "./progress";
 
 interface Props {
-	loading: boolean;
-	regions: readonly Region[];
+	readonly loading: boolean;
+	readonly regions: readonly Region[];
 }
 
 export const MenuBody: FC<Props> = memo(({ loading, regions }) => {

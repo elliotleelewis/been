@@ -1,7 +1,7 @@
 export interface Country {
-	name: string;
-	iso3166: string;
-	region: string;
-	bounds?: [number, number, number, number];
-	selected?: boolean;
+	readonly name: string;
+	readonly iso3166: string;
+	readonly region: string;
+	readonly bounds?: readonly [number, number, number, number];
+	readonly selected?: boolean;
 }

@@ -18,8 +18,8 @@ const lightThemeUrl = "mapbox://styles/mapbox/light-v11";
 const minZoom = 1.8;
 
 export interface MapForwardedRef {
-	isSourceLoaded: ForwardedRefFunction<MapRef["isSourceLoaded"]>;
-	querySourceFeatures: ForwardedRefFunction<MapRef["querySourceFeatures"]>;
+	readonly isSourceLoaded: ForwardedRefFunction<MapRef["isSourceLoaded"]>;
+	readonly querySourceFeatures: ForwardedRefFunction<MapRef["querySourceFeatures"]>;
 }
 
 export const Globe = memo(

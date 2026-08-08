@@ -2,7 +2,7 @@ import { memo } from "react";
 import type { FC } from "react";
 
 interface Props {
-	complete: number;
+	readonly complete: number;
 }
 
 export const Progress: FC<Props> = memo(({ complete }) => (

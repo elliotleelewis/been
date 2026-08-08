@@ -21,7 +21,7 @@ export const HydrateAtoms = <Tuples extends readonly (readonly [AnyWritableAtom,
 	initialValues,
 	children,
 }: PropsWithChildren<{
-	initialValues: InferAtomTuples<Tuples>;
+	readonly initialValues: InferAtomTuples<Tuples>;
 }>): ReactNode => {
 	useHydrateAtoms(initialValues);
 	return children;
