@@ -17,11 +17,7 @@
     "window": "readonly"
   },
   "rules": {
-    "@typescript-eslint/dot-notation": "off",
-    "@typescript-eslint/prefer-readonly-parameter-types": "warn",
-    "@typescript-eslint/strict-void-return": "off",
     "eslint/capitalized-comments": ["error", "always", { "ignoreConsecutiveComments": true }],
-    "eslint/id-length": ["error", { "checkGeneric": false }],
     "eslint/max-lines-per-function": "off",
     "eslint/no-console": ["error", { "allow": ["warn", "error"] }],
     "eslint/no-duplicate-imports": ["error", { "allowSeparateTypeImports": true }],
@@ -43,11 +39,12 @@
       { "namedComponents": "arrow-function", "unnamedComponents": "arrow-function" }
     ],
     "react/jsx-curly-brace-presence": "off",
-    "react/jsx-filename-extension": ["error", { "extensions": [".jsx", ".tsx"] }],
+    "react/jsx-filename-extension": ["error", { "extensions": [".tsx"] }],
     "react/jsx-max-depth": ["error", { "max": 4 }],
     "react/react-in-jsx-scope": "off",
+    "typescript/dot-notation": "off",
+    "typescript/prefer-readonly-parameter-types": "warn",
     "unicorn/catch-error-name": ["error", { "ignore": ["cause"] }],
-    "unicorn/no-nested-ternary": "off",
     "unicorn/no-null": "off",
     "vitest/consistent-test-filename": ["error", { "pattern": ".*\\.spec\\.[tj]sx?$" }],
     "vitest/no-hooks": ["error", { "allow": ["beforeEach", "afterEach"] }],
@@ -70,24 +67,8 @@
       }
     },
     {
-      "files": ["src/data/**"],
-      "rules": {
-        "eslint/max-lines": "off"
-      }
-    },
-    {
-      "files": ["**/*.{ts,tsx}"],
-      "excludeFiles": ["**/*.spec.{ts,tsx}", "src/utils/test.ts", "src/vitest-setup.ts"],
-      "rules": {
-        "vitest/require-hook": "off"
-      }
-    },
-    {
       "files": ["src/__e2e-test__/**"],
       "rules": {
-        "vitest/consistent-test-filename": "off",
-        "vitest/no-hooks": "off",
-        "vitest/prefer-expect-assertions": "off",
         "vitest/prefer-importing-vitest-globals": "off"
       }
     }

@@ -41,7 +41,8 @@ export const useFocusCamera = (
 				pitch: map.getPitch(),
 				zoom: map.getZoom(),
 			};
-			map.fitBounds(bounds);
+			// Copied because mapbox takes a mutable tuple, and the country's bounds are shared.
+			map.fitBounds([...bounds]);
 		}
 	}, [focus, mapRef, undoFocus]);
 

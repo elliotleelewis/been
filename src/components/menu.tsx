@@ -6,9 +6,9 @@ import { regionsAtom } from "../state/atoms.ts";
 import { MenuBody } from "./menu-body";
 
 interface Props {
-	loading?: boolean | undefined;
-	fullscreen: boolean;
-	toggleFullscreen: () => void;
+	readonly loading?: boolean | undefined;
+	readonly fullscreen: boolean;
+	readonly toggleFullscreen: () => void;
 }
 
 export const Menu: FC<Props> = memo(({ loading = false, fullscreen, toggleFullscreen }) => {

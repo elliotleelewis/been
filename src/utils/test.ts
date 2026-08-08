@@ -6,22 +6,22 @@ import { vi } from "vitest";
 // oxlint-disable-next-line no-explicit-any -- Any is required to allow any atom type. Unfortunately cannot be `unknown`.
 type AnyWritableAtom = WritableAtom<unknown, any[], unknown>;
 
-type InferAtomTuples<T> = {
-	[K in keyof T]: T[K] extends readonly [infer A, ...infer Rest]
-		? A extends WritableAtom<unknown, infer Args extends unknown[], unknown>
+type InferAtomTuples<Tuples> = {
+	[Key in keyof Tuples]: Tuples[Key] extends readonly [infer Atom, ...infer Rest]
+		? Atom extends WritableAtom<unknown, infer Args extends unknown[], unknown>
 			? Rest extends Args
-				? readonly [A, ...Rest]
+				? readonly [Atom, ...Rest]
 				: never
 			: never
 		: never;
 };
 
 // oxlint-disable-next-line no-export -- This is a test utility file.
-export const HydrateAtoms = <T extends readonly (readonly [AnyWritableAtom, ...unknown[]])[]>({
+export const HydrateAtoms = <Tuples extends readonly (readonly [AnyWritableAtom, ...unknown[]])[]>({
 	initialValues,
 	children,
 }: PropsWithChildren<{
-	initialValues: InferAtomTuples<T>;
+	readonly initialValues: InferAtomTuples<Tuples>;
 }>): ReactNode => {
 	useHydrateAtoms(initialValues);
 	return children;
@@ -42,7 +42,7 @@ export const mockMediaQueryList = (matches = false): MediaQueryList => ({
 });
 
 // oxlint-disable-next-line no-export -- This is a test utility file.
-export const assertDefined = <T>(value: T | null | undefined, message: string): T => {
+export const assertDefined = <Value>(value: Value | null | undefined, message: string): Value => {
 	if (value === null || value === undefined) {
 		throw new Error(message);
 	}

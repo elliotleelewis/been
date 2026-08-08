@@ -11,20 +11,21 @@ export const regionalizer = (countries: readonly Country[]): readonly Region[] =
 		}
 	}
 
-	return [...regionMap.entries()]
-		.map(([regionName, values]) => ({
-			complete: values.filter((country) => country.selected === true).length / values.length,
-			name: regionName,
-			values: values.toSorted((left, right) => left.name.localeCompare(right.name)),
-		}))
-		.toSorted((left, right) => {
-			if (left.name === "") {
-				return 1;
-			}
-			if (right.name === "") {
-				return -1;
-			}
+	const entries: readonly (readonly [string, readonly Country[]])[] = [...regionMap.entries()];
+	const regions: readonly Region[] = entries.map(([regionName, values]) => ({
+		complete: values.filter((country) => country.selected === true).length / values.length,
+		name: regionName,
+		values: values.toSorted((left, right) => left.name.localeCompare(right.name)),
+	}));
 
-			return left.name.localeCompare(right.name);
-		});
+	return regions.toSorted((left, right) => {
+		if (left.name === "") {
+			return 1;
+		}
+		if (right.name === "") {
+			return -1;
+		}
+
+		return left.name.localeCompare(right.name);
+	});
 };

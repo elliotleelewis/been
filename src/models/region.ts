@@ -1,7 +1,7 @@
 import type { Country } from "./country";
 
 export interface Region {
-	name: string;
-	values: Country[];
-	complete?: number;
+	readonly name: string;
+	readonly values: readonly Country[];
+	readonly complete?: number;
 }

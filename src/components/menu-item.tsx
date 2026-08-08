@@ -5,7 +5,7 @@ import type { Country } from "../models/country";
 import { addCountryAtom, removeCountryAtom } from "../state/atoms";
 
 interface Props {
-	country: Country;
+	readonly country: Country;
 }
 
 export const MenuItem: FC<Props> = memo(({ country }) => {

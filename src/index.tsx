@@ -10,6 +10,7 @@ if (!container) {
 }
 
 const root = createRoot(container);
+// oxlint-disable-next-line require-hook -- Mounting the app is the point of this file, not test setup.
 root.render(
 	<StrictMode>
 		<App />
