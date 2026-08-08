@@ -1,3 +1,4 @@
+// oxlint-disable max-lines -- A static dataset of every country, not code to be split up.
 import type { Country } from "../models/country";
 
 export const countries: Country[] = [

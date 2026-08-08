@@ -2,20 +2,20 @@ import { useEffect, useState } from "react";
 import type { Dispatch, SetStateAction } from "react";
 import { useWindow } from "./use-window";
 
-export const useLocalStorage = <T>(
+export const useLocalStorage = <Value>(
 	key: string,
-	initialValue: T,
-): readonly [T, Dispatch<SetStateAction<T>>] => {
+	initialValue: Value,
+): readonly [Value, Dispatch<SetStateAction<Value>>] => {
 	const window = useWindow();
 
-	const [storedValue, setStoredValue] = useState<T>((): T => {
+	const [storedValue, setStoredValue] = useState<Value>((): Value => {
 		try {
 			const item = window.localStorage.getItem(key);
 			if (item === null) {
 				return initialValue;
 			}
 			// oxlint-disable-next-line no-unsafe-type-assertion -- Deserialised JSON cannot be narrowed to the caller's generic without a schema.
-			return JSON.parse(item) as T;
+			return JSON.parse(item) as Value;
 		} catch (error) {
 			console.warn(`Error reading localStorage key "${key}":`, error);
 			return initialValue;

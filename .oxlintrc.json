@@ -18,7 +18,6 @@
   },
   "rules": {
     "eslint/capitalized-comments": ["error", "always", { "ignoreConsecutiveComments": true }],
-    "eslint/id-length": ["error", { "checkGeneric": false }],
     "eslint/max-lines-per-function": "off",
     "eslint/no-console": ["error", { "allow": ["warn", "error"] }],
     "eslint/no-duplicate-imports": ["error", { "allowSeparateTypeImports": true }],
@@ -65,18 +64,6 @@
       "files": ["*.d.ts"],
       "rules": {
         "import/unambiguous": "off"
-      }
-    },
-    {
-      "files": ["src/data/**"],
-      "rules": {
-        "eslint/max-lines": "off"
-      }
-    },
-    {
-      "files": ["src/index.tsx"],
-      "rules": {
-        "vitest/require-hook": "off"
       }
     },
     {
