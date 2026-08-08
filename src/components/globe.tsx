@@ -1,14 +1,16 @@
 import { useAtomValue } from "jotai";
-import "mapbox-gl/dist/mapbox-gl.css";
 import { forwardRef, memo, useImperativeHandle, useRef } from "react";
 import { Layer, Map, NavigationControl, Source } from "react-map-gl/mapbox";
 import type { MapRef } from "react-map-gl/mapbox";
+
 import { useFocusCamera } from "../hooks/use-focus-camera";
 import { useGlobeLayers } from "../hooks/use-globe-layers";
 import { useMatchMedia } from "../hooks/use-match-media";
 import { MapboxLayerKeys, MapboxSourceKeys } from "../models/enums";
 import { focusAtom, selectedCountriesAtom } from "../state/atoms.ts";
 import type { ForwardedRefFunction } from "../types/utils";
+
+import "mapbox-gl/dist/mapbox-gl.css";
 
 const apiKeyMapbox = import.meta.env["VITE_API_KEY_MAPBOX"];
 const testMode = import.meta.env.MODE === "test";

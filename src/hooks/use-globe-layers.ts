@@ -1,5 +1,5 @@
-import { useMemo } from "react";
 import type { FillExtrusionLayerSpecification, FillLayerSpecification } from "mapbox-gl";
+import { useMemo } from "react";
 
 type Filter = NonNullable<FillExtrusionLayerSpecification["filter"]>;
 

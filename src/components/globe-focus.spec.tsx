@@ -3,6 +3,7 @@ import { Provider, createStore } from "jotai";
 import { Map as MapboxMap } from "mapbox-gl";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import type { MockInstance } from "vitest";
+
 import type { Country } from "../models/country";
 import { addCountryAtom, rawCountriesAtom, removeCountryAtom } from "../state/atoms";
 import { mockMediaQueryList } from "../utils/test";

@@ -1,5 +1,6 @@
 import { atom } from "jotai";
 import { atomWithStorage } from "jotai/utils";
+
 import type { Country } from "../models/country.ts";
 import type { Focus } from "../models/focus.ts";
 import type { Region } from "../models/region.ts";

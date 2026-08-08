@@ -2,6 +2,7 @@ import classNames from "classnames";
 import { useSetAtom } from "jotai";
 import { memo, useCallback, useEffect, useState } from "react";
 import type { FC } from "react";
+
 import { rawCountriesAtom } from "../state/atoms.ts";
 import { Globe } from "./globe";
 import { Menu } from "./menu";
