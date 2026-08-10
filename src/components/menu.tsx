@@ -24,13 +24,11 @@ export const Menu: FC<Props> = memo(({ loading = false, fullscreen, toggleFullsc
 			return regions;
 		}
 		return regions
-			.map(
-				(region): Region => ({
-					complete: region.complete ?? 0,
-					name: region.name,
-					values: region.values.filter(({ name }) => name.toLowerCase().includes(searchTerm)),
-				}),
-			)
+			.map((region): Region => ({
+				complete: region.complete ?? 0,
+				name: region.name,
+				values: region.values.filter(({ name }) => name.toLowerCase().includes(searchTerm)),
+			}))
 			.filter((region) => region.values.length > 0);
 	}, [search, regions]);
 
