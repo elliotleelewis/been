@@ -65,11 +65,26 @@ describe("globe", () => {
 		const map = createRef<MapForwardedRef>();
 		render(<Globe ref={map} />);
 
-		await vi.waitUntil(() => map.current?.isSourceLoaded(MapboxSourceKeys.Countries), {
-			timeout: 10_000,
+		// The source is added empty and filled once the atlas has been fetched, so it reports
+		// itself loaded well before it holds anything. Waiting on the features is what waits for
+		// the atlas, and `querySourceFeatures` answers an empty list until the source exists.
+		await vi.waitUntil(() => map.current?.querySourceFeatures(MapboxSourceKeys.Countries)?.length, {
+			timeout: 20_000,
 		});
 
 		const globe = assertDefined(map.current, "Globe did not attach its forwarded ref.");
-		expect(globe.querySourceFeatures(MapboxSourceKeys.Countries)?.length).toBeGreaterThan(0);
+		const features = assertDefined(
+			globe.querySourceFeatures(MapboxSourceKeys.Countries),
+			"The map never exposed its country boundaries source.",
+		);
+		// The `been` layer filters on `iso_3166_1`, so the map holding features under any other
+		// code would leave those countries unfillable.
+		const tracked = new Set(countries.map(({ iso3166 }) => iso3166));
+		const untracked = features
+			.map((feature) => String(feature.properties?.["iso_3166_1"]))
+			.filter((code) => !tracked.has(code));
+
+		expect(features.length).toBeGreaterThan(0);
+		expect(untracked).toStrictEqual([]);
 	}, 30_000);
 });
