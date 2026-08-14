@@ -3,6 +3,7 @@ import { forwardRef, memo, useImperativeHandle, useRef } from "react";
 import { Layer, Map, NavigationControl, Source } from "react-map-gl/mapbox";
 import type { MapRef } from "react-map-gl/mapbox";
 
+import { useCountryBoundaries } from "../hooks/use-country-boundaries";
 import { useFocusCamera } from "../hooks/use-focus-camera";
 import { useGlobeLayers } from "../hooks/use-globe-layers";
 import { useMatchMedia } from "../hooks/use-match-media";
@@ -32,6 +33,8 @@ export const Globe = memo(
 
 		const selectedCountries = useAtomValue(selectedCountriesAtom);
 		const focus = useAtomValue(focusAtom);
+
+		const boundaries = useCountryBoundaries();
 
 		useImperativeHandle(
 			ref,
@@ -66,16 +69,11 @@ export const Globe = memo(
 				testMode={testMode}
 			>
 				<NavigationControl showCompass={false} />
-				<Source
-					id={MapboxSourceKeys.Countries}
-					type="vector"
-					url="mapbox://mapbox.country-boundaries-v1"
-				/>
+				<Source id={MapboxSourceKeys.Countries} type="geojson" data={boundaries} />
 				<Layer
 					id={MapboxLayerKeys.Been}
 					type="fill"
 					source={MapboxSourceKeys.Countries}
-					source-layer="country_boundaries"
 					beforeId="national-park"
 					filter={beenFilter}
 					paint={beenPaint}
