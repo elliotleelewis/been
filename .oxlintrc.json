@@ -67,6 +67,13 @@
       }
     },
     {
+      "files": ["scripts/**"],
+      "rules": {
+        "import/no-nodejs-modules": "off",
+        "vitest/require-hook": "off"
+      }
+    },
+    {
       "files": ["src/__e2e-test__/**"],
       "rules": {
         "vitest/prefer-importing-vitest-globals": "off"
