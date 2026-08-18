@@ -1,5 +1,9 @@
 <!doctype html>
-<html lang="en">
+<!-- iOS paints the strip behind the status bar with the canvas colour, which is the root
+	element's, so the root carries the title bar's colour rather than the app's white default.
+	The body carries the app's own surface, which is what shows anywhere inside the viewport
+	the app leaves uncovered. -->
+<html lang="en" class="bg-primary dark:bg-zinc-950">
 	<head>
 		<meta charset="utf-8" />
 		<title>Been</title>
@@ -7,7 +11,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<meta name="description" content='Web clone of the popular mobile app "been".' />
 	</head>
-	<body>
+	<body class="bg-white dark:bg-zinc-900">
 		<div id="app" class="inline"></div>
 		<script type="module" src="/index.tsx"></script>
 	</body>
