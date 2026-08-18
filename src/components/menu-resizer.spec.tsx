@@ -21,9 +21,12 @@ describe("menuResizer", () => {
 		vi.spyOn(globalThis, "matchMedia").mockReturnValue(mockMediaQueryList());
 	});
 
-	// Auto-cleanup is not registered as the suite does not run with `globals`.
+	// Auto-cleanup is not registered as the suite does not run with `globals`. The size the drag
+	// left behind goes too: it is in local storage, which outlives this file and is read by the
+	// drawer's atom the moment another spec file imports it.
 	afterEach(() => {
 		cleanup();
+		globalThis.localStorage.clear();
 	});
 
 	it("should render", () => {
