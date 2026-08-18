@@ -6,7 +6,7 @@ import { loadAtlas } from "../data/atlas";
 import { boundsOf, toBoundaries } from "../data/boundaries";
 import type { CountryBoundaries } from "../data/boundaries";
 import { countries } from "../data/countries";
-import { MapboxSourceKeys } from "../models/enums";
+import { MapSourceKeys } from "../models/enums";
 import { assertDefined, mockMediaQueryList } from "../utils/test";
 import { Globe } from "./globe";
 import type { MapForwardedRef } from "./globe";
@@ -68,20 +68,20 @@ describe("globe", () => {
 		// The source is added empty and filled once the atlas has been fetched, so it reports
 		// itself loaded well before it holds anything. Waiting on the features is what waits for
 		// the atlas, and `querySourceFeatures` answers an empty list until the source exists.
-		await vi.waitUntil(() => map.current?.querySourceFeatures(MapboxSourceKeys.Countries)?.length, {
+		await vi.waitUntil(() => map.current?.querySourceFeatures(MapSourceKeys.Countries)?.length, {
 			timeout: 20_000,
 		});
 
 		const globe = assertDefined(map.current, "Globe did not attach its forwarded ref.");
 		const features = assertDefined(
-			globe.querySourceFeatures(MapboxSourceKeys.Countries),
+			globe.querySourceFeatures(MapSourceKeys.Countries),
 			"The map never exposed its country boundaries source.",
 		);
 		// The `been` layer filters on `iso_3166_1`, so the map holding features under any other
 		// code would leave those countries unfillable.
 		const tracked = new Set(countries.map(({ iso3166 }) => iso3166));
 		const untracked = features
-			.map((feature) => String(feature.properties?.["iso_3166_1"]))
+			.map((feature) => String(feature.properties["iso_3166_1"]))
 			.filter((code) => !tracked.has(code));
 
 		expect(features.length).toBeGreaterThan(0);

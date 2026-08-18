@@ -1,22 +1,17 @@
 import { useAtomValue } from "jotai";
 import { forwardRef, memo, useImperativeHandle, useRef } from "react";
-import { Layer, Map, NavigationControl, Source } from "react-map-gl/mapbox";
-import type { MapRef } from "react-map-gl/mapbox";
+import { Layer, Map, NavigationControl, Source } from "react-map-gl/maplibre";
+import type { MapRef } from "react-map-gl/maplibre";
 
+import { useBasemap } from "../hooks/use-basemap";
 import { useCountryBoundaries } from "../hooks/use-country-boundaries";
 import { useFocusCamera } from "../hooks/use-focus-camera";
 import { useGlobeLayers } from "../hooks/use-globe-layers";
-import { useMatchMedia } from "../hooks/use-match-media";
-import { MapboxLayerKeys, MapboxSourceKeys } from "../models/enums";
+import { MapLayerKeys, MapSourceKeys } from "../models/enums";
 import { focusAtom, selectedCountriesAtom } from "../state/atoms.ts";
 import type { ForwardedRefFunction } from "../types/utils";
 
-import "mapbox-gl/dist/mapbox-gl.css";
-
-const apiKeyMapbox = import.meta.env["VITE_API_KEY_MAPBOX"];
-const testMode = import.meta.env.MODE === "test";
-const darkThemeUrl = "mapbox://styles/mapbox/dark-v11";
-const lightThemeUrl = "mapbox://styles/mapbox/light-v11";
+import "maplibre-gl/dist/maplibre-gl.css";
 
 const minZoom = 1.8;
 
@@ -29,12 +24,11 @@ export const Globe = memo(
 	forwardRef<MapForwardedRef>((_props, ref) => {
 		const internalRef = useRef<MapRef>(null);
 
-		const prefersDark = useMatchMedia("(prefers-color-scheme: dark)");
-
 		const selectedCountries = useAtomValue(selectedCountriesAtom);
 		const focus = useAtomValue(focusAtom);
 
 		const boundaries = useCountryBoundaries();
+		const { labelsLayerId, onStyleData: handleStyleData, styleUrl } = useBasemap();
 
 		useImperativeHandle(
 			ref,
@@ -53,40 +47,33 @@ export const Globe = memo(
 
 		const handleMoveStart = useFocusCamera(internalRef, focus);
 
-		const { beenFilter, beenPaint, buildingsFilter, buildingsPaint } =
-			useGlobeLayers(selectedCountries);
+		const { beenFilter, beenPaint } = useGlobeLayers(selectedCountries);
 
 		return (
 			<Map
-				mapboxAccessToken={apiKeyMapbox ?? ""}
-				mapStyle={prefersDark ? darkThemeUrl : lightThemeUrl}
-				antialias
-				attributionControl={false}
-				logoPosition="bottom-right"
+				mapStyle={styleUrl}
+				canvasContextAttributes={{ antialias: true }}
 				minZoom={minZoom}
 				onMoveStart={handleMoveStart}
+				onStyleData={handleStyleData}
+				projection="globe"
 				ref={internalRef}
-				testMode={testMode}
 			>
 				<NavigationControl showCompass={false} />
-				<Source id={MapboxSourceKeys.Countries} type="geojson" data={boundaries} />
-				<Layer
-					id={MapboxLayerKeys.Been}
-					type="fill"
-					source={MapboxSourceKeys.Countries}
-					beforeId="national-park"
-					filter={beenFilter}
-					paint={beenPaint}
-				/>
-				<Layer
-					id={MapboxLayerKeys.Buildings}
-					type="fill-extrusion"
-					source="composite"
-					source-layer="building"
-					minzoom={15}
-					filter={buildingsFilter}
-					paint={buildingsPaint}
-				/>
+				<Source id={MapSourceKeys.Countries} type="geojson" data={boundaries} />
+				{/* Held back until the layer it goes under has a name, because `beforeId` has to be
+				absent rather than undefined to mean "on top". Nothing is lost by waiting: the fill
+				cannot be added before the style it sits in has loaded either way. */}
+				{labelsLayerId === undefined ? null : (
+					<Layer
+						id={MapLayerKeys.Been}
+						type="fill"
+						source={MapSourceKeys.Countries}
+						beforeId={labelsLayerId}
+						filter={beenFilter}
+						paint={beenPaint}
+					/>
+				)}
 			</Map>
 		);
 	}),
