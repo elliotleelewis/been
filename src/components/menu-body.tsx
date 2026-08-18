@@ -44,7 +44,7 @@ export const MenuBody: FC<Props> = memo(({ loading, regions }) => {
 	}
 
 	return (
-		<ul className="min-h-0 flex-1 overflow-y-auto">
+		<ul className="min-h-0 flex-1 overscroll-contain overflow-y-auto">
 			{regions.map((region) => (
 				<li key={region.name}>
 					<div className="sticky top-0 flex items-center justify-between bg-zinc-200 p-4 font-medium dark:bg-zinc-800">

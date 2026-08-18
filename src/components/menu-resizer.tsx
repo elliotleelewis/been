@@ -9,7 +9,9 @@ interface Props {
 }
 
 // The edge the country drawer is dragged by: the seam it shares with the globe, which is its right
-// edge as a column and its top edge as a sheet.
+// edge as a column and its top edge as a sheet. As a sheet it is padded out to a finger's width,
+// because a miss there does not land on nothing: it lands on the map, or on a list at the top of
+// its scroll, and the browser reads the drag that follows as a pull to refresh.
 export const MenuResizer: FC<Props> = memo(({ controls }) => {
 	const { orientation, resizeProps, value, valueMax, valueMin } = useMenuResize();
 
@@ -20,7 +22,7 @@ export const MenuResizer: FC<Props> = memo(({ controls }) => {
 			// oxlint-disable-next-line jsx-a11y/prefer-tag-over-role -- An `hr` is a thematic break with nowhere to put the grip, and this separator is focusable.
 			role="separator"
 			tabIndex={0}
-			className="group flex shrink-0 cursor-row-resize touch-none select-none items-center justify-center bg-zinc-200 py-2 focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:ring-inset md:cursor-col-resize md:px-1 md:py-0 dark:bg-zinc-800"
+			className="group flex shrink-0 cursor-row-resize touch-none select-none items-center justify-center bg-zinc-200 py-5 focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:ring-inset md:cursor-col-resize md:px-1 md:py-0 dark:bg-zinc-800"
 			aria-controls={controls}
 			aria-label="Resize the country list"
 			aria-orientation={orientation}

@@ -22,7 +22,7 @@ exports[`menu > should render 1`] = `
     />
   </form>
   <ul
-    class="min-h-0 flex-1 overflow-y-auto"
+    class="min-h-0 flex-1 overscroll-contain overflow-y-auto"
   >
     <li>
       <div
