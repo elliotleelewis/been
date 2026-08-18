@@ -31,15 +31,15 @@ One package, no workspace members — `pnpm-workspace.yaml` exists only to pin
 down an optional dependency. Everything lives under `src/`, which is also
 Vite's root, so the build reads `src/index.html` and writes `dist/`.
 
-| Directory         | Role                                                                              |
-| ----------------- | --------------------------------------------------------------------------------- |
-| `src/components/` | React components. Presentational; they read and write atoms and hold no logic.    |
+| Directory         | Role                                                                                |
+| ----------------- | ----------------------------------------------------------------------------------- |
+| `src/components/` | React components. Presentational; they read and write atoms and hold no logic.      |
 | `src/state/`      | Jotai atoms. The single source of truth, including the derived and write-only ones. |
-| `src/hooks/`      | Adapters onto things React does not own: the map camera, media queries, storage.  |
-| `src/data/`       | The country dataset and the world atlas it is drawn from, plus generated output.  |
-| `src/models/`     | Shared types and key constants. No behaviour.                                     |
-| `src/utils/`      | Pure functions, and the test helpers.                                             |
-| `scripts/`        | Node-only tooling run by hand, not part of the bundle.                            |
+| `src/hooks/`      | Adapters onto things React does not own: the map camera, media queries, storage.    |
+| `src/data/`       | The country dataset and the world atlas it is drawn from, plus generated output.    |
+| `src/models/`     | Shared types and key constants. No behaviour.                                       |
+| `src/utils/`      | Pure functions, and the test helpers.                                               |
+| `scripts/`        | Node-only tooling run by hand, not part of the bundle.                              |
 
 How a selection travels:
 
