@@ -19,3 +19,44 @@ body {
 	overscroll-behavior: none;
 	overflow: hidden;
 }
+
+/* MapLibre ships its controls with one theme, a light one, so the dark scheme is ours to add. The
+   icons are background images with their colour baked in, which is why those are inverted rather
+   than restyled: the alternative is copying every data URI in here to change one fill. */
+@media (prefers-color-scheme: dark) {
+	.maplibregl-ctrl-group {
+		background: var(--color-zinc-900);
+	}
+
+	.maplibregl-ctrl-group:not(:empty) {
+		box-shadow: 0 0 0 2px color-mix(in oklab, var(--color-white) 15%, transparent);
+	}
+
+	.maplibregl-ctrl-group button + button {
+		border-block-start-color: var(--color-zinc-700);
+	}
+
+	.maplibregl-ctrl-icon,
+	.maplibregl-ctrl-attrib-button {
+		filter: invert(1);
+	}
+
+	.maplibregl-ctrl.maplibregl-ctrl-attrib {
+		background-color: color-mix(in oklab, var(--color-zinc-900) 50%, transparent);
+	}
+
+	.maplibregl-ctrl-attrib.maplibregl-compact {
+		background-color: var(--color-zinc-900);
+		color: var(--color-white);
+	}
+
+	.maplibregl-ctrl-attrib a {
+		color: color-mix(in oklab, var(--color-white) 75%, transparent);
+	}
+
+	@media (hover: hover) {
+		.maplibregl-ctrl button:not(:disabled):hover {
+			background-color: var(--color-zinc-800);
+		}
+	}
+}
