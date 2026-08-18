@@ -1,6 +1,6 @@
 import { cleanup, render } from "@testing-library/react";
 import { Provider } from "jotai";
-import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import { afterEach, beforeEach, describe, expect, it } from "vitest";
 
 import type { Country } from "../models/country.ts";
 import { rawCountriesAtom } from "../state/atoms.ts";
@@ -17,7 +17,7 @@ const renderMenu = (): ReturnType<typeof render> =>
 	render(
 		<Provider>
 			<HydrateAtoms initialValues={[[rawCountriesAtom, { [country.iso3166]: country }]]}>
-				<Menu fullscreen={false} toggleFullscreen={vi.fn<() => void>()} />
+				<Menu />
 			</HydrateAtoms>
 		</Provider>,
 	);

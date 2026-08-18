@@ -58,6 +58,12 @@ a country changes a filter rather than any geometry. The atlas itself is a
 ~700kB asset fetched at run time instead of bundled, and `src/data/countries.ts`
 is imported dynamically for the same reason.
 
+The country list is a drawer the reader sizes themselves: a column beside the globe on wide
+screens, a sheet under it on narrow ones. Its handle is react-aria's `useMove`, so one element
+answers to pointer, touch and the arrow keys; what it stores in `menuSizeAtom` is a fraction of
+the viewport per axis, which reaches the layout as the custom properties the grid tracks holding
+the drawer and the globe are sized by.
+
 Selecting a country also asks the camera to frame it, via `focusAtom`;
 unselecting the country the camera is framing puts it back where it was. That
 undo is deliberately one-shot and is dropped the moment the user moves the map

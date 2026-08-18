@@ -4,6 +4,8 @@
 @plugin "@tailwindcss/forms";
 @theme {
 	--color-primary: oklch(0.73 0.225 48);
+	/* The title bar's height, which the drawer's grid track has to leave standing. */
+	--spacing-header: 3.5rem;
 }
 
 /* Styles */
@@ -11,4 +13,50 @@ html,
 body {
 	inline-size: 100%;
 	block-size: 100%;
+	/* The page itself never scrolls: it is a globe and a drawer, and both handle their own drags.
+	   Left to overscroll, a touch browser reads a drag that starts near the top of either of them
+	   as a pull to refresh, and takes the gesture off whichever one it belonged to. */
+	overscroll-behavior: none;
+	overflow: hidden;
+}
+
+/* MapLibre ships its controls with one theme, a light one, so the dark scheme is ours to add. The
+   icons are background images with their colour baked in, which is why those are inverted rather
+   than restyled: the alternative is copying every data URI in here to change one fill. */
+@media (prefers-color-scheme: dark) {
+	.maplibregl-ctrl-group {
+		background: var(--color-zinc-900);
+	}
+
+	.maplibregl-ctrl-group:not(:empty) {
+		box-shadow: 0 0 0 2px color-mix(in oklab, var(--color-white) 15%, transparent);
+	}
+
+	.maplibregl-ctrl-group button + button {
+		border-block-start-color: var(--color-zinc-700);
+	}
+
+	.maplibregl-ctrl-icon,
+	.maplibregl-ctrl-attrib-button {
+		filter: invert(1);
+	}
+
+	.maplibregl-ctrl.maplibregl-ctrl-attrib {
+		background-color: color-mix(in oklab, var(--color-zinc-900) 50%, transparent);
+	}
+
+	.maplibregl-ctrl-attrib.maplibregl-compact {
+		background-color: var(--color-zinc-900);
+		color: var(--color-white);
+	}
+
+	.maplibregl-ctrl-attrib a {
+		color: color-mix(in oklab, var(--color-white) 75%, transparent);
+	}
+
+	@media (hover: hover) {
+		.maplibregl-ctrl button:not(:disabled):hover {
+			background-color: var(--color-zinc-800);
+		}
+	}
 }

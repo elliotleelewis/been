@@ -3,10 +3,13 @@ import { atomWithStorage } from "jotai/utils";
 
 import type { Country } from "../models/country.ts";
 import type { Focus } from "../models/focus.ts";
+import { MENU_SIZE_DEFAULT } from "../models/menu.ts";
+import type { MenuSize } from "../models/menu.ts";
 import type { Region } from "../models/region.ts";
 import { regionalizer } from "../utils/regionalizer.ts";
 
 const COUNTRIES_STORAGE_KEY = "APP_COUNTRIES";
+const MENU_SIZE_STORAGE_KEY = "APP_MENU_SIZE";
 
 export const rawCountriesAtom = atom<Record<string, Country>>({});
 export const selectedCountriesAtom = atomWithStorage<readonly string[]>(
@@ -16,6 +19,14 @@ export const selectedCountriesAtom = atomWithStorage<readonly string[]>(
 	{ getOnInit: true },
 );
 export const focusAtom = atom<Focus | null>(null);
+
+// Where the user dragged the edge of the country drawer to, kept so it is still there next time.
+export const menuSizeAtom = atomWithStorage<MenuSize>(
+	MENU_SIZE_STORAGE_KEY,
+	MENU_SIZE_DEFAULT,
+	undefined,
+	{ getOnInit: true },
+);
 
 export const countriesAtom = atom<readonly Country[]>((get) => {
 	const rawCountries = get(rawCountriesAtom);
