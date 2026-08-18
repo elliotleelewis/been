@@ -24,6 +24,7 @@
     "eslint/no-magic-numbers": "off",
     "eslint/no-ternary": "off",
     "eslint/no-undefined": "off",
+    "eslint/one-var": ["error", "never"],
     "eslint/sort-imports": ["error", { "ignoreDeclarationSort": true }],
     "import/exports-last": "off",
     "import/group-exports": "off",
