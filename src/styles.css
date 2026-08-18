@@ -4,6 +4,8 @@
 @plugin "@tailwindcss/forms";
 @theme {
 	--color-primary: oklch(0.73 0.225 48);
+	/* The title bar's height, which the drawer's grid track has to leave standing. */
+	--spacing-header: 3.5rem;
 }
 
 /* Styles */

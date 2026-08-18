@@ -13,7 +13,7 @@ interface Props {
 export const MenuBody: FC<Props> = memo(({ loading, regions }) => {
 	if (loading) {
 		return (
-			<div className="flex size-full items-center justify-center">
+			<div className="flex flex-1 items-center justify-center">
 				<svg
 					className="size-5 animate-spin text-neutral-800 dark:text-white"
 					xmlns="http://www.w3.org/2000/svg"
@@ -40,11 +40,11 @@ export const MenuBody: FC<Props> = memo(({ loading, regions }) => {
 	}
 
 	if (regions.length === 0) {
-		return <div className="m-4 h-full text-center font-medium">{"No results!"}</div>;
+		return <div className="m-4 text-center font-medium">{"No results!"}</div>;
 	}
 
 	return (
-		<ul className="h-full overflow-y-auto">
+		<ul className="min-h-0 flex-1 overflow-y-auto">
 			{regions.map((region) => (
 				<li key={region.name}>
 					<div className="sticky top-0 flex items-center justify-between bg-zinc-200 p-4 font-medium dark:bg-zinc-800">
