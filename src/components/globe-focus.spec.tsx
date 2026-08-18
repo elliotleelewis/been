@@ -1,6 +1,6 @@
 import { act, render } from "@testing-library/react";
 import { Provider, createStore } from "jotai";
-import { Map as MapboxMap } from "mapbox-gl";
+import { Map as MapLibreMap } from "maplibre-gl";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import type { MockInstance } from "vitest";
 
@@ -25,30 +25,30 @@ const createTestStore = (): ReturnType<typeof createStore> => {
 	return store;
 };
 
-// `Map` loads mapbox asynchronously, so nothing camera related exists on the first render.
+// `Map` loads MapLibre asynchronously, so nothing camera related exists on the first render.
 const renderGlobe = async (store: ReturnType<typeof createStore>): Promise<void> => {
 	const { container } = render(
 		<Provider store={store}>
 			<Globe />
 		</Provider>,
 	);
-	await vi.waitUntil(() => container.querySelector(".mapboxgl-canvas-container"), {
+	await vi.waitUntil(() => container.querySelector(".maplibregl-canvas-container"), {
 		timeout: 5000,
 	});
 };
 
 // The map the globe holds is private to it, so a spied call is the only handle a test has on it.
-const mapBehind = (spy: MockInstance, message: string): MapboxMap => {
+const mapBehind = (spy: MockInstance, message: string): MapLibreMap => {
 	const [map] = spy.mock.contexts;
-	if (!(map instanceof MapboxMap)) {
+	if (!(map instanceof MapLibreMap)) {
 		throw new Error(message);
 	}
 	return map;
 };
 
-// Announces the move a user gesture would make. Mapbox tells its own camera calls apart from
+// Announces the move a user gesture would make. MapLibre tells its own camera calls apart from
 // gestures by giving only the latter an `originalEvent`, which is the signal the globe reads.
-const dragMap = (map: MapboxMap): void => {
+const dragMap = (map: MapLibreMap): void => {
 	map.fire("movestart", { originalEvent: new globalThis.MouseEvent("mousemove", { buttons: 1 }) });
 };
 
@@ -66,8 +66,8 @@ describe("globe focus", () => {
 		expect.hasAssertions();
 
 		const store = createTestStore();
-		const fitBounds = vi.spyOn(MapboxMap.prototype, "fitBounds");
-		const easeTo = vi.spyOn(MapboxMap.prototype, "easeTo");
+		const fitBounds = vi.spyOn(MapLibreMap.prototype, "fitBounds");
+		const easeTo = vi.spyOn(MapLibreMap.prototype, "easeTo");
 		await renderGlobe(store);
 
 		act(() => {
@@ -91,8 +91,8 @@ describe("globe focus", () => {
 		expect.hasAssertions();
 
 		const store = createTestStore();
-		const fitBounds = vi.spyOn(MapboxMap.prototype, "fitBounds");
-		const easeTo = vi.spyOn(MapboxMap.prototype, "easeTo");
+		const fitBounds = vi.spyOn(MapLibreMap.prototype, "fitBounds");
+		const easeTo = vi.spyOn(MapLibreMap.prototype, "easeTo");
 		await renderGlobe(store);
 
 		act(() => {

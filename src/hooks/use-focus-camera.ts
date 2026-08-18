@@ -1,7 +1,7 @@
-import type { CameraOptions } from "mapbox-gl";
+import type { CameraOptions } from "maplibre-gl";
 import { useCallback, useEffect, useRef } from "react";
 import type { RefObject } from "react";
-import type { MapRef, ViewStateChangeEvent } from "react-map-gl/mapbox";
+import type { MapRef, ViewStateChangeEvent } from "react-map-gl/maplibre";
 
 import type { Focus } from "../models/focus";
 
@@ -42,7 +42,7 @@ export const useFocusCamera = (
 				pitch: map.getPitch(),
 				zoom: map.getZoom(),
 			};
-			// Copied because mapbox takes a mutable tuple, and the country's bounds are shared.
+			// Copied because the map takes a mutable tuple, and the country's bounds are shared.
 			map.fitBounds([...bounds]);
 		}
 	}, [focus, mapRef, undoFocus]);
