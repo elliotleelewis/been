@@ -1,7 +1,17 @@
+import { setWorkerUrl } from "maplibre-gl";
+import workerUrl from "maplibre-gl/dist/maplibre-gl-worker.mjs?worker&url";
 import { useCallback, useMemo, useState } from "react";
 import type { MapStyleDataEvent } from "react-map-gl/maplibre";
 
 import { useMatchMedia } from "./use-match-media";
+
+// MapLibre parses every tile, vector and GeoJSON alike, in a worker it locates at run time from
+// its own module URL. No bundler can see through that, so the worker file never reaches the build
+// and the map draws nothing but its background colour. Handing it the URL the bundler does emit is
+// what makes the map draw at all, which is why this sits with the map rather than at the entry
+// point: the tests render the globe directly and would otherwise be testing a map that cannot draw.
+// oxlint-disable-next-line require-hook -- Configuring the map is the point, not test setup.
+setWorkerUrl(workerUrl);
 
 // CARTO's OpenStreetMap basemaps, which need no API key. Their licences are what the map credits
 // through the attribution control MapLibre shows by default.
