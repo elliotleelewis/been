@@ -2,6 +2,7 @@ import { useAtomValue, useSetAtom } from "jotai";
 import { memo, useEffect, useId, useMemo, useState } from "react";
 import type { CSSProperties, FC } from "react";
 
+import type { Country } from "../models/country";
 import { menuSizeAtom, rawCountriesAtom } from "../state/atoms.ts";
 import { Globe } from "./globe";
 import { Menu } from "./menu";
@@ -15,6 +16,13 @@ const PERCENT_PRECISION = 2;
 // third of the screen from reaching CSS as seventeen digits.
 const percent = (fraction: number): string =>
 	`${Number((fraction * PERCENT).toFixed(PERCENT_PRECISION))}%`;
+
+// React Compiler cannot lower an import expression, so the dynamic import that keeps the country
+// list out of the main bundle sits at module scope rather than inside the effect that calls it.
+const loadCountries = async (): Promise<readonly Country[]> => {
+	const { countries } = await import("../data/countries");
+	return countries;
+};
 
 // `CSSProperties` has no room for custom properties, and the drawer's size reaches the layout as
 // two of them: the grid tracks the drawer sits in are what read it.
@@ -31,8 +39,8 @@ export const App: FC = memo(() => {
 	const [error, setError] = useState<Error | null>();
 
 	useEffect(() => {
-		import("../data/countries")
-			.then(({ countries }) => {
+		loadCountries()
+			.then((countries) => {
 				const countryMap = Object.fromEntries(
 					countries.map((country) => [country.iso3166, country]),
 				);
