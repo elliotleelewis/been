@@ -14,7 +14,7 @@ export default defineConfig(({ command }) => ({
 	optimizeDeps: {
 		exclude: ["chromium-bidi", "fsevents"],
 	},
-	plugins: [react(), tailwindcss()],
+	plugins: [react({ compiler: true }), tailwindcss()],
 	root: "./src",
 	test: {
 		browser: {
