@@ -1,4 +1,2 @@
 ignoredOptionalDependencies:
   - mapbox-gl
-minimumReleaseAgeExclude:
-  - "@vitejs/plugin-react@6.1.0"
