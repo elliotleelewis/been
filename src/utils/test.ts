@@ -1,4 +1,4 @@
-import type { WritableAtom } from "jotai/index";
+import type { WritableAtom } from "jotai";
 import { useHydrateAtoms } from "jotai/utils";
 import type { PropsWithChildren, ReactNode } from "react";
 import { vi } from "vitest";
@@ -8,7 +8,7 @@ type AnyWritableAtom = WritableAtom<unknown, any[], unknown>;
 
 type InferAtomTuples<Tuples> = {
 	[Key in keyof Tuples]: Tuples[Key] extends readonly [infer Atom, ...infer Rest]
-		? Atom extends WritableAtom<unknown, infer Args extends unknown[], unknown>
+		? Atom extends WritableAtom<unknown, infer Args, unknown>
 			? Rest extends Args
 				? readonly [Atom, ...Rest]
 				: never
