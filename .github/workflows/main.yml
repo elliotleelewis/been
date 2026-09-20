@@ -29,6 +29,9 @@ jobs:
           paths: "reports/*.xml"
   deploy:
     runs-on: ubuntu-24.04
+    permissions:
+      contents: read
+      deployments: write
     steps:
       - uses: actions/checkout@v7
       - uses: pnpm/action-setup@v6
@@ -40,10 +43,9 @@ jobs:
           cache: pnpm
       - run: pnpm install --frozen-lockfile
       - run: pnpm run build
-      - uses: cloudflare/pages-action@v1
+      - uses: cloudflare/wrangler-action@v4
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: 08bcfcb3f50021eafc9bd1bfb1f06ad0
-          projectName: been
-          directory: ./dist
+          command: pages deploy ./dist --project-name=been --branch=${{ github.head_ref || github.ref_name }}
           gitHubToken: ${{ secrets.GITHUB_TOKEN }}
