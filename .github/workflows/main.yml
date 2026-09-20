@@ -43,11 +43,6 @@ jobs:
           cache: pnpm
       - run: pnpm install --frozen-lockfile
       - run: pnpm run build
-      # wrangler-action installs Wrangler with a bare `pnpm add`, which pnpm
-      # fails when new dependencies ship build scripts it has not been told to
-      # run. Installing it here skips those scripts — none are needed to upload
-      # static files — and leaves the action nothing to install.
-      - run: pnpm add wrangler@4 --ignore-scripts
       - uses: cloudflare/wrangler-action@v4
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}

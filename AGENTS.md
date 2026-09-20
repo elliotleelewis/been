@@ -27,9 +27,10 @@ any country data that has to be fetched from a third party at run time.
 
 ## Architecture
 
-One package, no workspace members — `pnpm-workspace.yaml` exists only to pin
-down an optional dependency. Everything lives under `src/`, which is also
-Vite's root, so the build reads `src/index.html` and writes `dist/`.
+One package, no workspace members — `pnpm-workspace.yaml` exists only to hold
+pnpm's own settings: an ignored optional dependency, and which dependencies may
+run build scripts. Everything lives under `src/`, which is also Vite's root, so
+the build reads `src/index.html` and writes `dist/`.
 
 | Directory         | Role                                                                                |
 | ----------------- | ----------------------------------------------------------------------------------- |

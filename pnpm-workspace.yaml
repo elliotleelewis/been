@@ -1,2 +1,5 @@
+allowBuilds:
+  esbuild: false
+  workerd: true
 ignoredOptionalDependencies:
   - mapbox-gl
