@@ -1,0 +1,23 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`tap toast > should name the country a tap ticked 1`] = `
+<DocumentFragment>
+  <output
+    class="pointer-events-none absolute inset-x-0 bottom-10 z-10 flex justify-center px-4"
+  >
+    <div
+      class="pointer-events-auto flex items-center gap-4 rounded-full bg-zinc-900 py-2 ps-4 pe-2 text-sm text-white shadow-lg dark:bg-white dark:text-zinc-900"
+    >
+      <span>
+        Added United Kingdom
+      </span>
+      <button
+        class="rounded-full px-2 py-1 font-semibold text-primary hover:bg-white/10 focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:outline-none dark:text-primary dark:hover:bg-zinc-900/10"
+        type="button"
+      >
+        Undo
+      </button>
+    </div>
+  </output>
+</DocumentFragment>
+`;

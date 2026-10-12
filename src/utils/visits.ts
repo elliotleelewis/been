@@ -9,3 +9,6 @@ const isVisit = (value: unknown): value is Visit =>
 // Whether a value read back from storage has the shape the app stores visits in today.
 export const isVisits = (value: unknown): value is Visits =>
 	isRecord(value) && Object.values(value).every((visit) => isVisit(visit));
+
+export const withoutVisit = (visits: Visits, code: string): Visits =>
+	Object.fromEntries(Object.entries(visits).filter(([other]) => other !== code));

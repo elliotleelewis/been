@@ -7,7 +7,7 @@ import { MENU_SIZE_DEFAULT } from "../models/menu.ts";
 import type { MenuSize } from "../models/menu.ts";
 import type { Continent } from "../models/region.ts";
 import { regionalizer } from "../utils/regionalizer.ts";
-import { isVisits } from "../utils/visits.ts";
+import { isVisits, withoutVisit } from "../utils/visits.ts";
 import { homeRegionAtom } from "./regions.ts";
 import { validatedStorage } from "./storage.ts";
 
@@ -73,8 +73,5 @@ export const removeCountryAtom = atom(undefined, (get, set, countryCode: string)
 	// no longer have selected. Unselecting anything else just leaves the camera alone.
 	const undo = focus?.type === "country" && focus.country.iso3166 === countryCode;
 	set(focusAtom, undo ? { type: "undo" } : null);
-	set(
-		visitsAtom,
-		Object.fromEntries(Object.entries(visits).filter(([code]) => code !== countryCode)),
-	);
+	set(visitsAtom, withoutVisit(visits, countryCode));
 });

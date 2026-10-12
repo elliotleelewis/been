@@ -79,6 +79,11 @@ unselecting the country the camera is framing puts it back where it was. That
 undo is deliberately one-shot and is dropped the moment the user moves the map
 themselves.
 
+Countries can also be ticked by tapping them on the globe. Every country is drawn on an invisible
+layer the map tests the pointer against; a tap goes through `src/state/taps.ts`, which leaves the
+camera alone, since the reader is already looking at the country, and keeps the tap so the toast
+it raises can undo it. Double-click zoom is off, because its two clicks would tick and untick.
+
 ## Generated data
 
 Two files under `src/data/` are generated. **Never hand-edit generated

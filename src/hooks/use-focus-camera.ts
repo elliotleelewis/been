@@ -1,16 +1,18 @@
+import { useAtomValue } from "jotai";
 import type { CameraOptions } from "maplibre-gl";
 import { useCallback, useEffect, useRef } from "react";
 import type { RefObject } from "react";
 import type { MapRef, ViewStateChangeEvent } from "react-map-gl/maplibre";
 
-import type { Focus } from "../models/focus";
+import { focusAtom } from "../state/atoms.ts";
 
 // Frames the focused country, and returns the `onMoveStart` handler that lets the user's own
 // gestures take the camera back off us.
 export const useFocusCamera = (
 	mapRef: RefObject<MapRef | null>,
-	focus: Focus | null,
 ): ((event: ViewStateChangeEvent) => void) => {
+	const focus = useAtomValue(focusAtom);
+
 	// Where the camera sat before the current focus moved it, so an unselect can undo that
 	// move. Held in a ref because it is a detail of this map instance, and reading it should
 	// never trigger a render.
