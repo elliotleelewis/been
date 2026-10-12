@@ -1,7 +1,7 @@
 import type { Position } from "geojson";
 import { describe, expect, it } from "vitest";
 
-import { boundsOf } from "./boundaries";
+import { boundsOf, continuousPolygon } from "./boundaries";
 import type { Bounds, CountryBoundary } from "./boundaries";
 
 /** A closed ring around a box, given as west, south, east, north. */
@@ -53,5 +53,55 @@ describe("boundsOf", () => {
 		];
 
 		expect(boundsOf(boundaryOf([island]))).toStrictEqual([178, -17, 181, -16]);
+	}, 5000);
+
+	it("should carry an outline across the antimeridian on past 180, not round the globe", () => {
+		expect.hasAssertions();
+
+		const island: Position[][] = [
+			[
+				[178, -17],
+				[-179, -17],
+				[-179, -16],
+				[178, -16],
+				[178, -17],
+			],
+		];
+
+		expect(continuousPolygon(island)).toStrictEqual([
+			[
+				[178, -17],
+				[181, -17],
+				[181, -16],
+				[178, -16],
+				[178, -17],
+			],
+		]);
+	}, 5000);
+
+	it("should start an outline that crosses from the west on the eastern side of the line", () => {
+		expect.hasAssertions();
+
+		const island: Position[][] = [
+			[
+				[-179, -17],
+				[178, -17],
+				[178, -16],
+				[-179, -16],
+				[-179, -17],
+			],
+		];
+
+		expect(continuousPolygon(island)[0]?.map(([longitude]) => longitude)).toStrictEqual([
+			181, 178, 178, 181, 181,
+		]);
+	}, 5000);
+
+	it("should leave an outline that never crosses as it is", () => {
+		expect.hasAssertions();
+
+		const polygon = box([-10, 40, 0, 50]);
+
+		expect(continuousPolygon(polygon)).toStrictEqual(polygon);
 	}, 5000);
 });
