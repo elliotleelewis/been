@@ -12,7 +12,10 @@ import { ShareButton } from "./share-button";
 /** The order share links mark countries in, as the app derives it. */
 const CODES = countries.map(({ iso3166 }) => iso3166).toSorted();
 
-const renderButton = (): ReturnType<typeof render> => {
+/** A map with two countries ticked. */
+const FRANCE_AND_ITALY: Visits = { FR: {}, IT: {} };
+
+const renderButton = (visits: Visits): ReturnType<typeof render> => {
 	const store = createStore();
 	store.set(
 		rawCountriesAtom,
@@ -20,7 +23,7 @@ const renderButton = (): ReturnType<typeof render> => {
 			CODES.map((code) => [code, { iso3166: code, region: "150", subregion: "155" } as const]),
 		),
 	);
-	store.set(visitsAtom, { FR: {}, IT: {} });
+	store.set(visitsAtom, visits);
 	return render(
 		<Provider store={store}>
 			<ShareButton />
@@ -55,7 +58,7 @@ describe("share button", () => {
 	it("should open a dialog with a link to the reader's map, and a QR code for it", async () => {
 		expect.hasAssertions();
 
-		const result = renderButton();
+		const result = renderButton(FRANCE_AND_ITALY);
 		const dialog = openDialog(result);
 
 		expect(dialog).toHaveTextContent("Anyone with the link sees your 2 countries");
@@ -69,7 +72,7 @@ describe("share button", () => {
 		expect.hasAssertions();
 
 		const writeText = vi.spyOn(globalThis.navigator.clipboard, "writeText").mockResolvedValue();
-		const result = renderButton();
+		const result = renderButton(FRANCE_AND_ITALY);
 		openDialog(result);
 		act(() => {
 			result.getByRole("button", { name: "Copy link" }).click();
@@ -84,12 +87,31 @@ describe("share button", () => {
 	it("should close when done", () => {
 		expect.hasAssertions();
 
-		const result = renderButton();
+		const result = renderButton(FRANCE_AND_ITALY);
 		openDialog(result);
 		act(() => {
 			result.getByRole("button", { name: "Done" }).click();
 		});
 
 		expect(result.queryByRole("dialog")).toBeNull();
+	}, 5000);
+
+	it("should say how to start a map, not share an empty one, while nothing is ticked", () => {
+		expect.hasAssertions();
+
+		const result = renderButton({});
+		const dialog = openDialog(result);
+
+		expect(dialog).toHaveTextContent("Tick the countries you've been to");
+		expect(result.queryByRole("textbox", { name: "Link to your map" })).toBeNull();
+		expect(result.queryByRole("button", { name: "Copy link" })).toBeNull();
+	}, 5000);
+
+	it("should say one country, not one countries", () => {
+		expect.hasAssertions();
+
+		const result = renderButton({ FR: {} });
+
+		expect(openDialog(result)).toHaveTextContent("Anyone with the link sees your 1 country,");
 	}, 5000);
 });
