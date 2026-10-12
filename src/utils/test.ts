@@ -50,9 +50,11 @@ export const assertDefined = <Value>(value: Value | null | undefined, message: s
 	return value;
 };
 
-// Shaped like the basemaps the globe loads: fills that draw the world, then the label layers the
-// country fill has to stay underneath. Which of them the fill anchors to is the globe's to work
-// out, so the test names it only to assert against.
+/**
+ * Shaped like the basemaps the globe loads: fills that draw the world, then the label layers the
+ * country fill has to stay underneath. Which of them the fill anchors to is the globe's to work
+ * out, so the test names it only to assert against.
+ */
 // oxlint-disable-next-line no-export -- This is a test utility file.
 export const LABELS_LAYER_ID = "place-labels";
 const BASEMAP: StyleSpecification = {
@@ -70,8 +72,10 @@ const BASEMAP: StyleSpecification = {
 
 const originalFetch = globalThis.fetch.bind(globalThis);
 
-// Answers whichever of CARTO's styles the globe asks for with the stub above, and leaves every
-// other request — the atlas, above all — to the network.
+/**
+ * Answers whichever of CARTO's styles the globe asks for with the stub above, and leaves every
+ * other request — the atlas, above all — to the network.
+ */
 // oxlint-disable-next-line no-export -- This is a test utility file.
 export const stubBasemap = (): void => {
 	vi.spyOn(globalThis, "fetch").mockImplementation(async (input, init) => {

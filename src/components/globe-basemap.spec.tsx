@@ -7,14 +7,18 @@ import { MapLayerKeys } from "../models/enums";
 import { LABELS_LAYER_ID, assertDefined, mockMediaQueryList, stubBasemap } from "../utils/test";
 import { Globe } from "./globe";
 
-// The map the globe holds is private to it, so a spied call is the only handle a test has on it.
+/**
+ * The map the globe holds is private to it, so a spied call is the only handle a test has on it.
+ */
 const mapBehind = (spy: MockInstance): MapLibreMap | undefined => {
 	const [map] = spy.mock.contexts;
 	return map instanceof MapLibreMap ? map : undefined;
 };
 
-// `Map` loads MapLibre asynchronously and the fill waits on the style that names its anchor, so
-// the layer landing is what says both have happened.
+/**
+ * `Map` loads MapLibre asynchronously and the fill waits on the style that names its anchor, so
+ * the layer landing is what says both have happened.
+ */
 const renderGlobe = async (): Promise<MapLibreMap> => {
 	const addLayer = vi.spyOn(MapLibreMap.prototype, "addLayer");
 	render(<Globe />);

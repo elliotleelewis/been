@@ -13,8 +13,10 @@ interface Props {
 	readonly toast: QueuedToast<Tap>;
 }
 
-// Says which country a tap on the globe just ticked or unticked, which is the only way a phone,
-// with no hover, learns what was under the reader's finger, and offers to take it back.
+/**
+ * Says which country a tap on the globe just ticked or unticked, which is the only way a phone,
+ * with no hover, learns what was under the reader's finger, and offers to take it back.
+ */
 export const TapToast: FC<Props> = memo(({ state, toast }) => {
 	const toastRef = useRef<HTMLDivElement>(null);
 	const closeRef = useRef<HTMLButtonElement>(null);

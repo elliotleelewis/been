@@ -5,10 +5,12 @@ import { useToastRegion } from "react-aria";
 import { useTapToasts } from "../hooks/use-tap-toasts";
 import { TapToast } from "./tap-toast";
 
-// The landmark the tap toasts live in. React Aria makes it reachable with F6, holds every toast's
-// clock still while the pointer or focus is in it, and hands focus back to wherever it came from
-// when a toast it held goes away. It only exists while there is a toast to show. It spans the
-// globe's width to centre its toast, so when it takes focus, the ring goes round the toast instead.
+/**
+ * The landmark the tap toasts live in. React Aria makes it reachable with F6, holds every toast's
+ * clock still while the pointer or focus is in it, and hands focus back to wherever it came from
+ * when a toast it held goes away. It only exists while there is a toast to show. It spans the
+ * globe's width to centre its toast, so when it takes focus, the ring goes round the toast instead.
+ */
 export const TapToastRegion: FC = memo(() => {
 	const state = useTapToasts();
 	const ref = useRef<HTMLDivElement>(null);

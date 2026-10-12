@@ -11,9 +11,11 @@ import { assertDefined, mockMediaQueryList } from "../utils/test";
 import { Globe } from "./globe";
 import type { MapForwardedRef } from "./globe";
 
-// Describes each country as the bounds its boundary in the atlas implies, so a country the atlas
-// cannot draw reads as a missing boundary next to its code rather than throwing partway down the
-// list, and a mismatch names the country it is about.
+/**
+ * Describes each country as the bounds its boundary in the atlas implies, so a country the atlas
+ * cannot draw reads as a missing boundary next to its code rather than throwing partway down the
+ * list, and a mismatch names the country it is about.
+ */
 const describeBounds = (boundaries: CountryBoundaries): readonly string[] => {
 	const byCode = new Map(
 		boundaries.features.map((boundary) => [boundary.properties.iso_3166_1, boundary]),

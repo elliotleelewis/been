@@ -9,8 +9,10 @@ import { MenuContinent } from "./menu-continent";
 interface Props {
 	readonly continents: readonly Continent[];
 	readonly loading: boolean;
-	// Whether the list is narrowed by a search, which opens every continent with a match in it, as
-	// a match hidden inside a closed continent would read as no match at all.
+	/**
+	 * Whether the list is narrowed by a search, which opens every continent with a match in it, as
+	 * a match hidden inside a closed continent would read as no match at all.
+	 */
 	readonly searching: boolean;
 }
 

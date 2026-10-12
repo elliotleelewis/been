@@ -15,7 +15,7 @@ import "maplibre-gl/dist/maplibre-gl.css";
 
 const minZoom = 1.8;
 
-// The layer every country is drawn on, which is what clicks and the pointer are tested against.
+/** The layer every country is drawn on, which is what clicks and the pointer are tested against. */
 const INTERACTIVE_LAYER_IDS = [MapLayerKeys.Hit];
 
 export interface MapForwardedRef {

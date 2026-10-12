@@ -4,12 +4,14 @@ import type { Tap } from "../models/tap.ts";
 import { withoutVisit } from "../utils/visits.ts";
 import { removeCountryAtom, visitsAtom } from "./atoms.ts";
 
-// The last tap on the globe, for as long as it can still be undone.
+/** The last tap on the globe, for as long as it can still be undone. */
 export const lastTapAtom = atom<Tap | null>(null);
 
-// Ticks or unticks a country tapped on the globe. Unlike a tick in the list, it leaves the camera
-// where it is, because the reader is already looking at the country they tapped. A tap is easy to
-// make by mistake, so it is kept for an undo.
+/**
+ * Ticks or unticks a country tapped on the globe. Unlike a tick in the list, it leaves the camera
+ * where it is, because the reader is already looking at the country they tapped. A tap is easy to
+ * make by mistake, so it is kept for an undo.
+ */
 export const tapCountryAtom = atom(undefined, (get, set, code: string) => {
 	const visits = get(visitsAtom);
 	const previous = visits[code];
@@ -21,7 +23,7 @@ export const tapCountryAtom = atom(undefined, (get, set, code: string) => {
 	}
 });
 
-// Puts the last tapped country back the way it was, visit and all.
+/** Puts the last tapped country back the way it was, visit and all. */
 export const undoTapAtom = atom(undefined, (get, set) => {
 	const tap = get(lastTapAtom);
 	if (tap === null) {

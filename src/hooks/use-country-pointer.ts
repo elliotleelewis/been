@@ -5,7 +5,7 @@ import type { MapLayerMouseEvent } from "react-map-gl/maplibre";
 import { countriesAtom } from "../state/atoms.ts";
 import { tapCountryAtom } from "../state/taps.ts";
 
-// The country under a mouse, and where over the map the mouse is, in pixels from its corner.
+/** The country under a mouse, and where over the map the mouse is, in pixels from its corner. */
 export interface CountryHover {
 	readonly code: string;
 	readonly left: number;
@@ -20,16 +20,20 @@ export interface CountryPointer {
 	readonly onMouseOut: () => void;
 }
 
-// The country a pointer event landed on, from the features the map found under it on the layers
-// it was told are interactive.
+/**
+ * The country a pointer event landed on, from the features the map found under it on the layers
+ * it was told are interactive.
+ */
 const countryCodeOf = (event: MapLayerMouseEvent): string | undefined => {
 	const code: unknown = event.features?.[0]?.properties["iso_3166_1"];
 	return typeof code === "string" ? code : undefined;
 };
 
-// What the pointer does over the globe: a click or a tap ticks the country under it, and a mouse
-// is followed so the country under it can be named. Touch has no hover, so on a phone the toast a
-// tap raises is what says which country was under the reader's finger.
+/**
+ * What the pointer does over the globe: a click or a tap ticks the country under it, and a mouse
+ * is followed so the country under it can be named. Touch has no hover, so on a phone the toast a
+ * tap raises is what says which country was under the reader's finger.
+ */
 export const useCountryPointer = (): CountryPointer => {
 	const countries = useAtomValue(countriesAtom);
 	const tapCountry = useSetAtom(tapCountryAtom);

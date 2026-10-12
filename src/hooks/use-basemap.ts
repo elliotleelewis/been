@@ -13,23 +13,29 @@ import { useMatchMedia } from "./use-match-media";
 // oxlint-disable-next-line require-hook -- Configuring the map is the point, not test setup.
 setWorkerUrl(workerUrl);
 
-// CARTO's OpenStreetMap basemaps, which need no API key. Their licences are what the map credits
-// through the attribution control MapLibre shows by default.
+/**
+ * CARTO's OpenStreetMap basemaps, which need no API key. Their licences are what the map credits
+ * through the attribution control MapLibre shows by default.
+ */
 const DARK_STYLE_URL = "https://basemaps.cartocdn.com/gl/dark-matter-gl-style/style.json";
 const LIGHT_STYLE_URL = "https://basemaps.cartocdn.com/gl/positron-gl-style/style.json";
 
 export interface Basemap {
-	// The first of the style's label layers, which is what the country fill is drawn under. It is
-	// undefined until a style has loaded.
+	/**
+	 * The first of the style's label layers, which is what the country fill is drawn under. It is
+	 * undefined until a style has loaded.
+	 */
 	readonly labelsLayerId: string | undefined;
 	readonly onStyleData: (event: MapStyleDataEvent) => void;
 	readonly styleUrl: string;
 }
 
-// The map underneath the countries: which of the two styles the reader's theme asks for, and where
-// that style keeps its labels. Which layer that is belongs to the style rather than to us, and
-// MapLibre drops a layer whose `beforeId` names nothing without throwing, so the id is read back
-// off whichever style actually loaded instead of being written down here.
+/**
+ * The map underneath the countries: which of the two styles the reader's theme asks for, and where
+ * that style keeps its labels. Which layer that is belongs to the style rather than to us, and
+ * MapLibre drops a layer whose `beforeId` names nothing without throwing, so the id is read back
+ * off whichever style actually loaded instead of being written down here.
+ */
 export const useBasemap = (): Basemap => {
 	const prefersDark = useMatchMedia("(prefers-color-scheme: dark)");
 	const [labelsLayerId, setLabelsLayerId] = useState<string>();

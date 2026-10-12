@@ -15,7 +15,9 @@ const COUNTRIES_STORAGE_KEY = "APP_COUNTRIES";
 const MENU_SIZE_STORAGE_KEY = "APP_MENU_SIZE";
 
 export const rawCountriesAtom = atom<Record<string, CountryData>>({});
-// The languages the reader prefers, most preferred first, which every name and ordering follows.
+/**
+ * The languages the reader prefers, most preferred first, which every name and ordering follows.
+ */
 export const localesAtom = atom<readonly string[]>(globalThis.navigator.languages);
 export const visitsAtom = atomWithStorage<Visits>(
 	COUNTRIES_STORAGE_KEY,
@@ -25,7 +27,9 @@ export const visitsAtom = atomWithStorage<Visits>(
 );
 export const focusAtom = atom<Focus | null>(null);
 
-// Where the user dragged the edge of the country drawer to, kept so it is still there next time.
+/**
+ * Where the user dragged the edge of the country drawer to, kept so it is still there next time.
+ */
 export const menuSizeAtom = atomWithStorage<MenuSize>(
 	MENU_SIZE_STORAGE_KEY,
 	MENU_SIZE_DEFAULT,

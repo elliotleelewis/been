@@ -13,20 +13,26 @@ import { TapToastRegion } from "./tap-toast-region";
 const PERCENT = 100;
 const PERCENT_PRECISION = 2;
 
-// A fraction of the viewport as the percentage a grid track can be sized by, rounded to keep a
-// third of the screen from reaching CSS as seventeen digits.
+/**
+ * A fraction of the viewport as the percentage a grid track can be sized by, rounded to keep a
+ * third of the screen from reaching CSS as seventeen digits.
+ */
 const percent = (fraction: number): string =>
 	`${Number((fraction * PERCENT).toFixed(PERCENT_PRECISION))}%`;
 
-// React Compiler cannot lower an import expression, so the dynamic import that keeps the country
-// list out of the main bundle sits at module scope rather than inside the effect that calls it.
+/**
+ * React Compiler cannot lower an import expression, so the dynamic import that keeps the country
+ * list out of the main bundle sits at module scope rather than inside the effect that calls it.
+ */
 const loadCountries = async (): Promise<readonly CountryData[]> => {
 	const { countries } = await import("../data/countries");
 	return countries;
 };
 
-// `CSSProperties` has no room for custom properties, and the drawer's size reaches the layout as
-// two of them: the grid tracks the drawer sits in are what read it.
+/**
+ * `CSSProperties` has no room for custom properties, and the drawer's size reaches the layout as
+ * two of them: the grid tracks the drawer sits in are what read it.
+ */
 interface MenuStyle extends CSSProperties {
 	readonly "--menu-height": string;
 	readonly "--menu-width": string;

@@ -18,17 +18,21 @@ const unitedKingdom: Country = {
 	subregion: "154",
 };
 
-// Inland England, and open ocean in the South Atlantic, both on the side of the globe it opens on.
+/**
+ * Inland England, and open ocean in the South Atlantic, both on the side of the globe it opens on.
+ */
 const ENGLAND: LngLatLike = [-1.5, 52.5];
 const OCEAN: LngLatLike = [-15, -30];
 
-// The map the globe holds is private to it, so a spied call is the only handle a test has on it.
+/**
+ * The map the globe holds is private to it, so a spied call is the only handle a test has on it.
+ */
 const mapBehind = (spy: MockInstance): MapLibreMap | undefined => {
 	const [map] = spy.mock.contexts;
 	return map instanceof MapLibreMap ? map : undefined;
 };
 
-// Waits for the atlas to be drawn far enough that the map can find England under a pointer.
+/** Waits for the atlas to be drawn far enough that the map can find England under a pointer. */
 const renderGlobe = async (
 	store: ReturnType<typeof createStore>,
 ): Promise<{ readonly container: HTMLElement; readonly map: MapLibreMap }> => {
@@ -51,7 +55,7 @@ const renderGlobe = async (
 	return { container, map: assertDefined(mapBehind(addLayer), "The globe never built a map.") };
 };
 
-// Points at a place on the map as a mouse would, so the map works out what is under it itself.
+/** Points at a place on the map as a mouse would, so the map works out what is under it itself. */
 const pointAt = (map: MapLibreMap, type: "click" | "mousemove", place: LngLatLike): void => {
 	const point = map.project(place);
 	const { left, top } = map.getCanvasContainer().getBoundingClientRect();

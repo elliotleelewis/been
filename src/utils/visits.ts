@@ -6,7 +6,7 @@ const isRecord = (value: unknown): value is Readonly<Record<string, unknown>> =>
 const isVisit = (value: unknown): value is Visit =>
 	isRecord(value) && Object.keys(value).length === 0;
 
-// Whether a value read back from storage has the shape the app stores visits in today.
+/** Whether a value read back from storage has the shape the app stores visits in today. */
 export const isVisits = (value: unknown): value is Visits =>
 	isRecord(value) && Object.values(value).every((visit) => isVisit(visit));
 

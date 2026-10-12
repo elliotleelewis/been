@@ -6,8 +6,10 @@ import type { MapRef, ViewStateChangeEvent } from "react-map-gl/maplibre";
 
 import { focusAtom } from "../state/atoms.ts";
 
-// Frames the focused country, and returns the `onMoveStart` handler that lets the user's own
-// gestures take the camera back off us.
+/**
+ * Frames the focused country, and returns the `onMoveStart` handler that lets the user's own
+ * gestures take the camera back off us.
+ */
 export const useFocusCamera = (
 	mapRef: RefObject<MapRef | null>,
 ): ((event: ViewStateChangeEvent) => void) => {

@@ -17,9 +17,11 @@ export interface GlobeLayers {
 
 const PRIMARY = "#fd7e14";
 
-// Every country, drawn invisibly, so that the pointer has something to land on over a country the
-// reader has not been to. MapLibre still finds features under the pointer on a layer it draws
-// with no opacity.
+/**
+ * Every country, drawn invisibly, so that the pointer has something to land on over a country the
+ * reader has not been to. MapLibre still finds features under the pointer on a layer it draws
+ * with no opacity.
+ */
 const HIT_PAINT: Paint = { "fill-color": PRIMARY, "fill-opacity": 0 };
 const BEEN_PAINT: Paint = { "fill-color": PRIMARY, "fill-opacity": 0.6 };
 const HOVER_PAINT: Paint = { "fill-color": PRIMARY, "fill-opacity": 0.25 };

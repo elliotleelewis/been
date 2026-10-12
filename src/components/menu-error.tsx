@@ -1,8 +1,10 @@
 import { memo, useCallback } from "react";
 import type { FC } from "react";
 
-// What the drawer holds when the country list never arrived. A reload is the whole recovery: the
-// list is a static import, so there is nothing to retry but the page itself.
+/**
+ * What the drawer holds when the country list never arrived. A reload is the whole recovery: the
+ * list is a static import, so there is nothing to retry but the page itself.
+ */
 export const MenuError: FC = memo(() => {
 	const reload = useCallback(() => {
 		globalThis.location.reload();

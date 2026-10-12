@@ -2,7 +2,7 @@
 // Countries are named in the reader's language by `Intl.DisplayNames`, but browsers do not all
 // carry names for these areas, so the app holds them itself. They are English only for now.
 
-// Africa, the Americas, Asia, Europe and Oceania.
+/** Africa, the Americas, Asia, Europe and Oceania. */
 export const M49_REGIONS = {
 	"002": "Africa",
 	"009": "Oceania",
@@ -11,8 +11,10 @@ export const M49_REGIONS = {
 	"150": "Europe",
 } as const;
 
-// The most specific grouping M49 gives inside a region: its intermediate region where it has one,
-// such as South America (005), otherwise its sub-region, such as Northern America (021).
+/**
+ * The most specific grouping M49 gives inside a region: its intermediate region where it has one,
+ * such as South America (005), otherwise its sub-region, such as Northern America (021).
+ */
 export const M49_SUBREGIONS = {
 	"005": "South America",
 	"011": "Western Africa",
