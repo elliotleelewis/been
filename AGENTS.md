@@ -84,6 +84,10 @@ layer the map tests the pointer against; a tap goes through `src/state/taps.ts`,
 camera alone, since the reader is already looking at the country, and keeps the tap so the toast
 it raises can undo it. Double-click zoom is off, because its two clicks would tick and untick.
 
+react-aria supplies behaviour that is hard to get right by hand, such as the drawer's handle and
+the toast region, which pauses its timer while focused and is reachable with F6. Elements a native
+tag already makes accessible, such as checkboxes and disclosure buttons, stay native.
+
 ## Generated data
 
 Two files under `src/data/` are generated. **Never hand-edit generated

@@ -8,7 +8,7 @@ import { Globe } from "./globe";
 import { Menu } from "./menu";
 import { MenuError } from "./menu-error";
 import { MenuResizer } from "./menu-resizer";
-import { TapToast } from "./tap-toast";
+import { TapToastRegion } from "./tap-toast-region";
 
 const PERCENT = 100;
 const PERCENT_PRECISION = 2;
@@ -80,7 +80,7 @@ export const App: FC = memo(() => {
 			</div>
 			<div className="relative row-start-2 md:col-start-2 md:row-span-2 md:row-start-1">
 				<Globe />
-				<TapToast />
+				<TapToastRegion />
 			</div>
 		</div>
 	);

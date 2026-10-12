@@ -30,7 +30,6 @@ export const MenuItem: FC<Props> = memo(({ country }) => {
 					type="checkbox"
 					checked={country.selected}
 					onChange={toggleCountry}
-					aria-label="Visited"
 				/>
 				<span>{country.name}</span>
 			</label>

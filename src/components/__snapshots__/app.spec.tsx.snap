@@ -92,9 +92,6 @@ exports[`app > should render 1`] = `
       <div
         style="position: relative; width: 100%; height: 100%;"
       />
-      <output
-        class="pointer-events-none absolute inset-x-0 bottom-10 z-10 flex justify-center px-4"
-      />
     </div>
   </div>
 </DocumentFragment>
