@@ -61,6 +61,11 @@ The menu folds countries into their M49 regions as collapsible continents, with 
 heading inside. The reader's home continent is guessed from their time zone, listed first and, until
 they open or close one themselves, the only one open; that state lives in `src/state/regions.ts`.
 
+Searching the list lives in `src/state/search.ts`, over pure matching in `src/utils/search.ts`.
+Names are compared folded, without case, accents or punctuation, a tier at a time: a code or the
+start of a word, then anywhere in the name, then, only when nothing matches, near misses by edit
+distance, offered as suggestions and never ticked by Enter.
+
 The globe is MapLibre through `react-map-gl`, over a keyless CARTO basemap
 whose light and dark styles follow the reader's colour scheme. Selected
 countries are one fill layer filtered by ISO 3166-1 alpha-2 code, so selecting

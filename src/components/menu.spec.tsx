@@ -49,6 +49,8 @@ describe("menu", () => {
 	// Auto-cleanup is not registered as the suite does not run with `globals`.
 	afterEach(() => {
 		cleanup();
+		// A tick outlives the test in local storage, where the next spec to load would read it.
+		globalThis.localStorage.clear();
 	});
 
 	it("should render", () => {
@@ -112,9 +114,21 @@ describe("menu", () => {
 
 		const result = renderMenu();
 
-		fireEvent.change(result.getByPlaceholderText("Search..."), { target: { value: "bra" } });
+		fireEvent.change(result.getByRole("searchbox"), { target: { value: "bra" } });
 
 		expect(checkboxFor(result, brazil.name)).toBeVisible();
 		expect(result.queryByText(country.name)).toBeNull();
+	}, 5000);
+
+	it("should tick the only match when the search is submitted", () => {
+		expect.hasAssertions();
+
+		const result = renderMenu();
+		const searchbox = result.getByRole("searchbox");
+		fireEvent.change(searchbox, { target: { value: "bra" } });
+		fireEvent.submit(assertDefined(searchbox.closest("form"), "The search box is not in a form."));
+
+		expect(searchbox).toHaveValue("");
+		expect(checkboxFor(result, brazil.name)).toBeChecked();
 	}, 5000);
 });
