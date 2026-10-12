@@ -10,8 +10,8 @@ import { Menu } from "./menu";
 const country: Country = {
 	iso3166: "GB",
 	name: "United Kingdom",
-	region: "Europe",
-	subregion: "Northern Europe",
+	region: "150",
+	subregion: "154",
 };
 
 const renderMenu = (): ReturnType<typeof render> =>

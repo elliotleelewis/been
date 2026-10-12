@@ -16,8 +16,8 @@ const unitedKingdom: Country = {
 	bounds: [-8.65, 49.87, 1.76, 60.86],
 	iso3166: "GB",
 	name: "United Kingdom",
-	region: "Europe",
-	subregion: "Northern Europe",
+	region: "150",
+	subregion: "154",
 };
 
 const createTestStore = (): ReturnType<typeof createStore> => {

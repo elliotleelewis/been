@@ -1,7 +1,7 @@
 import { atom } from "jotai";
 import { atomWithStorage } from "jotai/utils";
 
-import type { Country, Visits } from "../models/country.ts";
+import type { Country, CountryData, Visits } from "../models/country.ts";
 import type { Focus } from "../models/focus.ts";
 import { MENU_SIZE_DEFAULT } from "../models/menu.ts";
 import type { MenuSize } from "../models/menu.ts";
@@ -13,7 +13,9 @@ import { validatedStorage } from "./storage.ts";
 const COUNTRIES_STORAGE_KEY = "APP_COUNTRIES";
 const MENU_SIZE_STORAGE_KEY = "APP_MENU_SIZE";
 
-export const rawCountriesAtom = atom<Record<string, Country>>({});
+export const rawCountriesAtom = atom<Record<string, CountryData>>({});
+// The languages the reader prefers, most preferred first, which every name and ordering follows.
+export const localesAtom = atom<readonly string[]>(globalThis.navigator.languages);
 export const visitsAtom = atomWithStorage<Visits>(
 	COUNTRIES_STORAGE_KEY,
 	{},
@@ -30,22 +32,27 @@ export const menuSizeAtom = atomWithStorage<MenuSize>(
 	{ getOnInit: true },
 );
 
+const countryNamesAtom = atom((get) => new Intl.DisplayNames(get(localesAtom), { type: "region" }));
+const collatorAtom = atom((get) => new Intl.Collator(get(localesAtom)));
+
 export const selectedCountriesAtom = atom<readonly string[]>((get) => Object.keys(get(visitsAtom)));
 export const countriesAtom = atom<readonly Country[]>((get) => {
 	const rawCountries = get(rawCountriesAtom);
 	const visits = get(visitsAtom);
+	const countryNames = get(countryNamesAtom);
 
 	// Spread into a new object rather than mutating `country`. Mutating it in place would keep
 	// the same object identity, so `memo`'d consumers such as `MenuItem` would never re-render.
 	// oxlint-disable-next-line no-map-spread -- The in-place mutation it suggests is what the new object identity is avoiding.
 	return Object.values(rawCountries).map((country) => ({
 		...country,
+		name: countryNames.of(country.iso3166) ?? country.iso3166,
 		selected: Object.hasOwn(visits, country.iso3166),
 	}));
 });
 export const regionsAtom = atom<readonly Region[]>((get) => {
 	const countries = get(countriesAtom);
-	return regionalizer(countries);
+	return regionalizer(countries, get(collatorAtom));
 });
 
 export const addCountryAtom = atom(undefined, (get, set, countryCode: string) => {

@@ -4,7 +4,9 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import type { Country } from "../models/country";
 import {
 	addCountryAtom,
+	countriesAtom,
 	focusAtom,
+	localesAtom,
 	rawCountriesAtom,
 	removeCountryAtom,
 	visitsAtom,
@@ -14,15 +16,15 @@ const unitedKingdom: Country = {
 	bounds: [-8.65, 49.87, 1.76, 60.86],
 	iso3166: "GB",
 	name: "United Kingdom",
-	region: "Europe",
-	subregion: "Northern Europe",
+	region: "150",
+	subregion: "154",
 };
 const france: Country = {
 	bounds: [-5.14, 41.33, 9.56, 51.09],
 	iso3166: "FR",
 	name: "France",
-	region: "Europe",
-	subregion: "Western Europe",
+	region: "150",
+	subregion: "155",
 };
 
 const createTestStore = (): ReturnType<typeof createStore> => {
@@ -114,5 +116,17 @@ describe("atoms", () => {
 
 		expect(store.get(visitsAtom)).toStrictEqual({});
 		expect(globalThis.localStorage.getItem("APP_COUNTRIES")).toBeNull();
+	}, 5000);
+
+	it("should name countries in the reader's language", () => {
+		expect.hasAssertions();
+
+		const store = createTestStore();
+		store.set(localesAtom, ["fr"]);
+
+		expect(store.get(countriesAtom).map(({ name }) => name)).toStrictEqual([
+			"Royaume-Uni",
+			"France",
+		]);
 	}, 5000);
 });

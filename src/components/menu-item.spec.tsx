@@ -12,8 +12,8 @@ describe("menuItem", () => {
 				country={{
 					iso3166: "GB",
 					name: "United Kingdom",
-					region: "Europe",
-					subregion: "Northern Europe",
+					region: "150",
+					subregion: "154",
 				}}
 			/>,
 		);

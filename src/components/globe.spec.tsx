@@ -12,15 +12,15 @@ import { Globe } from "./globe";
 import type { MapForwardedRef } from "./globe";
 
 // Describes each country as the bounds its boundary in the atlas implies, so a country the atlas
-// cannot draw reads as a missing boundary next to its name rather than throwing partway down the
+// cannot draw reads as a missing boundary next to its code rather than throwing partway down the
 // list, and a mismatch names the country it is about.
 const describeBounds = (boundaries: CountryBoundaries): readonly string[] => {
 	const byCode = new Map(
 		boundaries.features.map((boundary) => [boundary.properties.iso_3166_1, boundary]),
 	);
-	return countries.map(({ iso3166, name }) => {
+	return countries.map(({ iso3166 }) => {
 		const boundary = byCode.get(iso3166);
-		return `${name}: ${boundary === undefined ? "no boundary" : boundsOf(boundary).join(", ")}`;
+		return `${iso3166}: ${boundary === undefined ? "no boundary" : boundsOf(boundary).join(", ")}`;
 	});
 };
 
@@ -55,7 +55,7 @@ describe("globe", () => {
 		const fromAtlas = describeBounds(toBoundaries(await loadAtlas()));
 
 		expect(fromAtlas).toStrictEqual(
-			countries.map(({ bounds, name }) => `${name}: ${bounds?.join(", ")}`),
+			countries.map(({ bounds, iso3166 }) => `${iso3166}: ${bounds?.join(", ")}`),
 		);
 	}, 30_000);
 

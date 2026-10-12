@@ -1,11 +1,16 @@
-export interface Country {
-	readonly name: string;
+import type { M49Region, M49Subregion } from "./m49";
+
+// A country as the dataset holds it: codes only, so that nothing in it is in any one language.
+export interface CountryData {
 	readonly iso3166: string;
-	// The UN M49 region, such as "Americas", and the most specific grouping M49 gives inside it:
-	// its intermediate region where it has one, such as "South America", otherwise its sub-region.
-	readonly region: string;
-	readonly subregion: string;
+	readonly region: M49Region;
+	readonly subregion: M49Subregion;
 	readonly bounds?: readonly [number, number, number, number];
+}
+
+// A country as the app shows it, named in the reader's language.
+export interface Country extends CountryData {
+	readonly name: string;
 	readonly selected?: boolean;
 }
 

@@ -2,7 +2,7 @@ import { useAtomValue, useSetAtom } from "jotai";
 import { memo, useEffect, useId, useMemo, useState } from "react";
 import type { CSSProperties, FC } from "react";
 
-import type { Country } from "../models/country";
+import type { CountryData } from "../models/country";
 import { menuSizeAtom, rawCountriesAtom } from "../state/atoms.ts";
 import { Globe } from "./globe";
 import { Menu } from "./menu";
@@ -19,7 +19,7 @@ const percent = (fraction: number): string =>
 
 // React Compiler cannot lower an import expression, so the dynamic import that keeps the country
 // list out of the main bundle sits at module scope rather than inside the effect that calls it.
-const loadCountries = async (): Promise<readonly Country[]> => {
+const loadCountries = async (): Promise<readonly CountryData[]> => {
 	const { countries } = await import("../data/countries");
 	return countries;
 };
