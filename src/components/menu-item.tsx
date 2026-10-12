@@ -1,9 +1,10 @@
-import { useSetAtom } from "jotai";
+import { useAtomValue, useSetAtom } from "jotai";
 import { memo, useCallback } from "react";
 import type { FC } from "react";
 
 import type { Country } from "../models/country";
 import { addCountryAtom, removeCountryAtom } from "../state/atoms";
+import { viewingSharedMapAtom } from "../state/location";
 
 interface Props {
 	readonly country: Country;
@@ -12,6 +13,8 @@ interface Props {
 export const MenuItem: FC<Props> = memo(({ country }) => {
 	const addCountry = useSetAtom(addCountryAtom);
 	const removeCountry = useSetAtom(removeCountryAtom);
+	// Someone else's map, opened from a share link, is there to look at, not to change.
+	const viewingSharedMap = useAtomValue(viewingSharedMapAtom);
 
 	const toggleCountry = useCallback(() => {
 		if (country.selected === true) {
@@ -30,6 +33,7 @@ export const MenuItem: FC<Props> = memo(({ country }) => {
 					type="checkbox"
 					checked={country.selected}
 					onChange={toggleCountry}
+					disabled={viewingSharedMap}
 				/>
 				<span>{country.name}</span>
 			</label>

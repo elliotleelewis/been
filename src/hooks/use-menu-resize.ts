@@ -4,7 +4,7 @@ import { useMove } from "react-aria";
 import type { MoveMoveEvent, MoveResult } from "react-aria";
 
 import { MENU_SIZE_BOUNDS } from "../models/menu";
-import { menuSizeAtom } from "../state/atoms.ts";
+import { menuSizeAtom } from "../state/menu.ts";
 import { useMatchMedia } from "./use-match-media";
 import { useWindow } from "./use-window";
 

@@ -3,6 +3,7 @@ import { atom } from "jotai";
 import type { Tap } from "../models/tap.ts";
 import { withoutVisit } from "../utils/visits.ts";
 import { removeCountryAtom, visitsAtom } from "./atoms.ts";
+import { viewingSharedMapAtom } from "./location.ts";
 
 /** The last tap on the globe, for as long as it can still be undone. */
 export const lastTapAtom = atom<Tap | null>(null);
@@ -13,6 +14,9 @@ export const lastTapAtom = atom<Tap | null>(null);
  * make by mistake, so it is kept for an undo.
  */
 export const tapCountryAtom = atom(undefined, (get, set, code: string) => {
+	if (get(viewingSharedMapAtom)) {
+		return;
+	}
 	const visits = get(visitsAtom);
 	const previous = visits[code];
 	set(lastTapAtom, { code, previous });

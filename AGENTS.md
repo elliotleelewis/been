@@ -45,12 +45,13 @@ the build reads `src/index.html` and writes `dist/`.
 How a selection travels:
 
 ```
-data/countries.ts ──▶ rawCountriesAtom ─┐
-                                        ├─▶ countriesAtom ──▶ continentsAtom ──▶ Menu
-localStorage ──▶ visitsAtom ────────────┘         │
-                     │                            └─────────────────────────────▶ Globe
-                     └─▶ selectedCountriesAtom ─────────────────────────────────▶ Globe
-world atlas ──▶ data/boundaries.ts ──▶ useCountryBoundaries ────────────────────▶ Globe
+data/countries.ts ──▶ rawCountriesAtom ─────────────────┐
+                                                        ├─▶ countriesAtom ──▶ continentsAtom ──▶ Menu
+localStorage ──▶ visitsAtom ─────┐                      │         │
+                                 ├─▶ shownVisitsAtom ───┤         └───────────────────────────▶ Globe
+share link ──▶ sharedVisitsAtom ─┘                      │
+                                                        └─▶ selectedCountriesAtom ────────────▶ Globe
+world atlas ──▶ data/boundaries.ts ──▶ useCountryBoundaries ──────────────────────────────────▶ Globe
 ```
 
 The selection is stored as an object keyed by ISO 3166-1 alpha-2 code, one visit per country, so
@@ -88,6 +89,12 @@ Countries can also be ticked by tapping them on the globe. Every country is draw
 layer the map tests the pointer against; a tap goes through `src/state/taps.ts`, which leaves the
 camera alone, since the reader is already looking at the country, and keeps the tap so the toast
 it raises can undo it. Double-click zoom is off, because its two clicks would tick and untick.
+
+A map is shared as a link whose hash carries it: a format version, then one bit per country in
+the frozen order of `SHARE_CODES` in `src/models/share.ts`, as URL-safe base64. The hash never
+reaches a server. Opening one shows that map read-only through `shownVisitsAtom`, in place of the
+reader's own, which nothing can write to until they leave it; `src/state/location.ts` watches the
+hash. The share dialog draws the link as a QR code with an encoder loaded only when it opens.
 
 react-aria supplies behaviour that is hard to get right by hand, such as the drawer's handle and
 the toast region, which pauses its timer while focused and is reachable with F6. Elements a native

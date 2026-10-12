@@ -3,7 +3,7 @@ import { Provider } from "jotai";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 import { MENU_SIZE_DEFAULT } from "../models/menu.ts";
-import { menuSizeAtom } from "../state/atoms.ts";
+import { menuSizeAtom } from "../state/menu.ts";
 import { HydrateAtoms, mockMediaQueryList } from "../utils/test";
 import { App } from "./app";
 

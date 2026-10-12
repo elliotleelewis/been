@@ -3,16 +3,14 @@ import { atomWithStorage } from "jotai/utils";
 
 import type { Country, CountryData, Visits } from "../models/country.ts";
 import type { Focus } from "../models/focus.ts";
-import { MENU_SIZE_DEFAULT } from "../models/menu.ts";
-import type { MenuSize } from "../models/menu.ts";
 import type { Continent } from "../models/region.ts";
 import { regionalizer } from "../utils/regionalizer.ts";
 import { isVisits, withoutVisit } from "../utils/visits.ts";
+import { sharedVisitsAtom, viewingSharedMapAtom } from "./location.ts";
 import { homeRegionAtom } from "./regions.ts";
 import { validatedStorage } from "./storage.ts";
 
 const COUNTRIES_STORAGE_KEY = "APP_COUNTRIES";
-const MENU_SIZE_STORAGE_KEY = "APP_MENU_SIZE";
 
 export const rawCountriesAtom = atom<Record<string, CountryData>>({});
 /**
@@ -27,23 +25,20 @@ export const visitsAtom = atomWithStorage<Visits>(
 );
 export const focusAtom = atom<Focus | null>(null);
 
-/**
- * Where the user dragged the edge of the country drawer to, kept so it is still there next time.
- */
-export const menuSizeAtom = atomWithStorage<MenuSize>(
-	MENU_SIZE_STORAGE_KEY,
-	MENU_SIZE_DEFAULT,
-	undefined,
-	{ getOnInit: true },
-);
-
 const countryNamesAtom = atom((get) => new Intl.DisplayNames(get(localesAtom), { type: "region" }));
 const collatorAtom = atom((get) => new Intl.Collator(get(localesAtom)));
 
-export const selectedCountriesAtom = atom<readonly string[]>((get) => Object.keys(get(visitsAtom)));
+/**
+ * The visits on show: a shared map's while a share link is open, otherwise the reader's own. Only
+ * the reader's own are ever written to, so opening someone else's map cannot touch them.
+ */
+export const shownVisitsAtom = atom<Visits>((get) => get(sharedVisitsAtom) ?? get(visitsAtom));
+export const selectedCountriesAtom = atom<readonly string[]>((get) =>
+	Object.keys(get(shownVisitsAtom)),
+);
 export const countriesAtom = atom<readonly Country[]>((get) => {
 	const rawCountries = get(rawCountriesAtom);
-	const visits = get(visitsAtom);
+	const visits = get(shownVisitsAtom);
 	const countryNames = get(countryNamesAtom);
 
 	// Spread into a new object rather than mutating `country`. Mutating it in place would keep
@@ -61,7 +56,7 @@ export const continentsAtom = atom<readonly Continent[]>((get) =>
 
 export const addCountryAtom = atom(undefined, (get, set, countryCode: string) => {
 	const visits = get(visitsAtom);
-	if (!Object.hasOwn(visits, countryCode)) {
+	if (!get(viewingSharedMapAtom) && !Object.hasOwn(visits, countryCode)) {
 		const countries = get(countriesAtom);
 		const focusCountry = countries.find((country) => country.iso3166 === countryCode);
 		set(focusAtom, focusCountry ? { country: focusCountry, type: "country" } : null);
@@ -69,6 +64,9 @@ export const addCountryAtom = atom(undefined, (get, set, countryCode: string) =>
 	}
 });
 export const removeCountryAtom = atom(undefined, (get, set, countryCode: string) => {
+	if (get(viewingSharedMapAtom)) {
+		return;
+	}
 	const visits = get(visitsAtom);
 	const focus = get(focusAtom);
 

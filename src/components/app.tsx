@@ -1,13 +1,14 @@
-import { useAtomValue, useSetAtom } from "jotai";
-import { memo, useEffect, useId, useMemo, useState } from "react";
+import { useAtomValue } from "jotai";
+import { memo, useId, useMemo } from "react";
 import type { CSSProperties, FC } from "react";
 
-import type { CountryData } from "../models/country";
-import { menuSizeAtom, rawCountriesAtom } from "../state/atoms.ts";
+import { useCountries } from "../hooks/use-countries";
+import { menuSizeAtom } from "../state/menu.ts";
 import { Globe } from "./globe";
 import { Menu } from "./menu";
 import { MenuError } from "./menu-error";
 import { MenuResizer } from "./menu-resizer";
+import { ShareButton } from "./share-button";
 import { TapToastRegion } from "./tap-toast-region";
 
 const PERCENT = 100;
@@ -21,15 +22,6 @@ const percent = (fraction: number): string =>
 	`${Number((fraction * PERCENT).toFixed(PERCENT_PRECISION))}%`;
 
 /**
- * React Compiler cannot lower an import expression, so the dynamic import that keeps the country
- * list out of the main bundle sits at module scope rather than inside the effect that calls it.
- */
-const loadCountries = async (): Promise<readonly CountryData[]> => {
-	const { countries } = await import("../data/countries");
-	return countries;
-};
-
-/**
  * `CSSProperties` has no room for custom properties, and the drawer's size reaches the layout as
  * two of them: the grid tracks the drawer sits in are what read it.
  */
@@ -39,25 +31,9 @@ interface MenuStyle extends CSSProperties {
 }
 
 export const App: FC = memo(() => {
-	const setRawCountries = useSetAtom(rawCountriesAtom);
 	const menuSize = useAtomValue(menuSizeAtom);
 	const menuId = useId();
-	const [loading, setLoading] = useState(true);
-	const [error, setError] = useState<Error | null>();
-
-	useEffect(() => {
-		loadCountries()
-			.then((countries) => {
-				const countryMap = Object.fromEntries(
-					countries.map((country) => [country.iso3166, country]),
-				);
-				setRawCountries(countryMap);
-				setLoading(false);
-			})
-			.catch((cause: unknown) => {
-				setError(cause instanceof Error ? cause : new Error("Failed to load countries", { cause }));
-			});
-	}, [setRawCountries]);
+	const { error, loading } = useCountries();
 
 	const style = useMemo(
 		(): MenuStyle => ({
@@ -72,8 +48,9 @@ export const App: FC = memo(() => {
 			className="grid size-full grid-rows-[auto_minmax(0,1fr)_min(var(--menu-height),calc(100%_-_var(--spacing-header)))] md:grid-cols-[var(--menu-width)_minmax(0,1fr)] md:grid-rows-[auto_minmax(0,1fr)] dark:bg-zinc-900 dark:text-white"
 			style={style}
 		>
-			<div className="flex h-header items-center justify-center bg-primary text-white md:col-start-1 dark:bg-zinc-950 dark:text-primary">
+			<div className="relative flex h-header items-center justify-center bg-primary text-white md:col-start-1 dark:bg-zinc-950 dark:text-primary">
 				<h1 className="select-none font-bold text-xl tracking-wide">{"been"}</h1>
+				<ShareButton />
 			</div>
 			<div
 				id={menuId}
