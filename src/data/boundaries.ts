@@ -10,6 +10,8 @@ export interface BoundaryProperties {
 
 export type CountryBoundaries = FeatureCollection<Polygon | MultiPolygon, BoundaryProperties>;
 export type CountryBoundary = CountryBoundaries["features"][number];
+// West, south, east, north. A country that straddles the antimeridian has an east edge past 180,
+// such as Fiji's [177, -21, 182, -12], which MapLibre frames as one box across the date line.
 export type Bounds = readonly [number, number, number, number];
 
 export const EMPTY_BOUNDARIES: CountryBoundaries = { features: [], type: "FeatureCollection" };
@@ -86,12 +88,68 @@ const homeLandmassOf = (polygons: readonly Position[][][]): Bounds => {
 	return bounds;
 };
 
+// How far a polygon reaches in longitude, as its west and east edges.
+type Span = readonly [number, number];
+
+// Natural Earth keeps some islands, such as Fiji's Vanua Levu, whole across the antimeridian, so a
+// polygon that would otherwise reach most of the way round the globe is measured with its western
+// longitudes moved past 180 instead, and handed back as the two halves either side of the line.
+const spansOf = (polygon: Position[][]): readonly Span[] => {
+	const [west, , east] = boundsOfPolygons([polygon]);
+	if (east - west <= 180) {
+		return [[west, east]];
+	}
+	const shifted = polygon.map((ring) =>
+		ring.map((position) =>
+			position.map((value, index) => (index === 0 && value < 0 ? value + 360 : value)),
+		),
+	);
+	const [shiftedWest, , shiftedEast] = boundsOfPolygons([shifted]);
+	return [
+		[shiftedWest, 180],
+		[-180, shiftedEast - 360],
+	];
+};
+
+// The narrowest band of longitude covering every span, given sorted from west to east. It breaks
+// at the widest gap between them, starting from the one round the back of the globe, and when the
+// widest gap is anywhere else, its east edge runs on past 180.
+const longitudesOf = (first: Span, rest: readonly Span[]): Span => {
+	let [west, reach] = first;
+	let east = Math.max(reach, ...rest.map(([, spanEast]) => spanEast));
+	let widestGap = west + 360 - east;
+	for (const [spanWest, spanEast] of rest) {
+		const gap = spanWest - reach;
+		if (gap > widestGap) {
+			widestGap = gap;
+			[west, east] = [spanWest, reach + 360];
+		}
+		reach = Math.max(reach, spanEast);
+	}
+	return [west, east];
+};
+
+// A plain minimum and maximum would frame the whole world for a country with land either side of
+// the antimeridian, such as the United States with the Aleutians, where the band of longitude that
+// covers it instead runs from the Aleutians east across the line to Maine.
+const acrossAntimeridian = (polygons: readonly Position[][][]): Bounds => {
+	const [first, ...rest] = polygons
+		.flatMap((polygon) => spansOf(polygon))
+		.toSorted(([oneWest], [otherWest]) => oneWest - otherWest);
+	if (first === undefined) {
+		return EMPTY_BOUNDS;
+	}
+	const [, south, , north] = boundsOfPolygons(polygons);
+	const [west, east] = longitudesOf(first, rest);
+	return [west, south, east, north];
+};
+
 // The box the camera should frame when a country is selected.
 export const boundsOf = (boundary: CountryBoundary): Bounds => {
 	const polygons = polygonsOf(boundary);
 	return HOME_LANDMASS_ONLY.has(boundary.properties.iso_3166_1)
 		? homeLandmassOf(polygons)
-		: boundsOfPolygons(polygons);
+		: acrossAntimeridian(polygons);
 };
 
 // Turns the Natural Earth atlas into the boundaries the map fills in.
