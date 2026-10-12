@@ -29,7 +29,7 @@ exports[`menu > should render 1`] = `
         class="sticky top-0 flex items-center justify-between bg-zinc-200 p-4 font-medium dark:bg-zinc-800"
       >
         <h2>
-          Europe
+          Northern Europe
         </h2>
         <div
           class="relative size-5"

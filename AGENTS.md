@@ -47,10 +47,15 @@ How a selection travels:
 ```
 data/countries.ts ──▶ rawCountriesAtom ─┐
                                         ├─▶ countriesAtom ──▶ regionsAtom ──▶ Menu
-localStorage ──▶ selectedCountriesAtom ─┘         │
-                                                  └──────────────────────────▶ Globe
+localStorage ──▶ visitsAtom ────────────┘         │
+                     │                            └──────────────────────────▶ Globe
+                     └─▶ selectedCountriesAtom ──────────────────────────────▶ Globe
 world atlas ──▶ data/boundaries.ts ──▶ useCountryBoundaries ─────────────────▶ Globe
 ```
+
+The selection is stored as an object keyed by ISO 3166-1 alpha-2 code, one visit per country, so
+details can be added to a visit later. Stored state is validated when it is read, and anything not
+in today's shape is cleared rather than migrated.
 
 The globe is MapLibre through `react-map-gl`, over a keyless CARTO basemap
 whose light and dark styles follow the reader's colour scheme. Selected
@@ -77,6 +82,13 @@ output**; change the source and regenerate.
 
 - `src/data/boundary-codes.ts` — Natural Earth's alpha-3 keys mapped to the ISO 3166-1 alpha-2 codes the app uses.
 - `src/data/countries.ts` — the country list, with each `bounds` derived from the atlas.
+
+The list is the 193 UN member states plus its two observer states, the Holy See and Palestine.
+It holds codes, not names: each country's ISO 3166-1 alpha-2 code, its UN M49 region, and the most
+specific M49 group inside it (the intermediate region where there is one, otherwise the
+sub-region), which is what the menu groups by. Countries are named and sorted in the reader's
+language at run time with `Intl.DisplayNames` and `Intl.Collator`; browsers do not reliably name
+M49 areas, so their English names live in `src/models/m49.ts`.
 
 Both come from `pnpm run generate:countries`. The country list is the script's
 input as well as its output: a country the atlas cannot draw fails the run
