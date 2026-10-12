@@ -5,9 +5,10 @@ import type { Country, CountryData, Visits } from "../models/country.ts";
 import type { Focus } from "../models/focus.ts";
 import { MENU_SIZE_DEFAULT } from "../models/menu.ts";
 import type { MenuSize } from "../models/menu.ts";
-import type { Region } from "../models/region.ts";
+import type { Continent } from "../models/region.ts";
 import { regionalizer } from "../utils/regionalizer.ts";
 import { isVisits } from "../utils/visits.ts";
+import { homeRegionAtom } from "./regions.ts";
 import { validatedStorage } from "./storage.ts";
 
 const COUNTRIES_STORAGE_KEY = "APP_COUNTRIES";
@@ -50,10 +51,9 @@ export const countriesAtom = atom<readonly Country[]>((get) => {
 		selected: Object.hasOwn(visits, country.iso3166),
 	}));
 });
-export const regionsAtom = atom<readonly Region[]>((get) => {
-	const countries = get(countriesAtom);
-	return regionalizer(countries, get(collatorAtom));
-});
+export const continentsAtom = atom<readonly Continent[]>((get) =>
+	regionalizer(get(countriesAtom), get(collatorAtom), get(homeRegionAtom)),
+);
 
 export const addCountryAtom = atom(undefined, (get, set, countryCode: string) => {
 	const visits = get(visitsAtom);

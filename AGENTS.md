@@ -46,16 +46,20 @@ How a selection travels:
 
 ```
 data/countries.ts ──▶ rawCountriesAtom ─┐
-                                        ├─▶ countriesAtom ──▶ regionsAtom ──▶ Menu
+                                        ├─▶ countriesAtom ──▶ continentsAtom ──▶ Menu
 localStorage ──▶ visitsAtom ────────────┘         │
-                     │                            └──────────────────────────▶ Globe
-                     └─▶ selectedCountriesAtom ──────────────────────────────▶ Globe
-world atlas ──▶ data/boundaries.ts ──▶ useCountryBoundaries ─────────────────▶ Globe
+                     │                            └─────────────────────────────▶ Globe
+                     └─▶ selectedCountriesAtom ─────────────────────────────────▶ Globe
+world atlas ──▶ data/boundaries.ts ──▶ useCountryBoundaries ────────────────────▶ Globe
 ```
 
 The selection is stored as an object keyed by ISO 3166-1 alpha-2 code, one visit per country, so
 details can be added to a visit later. Stored state is validated when it is read, and anything not
 in today's shape is cleared rather than migrated.
+
+The menu folds countries into their M49 regions as collapsible continents, with each sub-region a
+heading inside. The reader's home continent is guessed from their time zone, listed first and, until
+they open or close one themselves, the only one open; that state lives in `src/state/regions.ts`.
 
 The globe is MapLibre through `react-map-gl`, over a keyless CARTO basemap
 whose light and dark styles follow the reader's colour scheme. Selected

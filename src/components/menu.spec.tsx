@@ -1,10 +1,11 @@
-import { cleanup, render } from "@testing-library/react";
+import { act, cleanup, fireEvent, render } from "@testing-library/react";
 import { Provider } from "jotai";
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
 
 import type { Country } from "../models/country.ts";
 import { rawCountriesAtom } from "../state/atoms.ts";
-import { HydrateAtoms } from "../utils/test.ts";
+import { homeRegionAtom } from "../state/regions.ts";
+import { HydrateAtoms, assertDefined } from "../utils/test.ts";
 import { Menu } from "./menu";
 
 const country: Country = {
@@ -13,14 +14,31 @@ const country: Country = {
 	region: "150",
 	subregion: "154",
 };
+const brazil: Country = {
+	iso3166: "BR",
+	name: "Brazil",
+	region: "019",
+	subregion: "005",
+};
 
 const renderMenu = (): ReturnType<typeof render> =>
 	render(
 		<Provider>
-			<HydrateAtoms initialValues={[[rawCountriesAtom, { [country.iso3166]: country }]]}>
+			<HydrateAtoms
+				initialValues={[
+					[rawCountriesAtom, { [brazil.iso3166]: brazil, [country.iso3166]: country }],
+					[homeRegionAtom, "150"],
+				]}
+			>
 				<Menu />
 			</HydrateAtoms>
 		</Provider>,
+	);
+
+const checkboxFor = (result: ReturnType<typeof render>, name: string): HTMLElement =>
+	assertDefined(
+		result.getByText(name).closest("label")?.querySelector("input"),
+		`No checkbox for ${name}.`,
 	);
 
 describe("menu", () => {
@@ -45,7 +63,7 @@ describe("menu", () => {
 		expect.hasAssertions();
 
 		const result = renderMenu();
-		const checkbox = result.getByLabelText("Visited");
+		const checkbox = checkboxFor(result, country.name);
 
 		expect(checkbox).not.toBeChecked();
 
@@ -58,11 +76,45 @@ describe("menu", () => {
 		expect.hasAssertions();
 
 		const result = renderMenu();
-		const checkbox = result.getByLabelText("Visited");
+		const checkbox = checkboxFor(result, country.name);
 
 		checkbox.click();
 		checkbox.click();
 
 		expect(checkbox).not.toBeChecked();
+	}, 5000);
+
+	it("should open only the home continent", () => {
+		expect.hasAssertions();
+
+		const result = renderMenu();
+
+		expect(checkboxFor(result, country.name)).toBeVisible();
+		expect(checkboxFor(result, brazil.name)).not.toBeVisible();
+	}, 5000);
+
+	it("should open a continent when its heading is clicked", () => {
+		expect.hasAssertions();
+
+		const result = renderMenu();
+		const heading = result.getByRole("button", { name: /Americas/u });
+
+		act(() => {
+			heading.click();
+		});
+
+		expect(heading).toHaveAttribute("aria-expanded", "true");
+		expect(checkboxFor(result, brazil.name)).toBeVisible();
+	}, 5000);
+
+	it("should show a match in a closed continent while searching", () => {
+		expect.hasAssertions();
+
+		const result = renderMenu();
+
+		fireEvent.change(result.getByPlaceholderText("Search..."), { target: { value: "bra" } });
+
+		expect(checkboxFor(result, brazil.name)).toBeVisible();
+		expect(result.queryByText(country.name)).toBeNull();
 	}, 5000);
 });

@@ -2,7 +2,6 @@ import { describe, expect, it } from "vitest";
 
 import type { Country } from "../models/country";
 import type { M49Region, M49Subregion } from "../models/m49";
-import type { Region } from "../models/region";
 import { regionalizer } from "./regionalizer";
 
 const collator = new Intl.Collator(["en"]);
@@ -14,70 +13,69 @@ const country = (name: string, region: M49Region, subregion: M49Subregion): Coun
 	subregion,
 });
 
+const france = country("France", "150", "155");
+const germany = country("Germany", "150", "155");
+const norway = country("Norway", "150", "154");
+const brazil = country("Brazil", "019", "005");
+const jamaica = country("Jamaica", "019", "029");
+
 describe("regionalizer", () => {
-	it("should correctly group countries by sub-region", () => {
+	it("should group countries by region, then by sub-region", () => {
 		expect.hasAssertions();
 
-		const countries: readonly Country[] = [
-			country("France", "150", "155"),
-			country("Sweden", "150", "154"),
-			country("Germany", "150", "155"),
-			country("Norway", "150", "154"),
-		];
+		const result = regionalizer([france, brazil, norway, germany], collator);
 
-		const expected: readonly Region[] = [
+		expect(result).toStrictEqual([
 			{
-				complete: 0,
-				name: "Northern Europe",
-				values: [country("Norway", "150", "154"), country("Sweden", "150", "154")],
+				code: "019",
+				name: "Americas",
+				total: 1,
+				values: [{ complete: 0, name: "South America", values: [brazil] }],
+				visited: 0,
 			},
 			{
-				complete: 0,
-				name: "Western Europe",
-				values: [country("France", "150", "155"), country("Germany", "150", "155")],
+				code: "150",
+				name: "Europe",
+				total: 3,
+				values: [
+					{ complete: 0, name: "Northern Europe", values: [norway] },
+					{ complete: 0, name: "Western Europe", values: [france, germany] },
+				],
+				visited: 0,
 			},
-		];
-
-		const result = regionalizer(countries, collator);
-		expect(result).toStrictEqual(expected);
+		]);
 	}, 5000);
 
 	it("should handle an empty array", () => {
 		expect.hasAssertions();
 
-		const result = regionalizer([], collator);
-		expect(result).toStrictEqual([]);
+		expect(regionalizer([], collator)).toStrictEqual([]);
 	}, 5000);
 
-	it("should report how much of each sub-region is selected", () => {
+	it("should count what is visited in each region and sub-region", () => {
 		expect.hasAssertions();
 
-		const countries: readonly Country[] = [
-			{ ...country("France", "150", "155"), selected: true },
-			country("Germany", "150", "155"),
-		];
+		const result = regionalizer([{ ...france, selected: true }, germany, norway], collator);
 
-		const result = regionalizer(countries, collator);
-		expect(result[0]?.complete).toBe(0.5);
+		expect(result[0]?.visited).toBe(1);
+		expect(result[0]?.total).toBe(3);
+		expect(result[0]?.values.map(({ complete }) => complete)).toStrictEqual([0, 0.5]);
 	}, 5000);
 
-	it("should sort sub-regions by their region first, then by name", () => {
+	it("should put the home region first", () => {
 		expect.hasAssertions();
 
-		const countries: readonly Country[] = [
-			country("France", "150", "155"),
-			country("Brazil", "019", "005"),
-			country("Poland", "150", "151"),
-			country("Jamaica", "019", "029"),
-		];
+		const result = regionalizer([brazil, france], collator, "150");
 
-		const result = regionalizer(countries, collator);
-		expect(result.map(({ name }) => name)).toStrictEqual([
-			"Caribbean",
-			"South America",
-			"Eastern Europe",
-			"Western Europe",
-		]);
+		expect(result.map(({ name }) => name)).toStrictEqual(["Europe", "Americas"]);
+	}, 5000);
+
+	it("should sort sub-regions within a region by name", () => {
+		expect.hasAssertions();
+
+		const result = regionalizer([brazil, jamaica], collator);
+
+		expect(result[0]?.values.map(({ name }) => name)).toStrictEqual(["Caribbean", "South America"]);
 	}, 5000);
 
 	it("should sort countries as the language it is given would", () => {
@@ -87,33 +85,15 @@ describe("regionalizer", () => {
 
 		// Swedish sorts Ö after Z, where English sorts it alongside O.
 		const result = regionalizer(countries, new Intl.Collator(["sv"]));
-		expect(result[0]?.values.map(({ name }) => name)).toStrictEqual(["Z", "Ö"]);
-	}, 5000);
-
-	it("should sort the countries within a sub-region", () => {
-		expect.hasAssertions();
-
-		const countries: readonly Country[] = [
-			country("Germany", "150", "155"),
-			country("France", "150", "155"),
-		];
-
-		const result = regionalizer(countries, collator);
-		expect(result[0]?.values.map(({ name }) => name)).toStrictEqual(["France", "Germany"]);
+		expect(result[0]?.values[0]?.values.map(({ name }) => name)).toStrictEqual(["Z", "Ö"]);
 	}, 5000);
 
 	it("should not mutate the original array", () => {
 		expect.hasAssertions();
 
-		const countries: readonly Country[] = [
-			country("Germany", "150", "155"),
-			country("France", "150", "155"),
-		];
+		const countries: readonly Country[] = [germany, france];
 
 		regionalizer(countries, collator);
-		expect(countries).toStrictEqual([
-			country("Germany", "150", "155"),
-			country("France", "150", "155"),
-		]);
+		expect(countries).toStrictEqual([germany, france]);
 	}, 5000);
 });
