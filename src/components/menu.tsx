@@ -2,8 +2,8 @@ import { useAtomValue } from "jotai";
 import { memo, useId, useMemo, useState } from "react";
 import type { FC } from "react";
 
-import type { Region } from "../models/region";
-import { regionsAtom } from "../state/atoms.ts";
+import type { Continent, Region } from "../models/region";
+import { continentsAtom } from "../state/atoms.ts";
 import { MenuBody } from "./menu-body";
 
 interface Props {
@@ -13,22 +13,31 @@ interface Props {
 export const Menu: FC<Props> = memo(({ loading = false }) => {
 	const searchId = useId();
 	const searchLabelId = useId();
-	const regions = useAtomValue(regionsAtom);
+	const continents = useAtomValue(continentsAtom);
 
 	const [search, setSearch] = useState("");
-	const filteredRegions = useMemo(() => {
-		const searchTerm = search.trim().toLowerCase();
+	const searchTerm = search.trim().toLowerCase();
+	// Narrows each continent to its matches, but keeps the counts that describe it whole.
+	const filteredContinents = useMemo(() => {
 		if (!searchTerm) {
-			return regions;
+			return continents;
 		}
-		return regions
-			.map((region): Region => ({
-				complete: region.complete ?? 0,
-				name: region.name,
-				values: region.values.filter(({ name }) => name.toLowerCase().includes(searchTerm)),
+		return continents
+			.map((continent): Continent => ({
+				code: continent.code,
+				name: continent.name,
+				total: continent.total,
+				values: continent.values
+					.map((region): Region => ({
+						complete: region.complete ?? 0,
+						name: region.name,
+						values: region.values.filter(({ name }) => name.toLowerCase().includes(searchTerm)),
+					}))
+					.filter((region) => region.values.length > 0),
+				visited: continent.visited,
 			}))
-			.filter((region) => region.values.length > 0);
-	}, [search, regions]);
+			.filter((continent) => continent.values.length > 0);
+	}, [searchTerm, continents]);
 
 	return (
 		<>
@@ -49,7 +58,7 @@ export const Menu: FC<Props> = memo(({ loading = false }) => {
 					aria-labelledby={searchLabelId}
 				/>
 			</form>
-			<MenuBody loading={loading} regions={filteredRegions} />
+			<MenuBody continents={filteredContinents} loading={loading} searching={searchTerm !== ""} />
 		</>
 	);
 });

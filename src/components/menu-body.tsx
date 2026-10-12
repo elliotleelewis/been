@@ -1,16 +1,22 @@
+import { useAtomValue } from "jotai";
 import { memo } from "react";
 import type { FC } from "react";
 
-import type { Region } from "../models/region";
-import { MenuItem } from "./menu-item";
-import { Progress } from "./progress";
+import type { Continent } from "../models/region";
+import { expandedRegionsAtom } from "../state/regions";
+import { MenuContinent } from "./menu-continent";
 
 interface Props {
+	readonly continents: readonly Continent[];
 	readonly loading: boolean;
-	readonly regions: readonly Region[];
+	// Whether the list is narrowed by a search, which opens every continent with a match in it, as
+	// a match hidden inside a closed continent would read as no match at all.
+	readonly searching: boolean;
 }
 
-export const MenuBody: FC<Props> = memo(({ loading, regions }) => {
+export const MenuBody: FC<Props> = memo(({ continents, loading, searching }) => {
+	const expandedRegions = useAtomValue(expandedRegionsAtom);
+
 	if (loading) {
 		return (
 			<div className="flex flex-1 items-center justify-center">
@@ -39,24 +45,18 @@ export const MenuBody: FC<Props> = memo(({ loading, regions }) => {
 		);
 	}
 
-	if (regions.length === 0) {
+	if (continents.length === 0) {
 		return <div className="m-4 text-center font-medium">{"No results!"}</div>;
 	}
 
 	return (
 		<ul className="min-h-0 flex-1 overscroll-contain overflow-y-auto">
-			{regions.map((region) => (
-				<li key={region.name}>
-					<div className="sticky top-0 flex items-center justify-between bg-zinc-200 p-4 font-medium dark:bg-zinc-800">
-						<h2>{region.name}</h2>
-						<Progress complete={region.complete ?? 0} />
-					</div>
-					<ul className="divide-y divide-zinc-100 dark:divide-zinc-800">
-						{region.values.map((country) => (
-							<MenuItem key={country.iso3166} country={country} />
-						))}
-					</ul>
-				</li>
+			{continents.map((continent) => (
+				<MenuContinent
+					key={continent.code}
+					continent={continent}
+					expanded={searching || expandedRegions.includes(continent.code)}
+				/>
 			))}
 		</ul>
 	);
