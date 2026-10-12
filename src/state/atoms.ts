@@ -1,21 +1,23 @@
 import { atom } from "jotai";
 import { atomWithStorage } from "jotai/utils";
 
-import type { Country } from "../models/country.ts";
+import type { Country, Visits } from "../models/country.ts";
 import type { Focus } from "../models/focus.ts";
 import { MENU_SIZE_DEFAULT } from "../models/menu.ts";
 import type { MenuSize } from "../models/menu.ts";
 import type { Region } from "../models/region.ts";
 import { regionalizer } from "../utils/regionalizer.ts";
+import { isVisits } from "../utils/visits.ts";
+import { validatedStorage } from "./storage.ts";
 
 const COUNTRIES_STORAGE_KEY = "APP_COUNTRIES";
 const MENU_SIZE_STORAGE_KEY = "APP_MENU_SIZE";
 
 export const rawCountriesAtom = atom<Record<string, Country>>({});
-export const selectedCountriesAtom = atomWithStorage<readonly string[]>(
+export const visitsAtom = atomWithStorage<Visits>(
 	COUNTRIES_STORAGE_KEY,
-	[],
-	undefined,
+	{},
+	validatedStorage(isVisits),
 	{ getOnInit: true },
 );
 export const focusAtom = atom<Focus | null>(null);
@@ -28,16 +30,17 @@ export const menuSizeAtom = atomWithStorage<MenuSize>(
 	{ getOnInit: true },
 );
 
+export const selectedCountriesAtom = atom<readonly string[]>((get) => Object.keys(get(visitsAtom)));
 export const countriesAtom = atom<readonly Country[]>((get) => {
 	const rawCountries = get(rawCountriesAtom);
-	const selectedCountries = get(selectedCountriesAtom);
+	const visits = get(visitsAtom);
 
 	// Spread into a new object rather than mutating `country`. Mutating it in place would keep
 	// the same object identity, so `memo`'d consumers such as `MenuItem` would never re-render.
 	// oxlint-disable-next-line no-map-spread -- The in-place mutation it suggests is what the new object identity is avoiding.
 	return Object.values(rawCountries).map((country) => ({
 		...country,
-		selected: selectedCountries.includes(country.iso3166),
+		selected: Object.hasOwn(visits, country.iso3166),
 	}));
 });
 export const regionsAtom = atom<readonly Region[]>((get) => {
@@ -46,16 +49,16 @@ export const regionsAtom = atom<readonly Region[]>((get) => {
 });
 
 export const addCountryAtom = atom(undefined, (get, set, countryCode: string) => {
-	const selectedCountries = get(selectedCountriesAtom);
-	if (!selectedCountries.includes(countryCode)) {
+	const visits = get(visitsAtom);
+	if (!Object.hasOwn(visits, countryCode)) {
 		const countries = get(countriesAtom);
 		const focusCountry = countries.find((country) => country.iso3166 === countryCode);
 		set(focusAtom, focusCountry ? { country: focusCountry, type: "country" } : null);
-		set(selectedCountriesAtom, [...selectedCountries, countryCode]);
+		set(visitsAtom, { ...visits, [countryCode]: {} });
 	}
 });
 export const removeCountryAtom = atom(undefined, (get, set, countryCode: string) => {
-	const selectedCountries = get(selectedCountriesAtom);
+	const visits = get(visitsAtom);
 	const focus = get(focusAtom);
 
 	// Unselecting the country the map is currently framing is an undo of that selection, so ask
@@ -64,7 +67,7 @@ export const removeCountryAtom = atom(undefined, (get, set, countryCode: string)
 	const undo = focus?.type === "country" && focus.country.iso3166 === countryCode;
 	set(focusAtom, undo ? { type: "undo" } : null);
 	set(
-		selectedCountriesAtom,
-		selectedCountries.filter((code) => code !== countryCode),
+		visitsAtom,
+		Object.fromEntries(Object.entries(visits).filter(([code]) => code !== countryCode)),
 	);
 });

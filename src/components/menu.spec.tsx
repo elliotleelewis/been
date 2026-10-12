@@ -11,6 +11,7 @@ const country: Country = {
 	iso3166: "GB",
 	name: "United Kingdom",
 	region: "Europe",
+	subregion: "Northern Europe",
 };
 
 const renderMenu = (): ReturnType<typeof render> =>

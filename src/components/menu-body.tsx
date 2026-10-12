@@ -48,7 +48,7 @@ export const MenuBody: FC<Props> = memo(({ loading, regions }) => {
 			{regions.map((region) => (
 				<li key={region.name}>
 					<div className="sticky top-0 flex items-center justify-between bg-zinc-200 p-4 font-medium dark:bg-zinc-800">
-						<h2>{region.name || "Other"}</h2>
+						<h2>{region.name}</h2>
 						<Progress complete={region.complete ?? 0} />
 					</div>
 					<ul className="divide-y divide-zinc-100 dark:divide-zinc-800">

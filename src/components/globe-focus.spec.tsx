@@ -17,6 +17,7 @@ const unitedKingdom: Country = {
 	iso3166: "GB",
 	name: "United Kingdom",
 	region: "Europe",
+	subregion: "Northern Europe",
 };
 
 const createTestStore = (): ReturnType<typeof createStore> => {
@@ -58,7 +59,7 @@ describe("globe focus", () => {
 	});
 
 	afterEach(() => {
-		// `selectedCountriesAtom` is backed by local storage, which outlives an individual store.
+		// `visitsAtom` is backed by local storage, which outlives an individual store.
 		globalThis.localStorage.clear();
 	});
 

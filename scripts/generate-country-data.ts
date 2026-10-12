@@ -6,6 +6,10 @@
 // Run it with `pnpm run generate:countries` after bumping `visionscarto-world-atlas`. The country
 // list is the input, not the output: a country the atlas cannot draw fails the run rather than
 // quietly disappearing, so dropping one is always a deliberate edit to src/data/countries.ts.
+//
+// That list is the 193 member states of the United Nations and its two observer states, the Holy
+// See and Palestine, each with its UN M49 region and sub-region. Territories are left out, so the
+// atlas draws them but nothing can select them.
 import { readFileSync, writeFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 
@@ -22,10 +26,6 @@ const resolve = (path: string): string => fileURLToPath(new globalThis.URL(path,
 const ATLAS_PATH = resolve("../node_modules/visionscarto-world-atlas/world/50m.json");
 const CODES_PATH = resolve("../src/data/boundary-codes.ts");
 const COUNTRIES_PATH = resolve("../src/data/countries.ts");
-
-// Natural Earth carries Kosovo as the user-assigned `XKX`, which is not in ISO 3166-1 and so is
-// absent from the lookup table. Every other country resolves from its alpha-3 code.
-const ALPHA3_OVERRIDES: Readonly<Record<string, string>> = { XKX: "XK" };
 
 type BoundedCountry = Country & { readonly bounds: Bounds };
 
@@ -49,7 +49,7 @@ const toCodes = (topology: Topology): Readonly<Record<string, string>> => {
 	const tracked = new Set(countries.map(({ iso3166 }) => iso3166));
 	const codes: Record<string, string> = {};
 	for (const alpha3 of alpha3sOf(topology)) {
-		const iso3166 = isoCountries.alpha3ToAlpha2(alpha3) ?? ALPHA3_OVERRIDES[alpha3];
+		const iso3166 = isoCountries.alpha3ToAlpha2(alpha3);
 		if (iso3166 !== undefined && tracked.has(iso3166)) {
 			codes[alpha3] = iso3166;
 		}
@@ -77,12 +77,12 @@ const withBounds = (
 		);
 	}
 
-	return countries.map(({ iso3166, name, region }) => {
+	return countries.map(({ iso3166, name, region, subregion }) => {
 		const boundary = boundaries.get(iso3166);
 		if (boundary === undefined) {
 			throw new Error(`No boundary for ${name}.`);
 		}
-		return { bounds: boundsOf(boundary), iso3166, name, region };
+		return { bounds: boundsOf(boundary), iso3166, name, region, subregion };
 	});
 };
 
@@ -105,13 +105,14 @@ const serializeCountries = (values: readonly BoundedCountry[]): string =>
 		'import type { Country } from "../models/country";',
 		"",
 		"export const countries: readonly Country[] = [",
-		...values.map(({ bounds, iso3166, name, region }) =>
+		...values.map(({ bounds, iso3166, name, region, subregion }) =>
 			[
 				"\t{",
 				`\t\tbounds: [${bounds.join(", ")}],`,
 				`\t\tiso3166: ${JSON.stringify(iso3166)},`,
 				`\t\tname: ${JSON.stringify(name)},`,
 				`\t\tregion: ${JSON.stringify(region)},`,
+				`\t\tsubregion: ${JSON.stringify(subregion)},`,
 				"\t},",
 			].join("\n"),
 		),
