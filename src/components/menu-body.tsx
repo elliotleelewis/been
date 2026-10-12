@@ -2,21 +2,17 @@ import { useAtomValue } from "jotai";
 import { memo } from "react";
 import type { FC } from "react";
 
-import type { Continent } from "../models/region";
+import type { SearchResults } from "../models/search";
 import { expandedRegionsAtom } from "../state/regions";
 import { MenuContinent } from "./menu-continent";
+import { MenuNoResults } from "./menu-no-results";
 
 interface Props {
-	readonly continents: readonly Continent[];
 	readonly loading: boolean;
-	/**
-	 * Whether the list is narrowed by a search, which opens every continent with a match in it, as
-	 * a match hidden inside a closed continent would read as no match at all.
-	 */
-	readonly searching: boolean;
+	readonly results: SearchResults;
 }
 
-export const MenuBody: FC<Props> = memo(({ continents, loading, searching }) => {
+export const MenuBody: FC<Props> = memo(({ loading, results }) => {
 	const expandedRegions = useAtomValue(expandedRegionsAtom);
 
 	if (loading) {
@@ -47,17 +43,19 @@ export const MenuBody: FC<Props> = memo(({ continents, loading, searching }) => 
 		);
 	}
 
-	if (continents.length === 0) {
-		return <div className="m-4 text-center font-medium">{"No results!"}</div>;
+	if (results.continents.length === 0) {
+		return <MenuNoResults query={results.query} suggestions={results.suggestions} />;
 	}
 
 	return (
 		<ul className="min-h-0 flex-1 overscroll-contain overflow-y-auto">
-			{continents.map((continent) => (
+			{results.continents.map((continent) => (
 				<MenuContinent
 					key={continent.code}
 					continent={continent}
-					expanded={searching || expandedRegions.includes(continent.code)}
+					// A search opens every continent with a match in it, as a match hidden inside a closed
+					// continent would read as no match at all.
+					expanded={results.query !== "" || expandedRegions.includes(continent.code)}
 				/>
 			))}
 		</ul>

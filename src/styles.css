@@ -20,6 +20,19 @@ body {
 	overflow: hidden;
 }
 
+/* The clear button WebKit and Blink give a search box is a fixed blue cross in either colour
+   scheme. Drawn as a mask over the box's own text colour instead, it follows the theme. */
+input[type="search"]::-webkit-search-cancel-button {
+	appearance: none;
+	inline-size: 1rem;
+	block-size: 1rem;
+	background-color: currentColor;
+	opacity: 0.6;
+	cursor: pointer;
+	mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.5' stroke-linecap='round'%3E%3Cpath d='M6 6l12 12M18 6 6 18'/%3E%3C/svg%3E")
+		center / contain no-repeat;
+}
+
 /* MapLibre ships its controls with one theme, a light one, so the dark scheme is ours to add. The
    icons are background images with their colour baked in, which is why those are inverted rather
    than restyled: the alternative is copying every data URI in here to change one fill. */
