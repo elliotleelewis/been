@@ -34,10 +34,52 @@ const HOME_LANDMASS_ONLY: ReadonlySet<string> = new Set(["FR", "NL", "NO"]);
  */
 const LANDMASS_GAP_DEGREES = 2;
 
+const TURN_DEGREES = 360;
+
+/** A longitude moved by whole turns to sit within half a turn of `near`. */
+const besideLongitude = (longitude: number, near: number): number =>
+	longitude + TURN_DEGREES * Math.round((near - longitude) / TURN_DEGREES);
+
+/** A ring with each longitude moved by whole turns to sit within half a turn of the one before. */
+const continuousRing = (ring: readonly Position[]): Position[] => {
+	const continuous: Position[] = [];
+	for (const [longitude = 0, ...rest] of ring) {
+		const previous = continuous.at(-1)?.[0];
+		continuous.push([
+			previous === undefined ? longitude : besideLongitude(longitude, previous),
+			...rest,
+		]);
+	}
+	return continuous;
+};
+
+/** A ring moved by whole turns, so its first longitude sits within half a turn of `near`. */
+const ringBeside = (ring: readonly Position[], near: number): Position[] => {
+	const shift = besideLongitude(ring[0]?.[0] ?? near, near) - (ring[0]?.[0] ?? near);
+	return ring.map(([longitude = 0, ...rest]) => [longitude + shift, ...rest]);
+};
+
+/**
+ * A polygon with no edge running the long way round the globe. The atlas is drawn for d3, which
+ * joins points along the sphere, so an island across the antimeridian, such as Wrangel Island in
+ * Russia or Vanua Levu in Fiji, has neighbouring points at 179.9 and -179.9. MapLibre joins points
+ * along the flat map, where those two are a world apart, and draws that edge as a band round the
+ * whole globe. Carried on past 180 instead, the outline stays where it is, and MapLibre draws a
+ * shape that runs past 180 across the antimeridian. A polygon that never crosses is left as it is.
+ */
+export const continuousPolygon = (polygon: readonly Position[][]): Position[][] => {
+	const [outer = [], ...holes] = polygon.map((ring) => continuousRing(ring));
+	const west = Math.min(...outer.map(([longitude = 0]) => longitude));
+	const anchored = west < -180 ? ringBeside(outer, (outer[0]?.[0] ?? 0) + TURN_DEGREES) : outer;
+	const near = anchored[0]?.[0] ?? 0;
+	return [anchored, ...holes.map((hole) => ringBeside(hole, near))];
+};
+
 const polygonsOf = (boundary: CountryBoundary): readonly Position[][][] =>
-	boundary.geometry.type === "Polygon"
+	(boundary.geometry.type === "Polygon"
 		? [boundary.geometry.coordinates]
-		: boundary.geometry.coordinates;
+		: boundary.geometry.coordinates
+	).map((polygon) => continuousPolygon(polygon));
 
 const extend = (bounds: Bounds, position: Position): Bounds => {
 	const [longitude, latitude] = position;
@@ -100,25 +142,17 @@ const homeLandmassOf = (polygons: readonly Position[][][]): Bounds => {
 type Span = readonly [number, number];
 
 /**
- * Natural Earth keeps some islands, such as Fiji's Vanua Levu, whole across the antimeridian, so a
- * polygon that would otherwise reach most of the way round the globe is measured with its western
- * longitudes moved past 180 instead, and handed back as the two halves either side of the line.
+ * Where a continuous polygon reaches in longitude: one span, or for one carried on past 180 across
+ * the antimeridian, the two halves either side of the line.
  */
 const spansOf = (polygon: Position[][]): readonly Span[] => {
 	const [west, , east] = boundsOfPolygons([polygon]);
-	if (east - west <= 180) {
-		return [[west, east]];
-	}
-	const shifted = polygon.map((ring) =>
-		ring.map((position) =>
-			position.map((value, index) => (index === 0 && value < 0 ? value + 360 : value)),
-		),
-	);
-	const [shiftedWest, , shiftedEast] = boundsOfPolygons([shifted]);
-	return [
-		[shiftedWest, 180],
-		[-180, shiftedEast - 360],
-	];
+	return east <= 180
+		? [[west, east]]
+		: [
+				[west, 180],
+				[-180, east - TURN_DEGREES],
+			];
 };
 
 /**
@@ -191,9 +225,19 @@ export const toBoundaries = (
 			}
 			const alpha3: unknown = properties?.["a3"];
 			const iso3166 = typeof alpha3 === "string" ? codes[alpha3] : undefined;
-			return iso3166 === undefined
-				? []
-				: [{ geometry, properties: { iso_3166_1: iso3166 }, type: "Feature" as const }];
+			if (iso3166 === undefined) {
+				return [];
+			}
+			const continuous: Polygon | MultiPolygon =
+				geometry.type === "Polygon"
+					? { coordinates: continuousPolygon(geometry.coordinates), type: "Polygon" }
+					: {
+							coordinates: geometry.coordinates.map((polygon) => continuousPolygon(polygon)),
+							type: "MultiPolygon",
+						};
+			return [
+				{ geometry: continuous, properties: { iso_3166_1: iso3166 }, type: "Feature" as const },
+			];
 		}),
 		type: "FeatureCollection",
 	};

@@ -7,7 +7,8 @@ import type { MockInstance } from "vitest";
 
 import type { Country } from "../models/country";
 import { MapLayerKeys } from "../models/enums";
-import { focusAtom, rawCountriesAtom, visitsAtom } from "../state/atoms";
+import { focusAtom, visitsAtom } from "../state/atoms";
+import { rawCountriesAtom } from "../state/dataset";
 import { assertDefined, mockMediaQueryList, stubBasemap } from "../utils/test";
 import { Globe } from "./globe";
 

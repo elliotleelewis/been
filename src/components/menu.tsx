@@ -4,6 +4,7 @@ import type { ChangeEvent, FC, SubmitEvent } from "react";
 
 import { searchAtom, searchResultsAtom, submitSearchAtom } from "../state/search.ts";
 import { MenuBody } from "./menu-body";
+import { SharedMapBanner } from "./shared-map-banner";
 
 interface Props {
 	readonly loading?: boolean | undefined;
@@ -32,6 +33,7 @@ export const Menu: FC<Props> = memo(({ loading = false }) => {
 
 	return (
 		<>
+			<SharedMapBanner />
 			<search className="shrink-0">
 				<form onSubmit={handleSubmit}>
 					<label id={searchLabelId} htmlFor={searchId} className="sr-only">

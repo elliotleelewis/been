@@ -7,10 +7,10 @@ import {
 	countriesAtom,
 	focusAtom,
 	localesAtom,
-	rawCountriesAtom,
 	removeCountryAtom,
 	visitsAtom,
 } from "./atoms";
+import { rawCountriesAtom } from "./dataset";
 
 const unitedKingdom: Country = {
 	bounds: [-8.65, 49.87, 1.76, 60.86],

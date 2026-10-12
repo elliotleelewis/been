@@ -3,7 +3,8 @@ import { Provider, createStore } from "jotai";
 import { afterEach, describe, expect, it, vi } from "vitest";
 
 import type { Country } from "../models/country";
-import { rawCountriesAtom, visitsAtom } from "../state/atoms";
+import { visitsAtom } from "../state/atoms";
+import { rawCountriesAtom } from "../state/dataset";
 import { lastTapAtom, tapCountryAtom } from "../state/taps";
 import { TapToastRegion } from "./tap-toast-region";
 

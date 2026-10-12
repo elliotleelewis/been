@@ -3,7 +3,7 @@ import { Provider } from "jotai";
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
 
 import type { Country } from "../models/country.ts";
-import { rawCountriesAtom } from "../state/atoms.ts";
+import { rawCountriesAtom } from "../state/dataset.ts";
 import { homeRegionAtom } from "../state/regions.ts";
 import { HydrateAtoms, assertDefined } from "../utils/test.ts";
 import { Menu } from "./menu";

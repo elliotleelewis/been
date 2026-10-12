@@ -5,7 +5,8 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import type { MockInstance } from "vitest";
 
 import type { Country } from "../models/country";
-import { addCountryAtom, rawCountriesAtom, removeCountryAtom } from "../state/atoms";
+import { addCountryAtom, removeCountryAtom } from "../state/atoms";
+import { rawCountriesAtom } from "../state/dataset";
 import { mockMediaQueryList } from "../utils/test";
 import { Globe } from "./globe";
 
