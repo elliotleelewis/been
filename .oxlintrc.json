@@ -32,6 +32,8 @@
     "import/no-relative-parent-imports": "off",
     "import/no-unassigned-import": ["error", { "allow": ["**/*.css", "**/jest-dom/vitest"] }],
     "import/prefer-default-export": "off",
+    "jsdoc/require-param": "off",
+    "jsdoc/require-returns": "off",
     "oxc/no-async-await": "off",
     "oxc/no-optional-chaining": "off",
     "oxc/no-rest-spread-properties": "off",

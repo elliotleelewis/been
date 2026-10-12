@@ -23,8 +23,10 @@ const groupBy = <Key, Value>(
 const selectedIn = (countries: readonly Country[]): number =>
 	countries.filter((country) => country.selected === true).length;
 
-// Groups countries into their M49 regions and, inside those, their sub-regions, ordered as the
-// reader's language would. The reader's home region, when there is a guess at it, comes first.
+/**
+ * Groups countries into their M49 regions and, inside those, their sub-regions, ordered as the
+ * reader's language would. The reader's home region, when there is a guess at it, comes first.
+ */
 export const regionalizer = (
 	countries: readonly Country[],
 	collator: Intl.Collator,

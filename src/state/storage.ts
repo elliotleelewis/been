@@ -1,11 +1,13 @@
 import { createJSONStorage } from "jotai/utils";
 
-// Jotai does not export its storage type, but this overload of `createJSONStorage` returns it.
+/** Jotai does not export its storage type, but this overload of `createJSONStorage` returns it. */
 type SyncStorage<Value> = ReturnType<typeof createJSONStorage<Value>>;
 
-// JSON in `localStorage`, but only ever in the shape `isValid` accepts. A stored value of any other
-// shape, such as one written by an older version of the app, is cleared rather than migrated, and
-// the atom starts again from its initial value.
+/**
+ * JSON in `localStorage`, but only ever in the shape `isValid` accepts. A stored value of any other
+ * shape, such as one written by an older version of the app, is cleared rather than migrated, and
+ * the atom starts again from its initial value.
+ */
 export const validatedStorage = <Value>(
 	isValid: (value: unknown) => value is Value,
 ): SyncStorage<Value> => {

@@ -4,14 +4,16 @@ import type { FC } from "react";
 import { useMenuResize } from "../hooks/use-menu-resize";
 
 interface Props {
-	// The drawer this handle resizes, so a screen reader can say what is being moved.
+	/** The drawer this handle resizes, so a screen reader can say what is being moved. */
 	readonly controls: string;
 }
 
-// The edge the country drawer is dragged by: the seam it shares with the globe, which is its right
-// edge as a column and its top edge as a sheet. As a sheet it is padded out to a finger's width,
-// because a miss there does not land on nothing: it lands on the map, or on a list at the top of
-// its scroll, and the browser reads the drag that follows as a pull to refresh.
+/**
+ * The edge the country drawer is dragged by: the seam it shares with the globe, which is its right
+ * edge as a column and its top edge as a sheet. As a sheet it is padded out to a finger's width,
+ * because a miss there does not land on nothing: it lands on the map, or on a list at the top of
+ * its scroll, and the browser reads the drag that follows as a pull to refresh.
+ */
 export const MenuResizer: FC<Props> = memo(({ controls }) => {
 	const { orientation, resizeProps, value, valueMax, valueMin } = useMenuResize();
 

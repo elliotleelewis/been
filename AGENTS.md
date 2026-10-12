@@ -79,6 +79,15 @@ unselecting the country the camera is framing puts it back where it was. That
 undo is deliberately one-shot and is dropped the moment the user moves the map
 themselves.
 
+Countries can also be ticked by tapping them on the globe. Every country is drawn on an invisible
+layer the map tests the pointer against; a tap goes through `src/state/taps.ts`, which leaves the
+camera alone, since the reader is already looking at the country, and keeps the tap so the toast
+it raises can undo it. Double-click zoom is off, because its two clicks would tick and untick.
+
+react-aria supplies behaviour that is hard to get right by hand, such as the drawer's handle and
+the toast region, which pauses its timer while focused and is reachable with F6. Elements a native
+tag already makes accessible, such as checkboxes and disclosure buttons, stay native.
+
 ## Generated data
 
 Two files under `src/data/` are generated. **Never hand-edit generated
@@ -104,6 +113,7 @@ rather than quietly disappearing, so adding or dropping one is an edit to
 
 - Tabs for indentation; two spaces for JSON, YAML, Markdown, per `.editorconfig`. oxfmt owns formatting, including import order — do not hand-format.
 - oxlint runs type-aware with every category set to error, so the linter is strict by default and exceptions are explicit. Suppress with a `oxlint-disable-next-line <rule> -- <reason>` comment; a suppression without a reason is not one.
+- Document declarations, from components and atoms down to interface members, with a JSDoc `/** */` block so editors show it on hover; `//` is for comments inside a body and for lint suppressions. Say what a thing is for in prose: TypeScript already carries the types, so `@param` and `@returns` are not required.
 - React: function components as arrow functions, wrapped in `memo` with a `displayName`. Props interfaces are `readonly`, and callbacks passed down are `useCallback`ed so the memoisation is worth having.
 - State lives in atoms rather than in components. Derived state is a read-only atom; anything that mutates more than one atom is a write-only atom, not a handler in a component.
 - Styling is Tailwind v4, configured in `src/styles.css` rather than a config file. Use the `primary` theme colour, and give every element its `dark:` variant.

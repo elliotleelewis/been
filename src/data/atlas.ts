@@ -2,7 +2,7 @@ import type { Topology } from "topojson-specification";
 // The atlas is a ~700kB file, so it is fetched as an asset rather than parsed as part of a chunk.
 import atlasUrl from "visionscarto-world-atlas/world/50m.json?url";
 
-// Fetches the Natural Earth atlas the country boundaries are drawn from.
+/** Fetches the Natural Earth atlas the country boundaries are drawn from. */
 export const loadAtlas = async (signal?: AbortSignal): Promise<Topology> => {
 	const response = await globalThis.fetch(atlasUrl, signal === undefined ? {} : { signal });
 	if (!response.ok) {

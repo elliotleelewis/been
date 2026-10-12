@@ -9,7 +9,7 @@ import { addCountryAtom, rawCountriesAtom, removeCountryAtom } from "../state/at
 import { mockMediaQueryList } from "../utils/test";
 import { Globe } from "./globe";
 
-// The `minZoom` the globe gives the map, which is also the zoom it opens at.
+/** The `minZoom` the globe gives the map, which is also the zoom it opens at. */
 const MIN_ZOOM = 1.8;
 
 const unitedKingdom: Country = {
@@ -26,7 +26,7 @@ const createTestStore = (): ReturnType<typeof createStore> => {
 	return store;
 };
 
-// `Map` loads MapLibre asynchronously, so nothing camera related exists on the first render.
+/** `Map` loads MapLibre asynchronously, so nothing camera related exists on the first render. */
 const renderGlobe = async (store: ReturnType<typeof createStore>): Promise<void> => {
 	const { container } = render(
 		<Provider store={store}>
@@ -38,7 +38,9 @@ const renderGlobe = async (store: ReturnType<typeof createStore>): Promise<void>
 	});
 };
 
-// The map the globe holds is private to it, so a spied call is the only handle a test has on it.
+/**
+ * The map the globe holds is private to it, so a spied call is the only handle a test has on it.
+ */
 const mapBehind = (spy: MockInstance, message: string): MapLibreMap => {
 	const [map] = spy.mock.contexts;
 	if (!(map instanceof MapLibreMap)) {
@@ -47,8 +49,10 @@ const mapBehind = (spy: MockInstance, message: string): MapLibreMap => {
 	return map;
 };
 
-// Announces the move a user gesture would make. MapLibre tells its own camera calls apart from
-// gestures by giving only the latter an `originalEvent`, which is the signal the globe reads.
+/**
+ * Announces the move a user gesture would make. MapLibre tells its own camera calls apart from
+ * gestures by giving only the latter an `originalEvent`, which is the signal the globe reads.
+ */
 const dragMap = (map: MapLibreMap): void => {
 	map.fire("movestart", { originalEvent: new globalThis.MouseEvent("mousemove", { buttons: 1 }) });
 };

@@ -4,7 +4,7 @@ import { describe, expect, it } from "vitest";
 import { boundsOf } from "./boundaries";
 import type { Bounds, CountryBoundary } from "./boundaries";
 
-// A closed ring around a box, given as west, south, east, north.
+/** A closed ring around a box, given as west, south, east, north. */
 const box = ([west, south, east, north]: Bounds): Position[][] => [
 	[
 		[west, south],

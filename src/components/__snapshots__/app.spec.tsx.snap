@@ -87,7 +87,7 @@ exports[`app > should render 1`] = `
       </div>
     </div>
     <div
-      class="row-start-2 md:col-start-2 md:row-span-2 md:row-start-1"
+      class="relative row-start-2 md:col-start-2 md:row-span-2 md:row-start-1"
     >
       <div
         style="position: relative; width: 100%; height: 100%;"

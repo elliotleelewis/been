@@ -8,22 +8,28 @@ import { menuSizeAtom } from "../state/atoms.ts";
 import { useMatchMedia } from "./use-match-media";
 import { useWindow } from "./use-window";
 
-// Tailwind's `md`, which is the breakpoint the drawer changes shape at. Where it sits is CSS's
-// business, but which axis the handle drags along only exists here.
+/**
+ * Tailwind's `md`, which is the breakpoint the drawer changes shape at. Where it sits is CSS's
+ * business, but which axis the handle drags along only exists here.
+ */
 const WIDE_SCREEN_QUERY = "(min-width: 48rem)";
 
-// How far one arrow key press moves the handle, in pixels. `useMove` reports a key press as a one
-// pixel move, which is a truthful delta and a useless step.
+/**
+ * How far one arrow key press moves the handle, in pixels. `useMove` reports a key press as a one
+ * pixel move, which is a truthful delta and a useless step.
+ */
 const KEYBOARD_STEP = 24;
 
 const PERCENT = 100;
 
 export interface MenuResize {
-	// The separator's own orientation, which is the one it lies along rather than the one it moves
-	// in: a drawer beside the globe is divided from it by a vertical separator.
+	/**
+	 * The separator's own orientation, which is the one it lies along rather than the one it moves
+	 * in: a drawer beside the globe is divided from it by a vertical separator.
+	 */
 	readonly orientation: "horizontal" | "vertical";
 	readonly resizeProps: MoveResult["moveProps"];
-	// The size and the bounds it moves between, as percentages, for the separator's `aria-value*`.
+	/** The size and the bounds it moves between, as percentages, for the separator's `aria-value*`. */
 	readonly value: number;
 	readonly valueMax: number;
 	readonly valueMin: number;
@@ -32,14 +38,18 @@ export interface MenuResize {
 const clamp = (value: number, min: number, max: number): number =>
 	Math.min(Math.max(value, min), max);
 
-// The drawer is a fraction of the viewport because that is what the grid track holding it is a
-// percentage of.
+/**
+ * The drawer is a fraction of the viewport because that is what the grid track holding it is a
+ * percentage of.
+ */
 const viewportSize = (window: typeof globalThis, wide: boolean): number =>
 	wide ? window.innerWidth : window.innerHeight;
 
-// The drag that sizes the country drawer. `useMove` is what makes one handle answer to a mouse, a
-// finger and the arrow keys alike; the rest is turning the deltas it reports into a fraction of
-// the viewport, along whichever axis the drawer currently runs.
+/**
+ * The drag that sizes the country drawer. `useMove` is what makes one handle answer to a mouse, a
+ * finger and the arrow keys alike; the rest is turning the deltas it reports into a fraction of
+ * the viewport, along whichever axis the drawer currently runs.
+ */
 export const useMenuResize = (): MenuResize => {
 	const window = useWindow();
 	const wide = useMatchMedia(WIDE_SCREEN_QUERY);

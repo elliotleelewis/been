@@ -4,7 +4,9 @@ import { loadAtlas } from "../data/atlas";
 import { EMPTY_BOUNDARIES, toBoundaries } from "../data/boundaries";
 import type { CountryBoundaries } from "../data/boundaries";
 
-// Fetches the country boundaries once, giving the map an empty collection to draw until they land.
+/**
+ * Fetches the country boundaries once, giving the map an empty collection to draw until they land.
+ */
 export const useCountryBoundaries = (): CountryBoundaries => {
 	const [boundaries, setBoundaries] = useState<CountryBoundaries>(EMPTY_BOUNDARIES);
 
