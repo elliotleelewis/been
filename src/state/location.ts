@@ -2,6 +2,7 @@ import { atom } from "jotai";
 
 import type { Visits } from "../models/country.ts";
 import { decodeShare, shareValueOf } from "../utils/share.ts";
+import { countryCodesAtom } from "./dataset.ts";
 
 /** The page's location hash, kept current as the reader follows links or goes back and forward. */
 const hashAtom = atom(globalThis.location.hash);
@@ -17,11 +18,17 @@ hashAtom.onMount = (setHash) => {
 
 /**
  * The map a share link opened the page on, or `null` when it opened on the reader's own. A link
- * this version cannot read opens their own map, rather than an empty one that looks like theirs.
+ * marks countries by their place in the country list, so until the list has loaded, a shared map
+ * shows empty rather than letting the reader's own show through first. A link this version cannot
+ * read opens their own map, rather than an empty one that looks like theirs.
  */
 export const sharedVisitsAtom = atom<Visits | null>((get) => {
 	const value = shareValueOf(get(hashAtom));
-	return (value === undefined ? undefined : decodeShare(value)) ?? null;
+	const codes = get(countryCodesAtom);
+	if (value === undefined) {
+		return null;
+	}
+	return codes.length === 0 ? {} : (decodeShare(value, codes) ?? null);
 });
 
 /** Whether a shared map is on show, which leaves nothing on screen that can change. */

@@ -2,7 +2,8 @@ import { createStore } from "jotai";
 import { afterEach, describe, expect, it } from "vitest";
 
 import type { Country } from "../models/country";
-import { focusAtom, localesAtom, rawCountriesAtom, visitsAtom } from "./atoms";
+import { focusAtom, localesAtom, visitsAtom } from "./atoms";
+import { rawCountriesAtom } from "./dataset";
 import { searchAtom, searchResultsAtom, submitSearchAtom } from "./search";
 
 const france: Country = { iso3166: "FR", name: "France", region: "150", subregion: "155" };

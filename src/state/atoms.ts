@@ -1,18 +1,17 @@
 import { atom } from "jotai";
 import { atomWithStorage } from "jotai/utils";
 
-import type { Country, CountryData, Visits } from "../models/country.ts";
+import type { Country, Visits } from "../models/country.ts";
 import type { Focus } from "../models/focus.ts";
-import type { Continent } from "../models/region.ts";
 import { regionalizer } from "../utils/regionalizer.ts";
 import { isVisits, withoutVisit } from "../utils/visits.ts";
+import { rawCountriesAtom } from "./dataset.ts";
 import { sharedVisitsAtom, viewingSharedMapAtom } from "./location.ts";
 import { homeRegionAtom } from "./regions.ts";
 import { validatedStorage } from "./storage.ts";
 
 const COUNTRIES_STORAGE_KEY = "APP_COUNTRIES";
 
-export const rawCountriesAtom = atom<Record<string, CountryData>>({});
 /**
  * The languages the reader prefers, most preferred first, which every name and ordering follows.
  */
@@ -50,7 +49,7 @@ export const countriesAtom = atom<readonly Country[]>((get) => {
 		selected: Object.hasOwn(visits, country.iso3166),
 	}));
 });
-export const continentsAtom = atom<readonly Continent[]>((get) =>
+export const continentsAtom = atom((get) =>
 	regionalizer(get(countriesAtom), get(collatorAtom), get(homeRegionAtom)),
 );
 

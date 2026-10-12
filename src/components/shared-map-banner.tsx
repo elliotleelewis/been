@@ -3,6 +3,7 @@ import { memo, useCallback } from "react";
 import type { FC } from "react";
 
 import { selectedCountriesAtom } from "../state/atoms";
+import { countryCodesAtom } from "../state/dataset";
 import { leaveSharedMapAtom, viewingSharedMapAtom } from "../state/location";
 
 /**
@@ -12,6 +13,9 @@ import { leaveSharedMapAtom, viewingSharedMapAtom } from "../state/location";
 export const SharedMapBanner: FC = memo(() => {
 	const viewingSharedMap = useAtomValue(viewingSharedMapAtom);
 	const { length: count } = useAtomValue(selectedCountriesAtom);
+	// The map a link carries can only be read once the country list is in, so until then there is
+	// no count to give.
+	const { length: loaded } = useAtomValue(countryCodesAtom);
 	const leaveSharedMap = useSetAtom(leaveSharedMapAtom);
 	const leave = useCallback(() => {
 		leaveSharedMap();
@@ -25,7 +29,7 @@ export const SharedMapBanner: FC = memo(() => {
 		<div className="flex shrink-0 items-center justify-between gap-3 bg-primary/15 px-4 py-2 text-sm dark:bg-primary/20">
 			<p>
 				<span className="font-medium">{"Viewing a shared map"}</span>
-				{` · ${String(count)} ${count === 1 ? "country" : "countries"}`}
+				{loaded === 0 ? null : ` · ${String(count)} ${count === 1 ? "country" : "countries"}`}
 			</p>
 			<button
 				type="button"

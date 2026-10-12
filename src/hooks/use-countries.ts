@@ -2,7 +2,7 @@ import { useSetAtom } from "jotai";
 import { useEffect, useMemo, useState } from "react";
 
 import type { CountryData } from "../models/country";
-import { rawCountriesAtom } from "../state/atoms.ts";
+import { rawCountriesAtom } from "../state/dataset.ts";
 
 /**
  * React Compiler cannot lower an import expression, so the dynamic import that keeps the country

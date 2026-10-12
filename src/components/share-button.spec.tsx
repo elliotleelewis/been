@@ -2,13 +2,24 @@ import { act, cleanup, render } from "@testing-library/react";
 import { Provider, createStore } from "jotai";
 import { afterEach, describe, expect, it, vi } from "vitest";
 
+import { countries } from "../data/countries";
 import type { Visits } from "../models/country";
 import { visitsAtom } from "../state/atoms";
+import { rawCountriesAtom } from "../state/dataset";
 import { decodeShare, shareValueOf } from "../utils/share";
 import { ShareButton } from "./share-button";
 
+/** The order share links mark countries in, as the app derives it. */
+const CODES = countries.map(({ iso3166 }) => iso3166).toSorted();
+
 const renderButton = (): ReturnType<typeof render> => {
 	const store = createStore();
+	store.set(
+		rawCountriesAtom,
+		Object.fromEntries(
+			CODES.map((code) => [code, { iso3166: code, region: "150", subregion: "155" } as const]),
+		),
+	);
 	store.set(visitsAtom, { FR: {}, IT: {} });
 	return render(
 		<Provider store={store}>
@@ -31,7 +42,7 @@ const linkIn = (result: ReturnType<typeof render>): string =>
 /** The map the link in the dialog's text box carries. */
 const sharedVisitsIn = (result: ReturnType<typeof render>): Visits | undefined => {
 	const value = shareValueOf(new globalThis.URL(linkIn(result)).hash);
-	return value === undefined ? undefined : decodeShare(value);
+	return value === undefined ? undefined : decodeShare(value, CODES);
 };
 
 describe("share button", () => {

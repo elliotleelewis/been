@@ -90,9 +90,10 @@ layer the map tests the pointer against; a tap goes through `src/state/taps.ts`,
 camera alone, since the reader is already looking at the country, and keeps the tap so the toast
 it raises can undo it. Double-click zoom is off, because its two clicks would tick and untick.
 
-A map is shared as a link whose hash carries it: a format version, then one bit per country in
-the frozen order of `SHARE_CODES` in `src/models/share.ts`, as URL-safe base64. The hash never
-reaches a server. Opening one shows that map read-only through `shownVisitsAtom`, in place of the
+A map is shared as a link whose hash carries it: a format version, a fingerprint of the dataset's
+sorted codes, then one bit per country in that order, as URL-safe base64. The order comes from the
+dataset rather than a list of its own, and the fingerprint makes a link written against any other
+list read as no map at all, rather than as the wrong countries. The hash never reaches a server. Opening one shows that map read-only through `shownVisitsAtom`, in place of the
 reader's own, which nothing can write to until they leave it; `src/state/location.ts` watches the
 hash. The share dialog draws the link as a QR code with an encoder loaded only when it opens.
 
