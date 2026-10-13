@@ -1,6 +1,7 @@
 import { memo } from "react";
 import type { FC } from "react";
 
+import { m } from "../paraglide/messages.js";
 import { useMenuResize } from "./use-menu-resize.ts";
 
 interface Props {
@@ -26,7 +27,7 @@ export const MenuResizer: FC<Props> = memo(({ controls }) => {
 			tabIndex={0}
 			className="group flex shrink-0 cursor-row-resize touch-none select-none items-center justify-center bg-zinc-200 py-5 focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:ring-inset md:cursor-col-resize md:px-1 md:py-0 dark:bg-zinc-800"
 			aria-controls={controls}
-			aria-label="Resize the country list"
+			aria-label={m.menu_resize()}
 			aria-orientation={orientation}
 			aria-valuemax={valueMax}
 			aria-valuemin={valueMin}

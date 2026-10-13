@@ -1,6 +1,7 @@
 import { M49_REGIONS, M49_REGION_CODES, M49_SUBREGIONS } from "../core/m49.ts";
 import type { CountryData, Visits } from "../core/types.ts";
 import { ISLAND_NATIONS, LANDLOCKED, MICROSTATES } from "../data/collections.ts";
+import { m } from "../paraglide/messages.js";
 import type { Achievement, Requirement } from "./types.ts";
 
 /** The counts of countries that earn a milestone, short of every country there is. */
@@ -32,36 +33,36 @@ const middleOf = ({ bounds }: CountryData): readonly [number, number] | undefine
 
 const milestonesOf = (codes: readonly string[]): readonly Achievement[] => [
 	{
-		description: "The first country in the passport",
+		description: m.achievement_first_description(),
 		id: "milestone:1",
 		kind: "milestone",
 		requirements: [{ codes, count: 1 }],
-		title: "First stamp",
+		title: m.achievement_first_title(),
 	},
 	...MILESTONES.filter((count) => count < codes.length).map((count): Achievement => ({
-		description: `Stamps from ${String(count)} countries`,
+		description: m.achievement_count_description({ count }),
 		id: `milestone:${String(count)}`,
 		kind: "milestone",
 		requirements: [{ codes, count }],
-		title: `${String(count)} countries`,
+		title: m.achievement_count_title({ count }),
 	})),
 	{
-		description: "A stamp from every country",
+		description: m.achievement_world_description(),
 		id: "milestone:all",
 		kind: "milestone",
 		requirements: [allOf(codes)],
-		title: "The whole world",
+		title: m.achievement_world_title(),
 	},
 ];
 
 const regionsOf = (countries: readonly CountryData[]): readonly Achievement[] =>
 	M49_REGION_CODES.map((region) => ({
-		description: `Every country in ${M49_REGIONS[region]}`,
+		description: m.achievement_area_description({ area: M49_REGIONS[region]() }),
 		id: `region:${region}`,
 		kind: "region",
 		region,
 		requirements: [allOf(codesWhere(countries, (country) => country.region === region))],
-		title: M49_REGIONS[region],
+		title: M49_REGIONS[region](),
 	}));
 
 const subregionsOf = (countries: readonly CountryData[]): readonly Achievement[] =>
@@ -74,12 +75,14 @@ const subregionsOf = (countries: readonly CountryData[]): readonly Achievement[]
 				? []
 				: [
 						{
-							description: `Every country in ${M49_SUBREGIONS[subregion]}`,
+							description: m.achievement_area_description({
+								area: M49_SUBREGIONS[subregion](),
+							}),
 							id: `subregion:${subregion}`,
 							kind: "subregion",
 							region,
 							requirements: [allOf(members.map(({ iso3166 }) => iso3166))],
-							title: M49_SUBREGIONS[subregion],
+							title: M49_SUBREGIONS[subregion](),
 						},
 					];
 		});
@@ -96,28 +99,28 @@ const geographyOf = (countries: readonly CountryData[]): readonly Achievement[] 
 	const west = codesWhere(countries, (country) => (middleOf(country)?.[1] ?? 0) < 0);
 	return [
 		{
-			description: "Countries north and south of the equator",
+			description: m.achievement_equator_sides_description(),
 			id: "geography:equator-sides",
 			kind: "geography",
 			requirements: [anyOf(north), anyOf(south)],
-			title: "Both sides of the equator",
+			title: m.achievement_equator_sides_title(),
 		},
 		{
-			description: "Countries east and west of Greenwich",
+			description: m.achievement_meridian_sides_description(),
 			id: "geography:meridian-sides",
 			kind: "geography",
 			requirements: [anyOf(east), anyOf(west)],
-			title: "Both sides of the meridian",
+			title: m.achievement_meridian_sides_title(),
 		},
 		{
-			description: "Countries north, south, east and west",
+			description: m.achievement_hemispheres_description(),
 			id: "geography:hemispheres",
 			kind: "geography",
 			requirements: [anyOf(north), anyOf(south), anyOf(east), anyOf(west)],
-			title: "All four hemispheres",
+			title: m.achievement_hemispheres_title(),
 		},
 		{
-			description: "A country the equator runs through",
+			description: m.achievement_equator_description(),
 			id: "geography:equator",
 			kind: "geography",
 			requirements: [
@@ -128,10 +131,10 @@ const geographyOf = (countries: readonly CountryData[]): readonly Achievement[] 
 					),
 				),
 			],
-			title: "On the equator",
+			title: m.achievement_equator_title(),
 		},
 		{
-			description: "A country the date line runs through",
+			description: m.achievement_date_line_description(),
 			id: "geography:date-line",
 			kind: "geography",
 			requirements: [
@@ -142,32 +145,32 @@ const geographyOf = (countries: readonly CountryData[]): readonly Achievement[] 
 					),
 				),
 			],
-			title: "Across the date line",
+			title: m.achievement_date_line_title(),
 		},
 	];
 };
 
 const collectionsOf = (): readonly Achievement[] => [
 	{
-		description: "All six of Europe's microstates",
+		description: m.achievement_microstates_description(),
 		id: "collection:microstates",
 		kind: "collection",
 		requirements: [allOf(MICROSTATES)],
-		title: "Microstates",
+		title: m.achievement_microstates_title(),
 	},
 	{
-		description: `${String(COLLECTION_COUNT)} countries made of islands`,
+		description: m.achievement_islands_description({ count: COLLECTION_COUNT }),
 		id: "collection:islands",
 		kind: "collection",
 		requirements: [{ codes: ISLAND_NATIONS, count: COLLECTION_COUNT }],
-		title: "Island hopper",
+		title: m.achievement_islands_title(),
 	},
 	{
-		description: `${String(COLLECTION_COUNT)} countries without a coast`,
+		description: m.achievement_landlocked_description({ count: COLLECTION_COUNT }),
 		id: "collection:landlocked",
 		kind: "collection",
 		requirements: [{ codes: LANDLOCKED, count: COLLECTION_COUNT }],
-		title: "Landlocked",
+		title: m.achievement_landlocked_title(),
 	},
 ];
 

@@ -1,5 +1,6 @@
 {
   "$schema": "./node_modules/oxlint/configuration_schema.json",
+  "ignorePatterns": ["src/paraglide/**"],
   "plugins": ["import", "jsdoc", "jsx-a11y", "oxc", "react", "typescript", "unicorn", "vitest"],
   "categories": {
     "correctness": "error",

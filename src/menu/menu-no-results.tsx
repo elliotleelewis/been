@@ -3,6 +3,7 @@ import { memo, useCallback } from "react";
 import type { FC } from "react";
 
 import type { Country } from "../core/types.ts";
+import { m } from "../paraglide/messages.js";
 import { MenuItem } from "./menu-item.tsx";
 import { searchAtom } from "./search.ts";
 
@@ -25,11 +26,11 @@ export const MenuNoResults: FC<Props> = memo(({ query, suggestions }) => {
 
 	return (
 		<div className="min-h-0 flex-1 overflow-y-auto">
-			<p className="mx-4 mt-6 mb-2 text-center font-medium">{`No countries match “${query}”.`}</p>
+			<p className="mx-4 mt-6 mb-2 text-center font-medium">{m.menu_no_results({ query })}</p>
 			{suggestions.length === 0 ? null : (
 				<>
 					<h2 className="px-4 py-2 font-medium text-xs text-zinc-600 uppercase tracking-wide dark:text-zinc-400">
-						{"Did you mean"}
+						{m.menu_did_you_mean()}
 					</h2>
 					<ul className="divide-y divide-zinc-100 dark:divide-zinc-800">
 						{suggestions.map((country) => (
@@ -44,7 +45,7 @@ export const MenuNoResults: FC<Props> = memo(({ query, suggestions }) => {
 					className="rounded-full px-4 py-1.5 font-medium text-primary text-sm hover:bg-zinc-100 focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:outline-none dark:text-primary dark:hover:bg-zinc-800"
 					onClick={clearSearch}
 				>
-					{"Clear search"}
+					{m.menu_clear_search()}
 				</button>
 			</div>
 		</div>

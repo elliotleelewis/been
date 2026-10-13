@@ -2,6 +2,7 @@ import { useAtomValue } from "jotai";
 import { memo } from "react";
 import type { FC } from "react";
 
+import { m } from "../paraglide/messages.js";
 import { VISAS_PER_PAGE } from "./types.ts";
 import { Visa } from "./visa.tsx";
 import { visasAtom } from "./visas.ts";
@@ -22,7 +23,9 @@ export const PassportVisaPage: FC<Props> = memo(({ index }) => {
 				<li key={visa.achievement.id} className="flex items-center">
 					<Visa visa={visa} />
 					<span className="sr-only">
-						{`${visa.achievement.title} visa: ${visa.achievement.description}${visa.date === undefined ? "" : `, issued ${visa.date}`}`}
+						{visa.date === undefined
+							? m.passport_visa_undated(visa.achievement)
+							: m.passport_visa_dated({ ...visa.achievement, date: visa.date })}
 					</span>
 				</li>
 			))}

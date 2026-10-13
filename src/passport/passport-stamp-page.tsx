@@ -3,6 +3,7 @@ import { memo, useCallback } from "react";
 import type { FC } from "react";
 
 import type { Country } from "../core/types.ts";
+import { m } from "../paraglide/messages.js";
 import { PassportStampSlot } from "./passport-stamp-slot.tsx";
 import { passportStampsAtom, showCountryAtom } from "./stamps.ts";
 import { STAMPS_PER_PAGE } from "./types.ts";
@@ -29,7 +30,7 @@ export const PassportStampPage: FC<Props> = memo(({ index, onClose }) => {
 
 	return page.length === 0 ? (
 		<p className="flex size-full items-center justify-center p-8 text-center text-[#3b3a35]/70 text-sm dark:text-[#3b3a35]/70">
-			{"Tick a country, in the list or on the globe, and its stamp goes here."}
+			{m.passport_stamps_empty()}
 		</p>
 	) : (
 		<ul className="grid size-full grid-cols-2 grid-rows-3 gap-1 p-3">

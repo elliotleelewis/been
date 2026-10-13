@@ -1,5 +1,7 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 
+import { m } from "../paraglide/messages.js";
+
 /** How long the copy button says it has copied, before going back to offering to. */
 const COPIED_DURATION_MS = 2000;
 
@@ -40,7 +42,7 @@ export const useShareLink = (url: string): ShareLinkActions => {
 
 	const canShare = typeof globalThis.navigator.share === "function";
 	const share = useCallback(() => {
-		globalThis.navigator.share({ title: "My been map", url }).catch((cause: unknown) => {
+		globalThis.navigator.share({ title: m.share_native_title(), url }).catch((cause: unknown) => {
 			// Closing the share sheet without picking anything rejects too, and is no failure.
 			if (!(cause instanceof globalThis.DOMException && cause.name === "AbortError")) {
 				console.error("Failed to share the link.", cause);

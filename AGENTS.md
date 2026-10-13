@@ -131,6 +131,25 @@ date a visa is issued is the day of the tick that met its last requirement. A st
 is followed by the visa moment, the visa stuck on in a burst of confetti before it flies into the
 passport too; its guilloché line-work is generated like the stamps (`src/passport/guilloche.ts`).
 
+Text goes through [Paraglide](https://paraglidejs.com):
+
+- Each message is in `messages/en.json` and is called as a typed function, like `m.menu_retry()`,
+  from `../paraglide/messages.js`. Paraglide compiles them into `src/paraglide/`, which is not
+  committed: `pnpm install` compiles them (`prepare`), and so does every build, dev server and test
+  run (the Vite plugin in `vite.config.ts`). TypeScript reads the compiled JavaScript's types, which
+  is why `allowJs` is on, so a message that does not exist, or a missing input, fails the build.
+- Name keys by where they are shown, in `snake_case`: `menu_…`, `globe_…`, `share_…`, `passport_…`,
+  `achievement_…`, and `m49_…` for the M49 areas, which `src/core/m49.ts` maps codes onto.
+- Counts use plural variants (see `share_summary`) and shares are formatted with `: number` (see
+  `menu_progress`), rather than choosing words or formatting in code.
+- All of the app's text is in messages, except its name, and the lettering printed on the passport
+  itself: "PASSPORT", "VISA", stamp captions, a visa's fields and the machine-readable lines, which
+  read as part of the object, as a real passport's do. Countries are named by `Intl.DisplayNames`.
+- English is the only language. Adding one means a `messages/{locale}.json` and the locale in
+  `project.inlang/settings.json`; the strategy, in both `vite.config.ts` and the `prepare` script,
+  already picks the reader's preferred language. The page's `lang` follows the locale
+  (`src/index.tsx`); its `dir` is left to the default until there is a right-to-left language.
+
 react-aria supplies behaviour that is hard to get right by hand, such as the drawer's handle and
 the toast region, which pauses its timer while focused and is reachable with F6. Elements a native
 tag already makes accessible, such as checkboxes and disclosure buttons, stay native.
@@ -148,7 +167,7 @@ It holds codes, not names: each country's ISO 3166-1 alpha-2 code, its UN M49 re
 specific M49 group inside it (the intermediate region where there is one, otherwise the
 sub-region), which is what the menu groups by. Countries are named and sorted in the reader's
 language at run time with `Intl.DisplayNames` and `Intl.Collator`; browsers do not reliably name
-M49 areas, so their English names live in `src/core/m49.ts`.
+M49 areas, so their names are messages, which `src/core/m49.ts` maps each code onto.
 
 Both come from `pnpm run generate:countries`. The country list is the script's
 input as well as its output: a country the atlas cannot draw fails the run

@@ -7,6 +7,11 @@
 /tmp
 /out-tsc
 /src/node_modules
+# Compiled from messages/ by Paraglide.
+/src/paraglide/
+# Paraglide's cache and bookkeeping. Only the settings are source.
+/project.inlang/*
+!/project.inlang/settings.json
 # Only exists if Bazel was run
 /bazel-out
 

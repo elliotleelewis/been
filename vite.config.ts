@@ -1,3 +1,4 @@
+import { paraglideVitePlugin } from "@inlang/paraglide-js";
 import tailwindcss from "@tailwindcss/vite";
 import react from "@vitejs/plugin-react";
 import { playwright } from "@vitest/browser-playwright";
@@ -14,7 +15,18 @@ export default defineConfig(({ command }) => ({
 	optimizeDeps: {
 		exclude: ["chromium-bidi", "fsevents"],
 	},
-	plugins: [react({ compiler: true }), tailwindcss()],
+	plugins: [
+		// Compiles messages/ into typed functions in src/paraglide/. English is the only language so
+		// far. Keep the strategy in step with `prepare` in package.json.
+		// Vite's root is src/, so both paths are anchored to this file rather than left relative.
+		paraglideVitePlugin({
+			outdir: `${import.meta.dirname}/src/paraglide`,
+			project: `${import.meta.dirname}/project.inlang`,
+			strategy: ["preferredLanguage", "baseLocale"],
+		}),
+		react({ compiler: true }),
+		tailwindcss(),
+	],
 	root: "./src",
 	test: {
 		browser: {
