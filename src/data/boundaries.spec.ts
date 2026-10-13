@@ -1,8 +1,8 @@
 import type { Position } from "geojson";
 import { describe, expect, it } from "vitest";
 
-import { boundsOf, continuousPolygon } from "./boundaries";
-import type { Bounds, CountryBoundary } from "./boundaries";
+import { boundsOf, continuousPolygon } from "./boundaries.ts";
+import type { Bounds, CountryBoundary } from "./boundaries.ts";
 
 /** A closed ring around a box, given as west, south, east, north. */
 const box = ([west, south, east, north]: Bounds): Position[][] => [
