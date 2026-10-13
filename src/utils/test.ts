@@ -90,3 +90,17 @@ export const stubBasemap = (): void => {
 		return response;
 	});
 };
+
+/** The day `freezeToday` makes it, as a visit ticked on it is dated. */
+// oxlint-disable-next-line no-export -- This is a test utility file.
+export const TODAY = "2026-10-13";
+
+/**
+ * Makes it `TODAY` for the rest of a test, so a tick's date can be asserted exactly. Only `Date` is
+ * faked, so timers carry on as they would; `vi.useRealTimers()` undoes it.
+ */
+// oxlint-disable-next-line no-export -- This is a test utility file.
+export const freezeToday = (): void => {
+	vi.useFakeTimers({ toFake: ["Date"] });
+	vi.setSystemTime(new Date(`${TODAY}T12:00:00`));
+};

@@ -29,7 +29,7 @@ export const ShareButton: FC = memo(() => {
 				{...buttonProps}
 				type="button"
 				ref={ref}
-				className="absolute end-2 rounded-full p-2 hover:bg-white/15 focus-visible:ring-2 focus-visible:ring-white/70 focus-visible:outline-none dark:hover:bg-zinc-800 dark:focus-visible:ring-primary/50"
+				className="rounded-full p-2 hover:bg-white/15 focus-visible:ring-2 focus-visible:ring-white/70 focus-visible:outline-none dark:hover:bg-zinc-800 dark:focus-visible:ring-primary/50"
 				aria-label="Share your map"
 			>
 				<svg

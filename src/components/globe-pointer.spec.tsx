@@ -9,7 +9,7 @@ import type { Country } from "../models/country";
 import { MapLayerKeys } from "../models/enums";
 import { focusAtom, visitsAtom } from "../state/atoms";
 import { rawCountriesAtom } from "../state/dataset";
-import { assertDefined, mockMediaQueryList, stubBasemap } from "../utils/test";
+import { TODAY, assertDefined, freezeToday, mockMediaQueryList, stubBasemap } from "../utils/test";
 import { Globe } from "./globe";
 
 const unitedKingdom: Country = {
@@ -76,18 +76,20 @@ describe("globe pointer", () => {
 	});
 
 	afterEach(() => {
+		vi.useRealTimers();
 		globalThis.localStorage.clear();
 	});
 
 	it("should tick a country when it is clicked, and leave the camera where it is", async () => {
 		expect.hasAssertions();
+		freezeToday();
 
 		const store = createStore();
 		const { map } = await renderGlobe(store);
 
 		pointAt(map, "click", ENGLAND);
 
-		expect(store.get(visitsAtom)).toStrictEqual({ GB: {} });
+		expect(store.get(visitsAtom)).toStrictEqual({ GB: { at: TODAY } });
 		expect(store.get(focusAtom)).toBeNull();
 	}, 30_000);
 

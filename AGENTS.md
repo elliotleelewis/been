@@ -51,11 +51,14 @@ localStorage ──▶ visitsAtom ─────┐                      │   
                                  ├─▶ shownVisitsAtom ───┤         └───────────────────────────▶ Globe
 share link ──▶ sharedVisitsAtom ─┘                      │
                                                         └─▶ selectedCountriesAtom ────────────▶ Globe
-world atlas ──▶ data/boundaries.ts ──▶ useCountryBoundaries ──────────────────────────────────▶ Globe
+world atlas ──▶ data/boundaries.ts ──▶ boundariesAtom ──────────────────────────────▶ Globe, Passport
+rawCountriesAtom ──▶ achievementsAtom ─┬─▶ visasAtom (with shownVisitsAtom) ─────────────▶ Passport
+                                       └─▶ announceStampAtom (each new tick) ───────────▶ visa moment
 ```
 
 The selection is stored as an object keyed by ISO 3166-1 alpha-2 code, one visit per country, so
-details can be added to a visit later. Stored state is validated when it is read, and anything not
+details can be added to a visit later; so far a visit holds the day it was ticked, if it was ticked
+since dates were kept. Stored state is validated when it is read, and anything not
 in today's shape is cleared rather than migrated.
 
 The menu folds countries into their M49 regions as collapsible continents, with each sub-region a
@@ -83,7 +86,8 @@ the drawer and the globe are sized by.
 Selecting a country also asks the camera to frame it, via `focusAtom`;
 unselecting the country the camera is framing puts it back where it was. That
 undo is deliberately one-shot and is dropped the moment the user moves the map
-themselves.
+themselves. Left alone at world view, the globe turns slowly west to east
+(`src/hooks/use-idle-spin.ts`) until anyone touches it; never under reduced motion.
 
 Countries can also be ticked by tapping them on the globe. Every country is drawn on an invisible
 layer the map tests the pointer against; a tap goes through `src/state/taps.ts`, which leaves the
@@ -96,6 +100,28 @@ dataset rather than a list of its own, and the fingerprint makes a link written 
 list read as no map at all, rather than as the wrong countries. The hash never reaches a server. Opening one shows that map read-only through `shownVisitsAtom`, in place of the
 reader's own, which nothing can write to until they leave it; `src/state/location.ts` watches the
 hash. The share dialog draws the link as a QR code with an encoder loaded only when it opens.
+
+The passport is a dialog of pages: a cover, an identity page summing the map up, then its stamps,
+in the order they went in, six to a page (`src/state/passport.ts`). Each stamp is generated, not
+drawn: its shape, slant and wording are picked from its country's code by a stable hash, its ink
+from its M49 region (`src/utils/stamp.ts`), and the outline in its middle is the country's home
+landmass, projected out of the same boundaries the globe draws (`src/utils/silhouette.ts`). The
+passport and its pages are paper and board, the same in either colour scheme. Ticking a country
+from the list, the search box or the globe plays its stamp moment (`src/state/stamping.ts`): the
+stamp comes down in the middle of the screen and flies into the passport button, unless the reader
+has asked for less motion. Anything that ticks a country for the reader goes through there, so
+undoing, loading and shared maps never stamp. A country being stamped fills in on a fresh layer of
+its own, because MapLibre can fade a paint property but not a filter; the been layer takes it back
+once the moment ends, by when the two look the same.
+
+Achievements are visas in the same passport, between the identity page and the stamps
+(`src/state/passport-pages.ts`). Each is a list of requirements, at least so many of a set of
+codes, built from the dataset in `src/utils/achievements.ts`: milestones, every continent and
+sub-region, hemispheres read off each country's bounds, and a few hand-kept collections in
+`src/data/collections.ts`. Being earned is only ever derived from the visits, never stored, and the
+date a visa is issued is the day of the tick that met its last requirement. A stamp that earns any
+is followed by the visa moment, the visa stuck on in a burst of confetti before it flies into the
+passport too; its guilloché line-work is generated like the stamps (`src/utils/guilloche.ts`).
 
 react-aria supplies behaviour that is hard to get right by hand, such as the drawer's handle and
 the toast region, which pauses its timer while focused and is reachable with F6. Elements a native

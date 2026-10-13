@@ -4,7 +4,7 @@ import { atomWithStorage } from "jotai/utils";
 import type { Country, Visits } from "../models/country.ts";
 import type { Focus } from "../models/focus.ts";
 import { regionalizer } from "../utils/regionalizer.ts";
-import { isVisits, withoutVisit } from "../utils/visits.ts";
+import { isVisits, visitOn, withoutVisit } from "../utils/visits.ts";
 import { rawCountriesAtom } from "./dataset.ts";
 import { sharedVisitsAtom, viewingSharedMapAtom } from "./location.ts";
 import { homeRegionAtom } from "./regions.ts";
@@ -59,7 +59,7 @@ export const addCountryAtom = atom(undefined, (get, set, countryCode: string) =>
 		const countries = get(countriesAtom);
 		const focusCountry = countries.find((country) => country.iso3166 === countryCode);
 		set(focusAtom, focusCountry ? { country: focusCountry, type: "country" } : null);
-		set(visitsAtom, { ...visits, [countryCode]: {} });
+		set(visitsAtom, { ...visits, [countryCode]: visitOn(new Date()) });
 	}
 });
 export const removeCountryAtom = atom(undefined, (get, set, countryCode: string) => {

@@ -2,6 +2,7 @@ import { createStore } from "jotai";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 import type { Country } from "../models/country";
+import { TODAY, freezeToday } from "../utils/test";
 import {
 	addCountryAtom,
 	countriesAtom,
@@ -39,6 +40,7 @@ describe("atoms", () => {
 		globalThis.localStorage.clear();
 	});
 	afterEach(() => {
+		vi.useRealTimers();
 		globalThis.localStorage.clear();
 	});
 
@@ -93,6 +95,7 @@ describe("atoms", () => {
 
 	it("should store a visit for each selected country", () => {
 		expect.hasAssertions();
+		freezeToday();
 
 		const store = createTestStore();
 
@@ -100,9 +103,9 @@ describe("atoms", () => {
 		store.set(addCountryAtom, unitedKingdom.iso3166);
 		store.set(removeCountryAtom, france.iso3166);
 
-		expect(store.get(visitsAtom)).toStrictEqual({ [unitedKingdom.iso3166]: {} });
+		expect(store.get(visitsAtom)).toStrictEqual({ [unitedKingdom.iso3166]: { at: TODAY } });
 		expect(globalThis.localStorage.getItem("APP_COUNTRIES")).toBe(
-			JSON.stringify({ [unitedKingdom.iso3166]: {} }),
+			JSON.stringify({ [unitedKingdom.iso3166]: { at: TODAY } }),
 		);
 	}, 5000);
 

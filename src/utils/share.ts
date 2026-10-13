@@ -1,5 +1,6 @@
 import type { Visits } from "../models/country";
 import { SHARE_PARAM, SHARE_VERSION } from "../models/share";
+import { hashOf } from "./hash";
 
 const BITS_PER_BYTE = 8;
 
@@ -9,24 +10,15 @@ const byteLengthOf = (codes: readonly string[]): number => Math.ceil(codes.lengt
 /** The value of a byte's bit at `offset`, counting from its most significant end. */
 const bitAt = (offset: number): number => 2 ** (BITS_PER_BYTE - 1 - offset);
 
-/** Keeps the fingerprint's running hash well inside the integers a number holds exactly. */
-const FINGERPRINT_MODULUS = 1_679_609;
 const FINGERPRINT_RADIX = 36;
-const FINGERPRINT_MULTIPLIER = 31;
 
 /**
  * A short fingerprint of the list of codes a link marks countries against. A link marks a country
  * by its place in that list, so one written against any other list, after a country is added or
  * removed, would otherwise read as a map of the wrong countries; with this, it reads as no map.
  */
-export const fingerprintOf = (codes: readonly string[]): string => {
-	const text = codes.join(",");
-	let hash = 0;
-	for (let index = 0; index < text.length; index += 1) {
-		hash = (hash * FINGERPRINT_MULTIPLIER + (text.codePointAt(index) ?? 0)) % FINGERPRINT_MODULUS;
-	}
-	return hash.toString(FINGERPRINT_RADIX);
-};
+export const fingerprintOf = (codes: readonly string[]): string =>
+	hashOf(codes.join(",")).toString(FINGERPRINT_RADIX);
 
 /** Bytes as URL-safe base64, without padding, so they can sit in a link as they are. */
 const toBase64Url = (bytes: Uint8Array): string =>

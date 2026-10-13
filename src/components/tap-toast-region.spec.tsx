@@ -6,6 +6,7 @@ import type { Country } from "../models/country";
 import { visitsAtom } from "../state/atoms";
 import { rawCountriesAtom } from "../state/dataset";
 import { lastTapAtom, tapCountryAtom } from "../state/taps";
+import { TODAY, freezeToday } from "../utils/test";
 import { TapToastRegion } from "./tap-toast-region";
 
 const unitedKingdom: Country = {
@@ -79,6 +80,7 @@ describe("tap toast region", () => {
 
 	it("should close without undoing when dismissed", () => {
 		expect.hasAssertions();
+		freezeToday();
 
 		const rendered = renderRegion();
 		tap(rendered);
@@ -86,7 +88,7 @@ describe("tap toast region", () => {
 			rendered.result.getByRole("button", { name: "Close" }).click();
 		});
 
-		expect(rendered.store.get(visitsAtom)).toStrictEqual({ GB: {} });
+		expect(rendered.store.get(visitsAtom)).toStrictEqual({ GB: { at: TODAY } });
 		expect(rendered.store.get(lastTapAtom)).toBeNull();
 		expect(rendered.result.queryByRole("alertdialog")).toBeNull();
 	}, 5000);

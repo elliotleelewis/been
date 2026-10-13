@@ -14,30 +14,73 @@ exports[`app > should render 1`] = `
       >
         been
       </h1>
-      <button
-        aria-expanded="false"
-        aria-label="Share your map"
-        class="absolute end-2 rounded-full p-2 hover:bg-white/15 focus-visible:ring-2 focus-visible:ring-white/70 focus-visible:outline-none dark:hover:bg-zinc-800 dark:focus-visible:ring-primary/50"
-        data-react-aria-pressable="true"
-        tabindex="0"
-        type="button"
+      <div
+        class="absolute end-2 flex items-center gap-1"
       >
-        <svg
-          aria-hidden="true"
-          class="size-5"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="2"
-          viewBox="0 0 24 24"
-          xmlns="http://www.w3.org/2000/svg"
+        <span
+          class="inline-flex"
         >
-          <path
-            d="M12 3v12m0-12 4 4m-4-4-4 4M5 13v6a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-6"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          />
-        </svg>
-      </button>
+          <button
+            aria-expanded="false"
+            aria-label="Open your passport"
+            class="rounded-full p-2 hover:bg-white/15 focus-visible:ring-2 focus-visible:ring-white/70 focus-visible:outline-none dark:hover:bg-zinc-800 dark:focus-visible:ring-primary/50"
+            data-react-aria-pressable="true"
+            tabindex="0"
+            type="button"
+          >
+            <svg
+              aria-hidden="true"
+              class="size-5"
+              fill="none"
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              viewBox="0 0 24 24"
+            >
+              <rect
+                height="18"
+                rx="2"
+                width="14"
+                x="5"
+                y="3"
+              />
+              <circle
+                cx="12"
+                cy="10"
+                r="3"
+              />
+              <path
+                d="M9 16h6"
+              />
+            </svg>
+          </button>
+        </span>
+        <button
+          aria-expanded="false"
+          aria-label="Share your map"
+          class="rounded-full p-2 hover:bg-white/15 focus-visible:ring-2 focus-visible:ring-white/70 focus-visible:outline-none dark:hover:bg-zinc-800 dark:focus-visible:ring-primary/50"
+          data-react-aria-pressable="true"
+          tabindex="0"
+          type="button"
+        >
+          <svg
+            aria-hidden="true"
+            class="size-5"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M12 3v12m0-12 4 4m-4-4-4 4M5 13v6a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-6"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          </svg>
+        </button>
+      </div>
     </div>
     <div
       class="z-10 row-start-3 flex min-h-0 flex-col-reverse overflow-hidden md:col-start-1 md:row-start-2 md:flex-row dark:bg-zinc-900 dark:text-white"
@@ -52,17 +95,17 @@ exports[`app > should render 1`] = `
           <form>
             <label
               class="sr-only"
-              for="_r_2_"
-              id="_r_3_"
+              for="_r_3_"
+              id="_r_4_"
             >
               Search
             </label>
             <input
-              aria-labelledby="_r_3_"
+              aria-labelledby="_r_4_"
               class="w-full border-none bg-white px-4 py-2 text-zinc-900 focus:ring-2 focus:ring-primary/50 focus:ring-inset disabled:hover:cursor-not-allowed dark:bg-zinc-900 dark:text-white"
               disabled=""
               enterkeyhint="done"
-              id="_r_2_"
+              id="_r_3_"
               placeholder="Search by name or code..."
               type="search"
               value=""
