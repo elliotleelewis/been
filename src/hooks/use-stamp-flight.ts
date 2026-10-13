@@ -3,7 +3,7 @@ import type { RefObject } from "react";
 
 /** How long the stamp takes to come down onto the page, in milliseconds. */
 const THUD_MS = 420;
-/** How long it sits there before it goes, so it can be read. */
+/** How long it sits there before it goes, so it can be read, unless told otherwise. */
 const HOLD_MS = 650;
 /** How long it takes to fly into the passport. */
 const FLIGHT_MS = 520;
@@ -45,14 +45,20 @@ const PULSE_FRAMES: Keyframe[] = [
 	{ transform: "scale(1)" },
 ];
 
+/** Where a moment's stamp flies to, `across` and `down`, and how long it sits before it goes. */
+interface Path {
+	readonly travel: readonly [number, number];
+	readonly hold: number;
+}
+
 /**
- * Animates a stamp coming down with a thud, sitting to be read, then flying `across` and `down`
- * into the passport, calling `onLanded` once it is in. It hands back the animations it starts, so
- * the next moment can cut them short.
+ * Animates a stamp coming down with a thud, sitting to be read, then flying into the passport,
+ * calling `onLanded` once it is in. It hands back the animations it starts, so the next moment can
+ * cut them short.
  */
 const playStampMoment = (
 	element: HTMLElement,
-	[across, down]: readonly [number, number],
+	{ hold, travel: [across, down] }: Path,
 	onLanded: () => void,
 ): readonly Animation[] => {
 	const thud = element.animate(THUD_FRAMES, {
@@ -66,7 +72,7 @@ const playStampMoment = (
 			{ opacity: 0.2, transform: `translate(${String(across)}px, ${String(down)}px) scale(0.12)` },
 		],
 		{
-			delay: THUD_MS + HOLD_MS,
+			delay: THUD_MS + hold,
 			duration: FLIGHT_MS,
 			easing: "cubic-bezier(0.55, 0, 0.75, 0.2)",
 			fill: "forwards",
@@ -86,6 +92,8 @@ export interface StampFlight {
 	/** The moment playing, if one is; each new one starts it again. */
 	readonly id: number | undefined;
 	readonly onDone: (id: number) => void;
+	/** How long it sits to be read before it flies, in milliseconds, if not a stamp's usual time. */
+	readonly hold?: number;
 }
 
 /**
@@ -94,7 +102,13 @@ export interface StampFlight {
  * still playing. A reader who has asked for less motion gets none of it: the moment ends as soon
  * as it starts.
  */
-export const useStampFlight = ({ id, onDone, stamp, target }: StampFlight): void => {
+export const useStampFlight = ({
+	hold = HOLD_MS,
+	id,
+	onDone,
+	stamp,
+	target,
+}: StampFlight): void => {
 	useEffect(() => {
 		const element = stamp.current;
 		let animations: readonly Animation[] = [];
@@ -107,7 +121,13 @@ export const useStampFlight = ({ id, onDone, stamp, target }: StampFlight): void
 				? []
 				: playStampMoment(
 						element,
-						travelBetween(element.getBoundingClientRect(), target.current?.getBoundingClientRect()),
+						{
+							hold,
+							travel: travelBetween(
+								element.getBoundingClientRect(),
+								target.current?.getBoundingClientRect(),
+							),
+						},
 						landed,
 					);
 			if (animations.length === 0) {
@@ -119,5 +139,5 @@ export const useStampFlight = ({ id, onDone, stamp, target }: StampFlight): void
 				animation.cancel();
 			}
 		};
-	}, [id, onDone, stamp, target]);
+	}, [hold, id, onDone, stamp, target]);
 };

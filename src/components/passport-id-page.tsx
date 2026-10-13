@@ -3,7 +3,7 @@ import { memo, useMemo } from "react";
 import type { FC } from "react";
 
 import { localesAtom } from "../state/atoms";
-import { passportStatsAtom } from "../state/passport";
+import { passportStatsAtom } from "../state/passport-pages";
 import { mrzOf } from "../utils/passport";
 import { PassportCrest } from "./passport-crest";
 
@@ -25,6 +25,7 @@ export const PassportIdPage: FC = memo(() => {
 		["Countries", `${String(stats.count)} of ${String(stats.total)}`],
 		["Of the world", share],
 		["Regions", `${String(stats.regions)} of 5`],
+		["Visas", `${String(stats.visas)} of ${String(stats.visaTotal)}`],
 		["Home region", stats.home ?? "—"],
 		["First stamp", stats.first ?? "—"],
 		["Latest stamp", stats.latest ?? "—"],

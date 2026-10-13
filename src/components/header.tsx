@@ -4,6 +4,7 @@ import type { FC } from "react";
 import { PassportButton } from "./passport-button";
 import { ShareButton } from "./share-button";
 import { StampMoment } from "./stamp-moment";
+import { VisaMoment } from "./visa-moment";
 
 /** The title bar: the app's name, with the passport and sharing at its end. */
 export const Header: FC = memo(() => {
@@ -20,6 +21,7 @@ export const Header: FC = memo(() => {
 				<ShareButton />
 			</div>
 			<StampMoment target={passportRef} />
+			<VisaMoment target={passportRef} />
 		</div>
 	);
 });

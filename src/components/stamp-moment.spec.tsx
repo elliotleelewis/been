@@ -41,13 +41,14 @@ describe("stamp moment", () => {
 
 		expect(globalThis.document.querySelector("[aria-hidden='true'] svg")).not.toBeNull();
 
-		await vi.waitFor(
-			() => {
-				expect(store.get(stampMomentAtom)).toBeNull();
-			},
-			{ timeout: 4000 },
-		);
-	}, 10_000);
+		// Played out to the end at once, rather than waited for, as a busy browser runs them slow.
+		for (const animation of globalThis.document.getAnimations()) {
+			animation.finish();
+		}
+		await vi.waitFor(() => {
+			expect(store.get(stampMomentAtom)).toBeNull();
+		});
+	}, 5000);
 
 	it("should skip the moment for someone who has asked for less motion", () => {
 		expect.hasAssertions();

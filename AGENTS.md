@@ -52,6 +52,8 @@ localStorage ──▶ visitsAtom ─────┐                      │   
 share link ──▶ sharedVisitsAtom ─┘                      │
                                                         └─▶ selectedCountriesAtom ────────────▶ Globe
 world atlas ──▶ data/boundaries.ts ──▶ boundariesAtom ──────────────────────────────▶ Globe, Passport
+rawCountriesAtom ──▶ achievementsAtom ─┬─▶ visasAtom (with shownVisitsAtom) ─────────────▶ Passport
+                                       └─▶ announceStampAtom (each new tick) ───────────▶ visa moment
 ```
 
 The selection is stored as an object keyed by ISO 3166-1 alpha-2 code, one visit per country, so
@@ -111,6 +113,15 @@ has asked for less motion. Anything that ticks a country for the reader goes thr
 undoing, loading and shared maps never stamp. A country being stamped fills in on a fresh layer of
 its own, because MapLibre can fade a paint property but not a filter; the been layer takes it back
 once the moment ends, by when the two look the same.
+
+Achievements are visas in the same passport, between the identity page and the stamps
+(`src/state/passport-pages.ts`). Each is a list of requirements, at least so many of a set of
+codes, built from the dataset in `src/utils/achievements.ts`: milestones, every continent and
+sub-region, hemispheres read off each country's bounds, and a few hand-kept collections in
+`src/data/collections.ts`. Being earned is only ever derived from the visits, never stored, and the
+date a visa is issued is the day of the tick that met its last requirement. A stamp that earns any
+is followed by the visa moment, the visa stuck on in a burst of confetti before it flies into the
+passport too; its guilloché line-work is generated like the stamps (`src/utils/guilloche.ts`).
 
 react-aria supplies behaviour that is hard to get right by hand, such as the drawer's handle and
 the toast region, which pauses its timer while focused and is reachable with F6. Elements a native

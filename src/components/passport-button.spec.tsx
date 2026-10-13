@@ -38,6 +38,13 @@ const openToIdentityPage = ({ result }: Rendered): HTMLElement => {
 	return result.getByRole("dialog", { name: "Passport" });
 };
 
+/** Turns the open passport's pages forward with the arrow key, `times` over. */
+const turnForward = (dialog: HTMLElement, times: number): void => {
+	for (let turn = 0; turn < times; turn += 1) {
+		fireEvent.keyDown(dialog, { key: "ArrowRight" });
+	}
+};
+
 describe("passport button", () => {
 	// Auto-cleanup is not registered as the suite does not run with `globals`.
 	afterEach(() => {
@@ -56,12 +63,29 @@ describe("passport button", () => {
 		expect(dialog).toHaveTextContent("Identity");
 	}, 5000);
 
+	it("should turn to the visas the map has earned, and say what each is for", () => {
+		expect.hasAssertions();
+
+		const rendered = renderButton();
+		const dialog = openToIdentityPage(rendered);
+		turnForward(dialog, 1);
+
+		expect(dialog).toHaveTextContent("Visas 1 of 2");
+		expect(dialog).toHaveTextContent(
+			"First stamp visa: The first country in the passport, issued 13 OCT 2026",
+		);
+		expect(
+			rendered.result.container.ownerDocument.querySelector("svg[viewBox='0 0 300 190']"),
+		).toMatchSnapshot();
+	}, 5000);
+
 	it("should turn to the stamps with the arrow keys, and show a stamp's country", () => {
 		expect.hasAssertions();
 
 		const rendered = renderButton();
 		const dialog = openToIdentityPage(rendered);
-		fireEvent.keyDown(dialog, { key: "ArrowRight" });
+		// The cover and identity page are followed by two pages of visas, for France's three.
+		turnForward(dialog, 3);
 		const stamp = rendered.result.getByRole("button", {
 			name: "France, 13 OCT 2026. Show on the globe",
 		});

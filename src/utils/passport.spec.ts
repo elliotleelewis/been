@@ -10,6 +10,8 @@ const STATS: PassportStats = {
 	latest: "13 OCT 2026",
 	regions: 4,
 	total: 195,
+	visaTotal: 42,
+	visas: 3,
 };
 
 describe("passport", () => {

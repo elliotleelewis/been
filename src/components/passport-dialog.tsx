@@ -5,7 +5,7 @@ import { useDialog, useKeyboard } from "react-aria";
 import type { KeyboardEvents, OverlayTriggerAria } from "react-aria";
 import type { OverlayTriggerState } from "react-stately";
 
-import { passportPageAtom, turnPassportPageAtom } from "../state/passport";
+import { passportPageAtom, turnPassportPageAtom } from "../state/passport-pages";
 import { Modal } from "./modal";
 import { PassportBook } from "./passport-book";
 import { PassportControls } from "./passport-controls";

@@ -5,14 +5,14 @@ import type { CountryData } from "../models/country";
 import { assertDefined } from "../utils/test";
 import { focusAtom, localesAtom, visitsAtom } from "./atoms";
 import { rawCountriesAtom } from "./dataset";
+import { passportStampsAtom, showCountryAtom } from "./passport";
 import {
 	passportPageAtom,
 	passportPageCountAtom,
-	passportStampsAtom,
+	passportPagesAtom,
 	passportStatsAtom,
-	showCountryAtom,
 	turnPassportPageAtom,
-} from "./passport";
+} from "./passport-pages";
 import { homeRegionAtom } from "./regions";
 
 const COUNTRIES: readonly CountryData[] = [
@@ -59,6 +59,8 @@ describe("passport state", () => {
 			latest: "13 OCT 2026",
 			regions: 2,
 			total: 4,
+			visaTotal: 9,
+			visas: 6,
 		});
 	}, 5000);
 
@@ -71,8 +73,23 @@ describe("passport state", () => {
 		store.set(turnPassportPageAtom, 10);
 
 		expect(atFront).toBe(0);
-		expect(store.get(passportPageCountAtom)).toBe(3);
-		expect(store.get(passportPageAtom)).toBe(2);
+		expect(store.get(passportPageCountAtom)).toBe(6);
+		expect(store.get(passportPageAtom)).toBe(5);
+	}, 5000);
+
+	it("should put a page of visas for every two earned before the stamps", () => {
+		expect.hasAssertions();
+
+		const pages = createTestStore().get(passportPagesAtom);
+
+		expect(pages.map(({ kind }) => kind)).toStrictEqual([
+			"cover",
+			"identity",
+			"visas",
+			"visas",
+			"visas",
+			"stamps",
+		]);
 	}, 5000);
 
 	it("should frame a stamp's country on the globe", () => {
