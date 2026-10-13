@@ -17,20 +17,53 @@
     "window": "readonly"
   },
   "rules": {
-    "eslint/capitalized-comments": ["error", "always", { "ignoreConsecutiveComments": true }],
+    "eslint/capitalized-comments": [
+      "error",
+      "always",
+      {
+        "ignoreConsecutiveComments": true
+      }
+    ],
     "eslint/max-lines-per-function": "off",
-    "eslint/no-console": ["error", { "allow": ["warn", "error"] }],
-    "eslint/no-duplicate-imports": ["error", { "allowSeparateTypeImports": true }],
+    "eslint/no-console": [
+      "error",
+      {
+        "allow": ["warn", "error"]
+      }
+    ],
+    "eslint/no-duplicate-imports": [
+      "error",
+      {
+        "allowSeparateTypeImports": true
+      }
+    ],
     "eslint/no-magic-numbers": "off",
     "eslint/no-ternary": "off",
     "eslint/no-undefined": "off",
     "eslint/one-var": ["error", "never"],
-    "eslint/sort-imports": ["error", { "ignoreDeclarationSort": true }],
+    "eslint/sort-imports": [
+      "error",
+      {
+        "ignoreDeclarationSort": true
+      }
+    ],
     "import/exports-last": "off",
+    "import/extensions": [
+      "error",
+      "always",
+      {
+        "ignorePackages": true
+      }
+    ],
     "import/group-exports": "off",
     "import/no-named-export": "off",
     "import/no-relative-parent-imports": "off",
-    "import/no-unassigned-import": ["error", { "allow": ["**/*.css", "**/jest-dom/vitest"] }],
+    "import/no-unassigned-import": [
+      "error",
+      {
+        "allow": ["**/*.css", "**/jest-dom/vitest"]
+      }
+    ],
     "import/prefer-default-export": "off",
     "jsdoc/require-param": "off",
     "jsdoc/require-returns": "off",
@@ -39,18 +72,46 @@
     "oxc/no-rest-spread-properties": "off",
     "react/function-component-definition": [
       "error",
-      { "namedComponents": "arrow-function", "unnamedComponents": "arrow-function" }
+      {
+        "namedComponents": "arrow-function",
+        "unnamedComponents": "arrow-function"
+      }
     ],
     "react/jsx-curly-brace-presence": "off",
-    "react/jsx-filename-extension": ["error", { "extensions": [".tsx"] }],
-    "react/jsx-max-depth": ["error", { "max": 4 }],
+    "react/jsx-filename-extension": [
+      "error",
+      {
+        "extensions": [".tsx"]
+      }
+    ],
+    "react/jsx-max-depth": [
+      "error",
+      {
+        "max": 4
+      }
+    ],
     "react/react-in-jsx-scope": "off",
     "typescript/dot-notation": "off",
     "typescript/prefer-readonly-parameter-types": "warn",
-    "unicorn/catch-error-name": ["error", { "ignore": ["cause"] }],
+    "unicorn/catch-error-name": [
+      "error",
+      {
+        "ignore": ["cause"]
+      }
+    ],
     "unicorn/no-null": "off",
-    "vitest/consistent-test-filename": ["error", { "pattern": ".*\\.spec\\.[tj]sx?$" }],
-    "vitest/no-hooks": ["error", { "allow": ["beforeEach", "afterEach"] }],
+    "vitest/consistent-test-filename": [
+      "error",
+      {
+        "pattern": ".*\\.spec\\.[tj]sx?$"
+      }
+    ],
+    "vitest/no-hooks": [
+      "error",
+      {
+        "allow": ["beforeEach", "afterEach"]
+      }
+    ],
     "vitest/no-importing-vitest-globals": "off",
     "vitest/prefer-called-times": "off",
     "vitest/prefer-describe-function-title": "off",
@@ -80,6 +141,86 @@
       "files": ["src/__e2e-test__/**"],
       "rules": {
         "vitest/prefer-importing-vitest-globals": "off"
+      }
+    },
+    {
+      "files": ["src/core/**", "src/data/**"],
+      "rules": {
+        "no-restricted-imports": [
+          "error",
+          {
+            "patterns": [
+              {
+                "group": ["../app/*", "../globe/*", "../menu/*", "../passport/*", "../share/*"],
+                "message": "Core is what every feature reads, so it imports none of them."
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "files": ["src/globe/**"],
+      "rules": {
+        "no-restricted-imports": [
+          "error",
+          {
+            "patterns": [
+              {
+                "group": ["../app/*", "../menu/*", "../passport/*", "../share/*"],
+                "message": "A feature imports only core and data; anything two features share belongs in core."
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "files": ["src/menu/**"],
+      "rules": {
+        "no-restricted-imports": [
+          "error",
+          {
+            "patterns": [
+              {
+                "group": ["../app/*", "../globe/*", "../passport/*", "../share/*"],
+                "message": "A feature imports only core and data; anything two features share belongs in core."
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "files": ["src/passport/**"],
+      "rules": {
+        "no-restricted-imports": [
+          "error",
+          {
+            "patterns": [
+              {
+                "group": ["../app/*", "../globe/*", "../menu/*", "../share/*"],
+                "message": "A feature imports only core and data; anything two features share belongs in core."
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "files": ["src/share/**"],
+      "rules": {
+        "no-restricted-imports": [
+          "error",
+          {
+            "patterns": [
+              {
+                "group": ["../app/*", "../globe/*", "../menu/*", "../passport/*"],
+                "message": "A feature imports only core and data; anything two features share belongs in core."
+              }
+            ]
+          }
+        ]
       }
     }
   ]
