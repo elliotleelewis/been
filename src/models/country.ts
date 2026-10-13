@@ -15,9 +15,16 @@ export interface Country extends CountryData {
 }
 
 /**
- * What is kept about a country the reader has been to, keyed by its ISO 3166-1 alpha-2 code. A
- * visit has no details yet; it is an object so that details of the trip can be added later without
- * changing how selections are stored.
+ * What is kept about a country the reader has been to, keyed by its ISO 3166-1 alpha-2 code. It is
+ * an object so that details of the trip can be added later without changing how selections are
+ * stored.
  */
-export type Visit = Readonly<Record<string, never>>;
+export interface Visit {
+	/**
+	 * The day the country was ticked, as an ISO 8601 date such as "2026-10-13", which its passport
+	 * stamp is dated with. Countries ticked before dates were kept, or opened from a share link, have
+	 * none.
+	 */
+	readonly at?: string;
+}
 export type Visits = Readonly<Record<string, Visit>>;

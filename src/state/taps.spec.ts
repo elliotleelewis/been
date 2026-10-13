@@ -1,22 +1,25 @@
 import { createStore } from "jotai";
-import { afterEach, describe, expect, it } from "vitest";
+import { afterEach, describe, expect, it, vi } from "vitest";
 
+import { TODAY, freezeToday } from "../utils/test";
 import { focusAtom, visitsAtom } from "./atoms";
 import { lastTapAtom, tapCountryAtom, undoTapAtom } from "./taps";
 
 describe("taps", () => {
 	// `visitsAtom` is backed by local storage, which outlives an individual store.
 	afterEach(() => {
+		vi.useRealTimers();
 		globalThis.localStorage.clear();
 	});
 
 	it("should tick a tapped country without moving the camera", () => {
 		expect.hasAssertions();
+		freezeToday();
 
 		const store = createStore();
 		store.set(tapCountryAtom, "FR");
 
-		expect(store.get(visitsAtom)).toStrictEqual({ FR: {} });
+		expect(store.get(visitsAtom)).toStrictEqual({ FR: { at: TODAY } });
 		expect(store.get(focusAtom)).toBeNull();
 		expect(store.get(lastTapAtom)).toStrictEqual({ code: "FR", previous: undefined });
 	}, 5000);

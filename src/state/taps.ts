@@ -1,7 +1,7 @@
 import { atom } from "jotai";
 
 import type { Tap } from "../models/tap.ts";
-import { withoutVisit } from "../utils/visits.ts";
+import { visitOn, withoutVisit } from "../utils/visits.ts";
 import { removeCountryAtom, visitsAtom } from "./atoms.ts";
 import { viewingSharedMapAtom } from "./location.ts";
 
@@ -21,7 +21,7 @@ export const tapCountryAtom = atom(undefined, (get, set, code: string) => {
 	const previous = visits[code];
 	set(lastTapAtom, { code, previous });
 	if (previous === undefined) {
-		set(visitsAtom, { ...visits, [code]: {} });
+		set(visitsAtom, { ...visits, [code]: visitOn(new Date()) });
 	} else {
 		set(removeCountryAtom, code);
 	}

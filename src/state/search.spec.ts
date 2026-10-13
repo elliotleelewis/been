@@ -1,7 +1,8 @@
 import { createStore } from "jotai";
-import { afterEach, describe, expect, it } from "vitest";
+import { afterEach, describe, expect, it, vi } from "vitest";
 
 import type { Country } from "../models/country";
+import { TODAY, freezeToday } from "../utils/test";
 import { focusAtom, localesAtom, visitsAtom } from "./atoms";
 import { rawCountriesAtom } from "./dataset";
 import { searchAtom, searchResultsAtom, submitSearchAtom } from "./search";
@@ -21,6 +22,7 @@ const createTestStore = (search: string): ReturnType<typeof createStore> => {
 describe("search state", () => {
 	// `visitsAtom` is backed by local storage, which outlives an individual store.
 	afterEach(() => {
+		vi.useRealTimers();
 		globalThis.localStorage.clear();
 	});
 
@@ -45,11 +47,12 @@ describe("search state", () => {
 
 	it("should tick the only match on submit, and clear the search", () => {
 		expect.hasAssertions();
+		freezeToday();
 
 		const store = createTestStore("fra");
 		store.set(submitSearchAtom);
 
-		expect(store.get(visitsAtom)).toStrictEqual({ FR: {} });
+		expect(store.get(visitsAtom)).toStrictEqual({ FR: { at: TODAY } });
 		expect(store.get(focusAtom)?.type).toBe("country");
 		expect(store.get(searchAtom)).toBe("");
 	}, 5000);

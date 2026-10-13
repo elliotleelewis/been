@@ -51,11 +51,12 @@ localStorage ──▶ visitsAtom ─────┐                      │   
                                  ├─▶ shownVisitsAtom ───┤         └───────────────────────────▶ Globe
 share link ──▶ sharedVisitsAtom ─┘                      │
                                                         └─▶ selectedCountriesAtom ────────────▶ Globe
-world atlas ──▶ data/boundaries.ts ──▶ useCountryBoundaries ──────────────────────────────────▶ Globe
+world atlas ──▶ data/boundaries.ts ──▶ boundariesAtom ──────────────────────────────▶ Globe, Passport
 ```
 
 The selection is stored as an object keyed by ISO 3166-1 alpha-2 code, one visit per country, so
-details can be added to a visit later. Stored state is validated when it is read, and anything not
+details can be added to a visit later; so far a visit holds the day it was ticked, if it was ticked
+since dates were kept. Stored state is validated when it is read, and anything not
 in today's shape is cleared rather than migrated.
 
 The menu folds countries into their M49 regions as collapsible continents, with each sub-region a
@@ -96,6 +97,13 @@ dataset rather than a list of its own, and the fingerprint makes a link written 
 list read as no map at all, rather than as the wrong countries. The hash never reaches a server. Opening one shows that map read-only through `shownVisitsAtom`, in place of the
 reader's own, which nothing can write to until they leave it; `src/state/location.ts` watches the
 hash. The share dialog draws the link as a QR code with an encoder loaded only when it opens.
+
+The passport is a dialog of pages: a cover, an identity page summing the map up, then its stamps,
+in the order they went in, six to a page (`src/state/passport.ts`). Each stamp is generated, not
+drawn: its shape, slant and wording are picked from its country's code by a stable hash, its ink
+from its M49 region (`src/utils/stamp.ts`), and the outline in its middle is the country's home
+landmass, projected out of the same boundaries the globe draws (`src/utils/silhouette.ts`). The
+passport and its pages are paper and board, the same in either colour scheme.
 
 react-aria supplies behaviour that is hard to get right by hand, such as the drawer's handle and
 the toast region, which pauses its timer while focused and is reachable with F6. Elements a native

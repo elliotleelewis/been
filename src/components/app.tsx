@@ -5,10 +5,10 @@ import type { CSSProperties, FC } from "react";
 import { useCountries } from "../hooks/use-countries";
 import { menuSizeAtom } from "../state/menu.ts";
 import { Globe } from "./globe";
+import { Header } from "./header";
 import { Menu } from "./menu";
 import { MenuError } from "./menu-error";
 import { MenuResizer } from "./menu-resizer";
-import { ShareButton } from "./share-button";
 import { TapToastRegion } from "./tap-toast-region";
 
 const PERCENT = 100;
@@ -48,10 +48,7 @@ export const App: FC = memo(() => {
 			className="grid size-full grid-rows-[auto_minmax(0,1fr)_min(var(--menu-height),calc(100%_-_var(--spacing-header)))] md:grid-cols-[var(--menu-width)_minmax(0,1fr)] md:grid-rows-[auto_minmax(0,1fr)] dark:bg-zinc-900 dark:text-white"
 			style={style}
 		>
-			<div className="relative flex h-header items-center justify-center bg-primary text-white md:col-start-1 dark:bg-zinc-950 dark:text-primary">
-				<h1 className="select-none font-bold text-xl tracking-wide">{"been"}</h1>
-				<ShareButton />
-			</div>
+			<Header />
 			<div
 				id={menuId}
 				className="z-10 row-start-3 flex min-h-0 flex-col-reverse overflow-hidden md:col-start-1 md:row-start-2 md:flex-row dark:bg-zinc-900 dark:text-white"

@@ -1,10 +1,11 @@
 import { act, cleanup, render } from "@testing-library/react";
 import { Provider, createStore } from "jotai";
-import { afterEach, describe, expect, it } from "vitest";
+import { afterEach, describe, expect, it, vi } from "vitest";
 
 import type { Country } from "../models/country";
 import { visitsAtom } from "../state/atoms";
 import { searchAtom } from "../state/search";
+import { TODAY, freezeToday } from "../utils/test";
 import { MenuNoResults } from "./menu-no-results";
 
 const france: Country = { iso3166: "FR", name: "France", region: "150", subregion: "155" };
@@ -28,6 +29,7 @@ const renderNoResults = (
 describe("menu no results", () => {
 	// Auto-cleanup is not registered as the suite does not run with `globals`.
 	afterEach(() => {
+		vi.useRealTimers();
 		cleanup();
 		globalThis.localStorage.clear();
 	});
@@ -44,13 +46,14 @@ describe("menu no results", () => {
 
 	it("should let a near miss be ticked where it stands", () => {
 		expect.hasAssertions();
+		freezeToday();
 
 		const { result, store } = renderNoResults([france]);
 		act(() => {
 			result.getByRole("checkbox", { name: "France" }).click();
 		});
 
-		expect(store.get(visitsAtom)).toStrictEqual({ FR: {} });
+		expect(store.get(visitsAtom)).toStrictEqual({ FR: { at: TODAY } });
 	}, 5000);
 
 	it("should clear the search", () => {

@@ -1,0 +1,111 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`passport button > should turn to the stamps with the arrow keys, and show a stamp's country 1`] = `
+<svg
+  aria-hidden="true"
+  class="size-full overflow-visible"
+  viewBox="0 0 120 120"
+>
+  <filter
+    height="120%"
+    id="_r_6_-ink"
+    width="120%"
+    x="-10%"
+    y="-10%"
+  >
+    <feturbulence
+      baseFrequency="0.9"
+      numOctaves="2"
+      result="speckle"
+      seed="340"
+      type="fractalNoise"
+    />
+    <fecolormatrix
+      in="speckle"
+      result="mask"
+      type="matrix"
+      values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 -1.6 0 0 0 1.45"
+    />
+    <fecomposite
+      in="SourceGraphic"
+      in2="mask"
+      operator="in"
+      result="inked"
+    />
+    <feturbulence
+      baseFrequency="0.06"
+      result="warp"
+      seed="341"
+      type="fractalNoise"
+    />
+    <fedisplacementmap
+      in="inked"
+      in2="warp"
+      scale="2.5"
+      xChannelSelector="R"
+      yChannelSelector="G"
+    />
+  </filter>
+  <g
+    color="#4b3a8c"
+    filter="url(#_r_6_-ink)"
+    opacity="0.88"
+    transform="rotate(13 60 60)"
+  >
+    <circle
+      cx="60"
+      cy="60"
+      fill="none"
+      r="56"
+      stroke="currentColor"
+      stroke-width="3"
+    />
+    <circle
+      cx="60"
+      cy="60"
+      fill="none"
+      r="44"
+      stroke="currentColor"
+      stroke-width="1.2"
+    />
+    <path
+      d="M 13 60 A 47 47 0 0 1 107 60"
+      fill="none"
+      id="_r_6_-name"
+    />
+    <text
+      fill="currentColor"
+      font-size="10"
+      font-weight="700"
+      letter-spacing="0.6"
+      text-anchor="middle"
+    >
+      <textpath
+        href="#_r_6_-name"
+        startOffset="50%"
+      >
+        FRANCE
+      </textpath>
+    </text>
+    <path
+      d="M 7 60 A 53 53 0 0 0 113 60"
+      fill="none"
+      id="_r_6_-footer"
+    />
+    <text
+      fill="currentColor"
+      font-size="7"
+      font-weight="700"
+      letter-spacing="0.6"
+      text-anchor="middle"
+    >
+      <textpath
+        href="#_r_6_-footer"
+        startOffset="50%"
+      >
+        ARRIVED · 13 OCT 2026
+      </textpath>
+    </text>
+  </g>
+</svg>
+`;

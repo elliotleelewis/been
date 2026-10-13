@@ -192,6 +192,15 @@ const acrossAntimeridian = (polygons: readonly Position[][][]): Bounds => {
 	return [west, south, east, north];
 };
 
+/**
+ * The box round a country's home landmass: its largest piece of land and whatever lies alongside
+ * it, which is what reads as the country's shape, as on a passport stamp. It leaves out the
+ * United States' Alaska and Hawaii, and New Zealand's outlying islands, where the box the camera
+ * frames keeps them.
+ */
+export const landmassBoundsOf = (boundary: CountryBoundary): Bounds =>
+	homeLandmassOf(polygonsOf(boundary));
+
 /** The box the camera should frame when a country is selected. */
 export const boundsOf = (boundary: CountryBoundary): Bounds => {
 	const polygons = polygonsOf(boundary);

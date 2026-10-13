@@ -25,6 +25,14 @@ describe("share", () => {
 		expect(decodeShare(encodeShare(everything, CODES), CODES)).toStrictEqual(everything);
 	}, 5000);
 
+	// Links already shared carry this fingerprint, so a change to how it is worked out would stop
+	// every one of them opening.
+	it("should fingerprint today's list as the links already shared were", () => {
+		expect.hasAssertions();
+
+		expect(fingerprintOf(CODES)).toBe("ngq2");
+	}, 5000);
+
 	it("should fingerprint each list of codes differently", () => {
 		expect.hasAssertions();
 
