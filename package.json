@@ -2,6 +2,7 @@
   "private": true,
   "type": "module",
   "scripts": {
+    "prepare": "paraglide-js compile --strategy preferredLanguage baseLocale",
     "start": "vite --host",
     "build": "tsc --noEmit && vite build",
     "preview": "vite preview --host",
@@ -27,6 +28,8 @@
     "uqr": "^0.1.0"
   },
   "devDependencies": {
+    "@inlang/paraglide-js": "^2.0.0",
+    "@inlang/plugin-message-format": "^4.0.0",
     "@playwright/test": "~1.64.0",
     "@tailwindcss/vite": "^4.0.0",
     "@testing-library/jest-dom": "^7.0.0",

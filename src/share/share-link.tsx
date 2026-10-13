@@ -1,6 +1,7 @@
 import { memo } from "react";
 import type { FC } from "react";
 
+import { m } from "../paraglide/messages.js";
 import { QrCode } from "./qr-code.tsx";
 import { useShareLink } from "./use-share-link.ts";
 
@@ -26,7 +27,7 @@ export const ShareLink: FC<Props> = memo(({ onDone, url }) => {
 				type="url"
 				value={url}
 				readOnly
-				aria-label="Link to your map"
+				aria-label={m.share_link_label()}
 			/>
 			<div className="flex w-full flex-wrap justify-center gap-2">
 				<button
@@ -34,7 +35,7 @@ export const ShareLink: FC<Props> = memo(({ onDone, url }) => {
 					className={`${BUTTON_CLASS_NAME} bg-primary text-white hover:bg-primary/90 dark:bg-primary dark:text-white`}
 					onClick={copy}
 				>
-					{copied ? "Copied!" : "Copy link"}
+					{copied ? m.share_copied() : m.share_copy()}
 				</button>
 				{share === undefined ? null : (
 					<button
@@ -42,7 +43,7 @@ export const ShareLink: FC<Props> = memo(({ onDone, url }) => {
 						className={`${BUTTON_CLASS_NAME} bg-zinc-100 hover:bg-zinc-200 dark:bg-zinc-800 dark:hover:bg-zinc-700`}
 						onClick={share}
 					>
-						{"Share…"}
+						{m.share_native()}
 					</button>
 				)}
 				<button
@@ -50,7 +51,7 @@ export const ShareLink: FC<Props> = memo(({ onDone, url }) => {
 					className={`${BUTTON_CLASS_NAME} hover:bg-zinc-100 dark:hover:bg-zinc-800`}
 					onClick={onDone}
 				>
-					{"Done"}
+					{m.share_done()}
 				</button>
 			</div>
 		</>

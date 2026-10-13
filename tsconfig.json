@@ -4,6 +4,8 @@
   "compilerOptions": {
     "types": ["vite/client"],
     "verbatimModuleSyntax": true,
-    "lib": ["ES2023", "DOM", "DOM.Iterable"]
+    "lib": ["ES2023", "DOM", "DOM.Iterable"],
+    // Paraglide compiles messages to JavaScript typed with JSDoc, which TypeScript only reads with this.
+    "allowJs": true
   }
 }

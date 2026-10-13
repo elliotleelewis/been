@@ -1,0 +1,182 @@
+{
+  "$schema": "https://inlang.com/schema/inlang-message-format",
+  "menu_search_label": "Search",
+  "menu_search_placeholder": "Search by name or code...",
+  "menu_loading": "Loading!",
+  "menu_error": "Oops! Something went wrong whilst loading the list of countries.",
+  "menu_retry": "Try again",
+  "menu_resize": "Resize the country list",
+  "menu_progress": [
+    {
+      "declarations": [
+        "input complete",
+        "local completePercent = complete: number style=percent maximumFractionDigits=1"
+      ],
+      "selectors": [],
+      "match": {
+        "": "{completePercent} complete."
+      }
+    }
+  ],
+  "menu_continent_count": "{visited}/{total}",
+  "menu_no_results": "No countries match “{query}”.",
+  "menu_did_you_mean": "Did you mean",
+  "menu_clear_search": "Clear search",
+  "menu_shared_map": "Viewing a shared map",
+  "menu_shared_map_count": [
+    {
+      "declarations": ["input count", "local countPlural = count: plural"],
+      "selectors": ["countPlural"],
+      "match": {
+        "countPlural=one": "{count} country",
+        "countPlural=*": "{count} countries"
+      }
+    }
+  ],
+  "menu_back_to_my_map": "Back to my map",
+  "globe_tap_added": "Added {country}",
+  "globe_tap_removed": "Removed {country}",
+  "globe_undo": "Undo",
+  "share_open": "Share your map",
+  "share_title": "Share your map",
+  "share_empty": "Tick the countries you've been to, in the list or on the globe, and you can share your map from here.",
+  "share_summary": [
+    {
+      "declarations": ["input count", "local countPlural = count: plural"],
+      "selectors": ["countPlural"],
+      "match": {
+        "countPlural=one": "Anyone with the link sees your {count} country, and can't change them.",
+        "countPlural=*": "Anyone with the link sees your {count} countries, and can't change them."
+      }
+    }
+  ],
+  "share_ok": "OK",
+  "share_link_label": "Link to your map",
+  "share_copy": "Copy link",
+  "share_copied": "Copied!",
+  "share_native": "Share…",
+  "share_done": "Done",
+  "share_native_title": "My been map",
+  "passport_open": "Open your passport",
+  "passport_title": "Passport",
+  "passport_close": "Close the passport",
+  "passport_cover_open": "Open the passport",
+  "passport_cover_hint": "Tap to open",
+  "passport_back": "‹ Back",
+  "passport_next": "Next ›",
+  "passport_page_cover": "Cover",
+  "passport_page_identity": "Identity",
+  "passport_page_visas": "Visas {page} of {pages}",
+  "passport_page_stamps": "Stamps {page} of {pages}",
+  "passport_id_countries": "Countries",
+  "passport_id_share": "Of the world",
+  "passport_id_regions": "Regions",
+  "passport_id_visas": "Visas",
+  "passport_id_home": "Home region",
+  "passport_id_first": "First stamp",
+  "passport_id_latest": "Latest stamp",
+  "passport_id_count": "{count} of {total}",
+  "passport_id_share_value": [
+    {
+      "declarations": [
+        "input share",
+        "local sharePercent = share: number style=percent maximumFractionDigits=1"
+      ],
+      "selectors": [],
+      "match": {
+        "": "{sharePercent}"
+      }
+    }
+  ],
+  "passport_stamps_empty": "Tick a country, in the list or on the globe, and its stamp goes here.",
+  "passport_stamp_dated": "{country}, {date}. Show on the globe",
+  "passport_stamp_undated": "{country}. Show on the globe",
+  "passport_visa_dated": "{title} visa: {description}, issued {date}",
+  "passport_visa_undated": "{title} visa: {description}",
+  "achievement_first_title": "First stamp",
+  "achievement_first_description": "The first country in the passport",
+  "achievement_count_title": [
+    {
+      "declarations": ["input count", "local countPlural = count: plural"],
+      "selectors": ["countPlural"],
+      "match": {
+        "countPlural=one": "{count} country",
+        "countPlural=*": "{count} countries"
+      }
+    }
+  ],
+  "achievement_count_description": [
+    {
+      "declarations": ["input count", "local countPlural = count: plural"],
+      "selectors": ["countPlural"],
+      "match": {
+        "countPlural=one": "Stamps from {count} country",
+        "countPlural=*": "Stamps from {count} countries"
+      }
+    }
+  ],
+  "achievement_world_title": "The whole world",
+  "achievement_world_description": "A stamp from every country",
+  "achievement_area_description": "Every country in {area}",
+  "achievement_equator_sides_title": "Both sides of the equator",
+  "achievement_equator_sides_description": "Countries north and south of the equator",
+  "achievement_meridian_sides_title": "Both sides of the meridian",
+  "achievement_meridian_sides_description": "Countries east and west of Greenwich",
+  "achievement_hemispheres_title": "All four hemispheres",
+  "achievement_hemispheres_description": "Countries north, south, east and west",
+  "achievement_equator_title": "On the equator",
+  "achievement_equator_description": "A country the equator runs through",
+  "achievement_date_line_title": "Across the date line",
+  "achievement_date_line_description": "A country the date line runs through",
+  "achievement_microstates_title": "Microstates",
+  "achievement_microstates_description": "All six of Europe's microstates",
+  "achievement_islands_title": "Island hopper",
+  "achievement_islands_description": [
+    {
+      "declarations": ["input count", "local countPlural = count: plural"],
+      "selectors": ["countPlural"],
+      "match": {
+        "countPlural=one": "{count} country made of islands",
+        "countPlural=*": "{count} countries made of islands"
+      }
+    }
+  ],
+  "achievement_landlocked_title": "Landlocked",
+  "achievement_landlocked_description": [
+    {
+      "declarations": ["input count", "local countPlural = count: plural"],
+      "selectors": ["countPlural"],
+      "match": {
+        "countPlural=one": "{count} country without a coast",
+        "countPlural=*": "{count} countries without a coast"
+      }
+    }
+  ],
+  "m49_africa": "Africa",
+  "m49_americas": "Americas",
+  "m49_asia": "Asia",
+  "m49_europe": "Europe",
+  "m49_oceania": "Oceania",
+  "m49_south_america": "South America",
+  "m49_western_africa": "Western Africa",
+  "m49_central_america": "Central America",
+  "m49_eastern_africa": "Eastern Africa",
+  "m49_northern_africa": "Northern Africa",
+  "m49_middle_africa": "Middle Africa",
+  "m49_southern_africa": "Southern Africa",
+  "m49_northern_america": "Northern America",
+  "m49_caribbean": "Caribbean",
+  "m49_eastern_asia": "Eastern Asia",
+  "m49_southern_asia": "Southern Asia",
+  "m49_south_eastern_asia": "South-eastern Asia",
+  "m49_southern_europe": "Southern Europe",
+  "m49_australia_and_new_zealand": "Australia and New Zealand",
+  "m49_melanesia": "Melanesia",
+  "m49_micronesia": "Micronesia",
+  "m49_polynesia": "Polynesia",
+  "m49_central_asia": "Central Asia",
+  "m49_western_asia": "Western Asia",
+  "m49_eastern_europe": "Eastern Europe",
+  "m49_northern_europe": "Northern Europe",
+  "m49_western_europe": "Western Europe"
+}

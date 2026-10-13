@@ -1,8 +1,8 @@
 import { useAtomValue } from "jotai";
-import { memo, useMemo } from "react";
+import { memo } from "react";
 import type { FC } from "react";
 
-import { localesAtom } from "../core/countries.ts";
+import { m } from "../paraglide/messages.js";
 import { mrzOf } from "./lettering.ts";
 import { passportStatsAtom } from "./pages.ts";
 import { PassportCrest } from "./passport-crest.tsx";
@@ -13,22 +13,17 @@ import { PassportCrest } from "./passport-crest.tsx";
  */
 export const PassportIdPage: FC = memo(() => {
 	const stats = useAtomValue(passportStatsAtom);
-	const locales = useAtomValue(localesAtom);
-	const share = useMemo(
-		() =>
-			new Intl.NumberFormat(locales, { maximumFractionDigits: 1, style: "percent" }).format(
-				stats.total === 0 ? 0 : stats.count / stats.total,
-			),
-		[locales, stats],
-	);
 	const fields: readonly (readonly [string, string])[] = [
-		["Countries", `${String(stats.count)} of ${String(stats.total)}`],
-		["Of the world", share],
-		["Regions", `${String(stats.regions)} of 5`],
-		["Visas", `${String(stats.visas)} of ${String(stats.visaTotal)}`],
-		["Home region", stats.home ?? "—"],
-		["First stamp", stats.first ?? "—"],
-		["Latest stamp", stats.latest ?? "—"],
+		[m.passport_id_countries(), m.passport_id_count({ count: stats.count, total: stats.total })],
+		[
+			m.passport_id_share(),
+			m.passport_id_share_value({ share: stats.total === 0 ? 0 : stats.count / stats.total }),
+		],
+		[m.passport_id_regions(), m.passport_id_count({ count: stats.regions, total: 5 })],
+		[m.passport_id_visas(), m.passport_id_count({ count: stats.visas, total: stats.visaTotal })],
+		[m.passport_id_home(), stats.home ?? "—"],
+		[m.passport_id_first(), stats.first ?? "—"],
+		[m.passport_id_latest(), stats.latest ?? "—"],
 	];
 
 	return (

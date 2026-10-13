@@ -5,6 +5,7 @@ import { useButton, useToast } from "react-aria";
 import type { QueuedToast, ToastState } from "react-stately";
 
 import { countriesAtom } from "../core/countries.ts";
+import { m } from "../paraglide/messages.js";
 import { undoTapAtom } from "./taps.ts";
 import type { Tap } from "./types.ts";
 
@@ -46,7 +47,9 @@ export const TapToast: FC<Props> = memo(({ state, toast }) => {
 			<div {...contentProps} className="me-3">
 				{/* oxlint-disable-next-line react/jsx-props-no-spreading -- As above, for the title the toast is labelled by. */}
 				<div {...titleProps}>
-					{`${toast.content.previous === undefined ? "Added" : "Removed"} ${name ?? toast.content.code}`}
+					{(toast.content.previous === undefined ? m.globe_tap_added : m.globe_tap_removed)({
+						country: name ?? toast.content.code,
+					})}
 				</div>
 			</div>
 			<button
@@ -54,7 +57,7 @@ export const TapToast: FC<Props> = memo(({ state, toast }) => {
 				className="rounded-full px-3 py-1 font-semibold text-primary hover:bg-white/10 focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:outline-none dark:text-primary dark:hover:bg-zinc-900/10"
 				onClick={undo}
 			>
-				{"Undo"}
+				{m.globe_undo()}
 			</button>
 			<button
 				// oxlint-disable-next-line react/jsx-props-no-spreading -- As above, for the close button `useButton` builds.

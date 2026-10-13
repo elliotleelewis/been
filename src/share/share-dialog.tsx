@@ -6,6 +6,7 @@ import type { OverlayTriggerAria } from "react-aria";
 import type { OverlayTriggerState } from "react-stately";
 
 import { Modal } from "../core/modal.tsx";
+import { m } from "../paraglide/messages.js";
 import { ShareLink } from "./share-link.tsx";
 import { shareUrlAtom, visitedCountAtom } from "./share.ts";
 
@@ -42,12 +43,10 @@ export const ShareDialog: FC<Props> = memo(({ overlayProps, state }) => {
 			>
 				{/* oxlint-disable-next-line react/jsx-props-no-spreading -- As above, for the title the dialog is labelled by. */}
 				<h2 {...titleProps} className="font-semibold text-lg">
-					{"Share your map"}
+					{m.share_title()}
 				</h2>
 				<p className="text-center text-sm text-zinc-600 dark:text-zinc-400">
-					{count === 0
-						? "Tick the countries you've been to, in the list or on the globe, and you can share your map from here."
-						: `Anyone with the link sees your ${String(count)} ${count === 1 ? "country" : "countries"}, and can't change them.`}
+					{count === 0 ? m.share_empty() : m.share_summary({ count })}
 				</p>
 				{count === 0 ? (
 					<button
@@ -55,7 +54,7 @@ export const ShareDialog: FC<Props> = memo(({ overlayProps, state }) => {
 						className="rounded-full bg-primary px-4 py-2 font-medium text-sm text-white hover:bg-primary/90 focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:outline-none dark:bg-primary dark:text-white"
 						onClick={handleDone}
 					>
-						{"OK"}
+						{m.share_ok()}
 					</button>
 				) : (
 					<ShareLink url={url} onDone={handleDone} />

@@ -16,7 +16,7 @@ export const passportStatsAtom = atom<PassportStats>((get) => {
 	return {
 		count: stamps.length,
 		first: dated[0]?.date,
-		home: home === undefined ? undefined : M49_REGIONS[home],
+		home: home === undefined ? undefined : M49_REGIONS[home](),
 		latest: dated.at(-1)?.date,
 		regions: new Set(stamps.map(({ country }) => country.region)).size,
 		total: get(countriesAtom).length,

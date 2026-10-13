@@ -2,6 +2,7 @@ import { useAtomValue } from "jotai";
 import { memo } from "react";
 import type { FC } from "react";
 
+import { m } from "../paraglide/messages.js";
 import { MenuContinent } from "./menu-continent.tsx";
 import { MenuNoResults } from "./menu-no-results.tsx";
 import { expandedRegionsAtom } from "./regions.ts";
@@ -24,7 +25,7 @@ export const MenuBody: FC<Props> = memo(({ loading, results }) => {
 					fill="none"
 					viewBox="0 0 24 24"
 				>
-					<title>{"Loading!"}</title>
+					<title>{m.menu_loading()}</title>
 					<circle
 						className="opacity-25"
 						cx="12"

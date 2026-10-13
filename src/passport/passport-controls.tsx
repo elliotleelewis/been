@@ -2,6 +2,7 @@ import { useAtomValue, useSetAtom } from "jotai";
 import { memo, useCallback } from "react";
 import type { FC } from "react";
 
+import { m } from "../paraglide/messages.js";
 import {
 	passportPageAtom,
 	passportPageCountAtom,
@@ -16,12 +17,13 @@ const BUTTON_CLASS_NAME =
 /** What the page the passport is open at is called, beneath it. */
 const pageNameOf = (page: PassportPage | undefined): string => {
 	if (page === undefined || page.kind === "cover") {
-		return "Cover";
+		return m.passport_page_cover();
 	}
 	if (page.kind === "identity") {
-		return "Identity";
+		return m.passport_page_identity();
 	}
-	return `${page.kind === "visas" ? "Visas" : "Stamps"} ${String(page.index + 1)} of ${String(page.of)}`;
+	const numbers = { page: page.index + 1, pages: page.of };
+	return page.kind === "visas" ? m.passport_page_visas(numbers) : m.passport_page_stamps(numbers);
 };
 
 /** Turns the passport's pages back and forward, and says which page it is open at. */
@@ -40,7 +42,7 @@ export const PassportControls: FC = memo(() => {
 	return (
 		<div className="flex w-full items-center justify-between gap-2">
 			<button type="button" className={BUTTON_CLASS_NAME} onClick={back} disabled={page === 0}>
-				{"‹ Back"}
+				{m.passport_back()}
 			</button>
 			<p className="text-sm text-zinc-600 tabular-nums dark:text-zinc-400" aria-live="polite">
 				{pageNameOf(pages[page])}
@@ -51,7 +53,7 @@ export const PassportControls: FC = memo(() => {
 				onClick={forward}
 				disabled={page === count - 1}
 			>
-				{"Next ›"}
+				{m.passport_next()}
 			</button>
 		</div>
 	);

@@ -6,6 +6,7 @@ import type { KeyboardEvents, OverlayTriggerAria } from "react-aria";
 import type { OverlayTriggerState } from "react-stately";
 
 import { Modal } from "../core/modal.tsx";
+import { m } from "../paraglide/messages.js";
 import { passportPageAtom, turnPassportPageAtom } from "./pages.ts";
 import { PassportBook } from "./passport-book.tsx";
 import { PassportControls } from "./passport-controls.tsx";
@@ -67,7 +68,7 @@ export const PassportDialog: FC<Props> = memo(({ overlayProps, state }) => {
 			>
 				{/* oxlint-disable-next-line react/jsx-props-no-spreading -- As above, for the title the dialog is labelled by. */}
 				<h2 {...titleProps} className="sr-only">
-					{"Passport"}
+					{m.passport_title()}
 				</h2>
 				<PassportBook onClose={close} />
 				<PassportControls />
@@ -75,7 +76,7 @@ export const PassportDialog: FC<Props> = memo(({ overlayProps, state }) => {
 					type="button"
 					className="absolute end-2 top-2 rounded-full p-2 hover:bg-zinc-100 focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:outline-none dark:hover:bg-zinc-800"
 					onClick={close}
-					aria-label="Close the passport"
+					aria-label={m.passport_close()}
 				>
 					<svg
 						className="size-4"

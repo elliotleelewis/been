@@ -1,14 +1,15 @@
-// Areas of the UN M49 standard, by their numeric code, with their English names as M49 gives them.
+// Areas of the UN M49 standard, by their numeric code, each with the message that names it.
 // Countries are named in the reader's language by `Intl.DisplayNames`, but browsers do not all
-// carry names for these areas, so the app holds them itself. They are English only for now.
+// carry names for these areas, so the app's messages hold them instead.
+import { m } from "../paraglide/messages.js";
 
 /** Africa, the Americas, Asia, Europe and Oceania. */
 export const M49_REGIONS = {
-	"002": "Africa",
-	"009": "Oceania",
-	"019": "Americas",
-	"142": "Asia",
-	"150": "Europe",
+	"002": m.m49_africa,
+	"009": m.m49_oceania,
+	"019": m.m49_americas,
+	"142": m.m49_asia,
+	"150": m.m49_europe,
 } as const;
 
 /**
@@ -16,28 +17,28 @@ export const M49_REGIONS = {
  * such as South America (005), otherwise its sub-region, such as Northern America (021).
  */
 export const M49_SUBREGIONS = {
-	"005": "South America",
-	"011": "Western Africa",
-	"013": "Central America",
-	"014": "Eastern Africa",
-	"015": "Northern Africa",
-	"017": "Middle Africa",
-	"018": "Southern Africa",
-	"021": "Northern America",
-	"029": "Caribbean",
-	"030": "Eastern Asia",
-	"034": "Southern Asia",
-	"035": "South-eastern Asia",
-	"039": "Southern Europe",
-	"053": "Australia and New Zealand",
-	"054": "Melanesia",
-	"057": "Micronesia",
-	"061": "Polynesia",
-	"143": "Central Asia",
-	"145": "Western Asia",
-	"151": "Eastern Europe",
-	"154": "Northern Europe",
-	"155": "Western Europe",
+	"005": m.m49_south_america,
+	"011": m.m49_western_africa,
+	"013": m.m49_central_america,
+	"014": m.m49_eastern_africa,
+	"015": m.m49_northern_africa,
+	"017": m.m49_middle_africa,
+	"018": m.m49_southern_africa,
+	"021": m.m49_northern_america,
+	"029": m.m49_caribbean,
+	"030": m.m49_eastern_asia,
+	"034": m.m49_southern_asia,
+	"035": m.m49_south_eastern_asia,
+	"039": m.m49_southern_europe,
+	"053": m.m49_australia_and_new_zealand,
+	"054": m.m49_melanesia,
+	"057": m.m49_micronesia,
+	"061": m.m49_polynesia,
+	"143": m.m49_central_asia,
+	"145": m.m49_western_asia,
+	"151": m.m49_eastern_europe,
+	"154": m.m49_northern_europe,
+	"155": m.m49_western_europe,
 } as const;
 
 export type M49Region = keyof typeof M49_REGIONS;

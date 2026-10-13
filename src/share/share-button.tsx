@@ -5,6 +5,7 @@ import { useButton, useOverlayTrigger } from "react-aria";
 import { useOverlayTriggerState } from "react-stately";
 
 import { viewingSharedMapAtom } from "../core/location.ts";
+import { m } from "../paraglide/messages.js";
 import { ShareDialog } from "./share-dialog.tsx";
 
 /**
@@ -30,7 +31,7 @@ export const ShareButton: FC = memo(() => {
 				type="button"
 				ref={ref}
 				className="rounded-full p-2 hover:bg-white/15 focus-visible:ring-2 focus-visible:ring-white/70 focus-visible:outline-none dark:hover:bg-zinc-800 dark:focus-visible:ring-primary/50"
-				aria-label="Share your map"
+				aria-label={m.share_open()}
 			>
 				<svg
 					className="size-5"

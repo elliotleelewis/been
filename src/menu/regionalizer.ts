@@ -34,14 +34,14 @@ export const regionalizer = (
 ): readonly Continent[] => {
 	const toRegion = (subregion: M49Subregion, values: readonly Country[]): Region => ({
 		complete: selectedIn(values) / values.length,
-		name: M49_SUBREGIONS[subregion],
+		name: M49_SUBREGIONS[subregion](),
 		values: values.toSorted((left, right) => collator.compare(left.name, right.name)),
 	});
 
 	const continents = [...groupBy(countries, ({ region }) => region)].map(
 		([code, values]): Continent => ({
 			code,
-			name: M49_REGIONS[code],
+			name: M49_REGIONS[code](),
 			total: values.length,
 			values: [...groupBy(values, ({ subregion }) => subregion)]
 				.map(([subregion, members]) => toRegion(subregion, members))

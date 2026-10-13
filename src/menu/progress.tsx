@@ -1,6 +1,8 @@
 import { memo } from "react";
 import type { FC } from "react";
 
+import { m } from "../paraglide/messages.js";
+
 interface Props {
 	readonly complete: number;
 }
@@ -8,7 +10,7 @@ interface Props {
 export const Progress: FC<Props> = memo(({ complete }) => (
 	<div className="relative size-5">
 		<svg className="-rotate-90 size-full" viewBox="0 0 36 36" xmlns="http://www.w3.org/2000/svg">
-			<title>{`${String(Math.round(complete * 1000) / 10)}% complete.`}</title>
+			<title>{m.menu_progress({ complete })}</title>
 			<circle
 				cx="18"
 				cy="18"

@@ -3,6 +3,7 @@ import type { FC } from "react";
 import { useButton, useOverlayTrigger } from "react-aria";
 import { useOverlayTriggerState } from "react-stately";
 
+import { m } from "../paraglide/messages.js";
 import { PassportDialog } from "./passport-dialog.tsx";
 
 /** Opens the passport, of the reader's own map or of a shared one while that is on show. */
@@ -20,7 +21,7 @@ export const PassportButton: FC = memo(() => {
 				type="button"
 				ref={ref}
 				className="rounded-full p-2 hover:bg-white/15 focus-visible:ring-2 focus-visible:ring-white/70 focus-visible:outline-none dark:hover:bg-zinc-800 dark:focus-visible:ring-primary/50"
-				aria-label="Open your passport"
+				aria-label={m.passport_open()}
 			>
 				<svg
 					className="size-5"

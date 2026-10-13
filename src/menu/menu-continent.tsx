@@ -2,6 +2,7 @@ import { useSetAtom } from "jotai";
 import { memo, useCallback, useId } from "react";
 import type { FC } from "react";
 
+import { m } from "../paraglide/messages.js";
 import { MenuItem } from "./menu-item.tsx";
 import { Progress } from "./progress.tsx";
 import { toggleRegionAtom } from "./regions.ts";
@@ -44,7 +45,7 @@ export const MenuContinent: FC<Props> = memo(({ continent, expanded }) => {
 					</svg>
 					<span className="flex-1">{continent.name}</span>
 					<span className="text-sm text-zinc-600 tabular-nums dark:text-zinc-400">
-						{`${String(continent.visited)}/${String(continent.total)}`}
+						{m.menu_continent_count({ total: continent.total, visited: continent.visited })}
 					</span>
 					<Progress complete={continent.visited / continent.total} />
 				</button>
