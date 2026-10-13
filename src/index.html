@@ -10,6 +10,15 @@
 		<base href="/" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<meta name="description" content='Web clone of the popular mobile app "been".' />
+		<!-- Installable as an app, which is also what keeps Safari from clearing the reader's map after
+			a week away: it only does that to sites, not to apps on the home screen. -->
+		<link rel="manifest" href="/manifest.webmanifest" />
+		<link rel="icon" href="/icon.svg" type="image/svg+xml" />
+		<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+		<!-- The title bar's colour in each scheme, for the browser's own chrome and an installed app's
+			status bar to match. -->
+		<meta name="theme-color" content="#ff6c00" media="(prefers-color-scheme: light)" />
+		<meta name="theme-color" content="#09090b" media="(prefers-color-scheme: dark)" />
 	</head>
 	<body class="bg-white dark:bg-zinc-900">
 		<div id="app" class="inline"></div>

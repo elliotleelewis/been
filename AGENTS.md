@@ -41,6 +41,7 @@ the build reads `src/index.html` and writes `dist/`.
 | `src/passport/` | The passport: its pages, the generated stamps and visas, achievements, and their moments. |
 | `src/share/`    | The share button and dialog, with the link's QR code.                                     |
 | `src/data/`     | The country dataset and the world atlas it is drawn from, plus generated output.          |
+| `src/public/`   | Copied into the build as is: the web app manifest and the app's icons.                    |
 | `scripts/`      | Node-only tooling run by hand, not part of the bundle.                                    |
 
 Each folder is flat, and a file's kind is in its name: `*.tsx` is a component, `use-*.ts` a hook
@@ -67,6 +68,12 @@ The selection is stored as an object keyed by ISO 3166-1 alpha-2 code, one visit
 details can be added to a visit later; so far a visit holds the day it was ticked, if it was ticked
 since dates were kept. Stored state is validated when it is read, and anything not
 in today's shape is cleared rather than migrated.
+
+Writing the visits also asks the browser, once a session, to keep the site's storage rather than
+clear it to make room (`src/core/persistence.ts`). The site is installable from its web app manifest,
+which matters as much: Safari clears a site's storage after a week unused, but not an app's on the
+home screen. There is no service worker, since working offline is not a goal; Chromium installs
+without one.
 
 The menu folds countries into their M49 regions as collapsible continents, with each sub-region a
 heading inside. The reader's home continent is guessed from their time zone, listed first and, until
@@ -156,11 +163,13 @@ tag already makes accessible, such as checkboxes and disclosure buttons, stay na
 
 ## Generated data
 
-Two files under `src/data/` are generated. **Never hand-edit generated
-output**; change the source and regenerate.
+Two files under `src/data/` and the PNG icons in `src/public/` are generated. **Never hand-edit
+generated output**; change the source and regenerate.
 
 - `src/data/boundary-codes.ts` — Natural Earth's alpha-3 keys mapped to the ISO 3166-1 alpha-2 codes the app uses.
 - `src/data/countries.ts` — the country list, with each `bounds` derived from the atlas.
+- `src/public/*.png` — `src/public/icon.svg` drawn at the sizes the manifest and iOS ask for, by
+  `pnpm run generate:icons`.
 
 The list is the 193 UN member states plus its two observer states, the Holy See and Palestine.
 It holds codes, not names: each country's ISO 3166-1 alpha-2 code, its UN M49 region, and the most
@@ -169,7 +178,7 @@ sub-region), which is what the menu groups by. Countries are named and sorted in
 language at run time with `Intl.DisplayNames` and `Intl.Collator`; browsers do not reliably name
 M49 areas, so their names are messages, which `src/core/m49.ts` maps each code onto.
 
-Both come from `pnpm run generate:countries`. The country list is the script's
+The two data files come from `pnpm run generate:countries`. The country list is the script's
 input as well as its output: a country the atlas cannot draw fails the run
 rather than quietly disappearing, so adding or dropping one is an edit to
 `src/data/countries.ts` followed by a regeneration. Re-run it after bumping

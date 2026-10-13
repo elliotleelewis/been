@@ -2,18 +2,31 @@ import { atom } from "jotai";
 import { atomWithStorage } from "jotai/utils";
 
 import { sharedVisitsAtom } from "./location.ts";
+import { persistStorageAtom } from "./persistence.ts";
 import { validatedStorage } from "./storage.ts";
 import type { Focus, Visits } from "./types.ts";
 import { isVisits } from "./visits.ts";
 
 const COUNTRIES_STORAGE_KEY = "APP_COUNTRIES";
 
-/** The countries the reader has been to, kept in local storage and cleared if not in today's shape. */
-export const visitsAtom = atomWithStorage<Visits>(
+/** The visits as local storage holds them, cleared if not in today's shape. */
+const storedVisitsAtom = atomWithStorage<Visits>(
 	COUNTRIES_STORAGE_KEY,
 	{},
 	validatedStorage(isVisits),
 	{ getOnInit: true },
+);
+
+/**
+ * The countries the reader has been to. Writing them also asks the browser to keep the site's
+ * storage, since from then on the reader has a map to lose.
+ */
+export const visitsAtom = atom(
+	(get) => get(storedVisitsAtom),
+	(_get, set, visits: Visits) => {
+		set(storedVisitsAtom, visits);
+		set(persistStorageAtom);
+	},
 );
 
 /** What the map's camera should do next, if anything has asked it to move. */

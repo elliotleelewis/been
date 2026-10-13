@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+	<!-- Full bleed, so a launcher can crop it to any shape: the globe sits well inside the
+		middle 80% a maskable icon is promised to keep. -->
+	<defs>
+		<clipPath id="globe"><circle cx="256" cy="256" r="150" /></clipPath>
+		<mask id="beyond-meridian">
+			<rect width="512" height="512" fill="#fff" />
+			<ellipse cx="256" cy="256" rx="62" ry="150" />
+		</mask>
+	</defs>
+	<rect width="512" height="512" fill="#ff6c00" />
+	<!-- One country ticked off: a cell of the graticule, filled in. -->
+	<rect
+		x="256"
+		y="181"
+		width="150"
+		height="75"
+		fill="#fff"
+		clip-path="url(#globe)"
+		mask="url(#beyond-meridian)"
+	/>
+	<g fill="none" stroke="#fff" stroke-width="14" stroke-linecap="round">
+		<circle cx="256" cy="256" r="150" />
+		<ellipse cx="256" cy="256" rx="62" ry="150" />
+		<path d="M106 256h300M126 181h260M126 331h260" />
+	</g>
+</svg>
