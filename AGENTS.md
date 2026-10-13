@@ -84,7 +84,8 @@ the drawer and the globe are sized by.
 Selecting a country also asks the camera to frame it, via `focusAtom`;
 unselecting the country the camera is framing puts it back where it was. That
 undo is deliberately one-shot and is dropped the moment the user moves the map
-themselves.
+themselves. Left alone at world view, the globe turns slowly west to east
+(`src/hooks/use-idle-spin.ts`) until anyone touches it; never under reduced motion.
 
 Countries can also be ticked by tapping them on the globe. Every country is drawn on an invisible
 layer the map tests the pointer against; a tap goes through `src/state/taps.ts`, which leaves the
@@ -107,7 +108,9 @@ passport and its pages are paper and board, the same in either colour scheme. Ti
 from the list, the search box or the globe plays its stamp moment (`src/state/stamping.ts`): the
 stamp comes down in the middle of the screen and flies into the passport button, unless the reader
 has asked for less motion. Anything that ticks a country for the reader goes through there, so
-undoing, loading and shared maps never stamp.
+undoing, loading and shared maps never stamp. A country being stamped fills in on a fresh layer of
+its own, because MapLibre can fade a paint property but not a filter; the been layer takes it back
+once the moment ends, by when the two look the same.
 
 react-aria supplies behaviour that is hard to get right by hand, such as the drawer's handle and
 the toast region, which pauses its timer while focused and is reachable with F6. Elements a native

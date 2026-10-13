@@ -5,7 +5,7 @@ import type { MapRef } from "react-map-gl/maplibre";
 import { useBasemap } from "../hooks/use-basemap";
 import { useCountryBoundaries } from "../hooks/use-country-boundaries";
 import { useCountryPointer } from "../hooks/use-country-pointer";
-import { useFocusCamera } from "../hooks/use-focus-camera";
+import { useGlobeCamera } from "../hooks/use-globe-camera";
 import { useGlobeLayers } from "../hooks/use-globe-layers";
 import { MapLayerKeys, MapSourceKeys } from "../models/enums";
 import type { ForwardedRefFunction } from "../types/utils";
@@ -45,16 +45,15 @@ export const Globe = memo(
 			[],
 		);
 
-		const handleMoveStart = useFocusCamera(internalRef);
+		const handleMoveStart = useGlobeCamera(internalRef);
 		const {
 			hover,
 			onClick: handleClick,
 			onMouseMove: handleMouseMove,
 			onMouseOut: handleMouseOut,
 		} = useCountryPointer();
-		const { beenFilter, beenPaint, hitPaint, hoverFilter, hoverPaint } = useGlobeLayers(
-			hover?.code,
-		);
+		const { beenFilter, beenPaint, freshFilter, freshPaint, hitPaint, hoverFilter, hoverPaint } =
+			useGlobeLayers(hover?.code);
 
 		return (
 			<Map
@@ -95,6 +94,14 @@ export const Globe = memo(
 							beforeId={labelsLayerId}
 							filter={beenFilter}
 							paint={beenPaint}
+						/>
+						<Layer
+							id={MapLayerKeys.Fresh}
+							type="fill"
+							source={MapSourceKeys.Countries}
+							beforeId={labelsLayerId}
+							filter={freshFilter}
+							paint={freshPaint}
 						/>
 						<Layer
 							id={MapLayerKeys.Hover}

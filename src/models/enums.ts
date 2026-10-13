@@ -4,6 +4,7 @@ export const MapSourceKeys = {
 
 export const MapLayerKeys = {
 	Been: "been",
+	Fresh: "fresh",
 	Hit: "hit",
 	Hover: "hover",
 } as const;
