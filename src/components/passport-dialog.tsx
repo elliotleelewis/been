@@ -63,7 +63,7 @@ export const PassportDialog: FC<Props> = memo(({ overlayProps, state }) => {
 				// oxlint-disable-next-line react/jsx-props-no-spreading -- As above, for the arrow keys that turn the pages.
 				{...keyboardProps}
 				ref={ref}
-				className="relative flex w-80 max-w-full flex-col items-center gap-4 rounded-2xl bg-white p-6 text-zinc-900 shadow-xl focus:outline-none dark:bg-zinc-900 dark:text-white"
+				className="relative flex w-80 max-w-full flex-col items-center gap-4 rounded-2xl bg-white px-6 pt-12 pb-6 text-zinc-900 shadow-xl focus:outline-none dark:bg-zinc-900 dark:text-white"
 			>
 				{/* oxlint-disable-next-line react/jsx-props-no-spreading -- As above, for the title the dialog is labelled by. */}
 				<h2 {...titleProps} className="sr-only">
