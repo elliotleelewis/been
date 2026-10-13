@@ -4,6 +4,7 @@ import type { Tap } from "../models/tap.ts";
 import { visitOn, withoutVisit } from "../utils/visits.ts";
 import { removeCountryAtom, visitsAtom } from "./atoms.ts";
 import { viewingSharedMapAtom } from "./location.ts";
+import { announceStampAtom } from "./stamping.ts";
 
 /** The last tap on the globe, for as long as it can still be undone. */
 export const lastTapAtom = atom<Tap | null>(null);
@@ -22,6 +23,7 @@ export const tapCountryAtom = atom(undefined, (get, set, code: string) => {
 	set(lastTapAtom, { code, previous });
 	if (previous === undefined) {
 		set(visitsAtom, { ...visits, [code]: visitOn(new Date()) });
+		set(announceStampAtom, code);
 	} else {
 		set(removeCountryAtom, code);
 	}

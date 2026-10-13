@@ -3,7 +3,8 @@ import { atom } from "jotai";
 import type { Continent } from "../models/region.ts";
 import type { SearchResults } from "../models/search.ts";
 import { bestMatchesOf, foldText, suggestionsFor } from "../utils/search.ts";
-import { addCountryAtom, continentsAtom, countriesAtom, localesAtom } from "./atoms.ts";
+import { continentsAtom, countriesAtom, localesAtom } from "./atoms.ts";
+import { stampCountryAtom } from "./stamping.ts";
 
 /** How many near misses to offer when a search matches nothing. */
 const MAX_SUGGESTIONS = 5;
@@ -66,8 +67,6 @@ export const submitSearchAtom = atom(undefined, (get, set) => {
 	if (matches.length !== 1 || match === undefined) {
 		return;
 	}
-	if (match.selected !== true) {
-		set(addCountryAtom, match.iso3166);
-	}
+	set(stampCountryAtom, match.iso3166);
 	set(searchAtom, "");
 });

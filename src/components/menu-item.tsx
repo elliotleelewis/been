@@ -3,15 +3,16 @@ import { memo, useCallback } from "react";
 import type { FC } from "react";
 
 import type { Country } from "../models/country";
-import { addCountryAtom, removeCountryAtom } from "../state/atoms";
+import { removeCountryAtom } from "../state/atoms";
 import { viewingSharedMapAtom } from "../state/location";
+import { stampCountryAtom } from "../state/stamping";
 
 interface Props {
 	readonly country: Country;
 }
 
 export const MenuItem: FC<Props> = memo(({ country }) => {
-	const addCountry = useSetAtom(addCountryAtom);
+	const addCountry = useSetAtom(stampCountryAtom);
 	const removeCountry = useSetAtom(removeCountryAtom);
 	// Someone else's map, opened from a share link, is there to look at, not to change.
 	const viewingSharedMap = useAtomValue(viewingSharedMapAtom);

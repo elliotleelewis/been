@@ -17,41 +17,45 @@ exports[`app > should render 1`] = `
       <div
         class="absolute end-2 flex items-center gap-1"
       >
-        <button
-          aria-expanded="false"
-          aria-label="Open your passport"
-          class="rounded-full p-2 hover:bg-white/15 focus-visible:ring-2 focus-visible:ring-white/70 focus-visible:outline-none dark:hover:bg-zinc-800 dark:focus-visible:ring-primary/50"
-          data-react-aria-pressable="true"
-          tabindex="0"
-          type="button"
+        <span
+          class="inline-flex"
         >
-          <svg
-            aria-hidden="true"
-            class="size-5"
-            fill="none"
-            stroke="currentColor"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            viewBox="0 0 24 24"
+          <button
+            aria-expanded="false"
+            aria-label="Open your passport"
+            class="rounded-full p-2 hover:bg-white/15 focus-visible:ring-2 focus-visible:ring-white/70 focus-visible:outline-none dark:hover:bg-zinc-800 dark:focus-visible:ring-primary/50"
+            data-react-aria-pressable="true"
+            tabindex="0"
+            type="button"
           >
-            <rect
-              height="18"
-              rx="2"
-              width="14"
-              x="5"
-              y="3"
-            />
-            <circle
-              cx="12"
-              cy="10"
-              r="3"
-            />
-            <path
-              d="M9 16h6"
-            />
-          </svg>
-        </button>
+            <svg
+              aria-hidden="true"
+              class="size-5"
+              fill="none"
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              viewBox="0 0 24 24"
+            >
+              <rect
+                height="18"
+                rx="2"
+                width="14"
+                x="5"
+                y="3"
+              />
+              <circle
+                cx="12"
+                cy="10"
+                r="3"
+              />
+              <path
+                d="M9 16h6"
+              />
+            </svg>
+          </button>
+        </span>
         <button
           aria-expanded="false"
           aria-label="Share your map"

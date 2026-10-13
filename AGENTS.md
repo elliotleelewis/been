@@ -103,7 +103,11 @@ in the order they went in, six to a page (`src/state/passport.ts`). Each stamp i
 drawn: its shape, slant and wording are picked from its country's code by a stable hash, its ink
 from its M49 region (`src/utils/stamp.ts`), and the outline in its middle is the country's home
 landmass, projected out of the same boundaries the globe draws (`src/utils/silhouette.ts`). The
-passport and its pages are paper and board, the same in either colour scheme.
+passport and its pages are paper and board, the same in either colour scheme. Ticking a country
+from the list, the search box or the globe plays its stamp moment (`src/state/stamping.ts`): the
+stamp comes down in the middle of the screen and flies into the passport button, unless the reader
+has asked for less motion. Anything that ticks a country for the reader goes through there, so
+undoing, loading and shared maps never stamp.
 
 react-aria supplies behaviour that is hard to get right by hand, such as the drawer's handle and
 the toast region, which pauses its timer while focused and is reachable with F6. Elements a native

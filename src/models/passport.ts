@@ -25,3 +25,10 @@ export interface PassportStats {
 
 /** How many stamps a page of the passport holds. */
 export const STAMPS_PER_PAGE = 6;
+
+/** A country that has just been stamped, which the stamp moment plays out for. */
+export interface StampMoment {
+	readonly code: string;
+	/** Counts up with every stamp, so stamping the same country twice plays the moment twice. */
+	readonly id: number;
+}
