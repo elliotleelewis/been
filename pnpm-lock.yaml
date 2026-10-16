@@ -254,6 +254,9 @@ importers:
       '@vitest/coverage-istanbul':
         specifier: ^5.0.0
         version: 5.0.3(vitest@5.0.3)
+      agnix:
+        specifier: ^0.57.0
+        version: 0.57.0
       dotenv:
         specifier: ^18.0.0
         version: 18.0.7
@@ -1737,6 +1740,13 @@ packages:
   acorn@8.19.0:
     resolution: {integrity: sha512-oJlA3XiRm7Cyk6qFD2Jn8ak9B7jSy0qy00ADO3+8dpT0LSjFihQYv4C02LFCSYJV3Q37xYwwRy5m+IpIiUzqWw==}
     engines: {node: '>=0.4.0'}
+    hasBin: true
+
+  agnix@0.57.0:
+    resolution: {integrity: sha512-AQO0xi4dk4mgYXcIYivbH3vjh14/pg7kipZ//X1nqlAQ1lJTtoLJ4U4vhnpBK2ldMOUVQFenhhbXKGvAa1MVng==}
+    engines: {node: '>=16.0.0'}
+    cpu: [x64, arm64]
+    os: [darwin, linux, win32]
     hasBin: true
 
   ajv@6.15.0:
@@ -3954,6 +3964,8 @@ snapshots:
       acorn: 8.19.0
 
   acorn@8.19.0: {}
+
+  agnix@0.57.0: {}
 
   ajv@6.15.0:
     dependencies:

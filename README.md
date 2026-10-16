@@ -63,7 +63,7 @@ preview link is not a green build.
 
 ```sh
 pnpm run format      # oxfmt --check              (:fix to write)
-pnpm run lint        # oxlint, type-aware         (:fix to write)
+pnpm run lint        # oxlint, then agnix on AGENTS.md (:fix for oxlint)
 pnpm run build       # tsc --noEmit, then vite build
 pnpm run test        # vitest, in a browser
 pnpm run e2e         # playwright, needs a server
