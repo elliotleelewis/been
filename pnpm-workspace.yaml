@@ -1,4 +1,5 @@
 allowBuilds:
+  agnix: true
   esbuild: false
   workerd: true
 ignoredOptionalDependencies:

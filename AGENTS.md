@@ -2,53 +2,52 @@
 
 Orientation for coding agents. Keep it short, keep it current, and describe
 structure rather than features — features change, the shape does not.
+`pnpm run lint` checks this file with [agnix](https://github.com/agent-sh/agnix),
+which caps it at 12,000 characters; `pnpm exec agnix explain <rule>` says why a
+rule fired.
 
-## What this is
+## Overview
 
 A web clone of the "been" mobile app: tick off the countries you have visited,
-watch them fill in on a globe. It is a single-page application with no backend
-of any kind, built with Vite and deployed as static files to Cloudflare Pages
-by CI.
+watch them fill in on a globe. A single-page application with no backend, built
+with Vite and deployed as static files to Cloudflare Pages by CI. The
+[README](./README.md) covers setup and running it.
 
 Goals, in priority order:
 
 1. **No server.** The country list ships with the bundle and the selection
-   lives in `localStorage`, so there is nothing to host, authenticate or
-   migrate. A change that needs a backend is the wrong change.
+   lives in `localStorage`. A change that needs a backend is the wrong change.
 2. **Type-safe.** `@tsconfig/strictest` and type-aware linting are on, and the
    build typechecks before it bundles. Reach for a type, not a cast.
-3. **Cheap to maintain.** Dependencies arrive as Renovate pull requests and the
-   whole check suite runs in CI, so upkeep stays close to zero effort.
+3. **Cheap to maintain.** Renovate brings the dependencies, CI runs every check.
 4. **Small.** One page, one screen's worth of state. Prefer deleting code to
    generalising it.
 
 Non-goals: accounts, syncing between devices, an API, offline-first machinery,
-any country data that has to be fetched from a third party at run time.
+any country data fetched from a third party at run time.
 
 ## Architecture
 
-One package, no workspace members — `pnpm-workspace.yaml` exists only to hold
-pnpm's own settings: an ignored optional dependency, and which dependencies may
-run build scripts. Everything lives under `src/`, which is also Vite's root, so
-the build reads `src/index.html` and writes `dist/`.
+One package; `pnpm-workspace.yaml` only holds pnpm's settings. `src/` is Vite's
+root: the build reads `src/index.html` and writes `dist/`.
 
-| Directory       | Role                                                                                      |
-| --------------- | ----------------------------------------------------------------------------------------- |
-| `src/app/`      | The shell that puts the features on screen: the layout, the header.                       |
-| `src/core/`     | What every feature reads: the dataset, the visits, ticking, the share-link format, M49.   |
-| `src/globe/`    | The MapLibre globe: its layers and camera, and ticking by tapping it.                     |
-| `src/menu/`     | The country list: continents, search, progress rings and the drawer's handle.             |
-| `src/passport/` | The passport: its pages, the generated stamps and visas, achievements, and their moments. |
-| `src/share/`    | The share button and dialog, with the link's QR code.                                     |
-| `src/data/`     | The country dataset and the world atlas it is drawn from, plus generated output.          |
-| `src/public/`   | Copied into the build as is: the web app manifest and the app's icons.                    |
-| `scripts/`      | Node-only tooling run by hand, not part of the bundle.                                    |
+| Directory       | Role                                                                              |
+| --------------- | --------------------------------------------------------------------------------- |
+| `src/app/`      | The shell that puts the features on screen: the layout, the header.               |
+| `src/core/`     | What every feature reads: the dataset, the visits, ticking, the share link, M49.  |
+| `src/globe/`    | The MapLibre globe: its layers and camera, and ticking by tapping it.             |
+| `src/menu/`     | The country list: continents, search, progress rings and the drawer's handle.     |
+| `src/passport/` | The passport: its pages, generated stamps and visas, achievements, their moments. |
+| `src/share/`    | The share button and dialog, with the link's QR code.                             |
+| `src/data/`     | The country dataset and the world atlas it is drawn from, plus generated output.  |
+| `src/public/`   | Copied into the build as is: the web app manifest and the app's icons.            |
+| `scripts/`      | Node-only tooling run by hand, not part of the bundle.                            |
 
 Each folder is flat, and a file's kind is in its name: `*.tsx` is a component, `use-*.ts` a hook
 onto something React does not own, `types.ts` the folder's shared types and constants, and every
-other `*.ts` either atoms or pure functions, never both. A feature imports only `core/` and
-`data/`, never another feature, and `core/` imports no feature; the linter enforces both, so
-anything two features need moves into `core/`. `app/` is the one place that imports features.
+other `*.ts` either atoms or pure functions, not both. A feature imports only `core/` and `data/`,
+and `core/` imports no feature; the linter enforces both, so anything two features need moves into
+`core/`. `app/` is the one place that imports features.
 
 How a selection travels:
 
@@ -64,162 +63,96 @@ rawCountriesAtom ──▶ achievementsAtom ─┬─▶ visasAtom (with shownVi
                                        └─▶ landStampAtom (each stamp that lands) ───────▶ visa moment
 ```
 
-The selection is stored as an object keyed by ISO 3166-1 alpha-2 code, one visit per country, so
-details can be added to a visit later; so far a visit holds the day it was ticked, if it was ticked
-since dates were kept. Stored state is validated when it is read, and anything not
-in today's shape is cleared rather than migrated.
+Rules that keep that shape:
 
-Writing the visits also asks the browser, once a session, to keep the site's storage rather than
-clear it to make room (`src/core/persistence.ts`). The site is installable from its web app manifest,
-which matters as much: Safari clears a site's storage after a week unused, but not an app's on the
-home screen. There is no service worker, since working offline is not a goal; Chromium installs
-without one.
+- **Visits** are an object keyed by ISO 3166-1 alpha-2 code, so a visit can gain details; so far,
+  the day it was ticked. Stored state is validated when read, and anything not in today's shape is
+  cleared rather than migrated. Writing visits asks once a session for persistent storage
+  (`src/core/persistence.ts`); the web app manifest matters as much, as Safari clears an unused
+  site's storage after a week but not a home-screen app's. No service worker: offline isn't a goal.
+- **Ticking** for the reader goes through `src/core/ticking.ts`, which starts the stamp moment;
+  undoing, loading and shared maps go around it, so they don't stamp. The passport plays the moment, and when the stamp
+  lands (`src/passport/moments.ts`) decides whether a visa moment follows. Both respect reduced motion.
+- **The globe** is MapLibre through `react-map-gl`, on a keyless CARTO basemap that follows the
+  colour scheme. Selected countries are one fill layer filtered by code: selecting changes a filter,
+  not geometry. A country being stamped fills in on a layer of its own, because MapLibre can fade a
+  paint property but not a filter. The ~700kB atlas is fetched at run time and
+  `src/data/countries.ts` imported dynamically, to keep both out of the bundle.
+- **The camera** frames a selected country via `focusAtom`; unselecting the framed one puts it back,
+  once, until the reader moves the map. At world view it idles in a slow spin
+  (`src/globe/use-idle-spin.ts`), but not under reduced motion. Tapping a country ticks it through
+  `src/globe/taps.ts`, leaving the camera alone; double-click zoom is off, or it would tick twice.
+- **The menu** groups countries by M49 region and sub-region, opening the reader's home continent,
+  guessed from their time zone (`src/menu/regions.ts`). Search (`src/menu/search.ts`, over pure
+  `src/menu/matching.ts`) folds case, accents and punctuation, and goes a tier at a time: code or
+  word start, then anywhere, then near misses as suggestions only, which Enter doesn't tick. The
+  drawer's handle is react-aria's `useMove`; `menuSizeAtom` stores a fraction of the viewport per axis.
+- **A share link** carries the map in its hash, which browsers don't send to a server: a format version, a
+  fingerprint of the dataset's sorted codes, then one bit per country in that order, as URL-safe
+  base64. The order comes from the dataset, and a link from any other list reads as no map. It
+  opens read-only through `shownVisitsAtom` (`src/core/location.ts` watches the hash). The QR
+  encoder loads only when the share dialog opens.
+- **The passport** is pages (`src/passport/pages.ts`): a cover, an identity page, the visas, then
+  stamps six to a page. **Stamps** are generated, not drawn: shape, slant and wording from a stable hash of the code, ink
+  from the M49 region (`src/passport/stamp-design.ts`), and the outline is the country's home
+  landmass from the globe's boundaries (`src/passport/silhouette.ts`). The passport is paper and
+  board, the same in either colour scheme.
+- **Achievements** are visas, with generated line-work (`src/passport/guilloche.ts`), built from the dataset in
+  `src/passport/achievements.ts` (milestones,
+  continents, sub-regions, hemispheres, and collections in `src/data/collections.ts`). Earning one is
+  derived from the visits and not stored; its date is the day of the tick that met its last
+  requirement.
+- **Accessibility:** react-aria supplies what is hard to get right by hand (the drawer's handle, the
+  toast region). Anything a native tag already makes accessible stays native.
 
-The menu folds countries into their M49 regions as collapsible continents, with each sub-region a
-heading inside. The reader's home continent is guessed from their time zone, listed first and, until
-they open or close one themselves, the only one open; that state lives in `src/menu/regions.ts`.
+## Text
 
-Searching the list lives in `src/menu/search.ts`, over pure matching in `src/menu/matching.ts`.
-Names are compared folded, without case, accents or punctuation, a tier at a time: a code or the
-start of a word, then anywhere in the name, then, only when nothing matches, near misses by edit
-distance, offered as suggestions and never ticked by Enter.
+Messages are in `messages/en.json`, through [Paraglide](https://paraglidejs.com): typed functions
+like `m.menu_retry()` from `../paraglide/messages.js`, compiled into the uncommitted
+`src/paraglide/` by `prepare` and the Vite plugin. `allowJs` is on so a missing message or input
+fails the build.
 
-The globe is MapLibre through `react-map-gl`, over a keyless CARTO basemap
-whose light and dark styles follow the reader's colour scheme. Selected
-countries are one fill layer filtered by ISO 3166-1 alpha-2 code, so selecting
-a country changes a filter rather than any geometry. The atlas itself is a
-~700kB asset fetched at run time instead of bundled, and `src/data/countries.ts`
-is imported dynamically for the same reason.
-
-The country list is a drawer the reader sizes themselves: a column beside the globe on wide
-screens, a sheet under it on narrow ones. Its handle is react-aria's `useMove`, so one element
-answers to pointer, touch and the arrow keys; what it stores in `menuSizeAtom` is a fraction of
-the viewport per axis, which reaches the layout as the custom properties the grid tracks holding
-the drawer and the globe are sized by.
-
-Selecting a country also asks the camera to frame it, via `focusAtom`;
-unselecting the country the camera is framing puts it back where it was. That
-undo is deliberately one-shot and is dropped the moment the user moves the map
-themselves. Left alone at world view, the globe turns slowly west to east
-(`src/globe/use-idle-spin.ts`) until anyone touches it; never under reduced motion.
-
-Countries can also be ticked by tapping them on the globe. Every country is drawn on an invisible
-layer the map tests the pointer against; a tap goes through `src/globe/taps.ts`, which leaves the
-camera alone, since the reader is already looking at the country, and keeps the tap so the toast
-it raises can undo it. Double-click zoom is off, because its two clicks would tick and untick.
-
-A map is shared as a link whose hash carries it: a format version, a fingerprint of the dataset's
-sorted codes, then one bit per country in that order, as URL-safe base64. The order comes from the
-dataset rather than a list of its own, and the fingerprint makes a link written against any other
-list read as no map at all, rather than as the wrong countries. The hash never reaches a server. Opening one shows that map read-only through `shownVisitsAtom`, in place of the
-reader's own, which nothing can write to until they leave it; `src/core/location.ts` watches the
-hash. The share dialog draws the link as a QR code with an encoder loaded only when it opens.
-
-The passport is a dialog of pages: a cover, an identity page summing the map up, then its stamps,
-in the order they went in, six to a page (`src/passport/pages.ts`). Each stamp is generated, not
-drawn: its shape, slant and wording are picked from its country's code by a stable hash, its ink
-from its M49 region (`src/passport/stamp-design.ts`), and the outline in its middle is the country's home
-landmass, projected out of the same boundaries the globe draws (`src/passport/silhouette.ts`). The
-passport and its pages are paper and board, the same in either colour scheme. Ticking a country
-from the list, the search box or the globe plays its stamp moment (`src/core/ticking.ts`): the
-stamp comes down in the middle of the screen and flies into the passport button, unless the reader
-has asked for less motion. Anything that ticks a country for the reader goes through there, so
-undoing, loading and shared maps never stamp. Ticking only starts the moment: the passport plays it,
-and once the stamp lands (`src/passport/moments.ts`) works out whether a visa moment follows. A country being stamped fills in on a fresh layer of
-its own, because MapLibre can fade a paint property but not a filter; the been layer takes it back
-once the moment ends, by when the two look the same.
-
-Achievements are visas in the same passport, between the identity page and the stamps
-(`src/passport/pages.ts`). Each is a list of requirements, at least so many of a set of
-codes, built from the dataset in `src/passport/achievements.ts`: milestones, every continent and
-sub-region, hemispheres read off each country's bounds, and a few hand-kept collections in
-`src/data/collections.ts`. Being earned is only ever derived from the visits, never stored, and the
-date a visa is issued is the day of the tick that met its last requirement. A stamp that earns any
-is followed by the visa moment, the visa stuck on in a burst of confetti before it flies into the
-passport too; its guilloché line-work is generated like the stamps (`src/passport/guilloche.ts`).
-
-Text goes through [Paraglide](https://paraglidejs.com):
-
-- Each message is in `messages/en.json` and is called as a typed function, like `m.menu_retry()`,
-  from `../paraglide/messages.js`. Paraglide compiles them into `src/paraglide/`, which is not
-  committed: `pnpm install` compiles them (`prepare`), and so does every build, dev server and test
-  run (the Vite plugin in `vite.config.ts`). TypeScript reads the compiled JavaScript's types, which
-  is why `allowJs` is on, so a message that does not exist, or a missing input, fails the build.
-- Name keys by where they are shown, in `snake_case`: `menu_…`, `globe_…`, `share_…`, `passport_…`,
-  `achievement_…`, and `m49_…` for the M49 areas, which `src/core/m49.ts` maps codes onto.
-- Counts use plural variants (see `share_summary`) and shares are formatted with `: number` (see
-  `menu_progress`), rather than choosing words or formatting in code.
-- All of the app's text is in messages, except its name, and the lettering printed on the passport
-  itself: "PASSPORT", "VISA", stamp captions, a visa's fields and the machine-readable lines, which
-  read as part of the object, as a real passport's do. Countries are named by `Intl.DisplayNames`.
-- English is the only language. Adding one means a `messages/{locale}.json` and the locale in
-  `project.inlang/settings.json`; the strategy, in both `vite.config.ts` and the `prepare` script,
-  already picks the reader's preferred language. The page's `lang` follows the locale
-  (`src/index.tsx`); its `dir` is left to the default until there is a right-to-left language.
-
-react-aria supplies behaviour that is hard to get right by hand, such as the drawer's handle and
-the toast region, which pauses its timer while focused and is reachable with F6. Elements a native
-tag already makes accessible, such as checkboxes and disclosure buttons, stay native.
+- Keys are `snake_case`, named by where they're shown: `menu_…`, `globe_…`, `share_…`,
+  `passport_…`, `achievement_…`, and `m49_…` for M49 areas (`src/core/m49.ts`).
+- Counts use plural variants (`share_summary`), shares `: number` (`menu_progress`), not code.
+- All text is in messages except the app's name and the passport's own lettering ("PASSPORT",
+  "VISA", stamp captions, visa fields, the machine-readable lines). Countries are named by
+  `Intl.DisplayNames`.
+- English is the only language. Adding one is a `messages/{locale}.json` and the locale in
+  `project.inlang/settings.json`. The page's `lang` follows the locale (`src/index.tsx`); its `dir` stays the default until there is a right-to-left one.
 
 ## Generated data
 
-Two files under `src/data/` and the PNG icons in `src/public/` are generated. **Never hand-edit
-generated output**; change the source and regenerate.
+**Don't hand-edit generated output**: change the source and regenerate.
 
-- `src/data/boundary-codes.ts` — Natural Earth's alpha-3 keys mapped to the ISO 3166-1 alpha-2 codes the app uses.
-- `src/data/countries.ts` — the country list, with each `bounds` derived from the atlas.
-- `src/public/*.png` — `src/public/icon.svg` drawn at the sizes the manifest and iOS ask for, by
-  `pnpm run generate:icons`.
+- `src/data/countries.ts` and `src/data/boundary-codes.ts` come from `pnpm run generate:countries`.
+  The country list is the script's input as well as its output, so add or drop a country by editing
+  it and regenerating. Re-run it after bumping `visionscarto-world-atlas`.
+- `src/public/*.png` come from `src/public/icon.svg`, by `pnpm run generate:icons`.
 
-The list is the 193 UN member states plus its two observer states, the Holy See and Palestine.
-It holds codes, not names: each country's ISO 3166-1 alpha-2 code, its UN M49 region, and the most
-specific M49 group inside it (the intermediate region where there is one, otherwise the
-sub-region), which is what the menu groups by. Countries are named and sorted in the reader's
-language at run time with `Intl.DisplayNames` and `Intl.Collator`; browsers do not reliably name
-M49 areas, so their names are messages, which `src/core/m49.ts` maps each code onto.
-
-The two data files come from `pnpm run generate:countries`. The country list is the script's
-input as well as its output: a country the atlas cannot draw fails the run
-rather than quietly disappearing, so adding or dropping one is an edit to
-`src/data/countries.ts` followed by a regeneration. Re-run it after bumping
-`visionscarto-world-atlas`.
+The list is the 193 UN members plus the Holy See and Palestine, as codes: alpha-2, M49 region, and
+the most specific M49 group inside it, which the menu groups by. Names come from `Intl.DisplayNames`
+at run time, except M49 areas', which are messages.
 
 ## Conventions
 
-- Tabs for indentation; two spaces for JSON, YAML, Markdown, per `.editorconfig`. oxfmt owns formatting, including import order — do not hand-format.
-- Relative imports name the file with its extension, as in `./types.ts`, which the linter enforces; it is what lets Node run `scripts/` against the same files Vite bundles.
-- oxlint runs type-aware with every category set to error, so the linter is strict by default and exceptions are explicit. Suppress with a `oxlint-disable-next-line <rule> -- <reason>` comment; a suppression without a reason is not one.
-- Document declarations, from components and atoms down to interface members, with a JSDoc `/** */` block so editors show it on hover; `//` is for comments inside a body and for lint suppressions. Say what a thing is for in prose: TypeScript already carries the types, so `@param` and `@returns` are not required.
-- React: function components as arrow functions, wrapped in `memo` with a `displayName`. Props interfaces are `readonly`, and callbacks passed down are `useCallback`ed so the memoisation is worth having.
-- Components are presentational: they read and write atoms and hold no logic. State lives in atoms rather than in components. Derived state is a read-only atom; anything that mutates more than one atom is a write-only atom, not a handler in a component.
-- Styling is Tailwind v4, configured in `src/styles.css` rather than a config file. Use the `primary` theme colour, and give every element its `dark:` variant.
-- Tests are Vitest running in a real Chromium via Playwright, co-located as `*.spec.ts(x)`, and lean on snapshots. When markup or class order changes legitimately, update the snapshot in the same commit.
-- Commit messages and pull request titles follow Conventional Commits; the PR title is enforced in CI.
+- Tabs, but two spaces for JSON, YAML and Markdown (`.editorconfig`). oxfmt owns formatting and import order.
+- Relative imports include the extension (`./types.ts`), so Node can run `scripts/` against the same files.
+- oxlint runs type-aware with every category an error. Suppress with `oxlint-disable-next-line <rule> -- <reason>`; a reason is required.
+- Every declaration, down to interface members, gets a JSDoc `/** */` saying what it's for. No `@param` or `@returns`: the types carry them. `//` is for comments in a body and suppressions.
+- React: arrow function components in `memo` with a `displayName`, `readonly` props, and callbacks passed down wrapped in `useCallback`.
+- Components are presentational: state is atoms, derived state a read-only atom, and anything that changes more than one atom a write-only atom.
+- Tailwind v4, configured in `src/styles.css`. Use the `primary` theme colour, and give every element its `dark:` variant.
+- Tests are Vitest in a real Chromium, co-located as `*.spec.ts(x)`, with snapshots. Update a snapshot in the same commit as the markup change.
+- Commit messages and PR titles follow Conventional Commits; CI checks the title.
 
 ## Checks
 
-Run from the repository root:
-
-```sh
-pnpm run format      # oxfmt --check              (:fix to write)
-pnpm run lint        # oxlint, type-aware         (:fix to write)
-pnpm run build       # tsc --noEmit, then vite build
-pnpm run test        # vitest, in a browser
-pnpm run e2e         # playwright, against the preview build
-```
-
-There is no separate typecheck script — `pnpm run build` is it. Both test
-commands need a browser: `pnpm exec playwright install chromium` once.
-`pnpm run test` watches on a TTY, so pass `--run` for a single pass. `pnpm run
-e2e` builds nothing itself: it reuses a dev server on :5173 if one is already
-running, and otherwise starts `pnpm run preview`, which serves whatever
-`pnpm run build` last wrote to `dist/`.
-
-Run the checks that cover what you touched before committing. CI runs lint,
-format, build and test on every pull request.
+`pnpm run format`, `lint`, `build` (the typecheck) and `test` (pass `--run` for one pass), plus
+`e2e`; see the README for the e2e server. Run the ones covering what you touched before committing. CI runs all but `e2e` on every pull request.
 
 ## Working here
 
-- Dependency bumps arrive as Renovate pull requests; do not hand-edit `pnpm-lock.yaml` other than by running pnpm.
-- If a lockfile-maintenance or dependency update breaks a check, fix the code rather than pinning the dependency back.
-- Prefer fixing the data or the map style over special-casing a country in component code. Where a country genuinely is the exception, `src/data/boundaries.ts` is where that belongs, with a comment saying why.
+- Change dependencies with pnpm; the lockfile isn't edited by hand. Renovate brings updates.
+- If a dependency update breaks a check, fix the code rather than pinning the dependency back.
+- Prefer fixing the data or the map style over special-casing a country in a component. Where one really is the exception, it goes in `src/data/boundaries.ts`, with a comment saying why.

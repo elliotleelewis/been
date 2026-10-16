@@ -1,0 +1,4 @@
+target = "ClaudeCode"
+# Only Claude Code reads AGENTS.md here. The Codex rules misread file
+# patterns and code in it, like `*.tsx` and `m.menu_retry()`, as paths.
+tools = ["claude-code"]
