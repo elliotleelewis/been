@@ -49,7 +49,7 @@
     "@vitest/browser": "^5.0.0",
     "@vitest/browser-playwright": "^5.0.0",
     "@vitest/coverage-istanbul": "^5.0.0",
-    "agnix": "^0.58.0",
+    "agnix": "^0.59.0",
     "dotenv": "^18.0.0",
     "globals": "^17.0.0",
     "i18n-iso-countries": "^7.0.0",
