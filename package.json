@@ -54,7 +54,7 @@
     "globals": "^17.0.0",
     "i18n-iso-countries": "^7.0.0",
     "oxc-transform-react": "^0.155.0",
-    "oxfmt": "~0.73.0",
+    "oxfmt": "~0.74.0",
     "oxlint": "~1.88.0",
     "oxlint-tsgolint": "^7.0.0",
     "playwright": "~1.64.0",
