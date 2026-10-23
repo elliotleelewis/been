@@ -45,7 +45,7 @@ const renderGlobe = async (store: ReturnType<typeof createStore>): Promise<void>
 const mapBehind = (spy: MockInstance, message: string): MapLibreMap => {
 	const [map] = spy.mock.contexts;
 	if (!(map instanceof MapLibreMap)) {
-		throw new Error(message);
+		throw new TypeError(message);
 	}
 	return map;
 };
