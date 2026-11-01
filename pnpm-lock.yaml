@@ -255,8 +255,8 @@ importers:
         specifier: ^5.0.0
         version: 5.0.5(vitest@5.0.5)
       agnix:
-        specifier: ^0.59.0
-        version: 0.59.3
+        specifier: ^0.60.0
+        version: 0.60.2
       dotenv:
         specifier: ^18.0.0
         version: 18.0.9
@@ -1745,8 +1745,8 @@ packages:
     engines: {node: '>=0.4.0'}
     hasBin: true
 
-  agnix@0.59.3:
-    resolution: {integrity: sha512-4iZJMY+R00rSq/xKIxczKj+B1yBNYqlr1OzYXQMRJpO0xSVNKn6m0kWXYJL7jOXbtdgUYI29kVKQWX0hj7mJjA==}
+  agnix@0.60.2:
+    resolution: {integrity: sha512-QUSptJ1ffqr35fieJXriYEeW2eVT/NLnfP1wCHzTkcfbStP55ueWit6NbhL6VcQ34IrvhHh81J9sqjR3JGZEgg==}
     engines: {node: '>=16.0.0'}
     cpu: [x64, arm64]
     os: [darwin, linux, win32]
@@ -3973,7 +3973,7 @@ snapshots:
 
   acorn@8.19.0: {}
 
-  agnix@0.59.3: {}
+  agnix@0.60.2: {}
 
   ajv@6.15.0:
     dependencies:
