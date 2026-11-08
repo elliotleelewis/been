@@ -33,7 +33,7 @@
   "devDependencies": {
     "@inlang/paraglide-js": "^3.0.0",
     "@inlang/plugin-message-format": "^4.0.0",
-    "@playwright/test": "~1.64.0",
+    "@playwright/test": "~1.65.0",
     "@tailwindcss/vite": "^4.0.0",
     "@testing-library/jest-dom": "^7.0.0",
     "@testing-library/react": "^16.0.0",
@@ -57,7 +57,7 @@
     "oxfmt": "~0.76.0",
     "oxlint": "~1.90.0",
     "oxlint-tsgolint": "^7.0.0",
-    "playwright": "~1.64.0",
+    "playwright": "~1.65.0",
     "topojson-client": "^3.0.0",
     "tslib": "^2.0.0",
     "typescript": "~7.0.0",
