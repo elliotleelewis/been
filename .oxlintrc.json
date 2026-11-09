@@ -116,7 +116,19 @@
     "vitest/no-importing-vitest-globals": "off",
     "vitest/prefer-called-times": "off",
     "vitest/prefer-describe-function-title": "off",
-    "vitest/prefer-strict-boolean-matchers": "off"
+    "vitest/prefer-strict-boolean-matchers": "off",
+    "react/forbid-component-props": [
+      "error",
+      {
+        "forbid": [
+          {
+            "propName": "className",
+            "allowedFor": ["Link"]
+          },
+          "style"
+        ]
+      }
+    ]
   },
   "overrides": [
     {

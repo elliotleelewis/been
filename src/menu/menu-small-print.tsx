@@ -1,7 +1,7 @@
+import { Link } from "@tanstack/react-router";
 import { memo } from "react";
 import type { FC } from "react";
 
-import { COOKIES_PATH, PRIVACY_PATH } from "../core/types.ts";
 import { m } from "../paraglide/messages.js";
 
 const LINK_CLASS_NAME =
@@ -14,12 +14,12 @@ export const MenuSmallPrint: FC = memo(() => (
 			className="flex justify-center gap-4 px-4 py-6 text-xs text-zinc-500 dark:text-zinc-400"
 			aria-label={m.legal_footer()}
 		>
-			<a href={PRIVACY_PATH} className={LINK_CLASS_NAME}>
+			<Link to="/privacy" className={LINK_CLASS_NAME}>
 				{m.legal_privacy_link()}
-			</a>
-			<a href={COOKIES_PATH} className={LINK_CLASS_NAME}>
+			</Link>
+			<Link to="/cookies" className={LINK_CLASS_NAME}>
 				{m.legal_cookies_link()}
-			</a>
+			</Link>
 		</nav>
 	</li>
 ));

@@ -113,8 +113,3 @@ export interface Recommendation {
 	readonly code: string;
 	readonly reasons: readonly RecommendationReason[];
 }
-
-/** Where the site's privacy policy is. */
-export const PRIVACY_PATH = "/privacy";
-/** Where the site says what it keeps on the reader's device. */
-export const COOKIES_PATH = "/cookies";

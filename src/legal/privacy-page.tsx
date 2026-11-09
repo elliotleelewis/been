@@ -1,7 +1,7 @@
+import { Link } from "@tanstack/react-router";
 import { memo } from "react";
 import type { FC } from "react";
 
-import { COOKIES_PATH } from "../core/types.ts";
 import { m } from "../paraglide/messages.js";
 import { getLocale } from "../paraglide/runtime.js";
 import { LegalPage } from "./legal-page.tsx";
@@ -30,9 +30,9 @@ export const PrivacyPage: FC = memo(() => (
 			{m.privacy_updated({ date: updated })}
 		</p>
 		<p className="mt-4">
-			<a href={COOKIES_PATH} className={LINK_CLASS_NAME}>
+			<Link to="/cookies" className={LINK_CLASS_NAME}>
 				{m.privacy_cookies_link()}
-			</a>
+			</Link>
 		</p>
 		<LegalSection heading={m.privacy_visits_heading()}>
 			<p className={BODY_CLASS_NAME}>{m.privacy_visits_body()}</p>

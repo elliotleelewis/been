@@ -9,7 +9,9 @@ exports[`privacy page > should render 1`] = `
       class="flex h-header items-center justify-center bg-primary text-white dark:bg-zinc-950 dark:text-primary"
     >
       <a
-        class="rounded font-bold text-xl tracking-wide focus-visible:ring-2 focus-visible:ring-white focus-visible:outline-none dark:focus-visible:ring-primary"
+        aria-current="page"
+        class="rounded font-bold text-xl tracking-wide focus-visible:ring-2 focus-visible:ring-white focus-visible:outline-none dark:focus-visible:ring-primary active"
+        data-status="active"
         href="/"
       >
         been
@@ -200,7 +202,9 @@ exports[`privacy page > should render 1`] = `
         class="mt-12"
       >
         <a
-          class="inline-block rounded-full bg-primary px-5 py-2.5 font-semibold text-white hover:bg-primary/90 focus-visible:ring-4 focus-visible:ring-primary/50 focus-visible:outline-none dark:text-white"
+          aria-current="page"
+          class="inline-block rounded-full bg-primary px-5 py-2.5 font-semibold text-white hover:bg-primary/90 focus-visible:ring-4 focus-visible:ring-primary/50 focus-visible:outline-none dark:text-white active"
+          data-status="active"
           href="/"
         >
           Back to your map

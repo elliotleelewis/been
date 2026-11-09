@@ -2,6 +2,7 @@ import { act, cleanup, render } from "@testing-library/react";
 import { Provider, createStore } from "jotai";
 import { afterEach, describe, expect, it } from "vitest";
 
+import { InRouter } from "../core/in-router.tsx";
 import { STORAGE_KEYS } from "../core/storage.ts";
 import { CookiesPage } from "./cookies-page.tsx";
 import { STORED_THINGS } from "./types.ts";
@@ -10,7 +11,9 @@ import { STORED_THINGS } from "./types.ts";
 const renderPage = (): ReturnType<typeof render> =>
 	render(
 		<Provider store={createStore()}>
-			<CookiesPage />
+			<InRouter>
+				<CookiesPage />
+			</InRouter>
 		</Provider>,
 	);
 

@@ -1,7 +1,7 @@
+import { Link } from "@tanstack/react-router";
 import { memo } from "react";
 import type { FC } from "react";
 
-import { PRIVACY_PATH } from "../core/types.ts";
 import { m } from "../paraglide/messages.js";
 import { CookieFacts } from "./cookie-facts.tsx";
 import { LegalPage } from "./legal-page.tsx";
@@ -17,9 +17,9 @@ import { BODY_CLASS_NAME, CLOUDFLARE_COOKIES_URL, LINK_CLASS_NAME } from "./type
 export const CookiesPage: FC = memo(() => (
 	<LegalPage eyebrow={m.cookies_eyebrow()} heading={m.cookies_heading()} intro={m.cookies_intro()}>
 		<p className="mt-4">
-			<a href={PRIVACY_PATH} className={LINK_CLASS_NAME}>
+			<Link to="/privacy" className={LINK_CLASS_NAME}>
 				{m.cookies_privacy_link()}
-			</a>
+			</Link>
 		</p>
 		<LegalSection heading={m.cookies_cloudflare_heading()}>
 			<p className={BODY_CLASS_NAME}>{m.cookies_cloudflare_body()}</p>
