@@ -1,5 +1,5 @@
 import { createStore } from "jotai";
-import { describe, expect, it } from "vitest";
+import { afterEach, describe, expect, it } from "vitest";
 
 import { rawCountriesAtom } from "../core/dataset.ts";
 import { visitsAtom } from "../core/selection.ts";
@@ -35,6 +35,12 @@ const kindsShownIn = (store: ReturnType<typeof createStore>): readonly (string |
 	store.get(shownPassportPagesAtom).map((page) => page?.kind ?? null);
 
 describe("passport pages", () => {
+	// `visitsAtom` is backed by local storage, which outlives an individual store, and the files after
+	// this one would otherwise start with its countries already ticked.
+	afterEach(() => {
+		globalThis.localStorage.clear();
+	});
+
 	it("should open from the cover onto a spread, and turn a spread at a time", () => {
 		expect.hasAssertions();
 
