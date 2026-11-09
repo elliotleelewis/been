@@ -6,6 +6,7 @@ import { m } from "../paraglide/messages.js";
 import { MenuContinent } from "./menu-continent.tsx";
 import { MenuNextUp } from "./menu-next-up.tsx";
 import { MenuNoResults } from "./menu-no-results.tsx";
+import { MenuSmallPrint } from "./menu-small-print.tsx";
 import { expandedRegionsAtom } from "./regions.ts";
 import type { SearchResults } from "./types.ts";
 
@@ -61,6 +62,7 @@ export const MenuBody: FC<Props> = memo(({ loading, results }) => {
 					expanded={results.query !== "" || expandedRegions.includes(continent.code)}
 				/>
 			))}
+			<MenuSmallPrint />
 		</ul>
 	);
 });

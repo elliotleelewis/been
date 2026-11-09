@@ -1,7 +1,6 @@
 # AGENTS.md
 
-Orientation for coding agents. Keep it short and current, and describe structure,
-not features.
+Orientation for coding agents. Keep it short and current: structure, not features.
 `pnpm run lint` checks this file with [agnix](https://github.com/agent-sh/agnix),
 which caps it at 12,000 characters; `pnpm exec agnix explain <rule>` says why a
 rule fired.
@@ -39,6 +38,7 @@ root: the build reads `src/index.html` and writes `dist/`.
 | `src/menu/`     | The country list: continents, search, progress rings and the drawer's handle.                  |
 | `src/passport/` | The passport: its pages, generated stamps and visas, and their moments.                        |
 | `src/share/`    | The share button and dialog, with the link's QR code.                                          |
+| `src/legal/`    | The privacy and cookies pages, each its own HTML entry beside `index.html`.                    |
 | `src/data/`     | The country dataset and the world atlas it is drawn from, plus generated output.               |
 | `src/public/`   | Copied into the build as is: the web app manifest and the app's icons.                         |
 | `scripts/`      | Node-only tooling run by hand, not part of the bundle.                                         |
@@ -117,7 +117,7 @@ like `m.menu_retry()` from `../paraglide/messages.js`, compiled into the uncommi
 fails the build.
 
 - Keys are `snake_case`, named by where they're shown: `menu_…`, `globe_…`, `share_…`,
-  `passport_…`, `achievement_…`, and `m49_…` for M49 areas (`src/core/m49.ts`).
+  `passport_…`, `achievement_…`, `privacy_…`, `cookies_…`, `legal_…`, and `m49_…` for M49 areas (`src/core/m49.ts`).
 - Counts use plural variants (`share_summary`), shares `: number` (`menu_progress`), not code.
 - All text is in messages except the app's name and the passport's own lettering ("PASSPORT",
   "VISA", stamp captions, visa fields, the machine-readable lines). Countries are named by

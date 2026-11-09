@@ -9,6 +9,15 @@ export default defineConfig(({ command }) => ({
 		assetsDir: "./",
 		emptyOutDir: true,
 		outDir: "../dist",
+		// The app, and the pages of its small print, which Cloudflare Pages serves at /privacy and
+		// /cookies.
+		rolldownOptions: {
+			input: {
+				cookies: `${import.meta.dirname}/src/cookies.html`,
+				index: `${import.meta.dirname}/src/index.html`,
+				privacy: `${import.meta.dirname}/src/privacy.html`,
+			},
+		},
 		sourcemap: command === "serve",
 	},
 	envDir: "../",
@@ -38,7 +47,7 @@ export default defineConfig(({ command }) => ({
 		},
 		clearMocks: true,
 		coverage: {
-			exclude: ["./index.tsx", "**/*.spec.{ts,tsx}"],
+			exclude: ["./index.tsx", "./privacy.tsx", "./cookies.tsx", "**/*.spec.{ts,tsx}"],
 			provider: "istanbul",
 			reportsDirectory: "../coverage",
 		},
