@@ -7,7 +7,6 @@ import type { OverlayTriggerState } from "react-stately";
 
 import { Modal } from "../core/modal.tsx";
 import { m } from "../paraglide/messages.js";
-import { ShareIcon } from "./share-icon.tsx";
 import { ShareLink } from "./share-link.tsx";
 import { shareUrlAtom, visitedCountAtom } from "./share.ts";
 
@@ -18,8 +17,8 @@ interface Props {
 }
 
 /**
- * Shares the reader's map: a QR code to show someone in person, the link it encodes to copy or send,
- * and the map summed up in emoji, or while nothing is ticked, how to start a map worth sharing. It is a modal dialog,
+ * Shares the reader's map: a QR code to show someone in person, and the map summed up in emoji,
+ * ending with the link the code encodes, to copy or send, or while nothing is ticked, how to start a map worth sharing. It is a modal dialog,
  * labelled by its title, that hands focus back to the share button when it closes.
  */
 export const ShareDialog: FC<Props> = memo(({ overlayProps, state }) => {
@@ -52,7 +51,17 @@ export const ShareDialog: FC<Props> = memo(({ overlayProps, state }) => {
 					onClick={handleDone}
 					aria-label={m.share_close()}
 				>
-					<ShareIcon name="close" />
+					<svg
+						className="size-4"
+						viewBox="0 0 24 24"
+						fill="none"
+						stroke="currentColor"
+						strokeWidth="2"
+						strokeLinecap="round"
+						aria-hidden="true"
+					>
+						<path d="M6 6l12 12M18 6 6 18" />
+					</svg>
 				</button>
 				<p className="text-center text-sm text-zinc-600 dark:text-zinc-400">
 					{count === 0 ? m.share_empty() : m.share_summary({ count })}

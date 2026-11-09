@@ -22,7 +22,7 @@ describe("summary", () => {
 		const summary = summaryOf({
 			countries: COUNTRIES,
 			tiers: [],
-			url: undefined,
+			url: "https://been.example/#map",
 			visits: { DE: {}, ES: {}, FR: {}, IT: {}, JP: {}, NL: {} },
 		});
 
@@ -33,6 +33,8 @@ describe("summary", () => {
 				"🟪🟪🟪🟪🟪⬜⬜⬜⬜⬜ Europe 5/10",
 				"🟥🟥🟥🟥🟥⬜⬜⬜⬜⬜ Asia 1/2",
 				"⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜ Oceania 0/1",
+				"",
+				"https://been.example/#map",
 			].join("\n"),
 		);
 	}, 5000);
@@ -49,7 +51,7 @@ describe("summary", () => {
 		const summary = summaryOf({
 			countries: [...COUNTRIES, ...many],
 			tiers: [],
-			url: undefined,
+			url: "https://been.example/#map",
 			visits: Object.fromEntries([...nine, "X0", "FJ"].map((code) => [code, {}])),
 		});
 
@@ -58,7 +60,7 @@ describe("summary", () => {
 		expect(summary).toContain("🟩⬜⬜⬜⬜⬜⬜⬜⬜⬜ Africa 1/30");
 	}, 5000);
 
-	it("should count the visas, the rare ones among them, and end with the link if given", () => {
+	it("should count the visas, and the rare ones among them, before the link", () => {
 		expect.hasAssertions();
 
 		const summary = summaryOf({

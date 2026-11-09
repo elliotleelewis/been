@@ -60,14 +60,14 @@ export interface SummaryInput {
 	readonly visits: Visits;
 	/** The tier of every achievement the map has earned, one for each of its visas. */
 	readonly tiers: readonly AchievementTier[];
-	/** The link to the map, to end with, if it is to. */
-	readonly url: string | undefined;
+	/** The link to the map, which it ends with. */
+	readonly url: string;
 }
 
 /**
  * A map summed up in a few lines of text and emoji, to paste anywhere: how many countries of the
- * world, a bar for each continent in its stamps' ink, how many visas, and the link, if one is
- * given. It says how far through each continent the map is, but not which countries are on it.
+ * world, a bar for each continent in its stamps' ink, how many visas, and the link, which shows
+ * the whole map to whoever opens it.
  */
 export const summaryOf = ({ countries, tiers, url, visits }: SummaryInput): string => {
 	const visited = countries.filter(({ iso3166 }) => Object.hasOwn(visits, iso3166)).length;
@@ -83,6 +83,7 @@ export const summaryOf = ({ countries, tiers, url, visits }: SummaryInput): stri
 				`${barOf(progress)} ${M49_REGIONS[progress.region]()} ${String(progress.visited)}/${String(progress.total)}`,
 		),
 		...visaLineOf(tiers),
-		...(url === undefined ? [] : ["", url]),
+		"",
+		url,
 	].join("\n");
 };

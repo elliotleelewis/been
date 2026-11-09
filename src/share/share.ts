@@ -14,10 +14,7 @@ export const shareUrlAtom = atom((get) =>
 /** How many countries the reader's own map has ticked, which the share dialog says it is sending. */
 export const visitedCountAtom = atom((get) => Object.keys(get(visitsAtom)).length);
 
-/** Whether the emoji summary ends with the link to the map, or says only how far through it is. */
-export const summaryIncludesLinkAtom = atom(true);
-
-/** The reader's own map summed up in emoji, to paste anywhere, with its link or without. */
+/** The reader's own map summed up in emoji, to paste anywhere, ending with its link. */
 export const shareSummaryAtom = atom((get) => {
 	const visits = get(visitsAtom);
 	return summaryOf({
@@ -25,7 +22,7 @@ export const shareSummaryAtom = atom((get) => {
 		tiers: get(achievementsAtom)
 			.filter((achievement) => isEarned(achievement, visits))
 			.map(({ tier }) => tier),
-		url: get(summaryIncludesLinkAtom) ? get(shareUrlAtom) : undefined,
+		url: get(shareUrlAtom),
 		visits,
 	});
 });

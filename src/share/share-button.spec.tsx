@@ -38,11 +38,15 @@ const openDialog = (result: ReturnType<typeof render>): HTMLElement => {
 	return result.getByRole("dialog", { name: "Share your map" });
 };
 
-/** The link in the dialog's text box. */
-const linkIn = (result: ReturnType<typeof render>): string =>
-	result.getByRole("textbox", { name: "Link to your map" }).getAttribute("value") ?? "";
+/** The summary in the dialog, to copy or send. */
+const summaryIn = (result: ReturnType<typeof render>): string =>
+	result.getByRole("status", { name: "Your map, summed up in emoji" }).textContent;
 
-/** The map the link in the dialog's text box carries. */
+/** The link the summary in the dialog ends with. */
+const linkIn = (result: ReturnType<typeof render>): string =>
+	summaryIn(result).split("\n").at(-1) ?? "";
+
+/** The map the link in the dialog carries. */
 const sharedVisitsIn = (result: ReturnType<typeof render>): Visits | undefined => {
 	const value = shareValueOf(new globalThis.URL(linkIn(result)).hash);
 	return value === undefined ? undefined : decodeShare(value, CODES);
@@ -68,20 +72,21 @@ describe("share button", () => {
 		expect(qrCode).toBeInTheDocument();
 	}, 5000);
 
-	it("should copy the link", async () => {
+	it("should copy the summary, link and all", async () => {
 		expect.hasAssertions();
 
 		const writeText = vi.spyOn(globalThis.navigator.clipboard, "writeText").mockResolvedValue();
 		const result = renderButton(FRANCE_AND_ITALY);
 		openDialog(result);
 		act(() => {
-			result.getByRole("button", { name: "Copy link" }).click();
+			result.getByRole("button", { name: "Copy" }).click();
 		});
 
 		const copied = await result.findByRole("button", { name: "Copied!" });
 
 		expect(copied).toBeInTheDocument();
-		expect(writeText).toHaveBeenCalledWith(linkIn(result));
+		expect(writeText).toHaveBeenCalledWith(summaryIn(result));
+		expect(summaryIn(result)).toContain("been · 2/");
 	}, 5000);
 
 	it("should close from its close button", () => {
@@ -103,8 +108,8 @@ describe("share button", () => {
 		const dialog = openDialog(result);
 
 		expect(dialog).toHaveTextContent("Tick the countries you've been to");
-		expect(result.queryByRole("textbox", { name: "Link to your map" })).toBeNull();
-		expect(result.queryByRole("button", { name: "Copy link" })).toBeNull();
+		expect(result.queryByRole("status", { name: "Your map, summed up in emoji" })).toBeNull();
+		expect(result.queryByRole("button", { name: "Copy" })).toBeNull();
 	}, 5000);
 
 	it("should say one country, not one countries", () => {

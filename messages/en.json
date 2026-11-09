@@ -64,19 +64,14 @@
     }
   ],
   "share_ok": "OK",
-  "share_link_label": "Link to your map",
   "share_copied": "Copied!",
   "share_native_title": "My been map",
   "share_close": "Close",
-  "share_link_copy": "Copy link",
-  "share_link_share": "Share link…",
   "share_qr_label": "QR code for the link to your map",
   "share_qr_caption": "Scan to see my map",
-  "share_emoji_heading": "Your map in emoji",
   "share_emoji_label": "Your map, summed up in emoji",
-  "share_emoji_include_link": "Include the link",
-  "share_emoji_copy": "Copy summary",
-  "share_emoji_post": "Post…",
+  "share_emoji_copy": "Copy",
+  "share_emoji_share": "Share…",
   "share_emoji_headline": "been · {count}/{total} countries ({percent}%) 🌍",
   "share_emoji_visas": [
     {
