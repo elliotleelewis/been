@@ -14,8 +14,8 @@ interface Props {
 /**
  * The passport at the page it is open at. Pages after the cover are paper, the same in either
  * colour scheme, and each one turns in as it opens, unless the reader has asked for less motion.
- * Laid out at a phone's size, it is zoomed up whole where the screen has room, so its lettering,
- * stamps and visas grow together and stay sharp, as a transform would not keep them.
+ * It is a phone's width, and wider where the screen has room. Everything on its pages is sized in
+ * fractions of its width, so the lettering, stamps and visas grow with it.
  */
 export const PassportBook: FC<Props> = memo(({ onClose }) => {
 	const index = useAtomValue(passportPageAtom);
@@ -27,13 +27,13 @@ export const PassportBook: FC<Props> = memo(({ onClose }) => {
 	const page = pages[index] ?? { kind: "cover" };
 
 	return (
-		<div className="aspect-[5/7] w-72 max-w-full drop-shadow-xl passport-lg:max-w-none passport-lg:[zoom:1.25] passport-xl:[zoom:1.5] passport-2xl:[zoom:1.75]">
+		<div className="@container aspect-[5/7] w-72 max-w-full drop-shadow-xl passport-lg:w-90 passport-xl:w-108 passport-2xl:w-126">
 			{page.kind === "cover" ? (
 				<PassportCover onOpen={open} />
 			) : (
 				<div
 					key={index}
-					className="size-full origin-left overflow-hidden rounded-e-xl rounded-s-sm bg-[#f3eddc] bg-[repeating-linear-gradient(135deg,transparent_0_6px,rgb(29_43_79/0.035)_6px_7px)] motion-safe:animate-page-turn dark:bg-[#ece4cf]"
+					className="size-full origin-left overflow-hidden rounded-e-[4.2cqw] rounded-s-[1.4cqw] bg-[#f3eddc] bg-[repeating-linear-gradient(135deg,transparent_0_6px,rgb(29_43_79/0.035)_6px_7px)] motion-safe:animate-page-turn dark:bg-[#ece4cf]"
 				>
 					<PassportPageContent page={page} onClose={onClose} />
 				</div>

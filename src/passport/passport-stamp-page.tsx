@@ -29,11 +29,11 @@ export const PassportStampPage: FC<Props> = memo(({ index, onClose }) => {
 	const page = stamps.slice(index * STAMPS_PER_PAGE, (index + 1) * STAMPS_PER_PAGE);
 
 	return page.length === 0 ? (
-		<p className="flex size-full items-center justify-center p-8 text-center text-[#3b3a35]/70 text-sm dark:text-[#3b3a35]/70">
+		<p className="flex size-full items-center justify-center p-[11.1cqw] text-center text-[#3b3a35]/70 text-[4.9cqw]/[1.43] dark:text-[#3b3a35]/70">
 			{m.passport_stamps_empty()}
 		</p>
 	) : (
-		<ul className="grid size-full grid-cols-2 grid-rows-3 gap-1 p-3">
+		<ul className="grid size-full grid-cols-2 grid-rows-3 gap-[1.4cqw] p-[4.2cqw]">
 			{page.map((stamp) => (
 				<PassportStampSlot key={stamp.country.iso3166} stamp={stamp} onShow={show} />
 			))}

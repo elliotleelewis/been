@@ -12,6 +12,12 @@ interface Props {
 	readonly onShow: (country: Country) => void;
 }
 
+/**
+ * How many pixels one hundredth of the passport's width is at its narrowest, the width a stamp's
+ * offset is measured at, so that it scales with the passport.
+ */
+const PX_PER_CQW = 2.88;
+
 /** One stamp's place on a page, nudged off it by the stamp's design, which shows its country. */
 export const PassportStampSlot: FC<Props> = memo(({ onShow, stamp }) => {
 	const show = useCallback(() => {
@@ -27,8 +33,8 @@ export const PassportStampSlot: FC<Props> = memo(({ onShow, stamp }) => {
 		<li className="flex items-center justify-center">
 			<button
 				type="button"
-				className="size-full max-h-32 max-w-32 rounded-full mix-blend-multiply transition-transform hover:scale-105 focus-visible:ring-2 focus-visible:ring-primary/60 focus-visible:outline-none"
-				style={{ translate: `${String(across)}px ${String(down)}px` }}
+				className="size-full max-h-[44.4cqw] max-w-[44.4cqw] rounded-full mix-blend-multiply transition-transform hover:scale-105 focus-visible:ring-2 focus-visible:ring-primary/60 focus-visible:outline-none"
+				style={{ translate: `${String(across / PX_PER_CQW)}cqw ${String(down / PX_PER_CQW)}cqw` }}
 				onClick={show}
 				aria-label={label}
 			>

@@ -27,14 +27,14 @@ export const PassportIdPage: FC = memo(() => {
 	];
 
 	return (
-		<div className="flex size-full flex-col justify-between p-5 font-mono text-[#3b3a35] dark:text-[#3b3a35]">
-			<p className="font-sans font-semibold text-[0.6rem] tracking-[0.3em]">{"PASSPORT · been"}</p>
-			<div className="flex gap-4">
+		<div className="flex size-full flex-col justify-between p-[6.9cqw] font-mono text-[#3b3a35] dark:text-[#3b3a35]">
+			<p className="font-sans font-semibold text-[3.3cqw] tracking-[0.3em]">{"PASSPORT · been"}</p>
+			<div className="flex gap-[5.6cqw]">
 				<PassportCrest variant="page" />
-				<dl className="grid grid-cols-1 gap-1.5 text-xs">
+				<dl className="grid grid-cols-1 gap-[2.1cqw] text-[4.2cqw]/[1.33]">
 					{fields.map(([label, value]) => (
 						<div key={label}>
-							<dt className="font-sans text-[0.55rem] uppercase tracking-wider opacity-60">
+							<dt className="font-sans text-[3.1cqw] uppercase tracking-wider opacity-60">
 								{label}
 							</dt>
 							<dd className="font-semibold">{value}</dd>
@@ -42,7 +42,7 @@ export const PassportIdPage: FC = memo(() => {
 					))}
 				</dl>
 			</div>
-			<p className="break-all text-[0.55rem] leading-tight tracking-tight" aria-hidden="true">
+			<p className="break-all text-[3.1cqw] leading-tight tracking-tight" aria-hidden="true">
 				{mrzOf(stats).join("\n")}
 			</p>
 		</div>

@@ -20,7 +20,7 @@ export const PassportVisaPage: FC<Props> = memo(({ index }) => {
 	const page = visas.slice(index * VISAS_PER_PAGE, (index + 1) * VISAS_PER_PAGE);
 
 	return (
-		<ul className="grid size-full grid-rows-2 gap-4 px-3 py-5">
+		<ul className="grid size-full grid-rows-2 gap-[5.6cqw] px-[4.2cqw] py-[6.9cqw]">
 			{page.map((visa) => (
 				<li key={visa.achievement.id} className="flex items-center">
 					<VisaCard visa={visa} />
