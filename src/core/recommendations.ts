@@ -26,12 +26,19 @@ const NEW_REGION_WEIGHT = 0.5;
  * across the world needs twice the reason a neighbour does to be recommended over it.
  */
 const FARTHEST_SHARE = 0.5;
+/**
+ * How much of a reason is left each time a country already recommended has been for it, so the
+ * few countries recommended are for different things, rather than four microstates for one visa.
+ */
+const REPEAT_SHARE = 0.5;
 const TURN_DEGREES = 360;
 const RADIANS = Math.PI / 180;
 
 /** A reason, and how much it counts towards recommending its country. */
 interface Weighed {
 	readonly code: string;
+	/** What the reason is about, the same for every country it is a reason for. */
+	readonly key: string;
 	readonly reason: RecommendationReason;
 	readonly weight: number;
 }
@@ -64,9 +71,16 @@ const remainingFor = (achievement: Achievement, visits: Visits): number =>
 		0,
 	);
 
+/** How many countries an achievement asks for in all. */
+const requiredFor = (achievement: Achievement): number =>
+	achievement.requirements.reduce((total, { count }) => total + count, 0);
+
 /**
  * What every achievement not yet earned still asks for, by country: each country's share of it, by
- * its rarity, over how many it still needs, so one country short of a rare visa counts for most.
+ * its rarity, and by how far through it the country would take the map, so the last country for a
+ * continent nearly done counts for most, and the first of six microstates for little, however few
+ * there are. Only an achievement the map has started on counts: starting one afresh is no nearer
+ * to it from any one country than another, and somewhere new is what a continent's first is for.
  * Milestones are left out: any country at all counts towards them, so they would only say what is
  * true of every country.
  */
@@ -75,10 +89,16 @@ const achievementReasonsOf = (achievements: readonly Achievement[], visits: Visi
 		.filter(({ kind }) => kind !== "milestone")
 		.flatMap((achievement) => {
 			const remaining = remainingFor(achievement, visits);
+			const required = requiredFor(achievement);
+			if (remaining === required) {
+				return [];
+			}
+			const through = (required - remaining + 1) / required;
 			return [...sharesOf(achievement, visits)].map(([code, share]) => ({
 				code,
+				key: achievement.id,
 				reason: { achievement, kind: "achievement", remaining } as const,
-				weight: (TIER_WEIGHTS[achievement.tier] * share) / remaining,
+				weight: TIER_WEIGHTS[achievement.tier] * share * through,
 			}));
 		});
 
@@ -97,6 +117,7 @@ const neighbourReasonsOf = (countries: readonly CountryData[], visits: Visits): 
 			: [
 					{
 						code: iso3166,
+						key: `neighbour:${latest}`,
 						reason: { kind: "neighbour", neighbour: latest } as const,
 						weight: NEIGHBOUR_WEIGHT,
 					},
@@ -112,6 +133,7 @@ const regionReasonsOf = (countries: readonly CountryData[], visits: Visits): Wei
 		.filter(({ region }) => !visited.has(region))
 		.map(({ iso3166, region }) => ({
 			code: iso3166,
+			key: `region:${region}`,
 			reason: { kind: "region", region } as const,
 			weight: NEW_REGION_WEIGHT,
 		}));
@@ -185,12 +207,72 @@ const reasonsByCode = (
 	return byCode;
 };
 
+/** How much a country's reasons count, less those already used, as near as it is to the map. */
+const scoreOf = (
+	reasons: readonly Weighed[],
+	used: ReadonlyMap<string, number>,
+	nearness: number,
+): number =>
+	reasons.reduce(
+		(total, { key, weight }) => total + weight * REPEAT_SHARE ** (used.get(key) ?? 0),
+		0,
+	) *
+	(FARTHEST_SHARE + (1 - FARTHEST_SHARE) * nearness);
+
+/** The country with the most reason to go, counting reasons already used for less. */
+const bestOf = (
+	candidates: ReadonlyMap<string, readonly Weighed[]>,
+	used: ReadonlyMap<string, number>,
+	nearness: ReadonlyMap<string, number>,
+): { readonly code: string; readonly reasons: readonly Weighed[] } | undefined =>
+	[...candidates]
+		.map(([code, reasons]) => ({
+			code,
+			reasons,
+			score: scoreOf(reasons, used, nearness.get(code) ?? 0),
+		}))
+		.toSorted((one, other) => other.score - one.score || one.code.localeCompare(other.code))
+		.at(0);
+
+/** A country recommended, its strongest reason first. */
+const recommendationOf = (code: string, reasons: readonly Weighed[]): Recommendation => ({
+	code,
+	reasons: reasons.toSorted((one, other) => other.weight - one.weight).map(({ reason }) => reason),
+});
+
+/**
+ * Picks the countries to recommend from `candidates`, which it takes them out of, one at a time:
+ * each the one with the most reason to go, counting a reason for less each time one picked
+ * before was for it.
+ */
+const picked = (
+	candidates: Map<string, readonly Weighed[]>,
+	nearness: ReadonlyMap<string, number>,
+): readonly Recommendation[] => {
+	const used = new Map<string, number>();
+	const chosen: Recommendation[] = [];
+	for (
+		let best = bestOf(candidates, used, nearness);
+		best !== undefined && chosen.length < RECOMMENDATION_COUNT;
+		best = bestOf(candidates, used, nearness)
+	) {
+		candidates.delete(best.code);
+		for (const { key } of best.reasons) {
+			used.set(key, (used.get(key) ?? 0) + 1);
+		}
+		chosen.push(recommendationOf(best.code, best.reasons));
+	}
+	return chosen;
+};
+
 /**
  * The countries most worth visiting next, best first, each with why. A country counts for every
- * reason there is to go: each visa it brings nearer, most for the rarest and nearest, bordering
- * somewhere already visited, and being a continent's first; and all of it counts for more the
- * nearer the country is to somewhere already visited. Nothing is recommended to
- * a map with no visits yet, as there is nothing yet to say what its reader is after.
+ * reason there is to go: each visa it brings nearer, most for the rarest and nearest done,
+ * bordering somewhere already visited, and being a continent's first; and all of it counts for more
+ * the nearer the country is to somewhere already visited. They are picked one at a time, and a
+ * reason counts for less each time one already picked was for it, so they are for different
+ * things. Nothing is recommended to a map with no visits yet, as there is nothing yet to say what
+ * its reader is after.
  */
 export const recommendationsOf = (
 	countries: readonly CountryData[],
@@ -200,21 +282,8 @@ export const recommendationsOf = (
 	if (Object.keys(visits).length === 0) {
 		return [];
 	}
-	const nearness = nearnessOf(countries, visits);
-	const scored = [...reasonsByCode(countries, visits, achievements)].map(([code, reasons]) => ({
-		code,
-		reasons,
-		score:
-			reasons.reduce((total, { weight }) => total + weight, 0) *
-			(FARTHEST_SHARE + (1 - FARTHEST_SHARE) * (nearness.get(code) ?? 0)),
-	}));
-	return scored
-		.toSorted((one, other) => other.score - one.score || one.code.localeCompare(other.code))
-		.slice(0, RECOMMENDATION_COUNT)
-		.map(({ code, reasons }) => ({
-			code,
-			reasons: reasons
-				.toSorted((one, other) => other.weight - one.weight)
-				.map(({ reason }) => reason),
-		}));
+	return picked(
+		new Map(reasonsByCode(countries, visits, achievements)),
+		nearnessOf(countries, visits),
+	);
 };

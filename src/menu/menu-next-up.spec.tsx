@@ -41,7 +41,9 @@ describe("menu next up", () => {
 		const belgium = globalThis.document.querySelector<HTMLInputElement>("input#BE");
 
 		expect(globalThis.document.body).toHaveTextContent("Next up");
-		expect(globalThis.document.body).toHaveTextContent("2 to go for Europe · Borders France");
+		expect(globalThis.document.body).toHaveTextContent(
+			"2 to go for Europe · 2 to go for Western Europe",
+		);
 
 		act(() => {
 			belgium?.click();

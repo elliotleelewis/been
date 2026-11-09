@@ -58,8 +58,8 @@ describe("recommendations", () => {
 
 		expect(first?.code).toBe("LU");
 		expect(first?.reasons.slice(0, 2)).toMatchObject([
-			{ achievement: { id: "subregion:155" }, kind: "achievement", remaining: 1 },
 			{ achievement: { id: "region:150" }, kind: "achievement", remaining: 2 },
+			{ achievement: { id: "subregion:155" }, kind: "achievement", remaining: 1 },
 		]);
 		expect(first?.reasons).toContainEqual({ kind: "neighbour", neighbour: "FR" });
 	}, 5000);
@@ -80,8 +80,27 @@ describe("recommendations", () => {
 
 		const codes = recommend({ FR: {} }).map(({ code }) => code);
 
-		// Japan would be Asia's first, but Italy is next door.
-		expect(codes[0]).toBe("IT");
-		expect(codes.indexOf("IT")).toBeLessThan(codes.indexOf("JP"));
+		// Western Europe is under way, so Belgium and Luxembourg lead. China and Japan would each be
+		// Asia's first, and China is the nearer of the two; Italy, next door, comes before Japan.
+		expect(codes).toStrictEqual(["BE", "LU", "CN", "IT", "JP"]);
+	}, 5000);
+
+	it("should count only the achievements the map has started on", () => {
+		expect.hasAssertions();
+
+		const japan = recommend({ FR: {} }).find(({ code }) => code === "JP");
+
+		// Asia is untouched, so Japan is only ever its first, not a step towards finishing it.
+		expect(japan?.reasons).toStrictEqual([{ kind: "region", region: "142" }]);
+	}, 5000);
+
+	it("should recommend countries for different things, not all for the one", () => {
+		expect.hasAssertions();
+
+		const [, second] = recommend({ BE: {}, FR: {} });
+
+		// Luxembourg completes Western Europe as well, but having just been the reason for one
+		// recommendation, that counts for less than Italy's own.
+		expect(second?.code).toBe("IT");
 	}, 5000);
 });
