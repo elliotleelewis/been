@@ -1,7 +1,8 @@
+import { RouterProvider } from "@tanstack/react-router";
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 
-import { App } from "./app/app.tsx";
+import { router } from "./app/router.tsx";
 import { getLocale } from "./paraglide/runtime.js";
 
 import "./styles.css";
@@ -20,6 +21,6 @@ const root = createRoot(container);
 // oxlint-disable-next-line require-hook -- Mounting the app is the point of this file, not test setup.
 root.render(
 	<StrictMode>
-		<App />
+		<RouterProvider router={router} />
 	</StrictMode>,
 );

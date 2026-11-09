@@ -3,15 +3,13 @@ import { atomWithStorage } from "jotai/utils";
 
 import { sharedVisitsAtom } from "./location.ts";
 import { persistStorageAtom } from "./persistence.ts";
-import { validatedStorage } from "./storage.ts";
+import { STORAGE_KEYS, validatedStorage } from "./storage.ts";
 import type { Focus, Visits } from "./types.ts";
 import { isVisits } from "./visits.ts";
 
-const COUNTRIES_STORAGE_KEY = "APP_COUNTRIES";
-
 /** The visits as local storage holds them, cleared if not in today's shape. */
 const storedVisitsAtom = atomWithStorage<Visits>(
-	COUNTRIES_STORAGE_KEY,
+	STORAGE_KEYS.countries,
 	{},
 	validatedStorage(isVisits),
 	{ getOnInit: true },

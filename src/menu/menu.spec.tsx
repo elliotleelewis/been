@@ -4,6 +4,7 @@ import { afterEach, beforeEach, describe, expect, it } from "vitest";
 
 import { rawCountriesAtom } from "../core/dataset.ts";
 import { homeRegionAtom } from "../core/home-region.ts";
+import { InRouter } from "../core/in-router.tsx";
 import { HydrateAtoms, assertDefined } from "../core/test.ts";
 import type { Country } from "../core/types.ts";
 import { Menu } from "./menu.tsx";
@@ -24,14 +25,16 @@ const brazil: Country = {
 const renderMenu = (): ReturnType<typeof render> =>
 	render(
 		<Provider>
-			<HydrateAtoms
-				initialValues={[
-					[rawCountriesAtom, { [brazil.iso3166]: brazil, [country.iso3166]: country }],
-					[homeRegionAtom, "150"],
-				]}
-			>
-				<Menu />
-			</HydrateAtoms>
+			<InRouter>
+				<HydrateAtoms
+					initialValues={[
+						[rawCountriesAtom, { [brazil.iso3166]: brazil, [country.iso3166]: country }],
+						[homeRegionAtom, "150"],
+					]}
+				>
+					<Menu />
+				</HydrateAtoms>
+			</InRouter>
 		</Provider>,
 	);
 

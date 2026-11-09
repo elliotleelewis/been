@@ -1,5 +1,15 @@
 import { createJSONStorage } from "jotai/utils";
 
+/**
+ * The keys the app keeps things under in `localStorage`, every one of them, so the cookies page can
+ * list and clear exactly what the app stores.
+ */
+export const STORAGE_KEYS = {
+	countries: "APP_COUNTRIES",
+	expandedRegions: "APP_EXPANDED_REGIONS",
+	menuSize: "APP_MENU_SIZE",
+} as const;
+
 /** Jotai does not export its storage type, but this overload of `createJSONStorage` returns it. */
 type SyncStorage<Value> = ReturnType<typeof createJSONStorage<Value>>;
 

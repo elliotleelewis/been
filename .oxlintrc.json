@@ -116,7 +116,19 @@
     "vitest/no-importing-vitest-globals": "off",
     "vitest/prefer-called-times": "off",
     "vitest/prefer-describe-function-title": "off",
-    "vitest/prefer-strict-boolean-matchers": "off"
+    "vitest/prefer-strict-boolean-matchers": "off",
+    "react/forbid-component-props": [
+      "error",
+      {
+        "forbid": [
+          {
+            "propName": "className",
+            "allowedFor": ["Link"]
+          },
+          "style"
+        ]
+      }
+    ]
   },
   "overrides": [
     {
@@ -152,7 +164,14 @@
           {
             "patterns": [
               {
-                "group": ["../app/*", "../globe/*", "../menu/*", "../passport/*", "../share/*"],
+                "group": [
+                  "../app/*",
+                  "../globe/*",
+                  "../menu/*",
+                  "../passport/*",
+                  "../share/*",
+                  "../legal/*"
+                ],
                 "message": "Core is what every feature reads, so it imports none of them."
               }
             ]
@@ -168,7 +187,7 @@
           {
             "patterns": [
               {
-                "group": ["../app/*", "../menu/*", "../passport/*", "../share/*"],
+                "group": ["../app/*", "../menu/*", "../passport/*", "../share/*", "../legal/*"],
                 "message": "A feature imports only core and data; anything two features share belongs in core."
               }
             ]
@@ -184,7 +203,7 @@
           {
             "patterns": [
               {
-                "group": ["../app/*", "../globe/*", "../passport/*", "../share/*"],
+                "group": ["../app/*", "../globe/*", "../passport/*", "../share/*", "../legal/*"],
                 "message": "A feature imports only core and data; anything two features share belongs in core."
               }
             ]
@@ -200,7 +219,7 @@
           {
             "patterns": [
               {
-                "group": ["../app/*", "../globe/*", "../menu/*", "../share/*"],
+                "group": ["../app/*", "../globe/*", "../menu/*", "../share/*", "../legal/*"],
                 "message": "A feature imports only core and data; anything two features share belongs in core."
               }
             ]
@@ -216,7 +235,23 @@
           {
             "patterns": [
               {
-                "group": ["../app/*", "../globe/*", "../menu/*", "../passport/*"],
+                "group": ["../app/*", "../globe/*", "../menu/*", "../passport/*", "../legal/*"],
+                "message": "A feature imports only core and data; anything two features share belongs in core."
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "files": ["src/legal/**"],
+      "rules": {
+        "no-restricted-imports": [
+          "error",
+          {
+            "patterns": [
+              {
+                "group": ["../app/*", "../globe/*", "../menu/*", "../passport/*", "../share/*"],
                 "message": "A feature imports only core and data; anything two features share belongs in core."
               }
             ]

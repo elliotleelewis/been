@@ -4,9 +4,7 @@ import { atomWithStorage } from "jotai/utils";
 import { homeRegionAtom } from "../core/home-region.ts";
 import type { M49Region } from "../core/m49.ts";
 import { M49_REGION_CODES, isExpandedRegions } from "../core/m49.ts";
-import { validatedStorage } from "../core/storage.ts";
-
-const EXPANDED_REGIONS_STORAGE_KEY = "APP_EXPANDED_REGIONS";
+import { STORAGE_KEYS, validatedStorage } from "../core/storage.ts";
 
 /**
  * The continents the reader has left open in the menu, or `null` until they first open or close
@@ -14,7 +12,7 @@ const EXPANDED_REGIONS_STORAGE_KEY = "APP_EXPANDED_REGIONS";
  * where home is, so that nothing starts out hidden.
  */
 const storedExpandedRegionsAtom = atomWithStorage<readonly M49Region[] | null>(
-	EXPANDED_REGIONS_STORAGE_KEY,
+	STORAGE_KEYS.expandedRegions,
 	null,
 	validatedStorage(isExpandedRegions),
 	{ getOnInit: true },

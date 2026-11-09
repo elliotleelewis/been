@@ -1,0 +1,216 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`privacy page > should render 1`] = `
+<div>
+  <div
+    class="size-full overflow-y-auto bg-white text-zinc-900 dark:bg-zinc-900 dark:text-white"
+  >
+    <header
+      class="flex h-header items-center justify-center bg-primary text-white dark:bg-zinc-950 dark:text-primary"
+    >
+      <a
+        aria-current="page"
+        class="rounded font-bold text-xl tracking-wide focus-visible:ring-2 focus-visible:ring-white focus-visible:outline-none dark:focus-visible:ring-primary active"
+        data-status="active"
+        href="/"
+      >
+        been
+      </a>
+    </header>
+    <main
+      class="mx-auto max-w-2xl px-5 py-12 sm:px-8 sm:py-16"
+    >
+      <p
+        class="text-xs font-semibold tracking-[0.25em] text-primary uppercase"
+      >
+        Privacy
+      </p>
+      <h1
+        class="mt-3 text-4xl font-bold tracking-tight sm:text-5xl"
+      >
+        Privacy policy
+      </h1>
+      <p
+        class="mt-5 text-lg/relaxed text-zinc-700 dark:text-zinc-300"
+      >
+        Been is a hobby project of mine, and I’m the one responsible for it. There are no accounts, no ads, and no server of its own: your map stays on your device. Here’s everything the site collects about you, and what happens to it.
+      </p>
+      <p
+        class="mt-4 text-xs font-semibold tracking-widest text-zinc-500 uppercase dark:text-zinc-400"
+      >
+        Last updated November 9, 2026
+      </p>
+      <p
+        class="mt-4"
+      >
+        <a
+          class="font-semibold text-primary underline underline-offset-4 hover:text-zinc-900 focus-visible:ring-4 focus-visible:ring-primary/50 focus-visible:outline-none dark:hover:text-white"
+          href="/cookies"
+        >
+          What’s kept on your device
+        </a>
+      </p>
+      <section>
+        <h2
+          class="mt-12 text-2xl font-bold"
+        >
+          When you visit
+        </h2>
+        <p
+          class="mt-4 leading-relaxed text-zinc-700 dark:text-zinc-300"
+        >
+          Cloudflare hosts the site, so every request goes through it. Like any web host, it sees your IP address, your browser, and the page you asked for, so it can send you the page and keep the site safe from attacks. I don’t keep any of that myself.
+        </p>
+        <p
+          class="mt-4 leading-relaxed text-zinc-700 dark:text-zinc-300"
+        >
+          I count visits with Cloudflare Web Analytics. It tells me how many people visited and which pages they looked at, but not who they were.
+        </p>
+      </section>
+      <section>
+        <h2
+          class="mt-12 text-2xl font-bold"
+        >
+          Your map
+        </h2>
+        <p
+          class="mt-4 leading-relaxed text-zinc-700 dark:text-zinc-300"
+        >
+          The countries you tick, and the day you ticked each, stay in your browser. They’re never sent to me or to anyone else, and I have no copy of them. Recommendations, visas and stamps are all worked out on your device.
+        </p>
+        <p
+          class="mt-4 leading-relaxed text-zinc-700 dark:text-zinc-300"
+        >
+          A share link carries your map in the part of the address after the #, which browsers don’t send to any server. It only goes where you send it, and anyone you send it to can see the countries on it. Its QR code is made on your device too.
+        </p>
+      </section>
+      <section>
+        <h2
+          class="mt-12 text-2xl font-bold"
+        >
+          The globe
+        </h2>
+        <p
+          class="mt-4 leading-relaxed text-zinc-700 dark:text-zinc-300"
+        >
+          The map under the globe, its coastlines and place names, comes from CARTO. Your browser fetches it from CARTO’s servers as you look around, so CARTO sees your IP address, your browser, and which parts of the world you’re looking at. It doesn’t learn which countries you’ve ticked: the country shapes come from this site.
+        </p>
+      </section>
+      <section>
+        <h2
+          class="mt-12 text-2xl font-bold"
+        >
+          Who else sees it
+        </h2>
+        <p
+          class="mt-4 leading-relaxed text-zinc-700 dark:text-zinc-300"
+        >
+          Cloudflare, which runs the hosting, the analytics and the security checks, and CARTO, for the map under the globe. Their networks span the world, so your data may be handled outside the country you’re in. The site uses your device’s own fonts, so your browser doesn’t ask Google for any.
+        </p>
+        <ul
+          class="mt-4 flex flex-col gap-2"
+        >
+          <li>
+            <a
+              class="font-semibold text-primary underline underline-offset-4 hover:text-zinc-900 focus-visible:ring-4 focus-visible:ring-primary/50 focus-visible:outline-none dark:hover:text-white"
+              href="https://www.cloudflare.com/privacypolicy/"
+            >
+              Cloudflare’s privacy policy
+            </a>
+          </li>
+          <li>
+            <a
+              class="font-semibold text-primary underline underline-offset-4 hover:text-zinc-900 focus-visible:ring-4 focus-visible:ring-primary/50 focus-visible:outline-none dark:hover:text-white"
+              href="https://carto.com/privacy"
+            >
+              CARTO’s privacy policy
+            </a>
+          </li>
+        </ul>
+      </section>
+      <section>
+        <h2
+          class="mt-12 text-2xl font-bold"
+        >
+          What it’s for
+        </h2>
+        <p
+          class="mt-4 leading-relaxed text-zinc-700 dark:text-zinc-300"
+        >
+          Running the site, keeping it secure, drawing the globe, and seeing roughly how many people visit. That’s all: none of it is sold, shared for advertising, or used to build a profile of you.
+        </p>
+      </section>
+      <section>
+        <h2
+          class="mt-12 text-2xl font-bold"
+        >
+          Do Not Track
+        </h2>
+        <p
+          class="mt-4 leading-relaxed text-zinc-700 dark:text-zinc-300"
+        >
+          There’s no tracking to opt out of, so the site treats every visit the same, whether or not your browser sends Do Not Track or Global Privacy Control.
+        </p>
+      </section>
+      <section>
+        <h2
+          class="mt-12 text-2xl font-bold"
+        >
+          Your choices
+        </h2>
+        <p
+          class="mt-4 leading-relaxed text-zinc-700 dark:text-zinc-300"
+        >
+          Your map is yours to clear whenever you like, from the cookies page. Wherever you live, you can also ask me what I hold about you, and ask me to correct or delete it. Depending on where you live, you may also be able to complain to a privacy regulator.
+        </p>
+        <p
+          class="mt-4"
+        >
+          <a
+            class="font-semibold text-primary underline underline-offset-4 hover:text-zinc-900 focus-visible:ring-4 focus-visible:ring-primary/50 focus-visible:outline-none dark:hover:text-white"
+            href="https://www.linkedin.com/in/elliotleelewis"
+          >
+            Message me on LinkedIn
+          </a>
+        </p>
+      </section>
+      <section>
+        <h2
+          class="mt-12 text-2xl font-bold"
+        >
+          Children
+        </h2>
+        <p
+          class="mt-4 leading-relaxed text-zinc-700 dark:text-zinc-300"
+        >
+          Anyone can use Been. It doesn’t ask for anyone’s name, age, email, or location, so it collects no more from children than from anyone else.
+        </p>
+      </section>
+      <section>
+        <h2
+          class="mt-12 text-2xl font-bold"
+        >
+          Changes
+        </h2>
+        <p
+          class="mt-4 leading-relaxed text-zinc-700 dark:text-zinc-300"
+        >
+          If the site starts collecting anything new, I’ll update this page first.
+        </p>
+      </section>
+      <p
+        class="mt-12"
+      >
+        <a
+          aria-current="page"
+          class="inline-block rounded-full bg-primary px-5 py-2.5 font-semibold text-white hover:bg-primary/90 focus-visible:ring-4 focus-visible:ring-primary/50 focus-visible:outline-none dark:text-white active"
+          data-status="active"
+          href="/"
+        >
+          Back to your map
+        </a>
+      </p>
+    </main>
+  </div>
+</div>
+`;
