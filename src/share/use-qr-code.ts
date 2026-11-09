@@ -1,13 +1,15 @@
 import { useEffect, useState } from "react";
 import type { QrCodeGenerateResult } from "uqr";
 
+import { QR_BORDER } from "./qr.ts";
+
 /**
  * React Compiler cannot lower an import expression, so the dynamic import that keeps the encoder
  * out of the main bundle sits at module scope rather than inside the effect that calls it.
  */
 const encodeQrCode = async (text: string): Promise<QrCodeGenerateResult> => {
 	const { encode } = await import("uqr");
-	return encode(text, { border: 4, ecc: "M" });
+	return encode(text, { border: QR_BORDER, ecc: "M" });
 };
 
 /** A QR code's modules, and the text they were encoded from. */

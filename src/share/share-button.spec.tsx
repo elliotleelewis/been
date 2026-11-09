@@ -84,13 +84,13 @@ describe("share button", () => {
 		expect(writeText).toHaveBeenCalledWith(linkIn(result));
 	}, 5000);
 
-	it("should close when done", () => {
+	it("should close from its close button", () => {
 		expect.hasAssertions();
 
 		const result = renderButton(FRANCE_AND_ITALY);
 		openDialog(result);
 		act(() => {
-			result.getByRole("button", { name: "Done" }).click();
+			result.getByRole("button", { name: "Close" }).click();
 		});
 
 		expect(result.queryByRole("dialog")).toBeNull();
