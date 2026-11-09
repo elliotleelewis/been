@@ -19,7 +19,7 @@
   },
   "dependencies": {
     "@tailwindcss/forms": "^0.5.0",
-    "@tanstack/react-router": "^1.170.46",
+    "@tanstack/react-router": "^1.0.0",
     "classnames": "^2.0.0",
     "jotai": "^3.0.0",
     "maplibre-gl": "^6.0.0",

@@ -170,7 +170,7 @@ importers:
         specifier: ^0.5.0
         version: 0.5.11(tailwindcss@4.3.5)
       '@tanstack/react-router':
-        specifier: ^1.170.46
+        specifier: ^1.0.0
         version: 1.170.46(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
       classnames:
         specifier: ^2.0.0
