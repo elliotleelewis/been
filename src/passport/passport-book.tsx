@@ -2,13 +2,14 @@ import { useAtomValue, useSetAtom } from "jotai";
 import { memo, useCallback, useRef } from "react";
 import type { FC } from "react";
 
-import { passportPageAtom, shownPassportPagesAtom, turnPassportPageAtom } from "./pages.ts";
+import { passportOpeningOfAtom, passportPageAtom, turnPassportPageAtom } from "./pages.ts";
 import { PassportSheet } from "./passport-sheet.tsx";
 import type { SheetPlace } from "./passport-sheet.tsx";
 import { askForDeviceTilt, useFoil } from "./use-foil.ts";
-import { usePassportSpread } from "./use-passport-spread.ts";
 
 interface Props {
+	/** Whether it lies open two pages at a time, as it does on screens wide enough. */
+	readonly spread: boolean;
 	/** Closes the passport. */
 	readonly onClose: () => void;
 }
@@ -23,18 +24,17 @@ const PLACES: readonly (readonly SheetPlace[])[] = [[], ["alone"], ["left", "rig
  * visa on its pages catches the same light. Each page turns in as it opens, unless the reader has
  * asked for less motion.
  */
-export const PassportBook: FC<Props> = memo(({ onClose }) => {
+export const PassportBook: FC<Props> = memo(({ onClose, spread }) => {
 	const index = useAtomValue(passportPageAtom);
-	const shown = useAtomValue(shownPassportPagesAtom);
+	const { shown } = useAtomValue(passportOpeningOfAtom)(spread);
 	const turnPage = useSetAtom(turnPassportPageAtom);
-	const spread = usePassportSpread();
 	const light = useRef<HTMLDivElement>(null);
 	useFoil(light, true);
 	const open = useCallback(() => {
 		// Opening the cover is the one tap iOS gives to ask for the device's tilt, which the light follows.
 		askForDeviceTilt();
-		turnPage(1);
-	}, [turnPage]);
+		turnPage({ by: 1, spread });
+	}, [spread, turnPage]);
 	const places = PLACES[shown.length] ?? [];
 
 	return (

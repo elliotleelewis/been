@@ -1,5 +1,5 @@
 import { useSetAtom } from "jotai";
-import { memo, useCallback, useEffect, useRef } from "react";
+import { memo, useCallback, useRef } from "react";
 import type { FC } from "react";
 import { useDialog, useKeyboard } from "react-aria";
 import type { KeyboardEvents, OverlayTriggerAria } from "react-aria";
@@ -7,9 +7,10 @@ import type { OverlayTriggerState } from "react-stately";
 
 import { Modal } from "../core/modal.tsx";
 import { m } from "../paraglide/messages.js";
-import { passportPageAtom, turnPassportPageAtom } from "./pages.ts";
+import { turnPassportPageAtom } from "./pages.ts";
 import { PassportBook } from "./passport-book.tsx";
 import { PassportControls } from "./passport-controls.tsx";
+import { usePassportSpread } from "./use-passport-spread.ts";
 
 interface Props {
 	/** The props `useOverlayTrigger` hands the dialog, which tie it to the button that opened it. */
@@ -30,12 +31,8 @@ const TURNS: Readonly<Record<string, number>> = { ArrowLeft: -1, ArrowRight: 1 }
 export const PassportDialog: FC<Props> = memo(({ overlayProps, state }) => {
 	const ref = useRef<HTMLDivElement>(null);
 	const { dialogProps, titleProps } = useDialog({}, ref);
-	const setPage = useSetAtom(passportPageAtom);
 	const turnPage = useSetAtom(turnPassportPageAtom);
-
-	useEffect(() => {
-		setPage(0);
-	}, [setPage]);
+	const spread = usePassportSpread();
 
 	const close = useCallback(() => {
 		state.close();
@@ -47,10 +44,10 @@ export const PassportDialog: FC<Props> = memo(({ overlayProps, state }) => {
 				event.continuePropagation();
 			} else {
 				event.preventDefault();
-				turnPage(by);
+				turnPage({ by, spread });
 			}
 		},
-		[turnPage],
+		[spread, turnPage],
 	);
 	const { keyboardProps } = useKeyboard({ onKeyDown: handleKeyDown });
 
@@ -70,8 +67,8 @@ export const PassportDialog: FC<Props> = memo(({ overlayProps, state }) => {
 				<h2 {...titleProps} className="sr-only">
 					{m.passport_title()}
 				</h2>
-				<PassportBook onClose={close} />
-				<PassportControls />
+				<PassportBook spread={spread} onClose={close} />
+				<PassportControls spread={spread} />
 				<button
 					type="button"
 					className="absolute end-2 top-2 rounded-full p-2 hover:bg-zinc-100 focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:outline-none dark:hover:bg-zinc-800"

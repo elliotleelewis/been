@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import type { RefObject } from "react";
 
+import { useReducedMotion } from "../core/use-match-media.ts";
 import type { ConfettiPiece } from "./confetti.ts";
 
 /** How long a piece of confetti flies, from the burst to the end of its fall, in milliseconds. */
@@ -30,9 +31,9 @@ export const useConfetti = (
 	pieces: readonly ConfettiPiece[],
 	id: number | undefined,
 ): void => {
+	const reduced = useReducedMotion();
 	useEffect(() => {
 		const element = container.current;
-		const reduced = globalThis.matchMedia("(prefers-reduced-motion: reduce)").matches;
 		const animations =
 			element === null || id === undefined || reduced
 				? []
@@ -54,5 +55,5 @@ export const useConfetti = (
 				animation.cancel();
 			}
 		};
-	}, [container, id, pieces]);
+	}, [container, id, pieces, reduced]);
 };

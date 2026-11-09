@@ -111,7 +111,7 @@ describe("visa card", () => {
 
 		const { store } = renderPage();
 		store.set(flippedVisaAtom, "milestone:1");
-		store.set(turnPassportPageAtom, 1);
+		store.set(turnPassportPageAtom, { by: 1, spread: false });
 
 		expect(store.get(flippedVisaAtom)).toBeNull();
 	}, 5000);

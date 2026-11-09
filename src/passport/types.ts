@@ -163,5 +163,21 @@ export type PassportPage =
 	| { readonly kind: "stamps"; readonly index: number; readonly of: number }
 	| { readonly kind: "visas"; readonly index: number; readonly of: number };
 
+/** What the passport shows where it is open: its pages on show, and where it can turn to. */
+export interface PassportOpening {
+	/** Left to right: the cover alone, one page, or two facing, the right one blank if there is none. */
+	readonly shown: readonly (PassportPage | null)[];
+	/** Whether there are pages before and after those on show. */
+	readonly turns: { readonly back: boolean; readonly forward: boolean };
+}
+
+/** A turn of the passport's pages. */
+export interface PassportTurn {
+	/** How many pages, or spreads where it lies open, forwards or, below 0, back. */
+	readonly by: number;
+	/** Whether it lies open two pages at a time. */
+	readonly spread: boolean;
+}
+
 /** How many stamps a page of the passport holds. */
 export const STAMPS_PER_PAGE = 6;
