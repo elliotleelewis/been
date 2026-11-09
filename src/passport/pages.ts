@@ -1,12 +1,13 @@
 import { atom } from "jotai";
 
 import { countriesAtom } from "../core/countries.ts";
+import { achievementsAtom } from "../core/dataset.ts";
 import { homeRegionAtom } from "../core/home-region.ts";
 import { M49_REGIONS } from "../core/m49.ts";
 import { passportStampsAtom } from "./stamps.ts";
 import { STAMPS_PER_PAGE, VISAS_PER_PAGE } from "./types.ts";
 import type { PassportPage, PassportStats } from "./types.ts";
-import { achievementsAtom, visasAtom } from "./visas.ts";
+import { visasAtom } from "./visas.ts";
 
 /** What the identity page says about the map on show. */
 export const passportStatsAtom = atom<PassportStats>((get) => {

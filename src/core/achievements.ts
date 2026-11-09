@@ -1,8 +1,7 @@
-import { M49_REGIONS, M49_REGION_CODES, M49_SUBREGIONS } from "../core/m49.ts";
-import type { CountryData, Visits } from "../core/types.ts";
 import { ISLAND_NATIONS, LANDLOCKED, MICROSTATES } from "../data/collections.ts";
 import { m } from "../paraglide/messages.js";
-import type { Achievement, Requirement } from "./types.ts";
+import { M49_REGIONS, M49_REGION_CODES, M49_SUBREGIONS } from "./m49.ts";
+import type { Achievement, CountryData, Requirement, Visits } from "./types.ts";
 
 /** The counts of countries that earn a milestone, short of every country there is. */
 const MILESTONES: readonly number[] = [10, 25, 50, 100, 150];

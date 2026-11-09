@@ -31,17 +31,17 @@ any country data fetched from a third party at run time.
 One package; `pnpm-workspace.yaml` only holds pnpm's settings. `src/` is Vite's
 root: the build reads `src/index.html` and writes `dist/`.
 
-| Directory       | Role                                                                              |
-| --------------- | --------------------------------------------------------------------------------- |
-| `src/app/`      | The shell that puts the features on screen: the layout, the header.               |
-| `src/core/`     | What every feature reads: the dataset, the visits, ticking, the share link, M49.  |
-| `src/globe/`    | The MapLibre globe: its layers and camera, and ticking by tapping it.             |
-| `src/menu/`     | The country list: continents, search, progress rings and the drawer's handle.     |
-| `src/passport/` | The passport: its pages, generated stamps and visas, achievements, their moments. |
-| `src/share/`    | The share button and dialog, with the link's QR code.                             |
-| `src/data/`     | The country dataset and the world atlas it is drawn from, plus generated output.  |
-| `src/public/`   | Copied into the build as is: the web app manifest and the app's icons.            |
-| `scripts/`      | Node-only tooling run by hand, not part of the bundle.                            |
+| Directory       | Role                                                                                           |
+| --------------- | ---------------------------------------------------------------------------------------------- |
+| `src/app/`      | The shell that puts the features on screen: the layout, the header.                            |
+| `src/core/`     | What every feature reads: the dataset, achievements, the visits, ticking, the share link, M49. |
+| `src/globe/`    | The MapLibre globe: its layers and camera, and ticking by tapping it.                          |
+| `src/menu/`     | The country list: continents, search, progress rings and the drawer's handle.                  |
+| `src/passport/` | The passport: its pages, generated stamps and visas, and their moments.                        |
+| `src/share/`    | The share button and dialog, with the link's QR code.                                          |
+| `src/data/`     | The country dataset and the world atlas it is drawn from, plus generated output.               |
+| `src/public/`   | Copied into the build as is: the web app manifest and the app's icons.                         |
+| `scripts/`      | Node-only tooling run by hand, not part of the bundle.                                         |
 
 Each folder is flat, and a file's kind is in its name: `*.tsx` is a component, `use-*.ts` a hook
 onto something React does not own, `types.ts` the folder's shared types and constants, and every
@@ -97,11 +97,11 @@ Rules that keep that shape:
   from the M49 region (`src/passport/stamp-design.ts`), and the outline is the country's home
   landmass from the globe's boundaries (`src/passport/silhouette.ts`). The passport is paper and
   board, the same in either colour scheme.
-- **Achievements** are visas, with generated line-work (`src/passport/guilloche.ts`), built from the dataset in
-  `src/passport/achievements.ts` (milestones,
-  continents, sub-regions, hemispheres, and collections in `src/data/collections.ts`). Earning one is
-  derived from the visits and not stored; its date is the day of the tick that met its last
-  requirement.
+- **Achievements** are built from the dataset in `src/core/achievements.ts` (milestones, continents,
+  sub-regions, hemispheres, and collections in `src/data/collections.ts`), so any feature can read
+  them. Earning one is derived from the visits and not stored; its date is the day of the tick that
+  met its last requirement. The passport shows each earned one as a visa, with generated line-work
+  (`src/passport/guilloche.ts`).
 - **Accessibility:** react-aria supplies what is hard to get right by hand (the drawer's handle, the
   toast region). Anything a native tag already makes accessible stays native.
 

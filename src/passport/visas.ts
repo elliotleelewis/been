@@ -1,16 +1,11 @@
 import { atom } from "jotai";
 
-import { rawCountriesAtom } from "../core/dataset.ts";
+import { earnedOn, isEarned } from "../core/achievements.ts";
+import { achievementsAtom } from "../core/dataset.ts";
 import { shownVisitsAtom } from "../core/selection.ts";
-import { achievementsOf, earnedOn, isEarned } from "./achievements.ts";
 import { passportDateOfAtom } from "./dates.ts";
-import type { Achievement, Visa } from "./types.ts";
+import type { Visa } from "./types.ts";
 import { visaDesignOf } from "./visa-design.ts";
-
-/** Every achievement there is for the country list, none until it has loaded. */
-export const achievementsAtom = atom<readonly Achievement[]>((get) =>
-	achievementsOf(Object.values(get(rawCountriesAtom))),
-);
 
 /**
  * The visas in the passport of whichever map is on show: one for each achievement it has earned, in
