@@ -14,8 +14,9 @@ interface Props {
 /**
  * The passport at the page it is open at. Pages after the cover are paper, the same in either
  * colour scheme, and each one turns in as it opens, unless the reader has asked for less motion.
- * It is a phone's width, and wider where the screen has room. Everything on its pages is sized in
- * fractions of its width, so the lettering, stamps and visas grow with it.
+ * It is as large as the screen leaves room for, up to a real passport's size and less what the
+ * dialog puts around it across and down, so it always fits whole. Everything on its pages is sized
+ * in fractions of its width, so the lettering, stamps and visas grow with it.
  */
 export const PassportBook: FC<Props> = memo(({ onClose }) => {
 	const index = useAtomValue(passportPageAtom);
@@ -27,7 +28,7 @@ export const PassportBook: FC<Props> = memo(({ onClose }) => {
 	const page = pages[index] ?? { kind: "cover" };
 
 	return (
-		<div className="@container aspect-[5/7] w-72 max-w-full drop-shadow-xl passport-lg:w-90 passport-xl:w-108 passport-2xl:w-126">
+		<div className="@container aspect-[5/7] w-[min(31.5rem,calc(100vw-5rem),calc((100dvh-10.5rem)*5/7))] drop-shadow-xl">
 			{page.kind === "cover" ? (
 				<PassportCover onOpen={open} />
 			) : (
