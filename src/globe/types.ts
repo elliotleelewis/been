@@ -29,4 +29,5 @@ export const MapLayerKeys = {
 	Fresh: "fresh",
 	Hit: "hit",
 	Hover: "hover",
+	Next: "next",
 } as const;

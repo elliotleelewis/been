@@ -1,0 +1,38 @@
+import { useAtomValue } from "jotai";
+import { memo } from "react";
+import type { FC } from "react";
+
+import { m } from "../paraglide/messages.js";
+import { MenuItem } from "./menu-item.tsx";
+import { nextUpAtom } from "./next-up.ts";
+
+/**
+ * The countries recommended to visit next, above the continents, each ticked like any other in the
+ * list, with why it is recommended beneath its name. It is not there until there is something to
+ * recommend from, nor on a shared map.
+ */
+export const MenuNextUp: FC = memo(() => {
+	const nextUp = useAtomValue(nextUpAtom);
+
+	return nextUp.length === 0 ? null : (
+		<li>
+			<h2 className="flex h-14 items-center gap-3 bg-primary/10 px-4 font-medium text-zinc-900 dark:bg-primary/15 dark:text-white">
+				<svg
+					className="size-4 shrink-0 text-primary"
+					viewBox="0 0 24 24"
+					fill="currentColor"
+					aria-hidden="true"
+				>
+					<path d="M12 2l2.4 7.2H22l-6 4.6 2.3 7.2-6.3-4.5-6.3 4.5L8 13.8 2 9.2h7.6z" />
+				</svg>
+				{m.menu_next_up()}
+			</h2>
+			<ul className="divide-y divide-zinc-100 dark:divide-zinc-800">
+				{nextUp.map(({ country, why }) => (
+					<MenuItem key={country.iso3166} country={country} detail={why} />
+				))}
+			</ul>
+		</li>
+	);
+});
+MenuNextUp.displayName = "MenuNextUp";

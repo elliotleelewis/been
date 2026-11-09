@@ -6,6 +6,8 @@ export interface CountryData {
 	readonly region: M49Region;
 	readonly subregion: M49Subregion;
 	readonly bounds?: readonly [number, number, number, number];
+	/** The countries it shares a land border with, by code, as the atlas draws them, if any. */
+	readonly neighbours?: readonly string[];
 }
 
 /** A country as the app shows it, named in the reader's language. */
@@ -91,4 +93,19 @@ export interface Earners {
 	 * tick is older than dates being kept, when there is no telling which one it was.
 	 */
 	readonly clincher: string | undefined;
+}
+
+/** Why a country is worth visiting next. */
+export type RecommendationReason =
+	/** It is one of what an achievement not yet earned still asks for, `remaining` of them in all. */
+	| { readonly kind: "achievement"; readonly achievement: Achievement; readonly remaining: number }
+	/** It borders a country already visited, the latest of them if more than one. */
+	| { readonly kind: "neighbour"; readonly neighbour: string }
+	/** It is in a continent with no visits yet. */
+	| { readonly kind: "region"; readonly region: M49Region };
+
+/** A country worth visiting next, and why, the strongest reason first. */
+export interface Recommendation {
+	readonly code: string;
+	readonly reasons: readonly RecommendationReason[];
 }

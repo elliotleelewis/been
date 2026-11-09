@@ -1,12 +1,14 @@
 import { useAtomValue } from "jotai";
-import type { FillLayerSpecification } from "maplibre-gl";
+import type { FillLayerSpecification, LineLayerSpecification } from "maplibre-gl";
 import { useEffect, useMemo, useState } from "react";
 
+import { recommendedCodesAtom } from "../core/recommended.ts";
 import { selectedCountriesAtom } from "../core/selection.ts";
 import { stampMomentAtom } from "../core/ticking.ts";
 
 type Filter = NonNullable<FillLayerSpecification["filter"]>;
 type Paint = NonNullable<FillLayerSpecification["paint"]>;
+type LinePaint = NonNullable<LineLayerSpecification["paint"]>;
 
 export interface GlobeLayers {
 	beenFilter: Filter;
@@ -16,6 +18,9 @@ export interface GlobeLayers {
 	hoverFilter: Filter;
 	hoverPaint: Paint;
 	hitPaint: Paint;
+	/** The countries recommended to visit next, outlined. */
+	nextFilter: Filter;
+	nextPaint: LinePaint;
 }
 
 const PRIMARY = "#fd7e14";
@@ -37,6 +42,13 @@ const FRESH_FADE_DELAY_MS = 40;
 const HIT_PAINT: Paint = { "fill-color": PRIMARY, "fill-opacity": 0 };
 const BEEN_PAINT: Paint = { "fill-color": PRIMARY, "fill-opacity": BEEN_OPACITY };
 const HOVER_PAINT: Paint = { "fill-color": PRIMARY, "fill-opacity": 0.25 };
+/** A dashed outline, as a route not yet taken, faint enough to leave the ticked fills to lead. */
+const NEXT_PAINT: LinePaint = {
+	"line-color": PRIMARY,
+	"line-dasharray": [2, 1.5],
+	"line-opacity": 0.85,
+	"line-width": 1.5,
+};
 
 /** A filter matching the country `code`, or none at all when there is no code. */
 const isCountry = (code: string | undefined): Filter => ["==", ["get", "iso_3166_1"], code ?? ""];
@@ -66,6 +78,7 @@ const useFadingIn = (fresh: string | undefined): string | undefined => {
  */
 export const useGlobeLayers = (hoveredCountry?: string): GlobeLayers => {
 	const selectedCountries = useAtomValue(selectedCountriesAtom);
+	const recommended = useAtomValue(recommendedCodesAtom);
 	const fresh = useAtomValue(stampMomentAtom)?.code;
 	const fading = useFadingIn(fresh);
 
@@ -90,6 +103,10 @@ export const useGlobeLayers = (hoveredCountry?: string): GlobeLayers => {
 		[fading],
 	);
 	const hoverFilter: Filter = useMemo(() => isCountry(hoveredCountry), [hoveredCountry]);
+	const nextFilter: Filter = useMemo(
+		() => ["in", ["get", "iso_3166_1"], ["literal", recommended]],
+		[recommended],
+	);
 
 	return useMemo(
 		() => ({
@@ -100,7 +117,9 @@ export const useGlobeLayers = (hoveredCountry?: string): GlobeLayers => {
 			hitPaint: HIT_PAINT,
 			hoverFilter,
 			hoverPaint: HOVER_PAINT,
+			nextFilter,
+			nextPaint: NEXT_PAINT,
 		}),
-		[beenFilter, freshFilter, freshPaint, hoverFilter],
+		[beenFilter, freshFilter, freshPaint, hoverFilter, nextFilter],
 	);
 };

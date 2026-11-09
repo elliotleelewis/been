@@ -1,7 +1,7 @@
 # AGENTS.md
 
-Orientation for coding agents. Keep it short, keep it current, and describe
-structure rather than features — features change, the shape does not.
+Orientation for coding agents. Keep it short and current, and describe structure,
+not features.
 `pnpm run lint` checks this file with [agnix](https://github.com/agent-sh/agnix),
 which caps it at 12,000 characters; `pnpm exec agnix explain <rule>` says why a
 rule fired.
@@ -23,8 +23,8 @@ Goals, in priority order:
 4. **Small.** One page, one screen's worth of state. Prefer deleting code to
    generalising it.
 
-Non-goals: accounts, syncing between devices, an API, offline-first machinery,
-any country data fetched from a third party at run time.
+Non-goals: accounts, syncing, an API, offline-first machinery, country data
+fetched from a third party at run time.
 
 ## Architecture
 
@@ -69,9 +69,9 @@ Rules that keep that shape:
   the day it was ticked. Stored state is validated when read, and anything not in today's shape is
   cleared rather than migrated. Writing visits asks once a session for persistent storage
   (`src/core/persistence.ts`); the web app manifest matters as much, as Safari clears an unused
-  site's storage after a week but not a home-screen app's. No service worker: offline isn't a goal.
+  site's storage after a week but not a home-screen app's.
 - **Ticking** for the reader goes through `src/core/ticking.ts`, which starts the stamp moment;
-  undoing, loading and shared maps go around it, so they don't stamp. The passport plays the moment, and when the stamp
+  undoing, loading and shared maps bypass it and don't stamp. The passport plays the moment, and when the stamp
   lands (`src/passport/moments.ts`) decides whether a visa moment follows. Both respect reduced motion.
 - **The globe** is MapLibre through `react-map-gl`, on a keyless CARTO basemap that follows the
   colour scheme. Selected countries are one fill layer filtered by code: selecting changes a filter,
@@ -104,6 +104,8 @@ Rules that keep that shape:
   one as a visa, with generated line-work (`src/passport/guilloche.ts`), which turns over to list
   those countries (`src/passport/visa-backs.ts`). Rare tiers are foil: CSS layers lit by
   the light `src/passport/use-foil.ts` casts on the whole passport, eased in `src/passport/foil.ts`.
+- **Recommendations** (`src/core/recommendations.ts`) weigh visas, borders and nearness; the menu
+  and the globe show them.
 - **Accessibility:** react-aria supplies what is hard to get right by hand (the drawer's handle, the
   toast region). Anything a native tag already makes accessible stays native.
 
@@ -127,7 +129,7 @@ fails the build.
 
 **Don't hand-edit generated output**: change the source and regenerate.
 
-- `src/data/countries.ts` and `src/data/boundary-codes.ts` come from `pnpm run generate:countries`.
+- `src/data/countries.ts` (bounds, neighbours) and `src/data/boundary-codes.ts` come from `pnpm run generate:countries`.
   The country list is the script's input as well as its output, so add or drop a country by editing
   it and regenerating. Re-run it after bumping `visionscarto-world-atlas`.
 - `src/public/*.png` come from `src/public/icon.svg`, by `pnpm run generate:icons`.

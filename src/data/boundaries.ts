@@ -29,6 +29,16 @@ export const EMPTY_BOUNDARIES: CountryBoundaries = { features: [], type: "Featur
 const HOME_LANDMASS_ONLY: ReadonlySet<string> = new Set(["FR", "NL", "NO"]);
 
 /**
+ * Land borders the atlas draws that are not borders a trip crosses, as each pair of codes. France
+ * is drawn with French Guiana, so it shares a border with Brazil and Suriname, but someone who has
+ * been to Paris is no nearer to either; the neighbours generated for each country leave them out.
+ */
+export const OVERSEAS_BORDERS: readonly (readonly [string, string])[] = [
+	["BR", "FR"],
+	["FR", "SR"],
+];
+
+/**
  * How far apart two parts of a country may sit and still count as one landmass. Wide enough to
  * hold Corsica onto France, narrow enough to leave Réunion off it.
  */

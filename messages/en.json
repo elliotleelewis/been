@@ -34,6 +34,19 @@
     }
   ],
   "menu_back_to_my_map": "Back to my map",
+  "menu_next_up": "Next up",
+  "menu_next_achievement": [
+    {
+      "declarations": ["input count", "input title", "local countPlural = count: plural"],
+      "selectors": ["countPlural"],
+      "match": {
+        "countPlural=one": "Completes {title}",
+        "countPlural=*": "{count} to go for {title}"
+      }
+    }
+  ],
+  "menu_next_neighbour": "Borders {country}",
+  "menu_next_region": "Your first in {region}",
   "globe_tap_added": "Added {country}",
   "globe_tap_removed": "Removed {country}",
   "globe_undo": "Undo",

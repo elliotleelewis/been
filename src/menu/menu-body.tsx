@@ -4,6 +4,7 @@ import type { FC } from "react";
 
 import { m } from "../paraglide/messages.js";
 import { MenuContinent } from "./menu-continent.tsx";
+import { MenuNextUp } from "./menu-next-up.tsx";
 import { MenuNoResults } from "./menu-no-results.tsx";
 import { expandedRegionsAtom } from "./regions.ts";
 import type { SearchResults } from "./types.ts";
@@ -50,6 +51,7 @@ export const MenuBody: FC<Props> = memo(({ loading, results }) => {
 
 	return (
 		<ul className="min-h-0 flex-1 overscroll-contain overflow-y-auto">
+			{results.query === "" ? <MenuNextUp /> : null}
 			{results.continents.map((continent) => (
 				<MenuContinent
 					key={continent.code}

@@ -50,8 +50,17 @@ export const Globe = memo(
 			onMouseMove: handleMouseMove,
 			onMouseOut: handleMouseOut,
 		} = useCountryPointer();
-		const { beenFilter, beenPaint, freshFilter, freshPaint, hitPaint, hoverFilter, hoverPaint } =
-			useGlobeLayers(hover?.code);
+		const {
+			beenFilter,
+			beenPaint,
+			freshFilter,
+			freshPaint,
+			hitPaint,
+			hoverFilter,
+			hoverPaint,
+			nextFilter,
+			nextPaint,
+		} = useGlobeLayers(hover?.code);
 
 		return (
 			<Map
@@ -108,6 +117,14 @@ export const Globe = memo(
 							beforeId={labelsLayerId}
 							filter={hoverFilter}
 							paint={hoverPaint}
+						/>
+						<Layer
+							id={MapLayerKeys.Next}
+							type="line"
+							source={MapSourceKeys.Countries}
+							beforeId={labelsLayerId}
+							filter={nextFilter}
+							paint={nextPaint}
 						/>
 					</>
 				)}

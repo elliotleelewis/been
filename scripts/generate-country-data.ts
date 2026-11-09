@@ -1,7 +1,8 @@
 // Regenerates the two files that tie the app's country list to the boundaries the map draws:
 //
 //   src/data/boundary-codes.ts - Natural Earth's alpha-3 keys, translated to ISO 3166-1 alpha-2
-//   src/data/countries.ts      - the same list, with `bounds` taken from those boundaries
+//   src/data/countries.ts      - the same list, with `bounds` taken from those boundaries, and the
+//                                countries each shares a land border with
 //
 // Run it with `pnpm run generate:countries` after bumping `visionscarto-world-atlas`. The country
 // list is the input, not the output: a country the atlas cannot draw fails the run rather than
@@ -16,10 +17,11 @@ import { readFileSync, writeFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 
 import isoCountries from "i18n-iso-countries";
-import type { Topology } from "topojson-specification";
+import { neighbors } from "topojson-client";
+import type { GeometryCollection, Topology } from "topojson-specification";
 
 import type { CountryData } from "../src/core/types.ts";
-import { boundsOf, toBoundaries } from "../src/data/boundaries.ts";
+import { OVERSEAS_BORDERS, boundsOf, toBoundaries } from "../src/data/boundaries.ts";
 import type { Bounds } from "../src/data/boundaries.ts";
 import { countries } from "../src/data/countries.ts";
 
@@ -29,21 +31,62 @@ const ATLAS_PATH = resolve("../node_modules/visionscarto-world-atlas/world/50m.j
 const CODES_PATH = resolve("../src/data/boundary-codes.ts");
 const COUNTRIES_PATH = resolve("../src/data/countries.ts");
 
-type BoundedCountry = CountryData & { readonly bounds: Bounds };
+type BoundedCountry = CountryData & {
+	readonly bounds: Bounds;
+	readonly neighbours: readonly string[];
+};
 
 // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- A file installed from npm, not untrusted input.
 const readAtlas = (): Topology => JSON.parse(readFileSync(ATLAS_PATH, "utf8")) as Topology;
 
-const alpha3sOf = (topology: Topology): readonly string[] => {
+/** The atlas's country shapes, which it keeps as one collection. */
+const geometriesOf = (topology: Topology): GeometryCollection["geometries"] => {
 	const object = topology.objects["countries"];
 	if (object?.type !== "GeometryCollection") {
 		throw new Error("The world atlas has no `countries` collection.");
 	}
-	return object.geometries.flatMap((geometry) => {
+	return object.geometries;
+};
+
+const alpha3sOf = (topology: Topology): readonly string[] =>
+	geometriesOf(topology).flatMap((geometry) => {
 		const properties: Readonly<Record<string, unknown>> = geometry.properties ?? {};
 		const alpha3 = properties["a3"];
 		return typeof alpha3 === "string" ? [alpha3] : [];
 	});
+
+/**
+ * The countries each listed country shares a land border with, by code: those whose shapes in the
+ * atlas share an edge, less the borders only an overseas territory makes, and those with
+ * territories nothing lists.
+ */
+const toNeighbours = (
+	topology: Topology,
+	codes: Readonly<Record<string, string>>,
+): ReadonlyMap<string, readonly string[]> => {
+	const geometries = geometriesOf(topology);
+	const codeOf = (index: number): string | undefined => {
+		const alpha3: unknown = geometries[index]?.properties?.["a3"];
+		return typeof alpha3 === "string" ? codes[alpha3] : undefined;
+	};
+	const overseas = new Set(
+		OVERSEAS_BORDERS.flatMap(([one, other]) => [`${one}:${other}`, `${other}:${one}`]),
+	);
+	const neighbours = new Map<string, Set<string>>();
+	for (const [index, others] of neighbors(geometries).entries()) {
+		const code = codeOf(index);
+		for (const other of others.map((neighbour) => codeOf(neighbour))) {
+			if (
+				code !== undefined &&
+				other !== undefined &&
+				other !== code &&
+				!overseas.has(`${code}:${other}`)
+			) {
+				neighbours.set(code, (neighbours.get(code) ?? new Set()).add(other));
+			}
+		}
+	}
+	return new Map([...neighbours].map(([code, others]) => [code, [...others].toSorted()]));
 };
 
 /** Only the countries the app lists, so a code the app does not track can never reach the map. */
@@ -79,12 +122,19 @@ const withBounds = (
 		);
 	}
 
+	const neighbours = toNeighbours(topology, codes);
 	return countries.map(({ iso3166, region, subregion }) => {
 		const boundary = boundaries.get(iso3166);
 		if (boundary === undefined) {
 			throw new Error(`No boundary for ${iso3166}.`);
 		}
-		return { bounds: boundsOf(boundary), iso3166, region, subregion };
+		return {
+			bounds: boundsOf(boundary),
+			iso3166,
+			neighbours: neighbours.get(iso3166) ?? [],
+			region,
+			subregion,
+		};
 	});
 };
 
@@ -109,11 +159,12 @@ const serializeCountries = (values: readonly BoundedCountry[]): string =>
 		'import type { CountryData } from "../core/types.ts";',
 		"",
 		"export const countries: readonly CountryData[] = [",
-		...values.map(({ bounds, iso3166, region, subregion }) =>
+		...values.map(({ bounds, iso3166, neighbours, region, subregion }) =>
 			[
 				"\t{",
 				`\t\tbounds: [${bounds.join(", ")}],`,
 				`\t\tiso3166: ${JSON.stringify(iso3166)},`,
+				...(neighbours.length === 0 ? [] : [`\t\tneighbours: ${JSON.stringify(neighbours)},`]),
 				`\t\tregion: ${JSON.stringify(region)},`,
 				`\t\tsubregion: ${JSON.stringify(subregion)},`,
 				"\t},",

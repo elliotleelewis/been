@@ -8,9 +8,11 @@ import type { Country } from "../core/types.ts";
 
 interface Props {
 	readonly country: Country;
+	/** A line beneath the country's name, such as why it is recommended. */
+	readonly detail?: string | undefined;
 }
 
-export const MenuItem: FC<Props> = memo(({ country }) => {
+export const MenuItem: FC<Props> = memo(({ country, detail }) => {
 	const addCountry = useSetAtom(stampCountryAtom);
 	const removeCountry = useSetAtom(removeCountryAtom);
 	// Someone else's map, opened from a share link, is there to look at, not to change.
@@ -35,7 +37,14 @@ export const MenuItem: FC<Props> = memo(({ country }) => {
 					onChange={toggleCountry}
 					disabled={viewingSharedMap}
 				/>
-				<span>{country.name}</span>
+				{detail === undefined ? (
+					<span>{country.name}</span>
+				) : (
+					<span className="flex flex-col py-0.5">
+						<span>{country.name}</span>
+						<span className="text-xs text-zinc-500 dark:text-zinc-400">{detail}</span>
+					</span>
+				)}
 			</label>
 		</li>
 	);
