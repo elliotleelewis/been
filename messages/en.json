@@ -93,6 +93,8 @@
   "passport_stamp_undated": "{country}. Show on the globe",
   "passport_visa_dated": "{title} visa: {description}, issued {date}",
   "passport_visa_undated": "{title} visa: {description}",
+  "passport_visa_foil": ". A foil visa",
+  "passport_visa_legendary": ". A legendary visa",
   "passport_visa_flip_back": "Turn the {title} visa back over",
   "passport_visa_countries": "Countries that earned the {title} visa",
   "passport_visa_clinched_milestone": [
@@ -158,6 +160,8 @@
       }
     }
   ],
+  "achievement_continents_title": "Every continent",
+  "achievement_continents_description": "A country in each of the five continents",
   "achievement_north": "North of the equator",
   "achievement_south": "South of the equator",
   "achievement_east": "East of Greenwich",

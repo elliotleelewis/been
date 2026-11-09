@@ -16,6 +16,103 @@
 			transform: perspective(1200px) rotateY(-35deg);
 		}
 	}
+
+	/* The left page of a spread turning in, from the spine at its right. */
+	--animate-page-turn-back: page-turn-back 320ms cubic-bezier(0.2, 0.7, 0.3, 1);
+
+	@keyframes page-turn-back {
+		from {
+			opacity: 0.4;
+			transform: perspective(1200px) rotateY(35deg);
+		}
+	}
+}
+
+/* What the passport's light falls on: `src/passport/use-foil.ts` sets these custom properties every
+   frame, and leans the element towards the light while the reader steers it. Without it, under
+   reduced motion, the light rests straight on. */
+.foil-lit {
+	transform: perspective(1400px) rotateX(var(--foil-tilt-x, 0deg)) rotateY(var(--foil-tilt-y, 0deg));
+}
+
+/* Foil visas. Holographic layers over a rare achievement's printed visa, which catch the light of
+   whatever they lie in. A foil visa has foil on its band and medallion only, so it still reads as
+   paper; a legendary one is foil all over. */
+.visa-face {
+	container-type: inline-size;
+}
+
+.visa-foil {
+	position: absolute;
+	inset: 0;
+	border-radius: 2%/3.2%;
+	pointer-events: none;
+}
+
+/* Foil ink: bands of colour, sliding across as the light moves, that take the place of the ink
+   wherever they are lighter than it. The paper is lighter still, so it is left as it is. */
+.visa-foil-ink {
+	background-image: repeating-linear-gradient(
+		115deg,
+		#e2468f 0%,
+		#e8a21f 6%,
+		#2fb873 12%,
+		#2b8fe0 18%,
+		#8a5ae6 24%,
+		#e2468f 30%
+	);
+	background-size: 400% 400%;
+	background-position: var(--foil-x, 50%) var(--foil-y, 50%);
+	mix-blend-mode: lighten;
+}
+
+/* On a legendary visa, a pale wash of the same colours over the paper as well. */
+.visa-foil-sheen {
+	background-image: repeating-linear-gradient(
+		115deg,
+		#ffc2df 0%,
+		#ffe6a8 8%,
+		#c4f5d6 16%,
+		#bfe4ff 24%,
+		#dccbff 32%,
+		#ffc2df 40%
+	);
+	background-size: 300% 300%;
+	background-position: calc(100% - var(--foil-x, 50%)) var(--foil-y, 50%);
+	mix-blend-mode: multiply;
+	opacity: calc(0.35 + var(--foil-shine, 0.35) * 0.3);
+}
+
+/* A fine print of dots in two corners of a legendary visa, which flash as the light crosses. */
+.visa-foil-dots {
+	background-image: radial-gradient(circle, rgb(255 255 255 / 0.95) 30%, transparent 34%);
+	background-size: 2.2% 3.5%;
+	mask-image: linear-gradient(135deg, #000 0 10%, transparent 24% 76%, #000 90%);
+	mix-blend-mode: overlay;
+	opacity: calc(var(--foil-shine, 0.35) * 0.9);
+}
+
+/* The bright spot where the light catches. */
+.visa-foil-glare {
+	background-image: radial-gradient(
+		circle at var(--foil-x, 50%) var(--foil-y, 50%),
+		rgb(255 255 255 / 0.8),
+		rgb(255 255 255 / 0) 50%
+	);
+	mix-blend-mode: soft-light;
+	opacity: var(--foil-shine, 0.35);
+}
+
+/* A foil visa's foil is its band, along the top, and its medallion, at the left. */
+.visa-face[data-tier="foil"] .visa-foil-ink {
+	mask-image:
+		linear-gradient(#000, #000),
+		radial-gradient(circle 15.3cqw at 19.3% 54.7%, #000 99%, transparent);
+	mask-size:
+		100% 13.7%,
+		100% 100%;
+	mask-position: top, center;
+	mask-repeat: no-repeat;
 }
 
 /* Styles */

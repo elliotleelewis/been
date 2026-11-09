@@ -1,44 +1,56 @@
 import { useAtomValue, useSetAtom } from "jotai";
-import { memo, useCallback } from "react";
+import { memo, useCallback, useRef } from "react";
 import type { FC } from "react";
 
-import { passportPageAtom, passportPagesAtom, turnPassportPageAtom } from "./pages.ts";
-import { PassportCover } from "./passport-cover.tsx";
-import { PassportPageContent } from "./passport-page-content.tsx";
+import { passportPageAtom, shownPassportPagesAtom, turnPassportPageAtom } from "./pages.ts";
+import { PassportSheet } from "./passport-sheet.tsx";
+import type { SheetPlace } from "./passport-sheet.tsx";
+import { askForDeviceTilt, useFoil } from "./use-foil.ts";
+import { usePassportSpread } from "./use-passport-spread.ts";
 
 interface Props {
 	/** Closes the passport. */
 	readonly onClose: () => void;
 }
 
+/** Where each of the sheets on show lies, by how many there are. */
+const PLACES: readonly (readonly SheetPlace[])[] = [[], ["alone"], ["left", "right"]];
+
 /**
- * The passport at the page it is open at. Pages after the cover are paper, the same in either
- * colour scheme, and each one turns in as it opens, unless the reader has asked for less motion.
- * It is as large as the screen leaves room for, up to a real passport's size and less what the
- * dialog puts around it across and down, so it always fits whole. Everything on its pages is sized
- * in fractions of its width, so the lettering, stamps and visas grow with it.
+ * The passport at the pages it is open at: its cover alone, then a page at a time, or, on a screen
+ * wide enough, two facing each other across the spine, as a real passport lies open. It leans
+ * towards the light, which follows the reader's pointer or the tilt of their device, and any foil
+ * visa on its pages catches the same light. Each page turns in as it opens, unless the reader has
+ * asked for less motion.
  */
 export const PassportBook: FC<Props> = memo(({ onClose }) => {
 	const index = useAtomValue(passportPageAtom);
-	const pages = useAtomValue(passportPagesAtom);
+	const shown = useAtomValue(shownPassportPagesAtom);
 	const turnPage = useSetAtom(turnPassportPageAtom);
+	const spread = usePassportSpread();
+	const light = useRef<HTMLDivElement>(null);
+	useFoil(light, true);
 	const open = useCallback(() => {
+		// Opening the cover is the one tap iOS gives to ask for the device's tilt, which the light follows.
+		askForDeviceTilt();
 		turnPage(1);
 	}, [turnPage]);
-	const page = pages[index] ?? { kind: "cover" };
+	const places = PLACES[shown.length] ?? [];
 
 	return (
-		<div className="@container aspect-[5/7] w-[min(31.5rem,calc(100vw-5rem),calc((100dvh-10.5rem)*5/7))] drop-shadow-xl">
-			{page.kind === "cover" ? (
-				<PassportCover onOpen={open} />
-			) : (
-				<div
-					key={index}
-					className="size-full origin-left overflow-hidden rounded-e-[4.2cqw] rounded-s-[1.4cqw] bg-[#f3eddc] bg-[repeating-linear-gradient(135deg,transparent_0_6px,rgb(29_43_79/0.035)_6px_7px)] motion-safe:animate-page-turn dark:bg-[#ece4cf]"
-				>
-					<PassportPageContent page={page} onClose={onClose} />
-				</div>
-			)}
+		<div ref={light} className="foil-lit flex drop-shadow-xl">
+			{shown.map((page, side) => (
+				<PassportSheet
+					// Keyed by the page open at, so each turn plays the page in afresh.
+					// oxlint-disable-next-line react/no-array-index-key -- The side is what tells the sheets in a spread apart.
+					key={`${String(index)}:${String(side)}`}
+					page={page}
+					place={places[side] ?? "alone"}
+					spread={spread}
+					onOpen={open}
+					onClose={onClose}
+				/>
+			))}
 		</div>
 	);
 });

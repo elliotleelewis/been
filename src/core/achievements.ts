@@ -1,10 +1,26 @@
 import { ISLAND_NATIONS, LANDLOCKED, MICROSTATES } from "../data/collections.ts";
 import { m } from "../paraglide/messages.js";
 import { M49_REGIONS, M49_REGION_CODES, M49_SUBREGIONS } from "./m49.ts";
-import type { Achievement, CountryData, Earners, Requirement, Visits } from "./types.ts";
+import type { Achievement, AchievementTier, CountryData, Requirement, Visits } from "./types.ts";
 
 /** The counts of countries that earn a milestone, short of every country there is. */
 const MILESTONES: readonly number[] = [10, 25, 50, 100, 150];
+/** The milestones that earn a foil visa, and those that earn a legendary one, by count. */
+const FOIL_MILESTONE = 100;
+const LEGENDARY_MILESTONE = 150;
+/**
+ * The sub-regions that earn a foil visa: the Pacific's three, scattered over an ocean so wide that
+ * completing one takes more travel than completing some continents.
+ */
+const FOIL_SUBREGIONS: ReadonlySet<string> = new Set(["054", "057", "061"]);
+
+/** The tier of the milestone for `count` countries. */
+const milestoneTierOf = (count: number): AchievementTier => {
+	if (count >= LEGENDARY_MILESTONE) {
+		return "legendary";
+	}
+	return count >= FOIL_MILESTONE ? "foil" : "standard";
+};
 /** How many of a large collection, such as the island nations, earn its achievement. */
 const COLLECTION_COUNT = 5;
 
@@ -37,6 +53,7 @@ const milestonesOf = (codes: readonly string[]): readonly Achievement[] => [
 		id: "milestone:1",
 		kind: "milestone",
 		requirements: [{ codes, count: 1 }],
+		tier: "standard",
 		title: m.achievement_first_title(),
 	},
 	...MILESTONES.filter((count) => count < codes.length).map((count): Achievement => ({
@@ -44,6 +61,7 @@ const milestonesOf = (codes: readonly string[]): readonly Achievement[] => [
 		id: `milestone:${String(count)}`,
 		kind: "milestone",
 		requirements: [{ codes, count }],
+		tier: milestoneTierOf(count),
 		title: m.achievement_count_title({ count }),
 	})),
 	{
@@ -51,6 +69,7 @@ const milestonesOf = (codes: readonly string[]): readonly Achievement[] => [
 		id: "milestone:all",
 		kind: "milestone",
 		requirements: [allOf(codes)],
+		tier: "legendary",
 		title: m.achievement_world_title(),
 	},
 ];
@@ -62,8 +81,24 @@ const regionsOf = (countries: readonly CountryData[]): readonly Achievement[] =>
 		kind: "region",
 		region,
 		requirements: [allOf(codesWhere(countries, (country) => country.region === region))],
+		tier: "foil",
 		title: M49_REGIONS[region](),
 	}));
+
+/** A stamp from each of the five continents, which a list missing any of them cannot earn. */
+const continentsOf = (countries: readonly CountryData[]): Achievement => ({
+	description: m.achievement_continents_description(),
+	id: "geography:continents",
+	kind: "geography",
+	requirements: M49_REGION_CODES.map((region) =>
+		anyOf(
+			codesWhere(countries, (country) => country.region === region),
+			M49_REGIONS[region](),
+		),
+	),
+	tier: "foil",
+	title: m.achievement_continents_title(),
+});
 
 const subregionsOf = (countries: readonly CountryData[]): readonly Achievement[] =>
 	[...new Set(countries.map(({ subregion }) => subregion))]
@@ -82,6 +117,7 @@ const subregionsOf = (countries: readonly CountryData[]): readonly Achievement[]
 							kind: "subregion",
 							region,
 							requirements: [allOf(members.map(({ iso3166 }) => iso3166))],
+							tier: FOIL_SUBREGIONS.has(subregion) ? "foil" : "standard",
 							title: M49_SUBREGIONS[subregion](),
 						},
 					];
@@ -103,6 +139,7 @@ const geographyOf = (countries: readonly CountryData[]): readonly Achievement[] 
 			id: "geography:equator-sides",
 			kind: "geography",
 			requirements: [anyOf(north, m.achievement_north()), anyOf(south, m.achievement_south())],
+			tier: "standard",
 			title: m.achievement_equator_sides_title(),
 		},
 		{
@@ -110,6 +147,7 @@ const geographyOf = (countries: readonly CountryData[]): readonly Achievement[] 
 			id: "geography:meridian-sides",
 			kind: "geography",
 			requirements: [anyOf(east, m.achievement_east()), anyOf(west, m.achievement_west())],
+			tier: "standard",
 			title: m.achievement_meridian_sides_title(),
 		},
 		{
@@ -122,6 +160,7 @@ const geographyOf = (countries: readonly CountryData[]): readonly Achievement[] 
 				anyOf(east, m.achievement_east()),
 				anyOf(west, m.achievement_west()),
 			],
+			tier: "standard",
 			title: m.achievement_hemispheres_title(),
 		},
 		{
@@ -136,6 +175,7 @@ const geographyOf = (countries: readonly CountryData[]): readonly Achievement[] 
 					),
 				),
 			],
+			tier: "standard",
 			title: m.achievement_equator_title(),
 		},
 		{
@@ -150,6 +190,7 @@ const geographyOf = (countries: readonly CountryData[]): readonly Achievement[] 
 					),
 				),
 			],
+			tier: "standard",
 			title: m.achievement_date_line_title(),
 		},
 	];
@@ -161,6 +202,7 @@ const collectionsOf = (): readonly Achievement[] => [
 		id: "collection:microstates",
 		kind: "collection",
 		requirements: [allOf(MICROSTATES)],
+		tier: "foil",
 		title: m.achievement_microstates_title(),
 	},
 	{
@@ -168,6 +210,7 @@ const collectionsOf = (): readonly Achievement[] => [
 		id: "collection:islands",
 		kind: "collection",
 		requirements: [{ codes: ISLAND_NATIONS, count: COLLECTION_COUNT }],
+		tier: "standard",
 		title: m.achievement_islands_title(),
 	},
 	{
@@ -175,6 +218,7 @@ const collectionsOf = (): readonly Achievement[] => [
 		id: "collection:landlocked",
 		kind: "collection",
 		requirements: [{ codes: LANDLOCKED, count: COLLECTION_COUNT }],
+		tier: "standard",
 		title: m.achievement_landlocked_title(),
 	},
 ];
@@ -192,6 +236,7 @@ export const achievementsOf = (countries: readonly CountryData[]): readonly Achi
 		: [
 				...milestonesOf(codes),
 				...regionsOf(countries),
+				continentsOf(countries),
 				...subregionsOf(countries),
 				...geographyOf(countries),
 				...collectionsOf(),
@@ -224,40 +269,6 @@ export const earnedOn = ({ requirements }: Achievement, visits: Visits): string 
 	);
 	const last = days.toSorted().at(-1);
 	return last === "" ? undefined : last;
-};
-
-/**
- * The visited ones of `codes` in the order they were ticked: those ticked before dates were kept
- * first, as `earnedOn` counts them, and ticks on the same day by code, so the order is stable.
- */
-const inTickOrder = (codes: readonly string[], visits: Visits): readonly string[] =>
-	codes
-		.filter((code) => Object.hasOwn(visits, code))
-		.toSorted(
-			(one, other) =>
-				(visits[one]?.at ?? "").localeCompare(visits[other]?.at ?? "") || one.localeCompare(other),
-		);
-
-/**
- * Which visited countries earned an achievement: for each requirement, the first ticks that met it
- * and the rest that also count, and the one tick that met the last requirement. The countries that
- * earned it are the ones `earnedOn` dates it by, so the back of a visa agrees with its front.
- */
-export const earnersOf = (achievement: Achievement, visits: Visits): Earners => {
-	const parts = achievement.requirements.map(({ codes, count }) => {
-		const ticked = inTickOrder(codes, visits);
-		return { count, earned: ticked.slice(0, count), extra: ticked.slice(count) };
-	});
-	const clincher = parts.every(({ count, earned }) => earned.length === count)
-		? inTickOrder(
-				parts.flatMap(({ earned }) => earned.slice(-1)),
-				visits,
-			).at(-1)
-		: undefined;
-	return {
-		clincher: clincher === undefined || visits[clincher]?.at === undefined ? undefined : clincher,
-		requirements: parts.map(({ earned, extra }) => ({ earned, extra })),
-	};
 };
 
 /** The achievements ticking `code` has just earned, which the visits without it had not. */
