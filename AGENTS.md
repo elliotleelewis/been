@@ -80,7 +80,7 @@ Rules that keep that shape:
   `src/data/countries.ts` imported dynamically, to keep both out of the bundle.
 - **The camera** frames a selected country via `focusAtom`; unselecting the framed one puts it back,
   once, until the reader moves the map. At world view it idles in a slow spin
-  (`src/globe/use-idle-spin.ts`), but not under reduced motion. Tapping a country ticks it through
+  (`src/globe/use-idle-spin.ts`) that eases home, but not under reduced motion; any move resets the wait. Tapping a country ticks it through
   `src/globe/taps.ts`, leaving the camera alone; double-click zoom is off, or it would tick twice.
 - **The menu** groups countries by M49 region and sub-region, opening the reader's home continent,
   guessed from their time zone (`src/menu/regions.ts`). Search (`src/menu/search.ts`, over pure

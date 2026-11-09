@@ -23,17 +23,40 @@ interface FoilState {
 	restingBeta: number | undefined;
 }
 
-/** Writes the light onto the element as the custom properties its styles read. */
-const paint = (element: HTMLElement, foil: Foil): void => {
-	for (const [name, value] of Object.entries(foilPropertiesOf(foil))) {
+/** The properties that tilt what the light falls on, rather than light the foil on it. */
+const TILT_PROPERTIES: ReadonlySet<string> = new Set(["--foil-tilt-x", "--foil-tilt-y"]);
+/** The foil visas within what the light falls on, which are all that its light restyles. */
+const FOIL_SELECTOR = ".visa-face:not([data-tier='standard'])";
+
+/** Sets a custom property on an element, unless it already holds that value. */
+const write = (element: HTMLElement, name: string, value: string): void => {
+	if (element.style.getPropertyValue(name) !== value) {
 		element.style.setProperty(name, value);
 	}
 };
 
-/** Takes the light off the element again, back to the resting light its styles default to. */
+/**
+ * Writes the light as the custom properties the styles read: the tilt onto the element, and the
+ * light onto each foil visa within it. Custom properties are inherited, so set on the element they
+ * would restyle everything inside it every frame, the stamps' ink filters too, which is far too
+ * slow in Safari; and a value that has not changed is not written at all.
+ */
+const paint = (element: HTMLElement, foil: Foil): void => {
+	const faces = [...element.querySelectorAll<HTMLElement>(FOIL_SELECTOR)];
+	for (const [name, value] of Object.entries(foilPropertiesOf(foil))) {
+		for (const target of TILT_PROPERTIES.has(name) ? [element] : faces) {
+			write(target, name, value);
+		}
+	}
+};
+
+/** Takes the light off the element and its foil again, back to the resting light they default to. */
 const unpaint = (element: HTMLElement): void => {
+	const targets = [element, ...element.querySelectorAll<HTMLElement>(FOIL_SELECTOR)];
 	for (const name of Object.keys(foilPropertiesOf(RESTING_FOIL))) {
-		element.style.removeProperty(name);
+		for (const target of targets) {
+			target.style.removeProperty(name);
+		}
 	}
 };
 
@@ -94,8 +117,8 @@ const animate = (element: HTMLElement, state: FoilState): (() => void) => {
  * Lights the element while `enabled`, and tilts it towards the light: the light follows the
  * pointer over it, or the tilt of the device it is held in, or drifts slowly, lying flat, while
  * neither is steering, and always eases from one to the next, so it never jumps. It is written
- * straight onto the element as custom properties, every frame, rather than through React, and the
- * foil visas inside inherit them. A reader who has asked for less motion gets the resting light.
+ * straight onto the element and the foil visas inside it as custom properties, every frame, rather
+ * than through React. A reader who has asked for less motion gets the resting light.
  */
 export const useFoil = (ref: RefObject<HTMLElement | null>, enabled: boolean): void => {
 	useEffect(() => {

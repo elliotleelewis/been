@@ -20,13 +20,27 @@ export interface CountryPointer {
 	readonly onMouseOut: () => void;
 }
 
+/** How far, in pixels, a point can come back from the round trip and still be on the globe. */
+const ON_GLOBE_PX = 2;
+
+/**
+ * Whether a pointer event landed on the globe itself rather than the space around it. Off the
+ * globe, the map pins the point to the nearest place on its horizon, and finds whatever country
+ * lies there on the far side, so a country could be picked from an inch away. A point on the globe
+ * comes back to itself from the place under it; a pinned one comes back to the horizon.
+ */
+const isOnGlobe = ({ lngLat, point, target }: MapLayerMouseEvent): boolean => {
+	const back = target.project(lngLat);
+	return Math.hypot(back.x - point.x, back.y - point.y) <= ON_GLOBE_PX;
+};
+
 /**
  * The country a pointer event landed on, from the features the map found under it on the layers
- * it was told are interactive.
+ * it was told are interactive, so long as it landed on the globe at all.
  */
 const countryCodeOf = (event: MapLayerMouseEvent): string | undefined => {
 	const code: unknown = event.features?.[0]?.properties["iso_3166_1"];
-	return typeof code === "string" ? code : undefined;
+	return typeof code === "string" && isOnGlobe(event) ? code : undefined;
 };
 
 /**

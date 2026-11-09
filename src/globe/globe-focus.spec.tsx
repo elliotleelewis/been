@@ -9,9 +9,7 @@ import { mockMediaQueryList } from "../core/test.ts";
 import { addCountryAtom, removeCountryAtom } from "../core/ticking.ts";
 import type { Country } from "../core/types.ts";
 import { Globe } from "./globe.tsx";
-
-/** The `minZoom` the globe gives the map, which is also the zoom it opens at. */
-const MIN_ZOOM = 1.8;
+import { GLOBE_MIN_ZOOM } from "./types.ts";
 
 const unitedKingdom: Country = {
 	bounds: [-8.65, 49.87, 1.76, 60.86],
@@ -89,7 +87,7 @@ describe("globe focus", () => {
 			bearing: 0,
 			center: { lat: 0, lng: 0 },
 			pitch: 0,
-			zoom: MIN_ZOOM,
+			zoom: GLOBE_MIN_ZOOM,
 		});
 	}, 10_000);
 

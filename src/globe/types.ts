@@ -14,6 +14,12 @@ export interface Tap {
 	readonly previous: Visit | undefined;
 }
 
+/**
+ * The furthest the camera can be from the globe, which is also where it opens, over the point where
+ * the equator meets the prime meridian, with the whole world in view.
+ */
+export const GLOBE_MIN_ZOOM = 1.8;
+
 export const MapSourceKeys = {
 	Countries: "countries",
 } as const;
