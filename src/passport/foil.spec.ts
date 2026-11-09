@@ -16,6 +16,7 @@ describe("foil", () => {
 		expect(foilOfPointer([100, 50, 300, 190], [175, 145])).toStrictEqual({
 			across: 0.25,
 			down: 0.5,
+			lean: 1,
 			shine: 1,
 		});
 		expect(foilOfPointer([100, 50, 300, 190], [0, 999])).toMatchObject({ across: 0, down: 1 });
@@ -32,7 +33,7 @@ describe("foil", () => {
 	it("should ease towards where the light is headed, by the same share however often", () => {
 		expect.hasAssertions();
 
-		const target = { across: 1, down: 1, shine: 1 };
+		const target = { across: 1, down: 1, lean: 1, shine: 1 };
 		const once = foilTowards(RESTING_FOIL, target, 100);
 		const twice = foilTowards(foilTowards(RESTING_FOIL, target, 50), target, 50);
 
@@ -42,7 +43,7 @@ describe("foil", () => {
 		expect(twice.across).toBeCloseTo(once.across, 10);
 	}, 5000);
 
-	it("should drift over the visa without leaving it, and tilt the visa towards the light", () => {
+	it("should drift without leaving the passport, and tilt it only while steered", () => {
 		expect.hasAssertions();
 
 		const drifts = Array.from({ length: 100 }, (_drift, index) => driftingFoilAt(index * 397));
@@ -50,10 +51,11 @@ describe("foil", () => {
 
 		expect(Math.min(...places)).toBeGreaterThan(0);
 		expect(Math.max(...places)).toBeLessThan(1);
-		expect(foilPropertiesOf({ across: 1, down: 0.5, shine: 0.5 })).toStrictEqual({
+		expect(driftingFoilAt(1234).lean).toBe(0);
+		expect(foilPropertiesOf({ across: 1, down: 0.5, lean: 1, shine: 0.5 })).toStrictEqual({
 			"--foil-shine": "0.500",
 			"--foil-tilt-x": "0.00deg",
-			"--foil-tilt-y": "7.00deg",
+			"--foil-tilt-y": "6.00deg",
 			"--foil-x": "100.00%",
 			"--foil-y": "50.00%",
 		});

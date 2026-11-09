@@ -16,18 +16,30 @@
 			transform: perspective(1200px) rotateY(-35deg);
 		}
 	}
+
+	/* The left page of a spread turning in, from the spine at its right. */
+	--animate-page-turn-back: page-turn-back 320ms cubic-bezier(0.2, 0.7, 0.3, 1);
+
+	@keyframes page-turn-back {
+		from {
+			opacity: 0.4;
+			transform: perspective(1200px) rotateY(35deg);
+		}
+	}
 }
 
-/* Foil visas. Holographic layers over a rare achievement's printed visa, lit where the reader's
-   pointer or device points: `src/passport/use-foil.ts` sets the custom properties every frame, and
-   without it, under reduced motion, the light rests straight on. A foil visa has foil on its band
-   and medallion only, so it still reads as paper; a legendary one is foil all over. */
+/* What the passport's light falls on: `src/passport/use-foil.ts` sets these custom properties every
+   frame, and leans the element towards the light while the reader steers it. Without it, under
+   reduced motion, the light rests straight on. */
+.foil-lit {
+	transform: perspective(1400px) rotateX(var(--foil-tilt-x, 0deg)) rotateY(var(--foil-tilt-y, 0deg));
+}
+
+/* Foil visas. Holographic layers over a rare achievement's printed visa, which catch the light of
+   whatever they lie in. A foil visa has foil on its band and medallion only, so it still reads as
+   paper; a legendary one is foil all over. */
 .visa-face {
 	container-type: inline-size;
-}
-
-.visa-face:not([data-tier="standard"]) {
-	transform: perspective(700px) rotateX(var(--foil-tilt-x, 0deg)) rotateY(var(--foil-tilt-y, 0deg));
 }
 
 .visa-foil {

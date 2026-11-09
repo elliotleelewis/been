@@ -6,7 +6,7 @@ import { confettiOf } from "./confetti.ts";
 import { endVisaMomentAtom, shownVisaMomentAtom } from "./moments.ts";
 import { useConfetti } from "./use-confetti.ts";
 import { useStampFlight } from "./use-stamp-flight.ts";
-import { VisaFace } from "./visa-face.tsx";
+import { VisaStack } from "./visa-stack.tsx";
 import { visasAtom } from "./visas.ts";
 
 interface Props {
@@ -59,18 +59,8 @@ export const VisaMoment: FC<Props> = memo(({ target }) => {
 					/>
 				))}
 			</div>
-			<div key={moment.id} ref={ref} className="grid w-72 max-w-[85vw] opacity-0">
-				{earned.toReversed().map((visa, index) => (
-					<div
-						key={visa.achievement.id}
-						className="[grid-area:1/1]"
-						style={{
-							transform: `translate(${String((earned.length - 1 - index) * 10)}px, ${String((earned.length - 1 - index) * 10)}px)`,
-						}}
-					>
-						<VisaFace visa={visa} lit />
-					</div>
-				))}
+			<div key={moment.id} ref={ref} className="w-72 max-w-[85vw] opacity-0">
+				<VisaStack visas={earned} />
 			</div>
 		</div>
 	);

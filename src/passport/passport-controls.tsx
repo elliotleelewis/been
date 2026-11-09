@@ -3,20 +3,15 @@ import { memo, useCallback } from "react";
 import type { FC } from "react";
 
 import { m } from "../paraglide/messages.js";
-import {
-	passportPageAtom,
-	passportPageCountAtom,
-	passportPagesAtom,
-	turnPassportPageAtom,
-} from "./pages.ts";
+import { passportTurnsAtom, shownPassportPagesAtom, turnPassportPageAtom } from "./pages.ts";
 import type { PassportPage } from "./types.ts";
 
 const BUTTON_CLASS_NAME =
 	"rounded-full px-4 py-2 font-medium text-sm hover:bg-zinc-100 focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:outline-none disabled:opacity-30 disabled:hover:bg-transparent dark:hover:bg-zinc-800 dark:disabled:hover:bg-transparent";
 
-/** What the page the passport is open at is called, beneath it. */
-const pageNameOf = (page: PassportPage | undefined): string => {
-	if (page === undefined || page.kind === "cover") {
+/** What a page the passport is open at is called, beneath it. */
+const pageNameOf = (page: PassportPage): string => {
+	if (page.kind === "cover") {
 		return m.passport_page_cover();
 	}
 	if (page.kind === "identity") {
@@ -26,11 +21,13 @@ const pageNameOf = (page: PassportPage | undefined): string => {
 	return page.kind === "visas" ? m.passport_page_visas(numbers) : m.passport_page_stamps(numbers);
 };
 
-/** Turns the passport's pages back and forward, and says which page it is open at. */
+/**
+ * Turns the passport's pages back and forward, and says which pages it is open at, both of them
+ * where it lies open at a spread.
+ */
 export const PassportControls: FC = memo(() => {
-	const page = useAtomValue(passportPageAtom);
-	const count = useAtomValue(passportPageCountAtom);
-	const pages = useAtomValue(passportPagesAtom);
+	const shown = useAtomValue(shownPassportPagesAtom);
+	const turns = useAtomValue(passportTurnsAtom);
 	const turnPage = useSetAtom(turnPassportPageAtom);
 	const back = useCallback(() => {
 		turnPage(-1);
@@ -41,17 +38,17 @@ export const PassportControls: FC = memo(() => {
 
 	return (
 		<div className="flex w-full items-center justify-between gap-2">
-			<button type="button" className={BUTTON_CLASS_NAME} onClick={back} disabled={page === 0}>
+			<button type="button" className={BUTTON_CLASS_NAME} onClick={back} disabled={!turns.back}>
 				{m.passport_back()}
 			</button>
 			<p className="text-sm text-zinc-600 tabular-nums dark:text-zinc-400" aria-live="polite">
-				{pageNameOf(pages[page])}
+				{shown.flatMap((page) => (page === null ? [] : [pageNameOf(page)])).join(" · ")}
 			</p>
 			<button
 				type="button"
 				className={BUTTON_CLASS_NAME}
 				onClick={forward}
-				disabled={page === count - 1}
+				disabled={!turns.forward}
 			>
 				{m.passport_next()}
 			</button>

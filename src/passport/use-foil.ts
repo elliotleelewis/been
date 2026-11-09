@@ -11,10 +11,10 @@ import {
 } from "./foil.ts";
 import type { Foil } from "./foil.ts";
 
-/** What is steering the light on a foil visa, the pointer winning over the device. */
+/** What is steering the light, the pointer winning over the device. */
 type Steer = "device" | "drift" | "pointer";
 
-/** The light on one foil visa as it plays out: where it is, where it is headed, and why. */
+/** The light as it plays out: where it is, where it is headed, and why. */
 interface FoilState {
 	current: Foil;
 	target: Foil;
@@ -91,10 +91,11 @@ const animate = (element: HTMLElement, state: FoilState): (() => void) => {
 };
 
 /**
- * Lights a foil visa while `enabled`: the light follows the pointer over it, or the tilt of the
- * device it is held in, or drifts slowly while neither is steering, and always eases from one to
- * the next, so it never jumps. It is written straight onto the element as custom properties, every
- * frame, rather than through React. A reader who has asked for less motion gets the resting light.
+ * Lights the element while `enabled`, and tilts it towards the light: the light follows the
+ * pointer over it, or the tilt of the device it is held in, or drifts slowly, lying flat, while
+ * neither is steering, and always eases from one to the next, so it never jumps. It is written
+ * straight onto the element as custom properties, every frame, rather than through React, and the
+ * foil visas inside inherit them. A reader who has asked for less motion gets the resting light.
  */
 export const useFoil = (ref: RefObject<HTMLElement | null>, enabled: boolean): void => {
 	useEffect(() => {
@@ -123,7 +124,7 @@ export const useFoil = (ref: RefObject<HTMLElement | null>, enabled: boolean): v
 
 /**
  * Asks to read the device's tilt, which iOS only reports once asked from a tap; elsewhere it is
- * reported unasked, and this does nothing. Whatever the answer, the visa still drifts without it.
+ * reported unasked, and this does nothing. Whatever the answer, the light still drifts without it.
  */
 export const askForDeviceTilt = (): void => {
 	const ask: unknown =

@@ -6,7 +6,6 @@ import type { AchievementTier } from "../core/types.ts";
 import { m } from "../paraglide/messages.js";
 import type { Visa as VisaModel } from "./types.ts";
 import { useFlipFocus } from "./use-flip-focus.ts";
-import { askForDeviceTilt } from "./use-foil.ts";
 import { VisaBack } from "./visa-back.tsx";
 import { flippedVisaAtom, visaBacksAtom } from "./visa-backs.ts";
 import { VisaFace } from "./visa-face.tsx";
@@ -36,12 +35,8 @@ export const VisaCard: FC<Props> = memo(({ visa }) => {
 	const { back: backButton, card, front } = useFlipFocus(flipped);
 
 	const flip = useCallback(() => {
-		// A tap is the one chance iOS gives to ask for the device's tilt, which the foil follows.
-		if (achievement.tier !== "standard") {
-			askForDeviceTilt();
-		}
 		setFlippedVisa(achievement.id);
-	}, [achievement.id, achievement.tier, setFlippedVisa]);
+	}, [achievement.id, setFlippedVisa]);
 	const flipBack = useCallback(() => {
 		setFlippedVisa(null);
 	}, [setFlippedVisa]);
@@ -60,7 +55,7 @@ export const VisaCard: FC<Props> = memo(({ visa }) => {
 					aria-controls={back === undefined ? undefined : backId}
 					inert={flipped}
 				>
-					<VisaFace visa={visa} lit={!flipped} />
+					<VisaFace visa={visa} />
 					<span className="sr-only">
 						{date === undefined
 							? m.passport_visa_undated(achievement)

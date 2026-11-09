@@ -58,12 +58,50 @@ export const passportPageCountAtom = atom((get) => get(passportPagesAtom).length
 export const passportPageAtom = atom(0);
 
 /**
- * Turns the passport's pages by `by`, forwards or back, stopping at either cover, and turns any visa
- * that was showing its back over again.
+ * Whether the passport lies open two pages at a time, as a real one does, which it does on screens
+ * wide enough to show both at a size that can be read.
+ */
+export const passportSpreadAtom = atom(false);
+
+/**
+ * The page on the left of the spread `page` is in. The cover is shut, on its own; after it, the
+ * identity page is on the left, facing the first page of visas, and so on in pairs.
+ */
+const leftPageOf = (page: number): number => (page === 0 ? 0 : page - ((page + 1) % 2));
+
+/** The pages the passport is open at, each in a spread with the one facing it where it lies open. */
+const openPagesAtom = atom((get) => {
+	const page = get(passportPageAtom);
+	return get(passportSpreadAtom) && page > 0 ? [leftPageOf(page), leftPageOf(page) + 1] : [page];
+});
+
+/**
+ * The pages on show, left to right: the cover alone, one page, or two facing each other, the right
+ * one blank where the last page has none to face it.
+ */
+export const shownPassportPagesAtom = atom<readonly (PassportPage | null)[]>((get) => {
+	const pages = get(passportPagesAtom);
+	return get(openPagesAtom).map((page) => pages[page] ?? null);
+});
+
+/** Whether there are pages before and after those on show, to turn back and forward to. */
+export const passportTurnsAtom = atom((get) => {
+	const shown = get(openPagesAtom);
+	return {
+		back: (shown[0] ?? 0) > 0,
+		forward: (shown.at(-1) ?? 0) < get(passportPageCountAtom) - 1,
+	};
+});
+
+/**
+ * Turns the passport's pages by `by`, forwards or back, a spread at a time where it lies open, and
+ * stopping at either cover. Any visa showing its back is turned over again.
  */
 export const turnPassportPageAtom = atom(undefined, (get, set, by: number) => {
 	const last = get(passportPageCountAtom) - 1;
-	const page = get(passportPageAtom) + by;
-	set(passportPageAtom, Math.min(Math.max(page, 0), last));
+	const spread = get(passportSpreadAtom);
+	const from = spread ? leftPageOf(get(passportPageAtom)) : get(passportPageAtom);
+	const page = Math.min(Math.max(from + (spread ? by * 2 : by), 0), last);
+	set(passportPageAtom, spread ? leftPageOf(page) : page);
 	set(flippedVisaAtom, null);
 });
