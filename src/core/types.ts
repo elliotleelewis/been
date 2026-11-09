@@ -6,6 +6,10 @@ export interface CountryData {
 	readonly region: M49Region;
 	readonly subregion: M49Subregion;
 	readonly bounds?: readonly [number, number, number, number];
+	/** The middle of its biggest piece of land, as a longitude and latitude. */
+	readonly centre?: readonly [number, number];
+	/** How much land it covers, in square kilometres. */
+	readonly area?: number;
 	/** The countries it shares a land border with, by code, as the atlas draws them, if any. */
 	readonly neighbours?: readonly string[];
 }

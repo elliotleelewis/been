@@ -22,6 +22,12 @@ const NEIGHBOUR_WEIGHT = 0.6;
 /** How much being a continent's first counts, as somewhere new altogether. */
 const NEW_REGION_WEIGHT = 0.5;
 /**
+ * How much land a country needs, in square kilometres, for being a continent's first to count in
+ * full: about Iceland's or Portugal's. A smaller one counts for less, by the square root of its
+ * share, so a continent's first is a country to see it by, not an atoll in the middle of an ocean.
+ */
+const FULL_SIZE_AREA = 100_000;
+/**
  * How much of its reasons a country on the far side of the world keeps, against all of them for one
  * on the doorstep of somewhere already visited, as the nearer is the likelier trip: a country
  * across the world needs twice the reason a neighbour does to be recommended over it.
@@ -32,7 +38,6 @@ const FARTHEST_SHARE = 0.5;
  * few countries recommended are for different things, rather than four microstates for one visa.
  */
 const REPEAT_SHARE = 0.5;
-const TURN_DEGREES = 360;
 const RADIANS = Math.PI / 180;
 
 /** A reason, and how much it counts towards recommending its country. */
@@ -113,33 +118,28 @@ const neighbourReasonsOf = (countries: readonly CountryData[], visits: Visits): 
 				];
 	});
 
-/** The countries in continents with no visits yet. */
+/** How much a country counts as a continent's first, by how much land it has to see. */
+const sizeOf = ({ area }: CountryData): number =>
+	area === undefined ? 1 : Math.min(1, Math.sqrt(area / FULL_SIZE_AREA));
+
+/** The countries in continents with no visits yet, the larger counting for more. */
 const regionReasonsOf = (countries: readonly CountryData[], visits: Visits): Weighed[] => {
 	const visited = new Set(
 		countries.filter(({ iso3166 }) => isVisited(visits, iso3166)).map(({ region }) => region),
 	);
 	return countries
 		.filter(({ region }) => !visited.has(region))
-		.map(({ iso3166, region }) => ({
-			code: iso3166,
-			key: `region:${region}`,
-			reason: { kind: "region", region } as const,
-			weight: NEW_REGION_WEIGHT,
+		.map((country) => ({
+			code: country.iso3166,
+			key: `region:${country.region}`,
+			reason: { kind: "region", region: country.region } as const,
+			weight: NEW_REGION_WEIGHT * sizeOf(country),
 		}));
 };
 
-/** The middle of a country's box, as a latitude and longitude in radians, if it has one. */
-const middleOf = ({ bounds }: CountryData): readonly [number, number] | undefined => {
-	if (bounds === undefined) {
-		return undefined;
-	}
-	const [west, south, east, north] = bounds;
-	const longitude = (west + east) / 2;
-	return [
-		((south + north) / 2) * RADIANS,
-		(longitude > TURN_DEGREES / 2 ? longitude - TURN_DEGREES : longitude) * RADIANS,
-	];
-};
+/** The middle of a country's land, as a latitude and longitude in radians, if it has one. */
+const middleOf = ({ centre }: CountryData): readonly [number, number] | undefined =>
+	centre === undefined ? undefined : [centre[1] * RADIANS, centre[0] * RADIANS];
 
 /** How far apart two places on the globe are, as a share of the furthest two can be. */
 const distanceBetween = (

@@ -85,7 +85,8 @@ export const continuousPolygon = (polygon: readonly Position[][]): Position[][] 
 	return [anchored, ...holes.map((hole) => ringBeside(hole, near))];
 };
 
-const polygonsOf = (boundary: CountryBoundary): readonly Position[][][] =>
+/** A country's polygons, each carried across the antimeridian unbroken. */
+export const polygonsOf = (boundary: CountryBoundary): readonly Position[][][] =>
 	(boundary.geometry.type === "Polygon"
 		? [boundary.geometry.coordinates]
 		: boundary.geometry.coordinates

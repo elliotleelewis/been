@@ -104,8 +104,8 @@ Rules that keep that shape:
   one as a visa, with generated line-work (`src/passport/guilloche.ts`), which turns over to list
   those countries (`src/passport/visa-backs.ts`). Rare tiers are foil: CSS layers lit by
   the light `src/passport/use-foil.ts` casts on the whole passport, eased in `src/passport/foil.ts`.
-- **Recommendations** (`src/core/recommendations.ts`) weigh visas, borders and nearness; the menu
-  and the globe show them.
+- **Recommendations** (`src/core/recommendations.ts`) weigh visas, borders, size and nearness
+  (between centres, not boxes); the menu, the globe and locked visas show them.
 - **Accessibility:** react-aria supplies what is hard to get right by hand (the drawer's handle, the
   toast region). Anything a native tag already makes accessible stays native.
 
@@ -129,7 +129,7 @@ fails the build.
 
 **Don't hand-edit generated output**: change the source and regenerate.
 
-- `src/data/countries.ts` (bounds, neighbours) and `src/data/boundary-codes.ts` come from `pnpm run generate:countries`.
+- `src/data/countries.ts` (bounds, centres, areas, neighbours) and `src/data/boundary-codes.ts` come from `pnpm run generate:countries`.
   The country list is the script's input as well as its output, so add or drop a country by editing
   it and regenerating. Re-run it after bumping `visionscarto-world-atlas`.
 - `src/public/*.png` come from `src/public/icon.svg`, by `pnpm run generate:icons`.

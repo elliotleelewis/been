@@ -6,34 +6,38 @@ import type { CountryData, Visits } from "./types.ts";
 
 /**
  * A small world: France and its neighbours Belgium and Luxembourg, Western Europe all three, then
- * Italy beside France, and China, Japan and South Korea a world away.
+ * Italy beside France, and China and Japan a world away, all of a size.
  */
 const COUNTRIES: readonly CountryData[] = [
 	{
-		bounds: [2.5, 49.5, 6.4, 51.5],
+		area: 100_000,
+		centre: [4.45, 50.5],
 		iso3166: "BE",
 		neighbours: ["FR", "LU"],
 		region: "150",
 		subregion: "155",
 	},
-	{ bounds: [73, 18, 135, 53], iso3166: "CN", region: "142", subregion: "030" },
+	{ area: 100_000, centre: [104, 35.5], iso3166: "CN", region: "142", subregion: "030" },
 	{
-		bounds: [-5, 42, 8, 51],
+		area: 100_000,
+		centre: [1.5, 46.5],
 		iso3166: "FR",
 		neighbours: ["BE", "IT", "LU"],
 		region: "150",
 		subregion: "155",
 	},
 	{
-		bounds: [6.6, 36, 18.5, 47],
+		area: 100_000,
+		centre: [12.55, 41.5],
 		iso3166: "IT",
 		neighbours: ["FR"],
 		region: "150",
 		subregion: "039",
 	},
-	{ bounds: [129, 31, 146, 45], iso3166: "JP", region: "142", subregion: "030" },
+	{ area: 100_000, centre: [137.5, 38], iso3166: "JP", region: "142", subregion: "030" },
 	{
-		bounds: [5.7, 49.4, 6.5, 50.2],
+		area: 100_000,
+		centre: [6.1, 49.8],
 		iso3166: "LU",
 		neighbours: ["BE", "FR"],
 		region: "150",
@@ -92,6 +96,23 @@ describe("recommendations", () => {
 
 		// Asia is untouched, so Japan is only ever its first, not a step towards finishing it.
 		expect(japan?.reasons).toStrictEqual([{ kind: "region", region: "142" }]);
+	}, 5000);
+
+	it("should make a continent's first a country to see it by, not an atoll nearer to hand", () => {
+		expect.hasAssertions();
+
+		// Oceania, with Australia and Kiribati, an atoll a good deal nearer Japan.
+		const oceania: readonly CountryData[] = [
+			{ area: 7_700_000, centre: [134.4, -25.6], iso3166: "AU", region: "009", subregion: "053" },
+			{ area: 811, centre: [173, 1.4], iso3166: "KI", region: "009", subregion: "057" },
+		];
+		const world = [...COUNTRIES, ...oceania];
+		const codes = recommendationsOf(world, { JP: {} }, achievementsOf(world)).map(
+			({ code }) => code,
+		);
+
+		expect(codes).toContain("AU");
+		expect(codes).not.toContain("KI");
 	}, 5000);
 
 	it("should recommend countries for different things, not all for the one", () => {

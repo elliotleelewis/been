@@ -3,6 +3,7 @@ import { describe, expect, it } from "vitest";
 
 import { boundsOf, continuousPolygon } from "./boundaries.ts";
 import type { Bounds, CountryBoundary } from "./boundaries.ts";
+import { centreOf, landAreaOf } from "./land.ts";
 
 /** A closed ring around a box, given as west, south, east, north. */
 const box = ([west, south, east, north]: Bounds): Position[][] => [
@@ -103,5 +104,54 @@ describe("boundsOf", () => {
 		const polygon = box([-10, 40, 0, 50]);
 
 		expect(continuousPolygon(polygon)).toStrictEqual(polygon);
+	}, 5000);
+});
+
+describe("centreOf", () => {
+	it("should put a country's middle in its mainland, not in a box with its far islands", () => {
+		expect.hasAssertions();
+
+		// The United States again, whose box's middle is out in the Pacific.
+		const polygons = [box([-125, 25, -67, 49]), box([172, 51, 180, 53]), box([-180, 51, -170, 53])];
+
+		expect(centreOf(boundaryOf(polygons))).toStrictEqual([-96, 37]);
+	}, 5000);
+
+	it("should keep the middle of an island across the antimeridian between -180 and 180", () => {
+		expect.hasAssertions();
+
+		const island: Position[][] = [
+			[
+				[178, -17],
+				[-176, -17],
+				[-176, -16],
+				[178, -16],
+				[178, -17],
+			],
+		];
+
+		expect(centreOf(boundaryOf([island]))).toStrictEqual([-179, -16.5]);
+	}, 5000);
+});
+
+describe("landAreaOf", () => {
+	it("should give a country drawn as a single point no land, and that point as its middle", () => {
+		expect.hasAssertions();
+
+		const point = boundaryOf([[[[12.45, 41.9]]]]);
+
+		expect(landAreaOf(point)).toBe(0);
+		expect(centreOf(point)).toStrictEqual([12.45, 41.9]);
+	}, 5000);
+
+	it("should measure land on the globe, less any lake in it", () => {
+		expect.hasAssertions();
+
+		// A degree square at the equator is about 111km a side.
+		const [square = []] = box([0, 0, 1, 1]);
+		const [lake = []] = box([0.25, 0.25, 0.75, 0.75]);
+
+		expect(landAreaOf(boundaryOf([[square]]))).toBeCloseTo(12_364, -1);
+		expect(landAreaOf(boundaryOf([[square, lake]]))).toBeCloseTo(12_364 * 0.75, -1);
 	}, 5000);
 });
