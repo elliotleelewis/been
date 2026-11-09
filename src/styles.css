@@ -32,6 +32,8 @@
    frame, and leans the element towards the light while the reader steers it. Without it, under
    reduced motion, the light rests straight on. */
 .foil-lit {
+	/* Its own layer, so tilting it moves what is already drawn rather than drawing it again. */
+	will-change: transform;
 	transform: perspective(1400px) rotateX(var(--foil-tilt-x, 0deg)) rotateY(var(--foil-tilt-y, 0deg));
 }
 

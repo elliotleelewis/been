@@ -3,7 +3,7 @@ import { Layer, Map, NavigationControl, Source } from "react-map-gl/maplibre";
 import type { MapRef } from "react-map-gl/maplibre";
 
 import { GlobeLabel } from "./globe-label.tsx";
-import { MapLayerKeys, MapSourceKeys } from "./types.ts";
+import { GLOBE_MIN_ZOOM, MapLayerKeys, MapSourceKeys } from "./types.ts";
 import type { ForwardedRefFunction } from "./types.ts";
 import { useBasemap } from "./use-basemap.ts";
 import { useCountryBoundaries } from "./use-country-boundaries.ts";
@@ -12,8 +12,6 @@ import { useGlobeCamera } from "./use-globe-camera.ts";
 import { useGlobeLayers } from "./use-globe-layers.ts";
 
 import "maplibre-gl/dist/maplibre-gl.css";
-
-const minZoom = 1.8;
 
 /** The layer every country is drawn on, which is what clicks and the pointer are tested against. */
 const INTERACTIVE_LAYER_IDS = [MapLayerKeys.Hit];
@@ -64,7 +62,7 @@ export const Globe = memo(
 				// untick it again on the way to zooming in. Scrolling, pinching and the buttons still zoom.
 				doubleClickZoom={false}
 				interactiveLayerIds={INTERACTIVE_LAYER_IDS}
-				minZoom={minZoom}
+				minZoom={GLOBE_MIN_ZOOM}
 				onClick={handleClick}
 				onMouseMove={handleMouseMove}
 				onMouseOut={handleMouseOut}

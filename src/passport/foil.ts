@@ -81,7 +81,7 @@ export const foilTowards = (current: Foil, target: Foil, elapsed: number): Foil 
 /**
  * The custom properties the passport's styles read, for the light at `foil`: where it catches, how
  * brightly, and how far the passport tilts, its near edge dipping away from the light. The foil
- * visas in it inherit them, so they all catch the one light.
+ * visas in it are each given them, so they all catch the one light.
  */
 export const foilPropertiesOf = ({
 	across,
