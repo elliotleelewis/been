@@ -17,8 +17,8 @@ interface Props {
 }
 
 /**
- * Shares the reader's map: a QR code to show someone in person, and the link it encodes to copy or
- * send, or while nothing is ticked, how to start a map worth sharing. It is a modal dialog,
+ * Shares the reader's map: a QR code to show someone in person, and the map summed up in emoji,
+ * ending with the link the code encodes, to copy or send, or while nothing is ticked, how to start a map worth sharing. It is a modal dialog,
  * labelled by its title, that hands focus back to the share button when it closes.
  */
 export const ShareDialog: FC<Props> = memo(({ overlayProps, state }) => {
@@ -39,12 +39,30 @@ export const ShareDialog: FC<Props> = memo(({ overlayProps, state }) => {
 				// oxlint-disable-next-line react/jsx-props-no-spreading -- As above, for what ties the dialog to its trigger.
 				{...overlayProps}
 				ref={ref}
-				className="flex w-80 max-w-full flex-col items-center gap-4 rounded-2xl bg-white p-6 text-zinc-900 shadow-xl focus:outline-none dark:bg-zinc-900 dark:text-white"
+				className="relative flex w-96 max-w-full flex-col items-center gap-4 rounded-2xl bg-white p-6 text-zinc-900 shadow-xl focus:outline-none dark:bg-zinc-900 dark:text-white"
 			>
 				{/* oxlint-disable-next-line react/jsx-props-no-spreading -- As above, for the title the dialog is labelled by. */}
 				<h2 {...titleProps} className="font-semibold text-lg">
 					{m.share_title()}
 				</h2>
+				<button
+					type="button"
+					className="absolute end-2 top-2 rounded-full p-2 hover:bg-zinc-100 focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:outline-none dark:hover:bg-zinc-800"
+					onClick={handleDone}
+					aria-label={m.share_close()}
+				>
+					<svg
+						className="size-4"
+						viewBox="0 0 24 24"
+						fill="none"
+						stroke="currentColor"
+						strokeWidth="2"
+						strokeLinecap="round"
+						aria-hidden="true"
+					>
+						<path d="M6 6l12 12M18 6 6 18" />
+					</svg>
+				</button>
 				<p className="text-center text-sm text-zinc-600 dark:text-zinc-400">
 					{count === 0 ? m.share_empty() : m.share_summary({ count })}
 				</p>
@@ -57,7 +75,7 @@ export const ShareDialog: FC<Props> = memo(({ overlayProps, state }) => {
 						{m.share_ok()}
 					</button>
 				) : (
-					<ShareLink url={url} onDone={handleDone} />
+					<ShareLink url={url} />
 				)}
 			</div>
 		</Modal>

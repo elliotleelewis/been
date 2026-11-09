@@ -1,7 +1,7 @@
 import { memo, useMemo } from "react";
 import type { FC } from "react";
 
-import { qrSvgOf } from "./qr.ts";
+import { QR_BORDER, qrSvgOf } from "./qr.ts";
 import { useQrCode } from "./use-qr-code.ts";
 
 interface Props {
@@ -12,8 +12,8 @@ interface Props {
 }
 
 /**
- * A QR code for `text`. It is dark on light in either colour scheme: plenty of scanners cannot read
- * a code drawn the other way round.
+ * A QR code for `text`, in the app's colours on the passport's paper. It is dark on light in either colour scheme: plenty of scanners cannot read a
+ * code drawn the other way round.
  */
 export const QrCode: FC<Props> = memo(({ label, text }) => {
 	const modules = useQrCode(text);
@@ -21,15 +21,15 @@ export const QrCode: FC<Props> = memo(({ label, text }) => {
 		() =>
 			modules === undefined
 				? undefined
-				: `data:image/svg+xml,${encodeURIComponent(qrSvgOf(modules))}`,
+				: `data:image/svg+xml,${encodeURIComponent(qrSvgOf(modules, QR_BORDER))}`,
 		[modules],
 	);
 
 	return (
-		<div className="size-48 overflow-hidden rounded-lg bg-white">
-			{src === undefined ? null : (
-				<img className="size-full [image-rendering:pixelated]" src={src} alt={label} />
-			)}
+		<div className="rounded-2xl bg-[#fbf7ec] p-2 shadow-sm ring-1 ring-[#c2410c]/30 dark:bg-[#fbf7ec] dark:ring-[#c2410c]/50">
+			<div className="size-48">
+				{src === undefined ? null : <img className="size-full" src={src} alt={label} />}
+			</div>
 		</div>
 	);
 });
