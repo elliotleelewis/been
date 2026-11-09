@@ -3,6 +3,7 @@ import type { FC } from "react";
 
 import { fontSizeFor } from "./lettering.ts";
 import { StampFrame } from "./stamp-frame.tsx";
+import { StampSilhouette } from "./stamp-silhouette.tsx";
 import { StampText } from "./stamp-text.tsx";
 import type { PassportStamp, StampShape } from "./types.ts";
 
@@ -55,7 +56,7 @@ const FOOTER_SIZE = 7;
 
 /**
  * A passport stamp for a country: a double border in one of a few shapes, the country's own outline
- * in the middle, and its name, the word it was stamped with and the date around it, all pressed at
+ * in the middle, or an emblem of its code where it is too small to have one, and its name, the word it was stamped with and the date around it, all pressed at
  * a slant in its region's ink. The ink is broken up with noise, as rubber stamps never print solid.
  */
 export const Stamp: FC<Props> = memo(({ stamp }) => {
@@ -101,7 +102,7 @@ export const Stamp: FC<Props> = memo(({ stamp }) => {
 				<StampFrame shape={shape} />
 				{stamp.silhouette === undefined ? null : (
 					<svg x={left} y={top} width={width} height={height} viewBox="0 0 100 100">
-						<path d={stamp.silhouette} fill="currentColor" />
+						<StampSilhouette code={stamp.country.iso3166} silhouette={stamp.silhouette} />
 					</svg>
 				)}
 				<StampText

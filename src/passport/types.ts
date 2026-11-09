@@ -162,7 +162,10 @@ export interface PassportStamp {
 	readonly design: StampDesign;
 	/** The day the stamp is dated, as the reader writes dates, or none for an older tick. */
 	readonly date: string | undefined;
-	/** The country's outline as an SVG path in a 100-unit square, once the atlas has loaded. */
+	/**
+	 * The country's outline as an SVG path in a 100-unit square, once the atlas has loaded: empty
+	 * where the atlas draws it as no more than a point, as it does the Holy See.
+	 */
 	readonly silhouette: string | undefined;
 }
 
