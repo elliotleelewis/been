@@ -8,7 +8,7 @@ exports[`passport button > should turn to the stamps with the arrow keys, and sh
 >
   <filter
     height="120%"
-    id="_r_j_-ink"
+    id="_r_k_-ink"
     width="120%"
     x="-10%"
     y="-10%"
@@ -48,7 +48,7 @@ exports[`passport button > should turn to the stamps with the arrow keys, and sh
   </filter>
   <g
     color="#4b3a8c"
-    filter="url(#_r_j_-ink)"
+    filter="url(#_r_k_-ink)"
     opacity="0.88"
     transform="rotate(13 60 60)"
   >
@@ -71,7 +71,7 @@ exports[`passport button > should turn to the stamps with the arrow keys, and sh
     <path
       d="M 13 60 A 47 47 0 0 1 107 60"
       fill="none"
-      id="_r_j_-name"
+      id="_r_k_-name"
     />
     <text
       fill="currentColor"
@@ -81,7 +81,7 @@ exports[`passport button > should turn to the stamps with the arrow keys, and sh
       text-anchor="middle"
     >
       <textpath
-        href="#_r_j_-name"
+        href="#_r_k_-name"
         startOffset="50%"
       >
         FRANCE
@@ -90,7 +90,7 @@ exports[`passport button > should turn to the stamps with the arrow keys, and sh
     <path
       d="M 7 60 A 53 53 0 0 0 113 60"
       fill="none"
-      id="_r_j_-footer"
+      id="_r_k_-footer"
     />
     <text
       fill="currentColor"
@@ -100,7 +100,7 @@ exports[`passport button > should turn to the stamps with the arrow keys, and sh
       text-anchor="middle"
     >
       <textpath
-        href="#_r_j_-footer"
+        href="#_r_k_-footer"
         startOffset="50%"
       >
         ARRIVED · 13 OCT 2026

@@ -1,3 +1,4 @@
+import classNames from "classnames";
 import { memo } from "react";
 import type { FC, RefObject } from "react";
 
@@ -32,11 +33,19 @@ export const VisaBack: FC<Props> = memo(({ back, buttonRef, id, onFlipBack, show
 	return (
 		<div
 			id={id}
-			className={`absolute inset-0 flex flex-col overflow-hidden rounded-[2cqw] bg-[color-mix(in_oklab,currentColor_7%,#fbf7ec)] shadow-sm ring-1 ring-current/60 backface-hidden motion-safe:rotate-y-180 motion-reduce:transition-opacity motion-reduce:duration-300 ${shown ? "" : "pointer-events-none motion-reduce:opacity-0"}`}
+			className={classNames(
+				"absolute inset-0 flex flex-col overflow-hidden rounded-[2cqw] bg-[color-mix(in_oklab,currentColor_7%,#fbf7ec)] shadow-sm ring-1 ring-current/60 backface-hidden motion-safe:rotate-y-180 motion-reduce:transition-opacity motion-reduce:duration-300",
+				{ "pointer-events-none motion-reduce:opacity-0": !shown },
+			)}
 			style={{ color: visa.design.ink, rotate: `${String(visa.design.rotation)}deg` }}
 			inert={!shown}
 		>
-			<VisaBackBand visa={visa} buttonRef={buttonRef} onFlipBack={onFlipBack} />
+			<VisaBackBand
+				heading="ENTRY RECORD"
+				visa={visa}
+				buttonRef={buttonRef}
+				onFlipBack={onFlipBack}
+			/>
 			<div className="grid min-h-0 flex-1 grid-cols-[36%_1fr] gap-[3cqw] p-[3cqw] text-[#3b3a35]">
 				<VisaBackClincher clincher={back.clincher} />
 				<section

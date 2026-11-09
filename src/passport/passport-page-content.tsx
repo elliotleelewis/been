@@ -2,6 +2,7 @@ import { memo } from "react";
 import type { FC } from "react";
 
 import { PassportIdPage } from "./passport-id-page.tsx";
+import { PassportLockedPage } from "./passport-locked-page.tsx";
 import { PassportStampPage } from "./passport-stamp-page.tsx";
 import { PassportVisaPage } from "./passport-visa-page.tsx";
 import type { PassportPage } from "./types.ts";
@@ -20,6 +21,9 @@ export const PassportPageContent: FC<Props> = memo(({ onClose, page }) => {
 	}
 	if (page.kind === "identity") {
 		return <PassportIdPage />;
+	}
+	if (page.kind === "locked") {
+		return <PassportLockedPage index={page.index} />;
 	}
 	return page.kind === "visas" ? (
 		<PassportVisaPage index={page.index} />

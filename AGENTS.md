@@ -92,8 +92,8 @@ Rules that keep that shape:
   base64. The order comes from the dataset, and a link from any other list reads as no map. It
   opens read-only through `shownVisitsAtom` (`src/core/location.ts` watches the hash). The QR
   encoder loads only when the share dialog opens.
-- **The passport** is pages (`src/passport/pages.ts`): a cover, an identity page, the visas, then
-  stamps six to a page, shown two at a time on wide screens (`src/passport/use-passport-spread.ts`). **Stamps** are generated, not drawn: shape, slant and wording from a stable hash of the code, ink
+- **The passport** is pages (`src/passport/pages.ts`): a cover, an identity page, the visas, those
+  within reach (`src/passport/locked-visas.ts`), then stamps six to a page, each part a tap away, shown two at a time on wide screens (`src/passport/use-passport-spread.ts`). **Stamps** are generated, not drawn: shape, slant and wording from a stable hash of the code, ink
   from the M49 region (`src/passport/stamp-design.ts`), and the outline is the country's home
   landmass from the globe's boundaries (`src/passport/silhouette.ts`). The passport is paper and
   board, the same in either colour scheme.
@@ -146,7 +146,7 @@ at run time, except M49 areas', which are messages.
 - Every declaration, down to interface members, gets a JSDoc `/** */` saying what it's for. No `@param` or `@returns`: the types carry them. `//` is for comments in a body and suppressions.
 - React: arrow function components in `memo` with a `displayName`, `readonly` props, and callbacks passed down wrapped in `useCallback`.
 - Components are presentational: state is atoms, derived state a read-only atom, and anything that changes more than one atom a write-only atom.
-- Tailwind v4, configured in `src/styles.css`. Use the `primary` theme colour, and give every element its `dark:` variant.
+- Tailwind v4, configured in `src/styles.css`. Use the `primary` theme colour, and give every element its `dark:` variant. Combine classes with `classnames`, not template strings.
 - Tests are Vitest in a real Chromium, co-located as `*.spec.ts(x)`, with snapshots. Update a snapshot in the same commit as the markup change.
 - Commit messages and PR titles follow Conventional Commits; CI checks the title.
 

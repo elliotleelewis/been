@@ -1,3 +1,4 @@
+import classNames from "classnames";
 import { memo } from "react";
 import type { FC } from "react";
 
@@ -46,12 +47,17 @@ const PAPERS: Readonly<Record<SheetPlace, string>> = {
  * colour scheme. Everything on it is sized in fractions of its width, so it grows with the screen.
  */
 export const PassportSheet: FC<Props> = memo(({ onClose, onOpen, page, place, spread }) => (
-	<div className={`@container aspect-[5/7] shrink-0 ${WIDTHS[spread ? "spread" : "single"]}`}>
+	<div
+		className={classNames("@container aspect-[5/7] shrink-0", WIDTHS[spread ? "spread" : "single"])}
+	>
 		{page?.kind === "cover" ? (
 			<PassportCover onOpen={onOpen} />
 		) : (
 			<div
-				className={`size-full overflow-hidden bg-[#f3eddc] bg-[repeating-linear-gradient(135deg,transparent_0_6px,rgb(29_43_79/0.035)_6px_7px)] dark:bg-[#ece4cf] ${PAPERS[place]}`}
+				className={classNames(
+					"size-full overflow-hidden bg-[#f3eddc] bg-[repeating-linear-gradient(135deg,transparent_0_6px,rgb(29_43_79/0.035)_6px_7px)] dark:bg-[#ece4cf]",
+					PAPERS[place],
+				)}
 			>
 				{page === null ? null : <PassportPageContent page={page} onClose={onClose} />}
 			</div>

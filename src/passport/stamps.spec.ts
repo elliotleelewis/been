@@ -74,11 +74,11 @@ describe("passport state", () => {
 		store.set(turnPassportPageAtom, { by: 10, spread: false });
 
 		expect(atFront).toBe(0);
-		expect(store.get(passportPageCountAtom)).toBe(6);
-		expect(store.get(passportPageAtom)).toBe(5);
+		expect(store.get(passportPageCountAtom)).toBe(7);
+		expect(store.get(passportPageAtom)).toBe(6);
 	}, 5000);
 
-	it("should put a page of visas for every two earned before the stamps", () => {
+	it("should put a page of visas for every two earned, then for those within reach, before the stamps", () => {
 		expect.hasAssertions();
 
 		const pages = createTestStore().get(passportPagesAtom);
@@ -89,6 +89,7 @@ describe("passport state", () => {
 			"visas",
 			"visas",
 			"visas",
+			"locked",
 			"stamps",
 		]);
 	}, 5000);

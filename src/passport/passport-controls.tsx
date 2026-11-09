@@ -18,6 +18,9 @@ const pageNameOf = (page: PassportPage): string => {
 		return m.passport_page_identity();
 	}
 	const numbers = { page: page.index + 1, pages: page.of };
+	if (page.kind === "locked") {
+		return m.passport_page_locked(numbers);
+	}
 	return page.kind === "visas" ? m.passport_page_visas(numbers) : m.passport_page_stamps(numbers);
 };
 

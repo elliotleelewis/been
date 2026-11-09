@@ -4,9 +4,17 @@ import { countriesAtom } from "../core/countries.ts";
 import { achievementsAtom } from "../core/dataset.ts";
 import { homeRegionAtom } from "../core/home-region.ts";
 import { M49_REGIONS } from "../core/m49.ts";
+import { lockedVisasAtom } from "./locked-visas.ts";
 import { passportStampsAtom } from "./stamps.ts";
 import { STAMPS_PER_PAGE, VISAS_PER_PAGE } from "./types.ts";
-import type { PassportOpening, PassportPage, PassportStats, PassportTurn } from "./types.ts";
+import type {
+	PassportChapter,
+	PassportChapterStart,
+	PassportOpening,
+	PassportPage,
+	PassportStats,
+	PassportTurn,
+} from "./types.ts";
 import { flippedVisaAtom } from "./visa-backs.ts";
 import { visasAtom } from "./visas.ts";
 
@@ -27,29 +35,32 @@ export const passportStatsAtom = atom<PassportStats>((get) => {
 	};
 });
 
+/** `of` pages of a part of the passport, numbered from 0. */
+const chapterPagesOf = (kind: PassportChapter, of: number): readonly PassportPage[] =>
+	Array.from({ length: of }, (_page, index): PassportPage => ({ index, kind, of }));
+
 /**
  * The passport's pages in order: the cover, the identity page, a page for every two visas, if the
- * map has earned any, then a page for every six stamps, with at least one to say where stamps come
- * from.
+ * map has earned any, then for every two within reach, if any are, then a page for every six stamps,
+ * with at least one to say where stamps come from.
  */
 export const passportPagesAtom = atom<readonly PassportPage[]>((get) => {
-	const visaPages = Math.ceil(get(visasAtom).length / VISAS_PER_PAGE);
 	const stampPages = Math.max(1, Math.ceil(get(passportStampsAtom).length / STAMPS_PER_PAGE));
 	return [
 		{ kind: "cover" },
 		{ kind: "identity" },
-		...Array.from({ length: visaPages }, (_page, index): PassportPage => ({
-			index,
-			kind: "visas",
-			of: visaPages,
-		})),
-		...Array.from({ length: stampPages }, (_page, index): PassportPage => ({
-			index,
-			kind: "stamps",
-			of: stampPages,
-		})),
+		...chapterPagesOf("visas", Math.ceil(get(visasAtom).length / VISAS_PER_PAGE)),
+		...chapterPagesOf("locked", Math.ceil(get(lockedVisasAtom).length / VISAS_PER_PAGE)),
+		...chapterPagesOf("stamps", stampPages),
 	];
 });
+
+/** Where each part of the passport it has pages for starts, in order. */
+export const passportChaptersAtom = atom<readonly PassportChapterStart[]>((get) =>
+	get(passportPagesAtom).flatMap((page, index): PassportChapterStart[] =>
+		"index" in page && page.index === 0 ? [{ chapter: page.kind, page: index }] : [],
+	),
+);
 
 /** How many pages the passport has. */
 export const passportPageCountAtom = atom((get) => get(passportPagesAtom).length);
@@ -96,6 +107,15 @@ export const turnPassportPageAtom = atom(undefined, (get, set, { by, spread }: P
 	const from = spread ? leftPageOf(get(passportPageAtom)) : get(passportPageAtom);
 	const page = Math.min(Math.max(from + (spread ? by * 2 : by), 0), last);
 	set(passportPageAtom, spread ? leftPageOf(page) : page);
+	set(flippedVisaAtom, null);
+});
+
+/**
+ * Opens the passport straight at the page `page`, at the spread it lies in where it lies open, with
+ * every visa the right way up.
+ */
+export const jumpToPassportPageAtom = atom(undefined, (_get, set, page: number) => {
+	set(passportPageAtom, page);
 	set(flippedVisaAtom, null);
 });
 

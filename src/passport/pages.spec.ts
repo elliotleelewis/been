@@ -3,7 +3,14 @@ import { afterEach, describe, expect, it } from "vitest";
 
 import { rawCountriesAtom } from "../core/dataset.ts";
 import { visitsAtom } from "../core/selection.ts";
-import { passportOpeningOfAtom, passportPageAtom, turnPassportPageAtom } from "./pages.ts";
+import {
+	jumpToPassportPageAtom,
+	passportChaptersAtom,
+	passportOpeningOfAtom,
+	passportPageAtom,
+	turnPassportPageAtom,
+} from "./pages.ts";
+import { flippedVisaAtom } from "./visa-backs.ts";
 
 /**
  * A store for a passport of six pages, to be laid open two at a time: the cover, the identity
@@ -81,6 +88,34 @@ describe("passport pages", () => {
 		store.set(turnPassportPageAtom, { by: 1, spread: true });
 		store.set(turnPassportPageAtom, { by: 1, spread: true });
 
+		// The first stamp's visa faces the first page of those within reach, which run onto a second.
+		expect(kindsShownIn(store)).toStrictEqual(["locked", "locked"]);
+
+		store.set(turnPassportPageAtom, { by: 1, spread: true });
+
 		expect(kindsShownIn(store)).toStrictEqual(["stamps", null]);
+	}, 5000);
+
+	it("should open straight at any of its parts, at the spread it starts in", () => {
+		expect.hasAssertions();
+
+		const store = storeOfSpreads();
+		store.set(visitsAtom, { FR: {} });
+
+		expect(store.get(passportChaptersAtom)).toStrictEqual([
+			{ chapter: "visas", page: 2 },
+			{ chapter: "locked", page: 3 },
+			{ chapter: "stamps", page: 5 },
+		]);
+
+		store.set(flippedVisaAtom, "region:150");
+		store.set(jumpToPassportPageAtom, 5);
+
+		expect(kindsShownIn(store)).toStrictEqual(["stamps", null]);
+		expect(store.get(flippedVisaAtom)).toBeNull();
+
+		store.set(turnPassportPageAtom, { by: -1, spread: true });
+
+		expect(kindsShownIn(store)).toStrictEqual(["locked", "locked"]);
 	}, 5000);
 });

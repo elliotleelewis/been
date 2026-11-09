@@ -1,4 +1,4 @@
-import { act, cleanup, fireEvent, render } from "@testing-library/react";
+import { act, cleanup, fireEvent, render, within } from "@testing-library/react";
 import { Provider, createStore } from "jotai";
 import { afterEach, describe, expect, it } from "vitest";
 
@@ -85,8 +85,9 @@ describe("passport button", () => {
 
 		const rendered = renderButton();
 		const dialog = openToIdentityPage(rendered);
-		// The cover and identity page are followed by two pages of visas, for France's three.
-		turnForward(dialog, 3);
+		// The cover and identity page are followed by two pages of visas, for France's three, and one
+		// of those within reach.
+		turnForward(dialog, 4);
 		const stamp = rendered.result.getByRole("button", {
 			name: "France, 13 OCT 2026. Show on the globe",
 		});
@@ -117,9 +118,29 @@ describe("passport button", () => {
 		act(() => {
 			visa.focus();
 		});
-		turnForward(dialog, 2);
+		turnForward(dialog, 3);
 
 		expect(dialog).toHaveTextContent("Stamps 1 of 1");
 		expect(dialog).toHaveFocus();
+	}, 5000);
+
+	it("should open straight at the stamps, past the visas, from the parts beneath it", () => {
+		expect.hasAssertions();
+
+		const rendered = renderButton();
+		const dialog = openToIdentityPage(rendered);
+		const parts = rendered.result.getByRole("navigation", { name: "Go to" });
+		act(() => {
+			within(parts).getByRole("button", { name: "Stamps" }).click();
+		});
+
+		expect(dialog).toHaveTextContent("Stamps 1 of 1");
+		expect(within(parts).getByRole("button", { name: "Stamps" })).toHaveAttribute(
+			"aria-current",
+			"page",
+		);
+		expect(within(parts).getByRole("button", { name: "Visas" })).not.toHaveAttribute(
+			"aria-current",
+		);
 	}, 5000);
 });

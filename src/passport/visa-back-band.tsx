@@ -5,6 +5,8 @@ import { m } from "../paraglide/messages.js";
 import type { Visa } from "./types.ts";
 
 interface Props {
+	/** What the back is, in the passport's own lettering. */
+	readonly heading: string;
 	readonly visa: Visa;
 	/** The button that turns the visa back over, which takes focus when the back comes round. */
 	readonly buttonRef: RefObject<HTMLButtonElement | null>;
@@ -17,10 +19,10 @@ interface Props {
  * only its lettering is set in paper colour: what the back is, the visa's
  * category and number, and a button that turns it back over.
  */
-export const VisaBackBand: FC<Props> = memo(({ buttonRef, onFlipBack, visa }) => (
+export const VisaBackBand: FC<Props> = memo(({ buttonRef, heading, onFlipBack, visa }) => (
 	<div className="flex h-[8.7cqw] shrink-0 items-center gap-[2cqw] bg-current ps-[4cqw] pe-[1.5cqw]">
 		<span className="text-[3.6cqw] font-extrabold tracking-[0.9cqw] whitespace-nowrap text-[#fbf7ec]">
-			{"ENTRY RECORD"}
+			{heading}
 		</span>
 		<span className="ms-auto truncate text-[2.5cqw] font-semibold tracking-[0.3cqw] text-[#fbf7ec]">
 			{`${visa.design.type} · No ${visa.design.serial}`}
