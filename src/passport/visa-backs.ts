@@ -1,7 +1,7 @@
 import { atom } from "jotai";
 
-import { earnersOf } from "../core/achievements.ts";
 import { countriesAtom } from "../core/countries.ts";
+import { earnersOf } from "../core/earners.ts";
 import { shownVisitsAtom } from "../core/selection.ts";
 import type { Achievement, Country } from "../core/types.ts";
 import { m } from "../paraglide/messages.js";

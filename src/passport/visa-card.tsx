@@ -2,12 +2,20 @@ import { useAtom, useAtomValue } from "jotai";
 import { memo, useCallback, useId } from "react";
 import type { FC } from "react";
 
+import type { AchievementTier } from "../core/types.ts";
 import { m } from "../paraglide/messages.js";
 import type { Visa as VisaModel } from "./types.ts";
 import { useFlipFocus } from "./use-flip-focus.ts";
+import { askForDeviceTilt } from "./use-foil.ts";
 import { VisaBack } from "./visa-back.tsx";
 import { flippedVisaAtom, visaBacksAtom } from "./visa-backs.ts";
-import { Visa } from "./visa.tsx";
+import { VisaFace } from "./visa-face.tsx";
+
+/** What a rare visa's tier is called, after what it is for, to someone who can't see its foil. */
+const TIER_LABELS: Readonly<Partial<Record<AchievementTier, () => string>>> = {
+	foil: m.passport_visa_foil,
+	legendary: m.passport_visa_legendary,
+};
 
 interface Props {
 	readonly visa: VisaModel;
@@ -28,8 +36,12 @@ export const VisaCard: FC<Props> = memo(({ visa }) => {
 	const { back: backButton, card, front } = useFlipFocus(flipped);
 
 	const flip = useCallback(() => {
+		// A tap is the one chance iOS gives to ask for the device's tilt, which the foil follows.
+		if (achievement.tier !== "standard") {
+			askForDeviceTilt();
+		}
 		setFlippedVisa(achievement.id);
-	}, [achievement.id, setFlippedVisa]);
+	}, [achievement.id, achievement.tier, setFlippedVisa]);
 	const flipBack = useCallback(() => {
 		setFlippedVisa(null);
 	}, [setFlippedVisa]);
@@ -48,11 +60,12 @@ export const VisaCard: FC<Props> = memo(({ visa }) => {
 					aria-controls={back === undefined ? undefined : backId}
 					inert={flipped}
 				>
-					<Visa visa={visa} />
+					<VisaFace visa={visa} lit={!flipped} />
 					<span className="sr-only">
 						{date === undefined
 							? m.passport_visa_undated(achievement)
 							: m.passport_visa_dated({ ...achievement, date })}
+						{TIER_LABELS[achievement.tier]?.()}
 					</span>
 				</button>
 				{back === undefined ? null : (

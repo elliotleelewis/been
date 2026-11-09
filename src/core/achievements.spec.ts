@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 
-import { achievementsOf, earnedOn, earnersOf, isEarned, newlyEarned } from "./achievements.ts";
+import { achievementsOf, earnedOn, isEarned, newlyEarned } from "./achievements.ts";
+import { earnersOf } from "./earners.ts";
 import { assertDefined } from "./test.ts";
 import type { CountryData } from "./types.ts";
 
@@ -102,5 +103,38 @@ describe("achievements", () => {
 		});
 		expect(earnersOf(europe, { FR: {}, IT: {}, VA: {} }).clincher).toBeUndefined();
 		expect(earnersOf(europe, { FR: {}, IT: {}, VA: { at: "2024-01-01" } }).clincher).toBe("VA");
+	}, 5000);
+
+	it("should print the rarest achievements on foil, and the rarest of all as legendary", () => {
+		expect.hasAssertions();
+
+		const tiers = Object.fromEntries(achievementsOf(COUNTRIES).map(({ id, tier }) => [id, tier]));
+
+		expect(tiers).toMatchObject({
+			"geography:equator": "standard",
+			"milestone:1": "standard",
+			"milestone:all": "legendary",
+			"region:150": "foil",
+			"subregion:054": "foil",
+			"subregion:155": "standard",
+		});
+	}, 5000);
+
+	it("should ask for a country in each continent, once the list has all five", () => {
+		expect.hasAssertions();
+
+		const all = [
+			...COUNTRIES,
+			{ iso3166: "JP", region: "142", subregion: "030" },
+			{ iso3166: "KE", region: "002", subregion: "014" },
+		] as const satisfies readonly CountryData[];
+		const continents = assertDefined(
+			achievementsOf(all).find(({ id }) => id === "geography:continents"),
+			"There is no achievement for every continent.",
+		);
+
+		expect(achievementsOf(COUNTRIES).some(({ id }) => id === "geography:continents")).toBeFalsy();
+		expect(isEarned(continents, { BR: {}, FJ: {}, FR: {}, JP: {} })).toBeFalsy();
+		expect(isEarned(continents, { BR: {}, FJ: {}, FR: {}, JP: {}, KE: {} })).toBeTruthy();
 	}, 5000);
 });

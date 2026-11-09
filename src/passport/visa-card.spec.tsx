@@ -71,6 +71,7 @@ describe("visa card", () => {
 		const front = frontOf(rendered, /^Europe visa/u);
 		turnOver(front);
 
+		expect(front).toHaveAccessibleName(/\. A foil visa$/u);
 		expect(front).toHaveAttribute("aria-expanded", "true");
 		expect(backOf(front)).toHaveTextContent("The last one in Europe");
 		expect(backOf(front)).toMatchSnapshot();

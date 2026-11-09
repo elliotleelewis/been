@@ -9,6 +9,7 @@ const EUROPE: Achievement = {
 	kind: "region",
 	region: "150",
 	requirements: [],
+	tier: "foil",
 	title: "Europe",
 };
 

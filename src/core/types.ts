@@ -49,6 +49,12 @@ export interface StampMoment {
 /** The kinds of achievement there are, each with a visa of its own colour and type. */
 export type AchievementKind = "collection" | "geography" | "milestone" | "region" | "subregion";
 
+/**
+ * How rare an achievement is, which its visa shows: printed plain, with foil on its band and
+ * medallion, or holographic all over.
+ */
+export type AchievementTier = "foil" | "legendary" | "standard";
+
 /** One part of what an achievement asks for: at least `count` of `codes` ticked. */
 export interface Requirement {
 	readonly codes: readonly string[];
@@ -62,6 +68,7 @@ export interface Achievement {
 	/** Stable across releases, so a visa keeps its design and serial number. */
 	readonly id: string;
 	readonly kind: AchievementKind;
+	readonly tier: AchievementTier;
 	readonly title: string;
 	/** What it took, in a few words, beneath the title on its visa. */
 	readonly description: string;

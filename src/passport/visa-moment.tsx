@@ -6,7 +6,7 @@ import { confettiOf } from "./confetti.ts";
 import { endVisaMomentAtom, shownVisaMomentAtom } from "./moments.ts";
 import { useConfetti } from "./use-confetti.ts";
 import { useStampFlight } from "./use-stamp-flight.ts";
-import { Visa } from "./visa.tsx";
+import { VisaFace } from "./visa-face.tsx";
 import { visasAtom } from "./visas.ts";
 
 interface Props {
@@ -68,7 +68,7 @@ export const VisaMoment: FC<Props> = memo(({ target }) => {
 							transform: `translate(${String((earned.length - 1 - index) * 10)}px, ${String((earned.length - 1 - index) * 10)}px)`,
 						}}
 					>
-						<Visa visa={visa} />
+						<VisaFace visa={visa} lit />
 					</div>
 				))}
 			</div>
