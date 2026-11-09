@@ -42,3 +42,16 @@ export const shownVisitsAtom = atom<Visits>((get) => get(sharedVisitsAtom) ?? ge
 export const selectedCountriesAtom = atom<readonly string[]>((get) =>
 	Object.keys(get(shownVisitsAtom)),
 );
+
+/**
+ * The country the reader is pointing at, or on, in the list, which the globe highlights as it does
+ * the one under the mouse, so the two can be matched up.
+ */
+export const pointedCountryAtom = atom<string | null>(null);
+
+/** Stops pointing at `code`, unless the reader has already moved on to another. */
+export const unpointCountryAtom = atom(undefined, (get, set, code: string) => {
+	if (get(pointedCountryAtom) === code) {
+		set(pointedCountryAtom, null);
+	}
+});
