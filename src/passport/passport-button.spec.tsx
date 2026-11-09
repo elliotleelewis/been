@@ -102,4 +102,24 @@ describe("passport button", () => {
 		expect(rendered.result.queryByRole("dialog")).toBeNull();
 		expect(rendered.store.get(focusAtom)?.type).toBe("country");
 	}, 5000);
+
+	it("should keep focus in the passport as its pages turn, so the keys still reach it", () => {
+		expect.hasAssertions();
+
+		const rendered = renderButton();
+		const dialog = openToIdentityPage(rendered);
+
+		// Opening the cover took away the button that had focus.
+		expect(dialog).toHaveFocus();
+
+		turnForward(dialog, 1);
+		const visa = rendered.result.getByRole("button", { name: /^First stamp visa/u });
+		act(() => {
+			visa.focus();
+		});
+		turnForward(dialog, 2);
+
+		expect(dialog).toHaveTextContent("Stamps 1 of 1");
+		expect(dialog).toHaveFocus();
+	}, 5000);
 });

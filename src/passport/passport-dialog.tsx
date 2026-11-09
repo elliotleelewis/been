@@ -1,15 +1,14 @@
-import { useSetAtom } from "jotai";
 import { memo, useCallback, useRef } from "react";
 import type { FC } from "react";
-import { useDialog, useKeyboard } from "react-aria";
-import type { KeyboardEvents, OverlayTriggerAria } from "react-aria";
+import { useDialog } from "react-aria";
+import type { OverlayTriggerAria } from "react-aria";
 import type { OverlayTriggerState } from "react-stately";
 
 import { Modal } from "../core/modal.tsx";
 import { m } from "../paraglide/messages.js";
-import { turnPassportPageAtom } from "./pages.ts";
 import { PassportBook } from "./passport-book.tsx";
 import { PassportControls } from "./passport-controls.tsx";
+import { usePageTurns } from "./use-page-turns.ts";
 import { usePassportSpread } from "./use-passport-spread.ts";
 
 interface Props {
@@ -18,12 +17,6 @@ interface Props {
 	readonly state: OverlayTriggerState;
 }
 
-/** A key press as react-aria hands it over, which it does not export a name for. */
-type KeyboardEvent = Parameters<NonNullable<KeyboardEvents["onKeyDown"]>>[0];
-
-/** The arrow keys that turn the passport's pages, and which way each turns them. */
-const TURNS: Readonly<Record<string, number>> = { ArrowLeft: -1, ArrowRight: 1 };
-
 /**
  * The passport for the map on show: opened at its cover each time, its pages turned with the
  * buttons beneath it or the arrow keys.
@@ -31,25 +24,12 @@ const TURNS: Readonly<Record<string, number>> = { ArrowLeft: -1, ArrowRight: 1 }
 export const PassportDialog: FC<Props> = memo(({ overlayProps, state }) => {
 	const ref = useRef<HTMLDivElement>(null);
 	const { dialogProps, titleProps } = useDialog({}, ref);
-	const turnPage = useSetAtom(turnPassportPageAtom);
 	const spread = usePassportSpread();
+	const keyboardProps = usePageTurns(ref, spread);
 
 	const close = useCallback(() => {
 		state.close();
 	}, [state]);
-	const handleKeyDown = useCallback(
-		(event: KeyboardEvent) => {
-			const by = TURNS[event.key];
-			if (by === undefined) {
-				event.continuePropagation();
-			} else {
-				event.preventDefault();
-				turnPage({ by, spread });
-			}
-		},
-		[spread, turnPage],
-	);
-	const { keyboardProps } = useKeyboard({ onKeyDown: handleKeyDown });
 
 	return (
 		<Modal state={state}>
