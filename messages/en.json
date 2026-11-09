@@ -25,13 +25,8 @@
   "menu_shared_map": "Viewing a shared map",
   "menu_shared_map_count": [
     {
-      "declarations": [
-        "input count",
-        "local countPlural = count: plural"
-      ],
-      "selectors": [
-        "countPlural"
-      ],
+      "declarations": ["input count", "local countPlural = count: plural"],
+      "selectors": ["countPlural"],
       "match": {
         "countPlural=one": "{count} country",
         "countPlural=*": "{count} countries"
@@ -42,14 +37,8 @@
   "menu_next_up": "Next up",
   "menu_next_achievement": [
     {
-      "declarations": [
-        "input count",
-        "input title",
-        "local countPlural = count: plural"
-      ],
-      "selectors": [
-        "countPlural"
-      ],
+      "declarations": ["input count", "input title", "local countPlural = count: plural"],
+      "selectors": ["countPlural"],
       "match": {
         "countPlural=one": "Completes {title}",
         "countPlural=*": "{count} to go for {title}"
@@ -66,13 +55,8 @@
   "share_empty": "Tick the countries you've been to, in the list or on the globe, and you can share your map from here.",
   "share_summary": [
     {
-      "declarations": [
-        "input count",
-        "local countPlural = count: plural"
-      ],
-      "selectors": [
-        "countPlural"
-      ],
+      "declarations": ["input count", "local countPlural = count: plural"],
+      "selectors": ["countPlural"],
       "match": {
         "countPlural=one": "Anyone with the link sees your {count} country, and can't change them.",
         "countPlural=*": "Anyone with the link sees your {count} countries, and can't change them."
@@ -90,13 +74,8 @@
   "share_emoji_headline": "been · {count}/{total} countries ({percent}%) 🌍",
   "share_emoji_visas": [
     {
-      "declarations": [
-        "input count",
-        "local countPlural = count: plural"
-      ],
-      "selectors": [
-        "countPlural"
-      ],
+      "declarations": ["input count", "local countPlural = count: plural"],
+      "selectors": ["countPlural"],
       "match": {
         "countPlural=one": "🛂 {count} visa",
         "countPlural=*": "🛂 {count} visas"
@@ -159,9 +138,7 @@
         "input description",
         "local countPlural = count: plural"
       ],
-      "selectors": [
-        "countPlural"
-      ],
+      "selectors": ["countPlural"],
       "match": {
         "countPlural=one": "{title} visa, not yet issued: {description}. One more country to go",
         "countPlural=*": "{title} visa, not yet issued: {description}. {count} more countries to go"
@@ -174,13 +151,8 @@
   "passport_visa_countries": "Countries that earned the {title} visa",
   "passport_visa_clinched_milestone": [
     {
-      "declarations": [
-        "input count",
-        "local countOrdinal = count: plural type=ordinal"
-      ],
-      "selectors": [
-        "countOrdinal"
-      ],
+      "declarations": ["input count", "local countOrdinal = count: plural type=ordinal"],
+      "selectors": ["countOrdinal"],
       "match": {
         "countOrdinal=one": "Your {count}st country",
         "countOrdinal=two": "Your {count}nd country",
@@ -196,13 +168,8 @@
   "achievement_first_description": "The first country in the passport",
   "achievement_count_title": [
     {
-      "declarations": [
-        "input count",
-        "local countPlural = count: plural"
-      ],
-      "selectors": [
-        "countPlural"
-      ],
+      "declarations": ["input count", "local countPlural = count: plural"],
+      "selectors": ["countPlural"],
       "match": {
         "countPlural=one": "{count} country",
         "countPlural=*": "{count} countries"
@@ -211,13 +178,8 @@
   ],
   "achievement_count_description": [
     {
-      "declarations": [
-        "input count",
-        "local countPlural = count: plural"
-      ],
-      "selectors": [
-        "countPlural"
-      ],
+      "declarations": ["input count", "local countPlural = count: plural"],
+      "selectors": ["countPlural"],
       "match": {
         "countPlural=one": "Stamps from {count} country",
         "countPlural=*": "Stamps from {count} countries"
@@ -242,13 +204,8 @@
   "achievement_islands_title": "Island hopper",
   "achievement_islands_description": [
     {
-      "declarations": [
-        "input count",
-        "local countPlural = count: plural"
-      ],
-      "selectors": [
-        "countPlural"
-      ],
+      "declarations": ["input count", "local countPlural = count: plural"],
+      "selectors": ["countPlural"],
       "match": {
         "countPlural=one": "{count} country made of islands",
         "countPlural=*": "{count} countries made of islands"
@@ -264,13 +221,8 @@
   "achievement_landlocked_title": "Landlocked",
   "achievement_landlocked_description": [
     {
-      "declarations": [
-        "input count",
-        "local countPlural = count: plural"
-      ],
-      "selectors": [
-        "countPlural"
-      ],
+      "declarations": ["input count", "local countPlural = count: plural"],
+      "selectors": ["countPlural"],
       "match": {
         "countPlural=one": "{count} country without a coast",
         "countPlural=*": "{count} countries without a coast"
