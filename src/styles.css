@@ -18,6 +18,12 @@
 	}
 }
 
+/* Screens with room for the passport at a larger size, each wide and tall enough for the whole
+   dialog at the next step up, so its lettering is not left at the size a phone needs. */
+@custom-variant passport-lg (@media (min-width: 40rem) and (min-height: 42rem));
+@custom-variant passport-xl (@media (min-width: 48rem) and (min-height: 50rem));
+@custom-variant passport-2xl (@media (min-width: 56rem) and (min-height: 56rem));
+
 /* Styles */
 html,
 body {
