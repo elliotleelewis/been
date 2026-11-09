@@ -9,16 +9,13 @@ interface Props {
 	readonly text: string;
 	/** What a screen reader says the image is. */
 	readonly label: string;
-	/** What the line beneath it says to whoever is shown it. */
-	readonly caption: string;
 }
 
 /**
- * A QR code for `text`, in the app's colours on the passport's paper, with a line beneath saying
- * what it is for. It is dark on light in either colour scheme: plenty of scanners cannot read a
+ * A QR code for `text`, in the app's colours on the passport's paper. It is dark on light in either colour scheme: plenty of scanners cannot read a
  * code drawn the other way round.
  */
-export const QrCode: FC<Props> = memo(({ caption, label, text }) => {
+export const QrCode: FC<Props> = memo(({ label, text }) => {
 	const modules = useQrCode(text);
 	const src = useMemo(
 		() =>
@@ -29,14 +26,11 @@ export const QrCode: FC<Props> = memo(({ caption, label, text }) => {
 	);
 
 	return (
-		<figure className="flex flex-col items-center rounded-2xl bg-[#fbf7ec] px-2 pt-2 pb-3 shadow-sm ring-1 ring-[#c2410c]/30 dark:bg-[#fbf7ec] dark:ring-[#c2410c]/50">
+		<div className="rounded-2xl bg-[#fbf7ec] p-2 shadow-sm ring-1 ring-[#c2410c]/30 dark:bg-[#fbf7ec] dark:ring-[#c2410c]/50">
 			<div className="size-48">
 				{src === undefined ? null : <img className="size-full" src={src} alt={label} />}
 			</div>
-			<figcaption className="text-xs font-semibold tracking-wide text-[#7c2d12] dark:text-[#7c2d12]">
-				{caption}
-			</figcaption>
-		</figure>
+		</div>
 	);
 });
 QrCode.displayName = "QrCode";

@@ -16,7 +16,7 @@ interface Props {
  */
 export const ShareLink: FC<Props> = memo(({ url }) => (
 	<>
-		<QrCode label={m.share_qr_label()} caption={m.share_qr_caption()} text={url} />
+		<QrCode label={m.share_qr_label()} text={url} />
 		<ShareSummary />
 	</>
 ));
