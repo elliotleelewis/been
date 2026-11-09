@@ -3,18 +3,12 @@ import { afterEach, describe, expect, it } from "vitest";
 
 import { rawCountriesAtom } from "../core/dataset.ts";
 import { visitsAtom } from "../core/selection.ts";
-import {
-	passportPageAtom,
-	passportSpreadAtom,
-	passportTurnsAtom,
-	shownPassportPagesAtom,
-	turnPassportPageAtom,
-} from "./pages.ts";
+import { passportOpeningOfAtom, passportPageAtom, turnPassportPageAtom } from "./pages.ts";
 
 /**
- * A store for a passport of six pages, laid open two at a time: the cover, the identity page, two
- * pages of visas, for the first stamp and Europe and Western Europe complete, and two pages of
- * stamps for the seven countries ticked.
+ * A store for a passport of six pages, to be laid open two at a time: the cover, the identity
+ * page, two pages of visas, for the first stamp and Europe and Western Europe complete, and two
+ * pages of stamps for the seven countries ticked.
  */
 const storeOfSpreads = (): ReturnType<typeof createStore> => {
 	const codes = ["AT", "BE", "CH", "DE", "ES", "FR", "IT"];
@@ -26,13 +20,14 @@ const storeOfSpreads = (): ReturnType<typeof createStore> => {
 		),
 	);
 	store.set(visitsAtom, Object.fromEntries(codes.map((code) => [code, {}])));
-	store.set(passportSpreadAtom, true);
 	return store;
 };
 
-/** What kind of page is on show, left to right, a blank page as `null`. */
+/** What kind of page is on show, left to right, with the passport open, a blank page as `null`. */
 const kindsShownIn = (store: ReturnType<typeof createStore>): readonly (string | null)[] =>
-	store.get(shownPassportPagesAtom).map((page) => page?.kind ?? null);
+	store
+		.get(passportOpeningOfAtom)(true)
+		.shown.map((page) => page?.kind ?? null);
 
 describe("passport pages", () => {
 	// `visitsAtom` is backed by local storage, which outlives an individual store, and the files after
@@ -48,14 +43,17 @@ describe("passport pages", () => {
 
 		expect(kindsShownIn(store)).toStrictEqual(["cover"]);
 
-		store.set(turnPassportPageAtom, 1);
+		store.set(turnPassportPageAtom, { by: 1, spread: true });
 
 		expect(kindsShownIn(store)).toStrictEqual(["identity", "visas"]);
 
-		store.set(turnPassportPageAtom, 1);
+		store.set(turnPassportPageAtom, { by: 1, spread: true });
 
 		expect(kindsShownIn(store)).toStrictEqual(["visas", "stamps"]);
-		expect(store.get(passportTurnsAtom)).toStrictEqual({ back: true, forward: true });
+		expect(store.get(passportOpeningOfAtom)(true).turns).toStrictEqual({
+			back: true,
+			forward: true,
+		});
 	}, 5000);
 
 	it("should turn back to the cover, and open at the spread a page lies in", () => {
@@ -66,10 +64,13 @@ describe("passport pages", () => {
 
 		expect(kindsShownIn(store)).toStrictEqual(["identity", "visas"]);
 
-		store.set(turnPassportPageAtom, -1);
+		store.set(turnPassportPageAtom, { by: -1, spread: true });
 
 		expect(kindsShownIn(store)).toStrictEqual(["cover"]);
-		expect(store.get(passportTurnsAtom)).toStrictEqual({ back: false, forward: true });
+		expect(store.get(passportOpeningOfAtom)(true).turns).toStrictEqual({
+			back: false,
+			forward: true,
+		});
 	}, 5000);
 
 	it("should leave the last page facing a blank one", () => {
@@ -77,8 +78,8 @@ describe("passport pages", () => {
 
 		const store = storeOfSpreads();
 		store.set(visitsAtom, { FR: {} });
-		store.set(turnPassportPageAtom, 1);
-		store.set(turnPassportPageAtom, 1);
+		store.set(turnPassportPageAtom, { by: 1, spread: true });
+		store.set(turnPassportPageAtom, { by: 1, spread: true });
 
 		expect(kindsShownIn(store)).toStrictEqual(["stamps", null]);
 	}, 5000);

@@ -3,6 +3,7 @@ import { useEffect } from "react";
 import type { RefObject } from "react";
 import type { MapRef } from "react-map-gl/maplibre";
 
+import { useReducedMotion } from "../core/use-match-media.ts";
 import { MAX_SPIN_ZOOM, spunCameraOf } from "./spin.ts";
 
 /** How long the globe has to be left alone before it starts to turn, in milliseconds. */
@@ -29,6 +30,7 @@ const spin = (map: MapLibreMap, elapsed: number): void => {
  * sees it turn, and a hidden tab does not turn it, as animation frames stop there.
  */
 export const useIdleSpin = (mapRef: RefObject<MapRef | null>): void => {
+	const reduced = useReducedMotion();
 	useEffect(() => {
 		let frame = 0;
 		let lastActive = globalThis.performance.now();
@@ -58,7 +60,7 @@ export const useIdleSpin = (mapRef: RefObject<MapRef | null>): void => {
 			lastFrame = now;
 			frame = globalThis.requestAnimationFrame(tick);
 		};
-		if (!globalThis.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+		if (!reduced) {
 			frame = globalThis.requestAnimationFrame(tick);
 		}
 		return (): void => {
@@ -67,5 +69,5 @@ export const useIdleSpin = (mapRef: RefObject<MapRef | null>): void => {
 				watched?.off(event, wake);
 			}
 		};
-	}, [mapRef]);
+	}, [mapRef, reduced]);
 };

@@ -1,8 +1,4 @@
-import { useSetAtom } from "jotai";
-import { useEffect } from "react";
-
 import { useMatchMedia } from "../core/use-match-media.ts";
-import { passportSpreadAtom } from "./pages.ts";
 
 /**
  * Screens that can show the passport open at two pages: wide enough that each is no smaller than a
@@ -11,12 +7,8 @@ import { passportSpreadAtom } from "./pages.ts";
  */
 const SPREAD_QUERY = "(min-width: 40rem) and (min-aspect-ratio: 8/7)";
 
-/** Lays the passport open two pages at a time while the screen is wide enough, and says if it is. */
-export const usePassportSpread = (): boolean => {
-	const spread = useMatchMedia(SPREAD_QUERY);
-	const setSpread = useSetAtom(passportSpreadAtom);
-	useEffect(() => {
-		setSpread(spread);
-	}, [setSpread, spread]);
-	return spread;
-};
+/**
+ * Whether the passport lies open two pages at a time, as a real one does, which it does while the
+ * screen is wide enough. Read from the screen as it renders, and one page at a time on a server.
+ */
+export const usePassportSpread = (): boolean => useMatchMedia(SPREAD_QUERY);

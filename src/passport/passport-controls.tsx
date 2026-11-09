@@ -3,7 +3,7 @@ import { memo, useCallback } from "react";
 import type { FC } from "react";
 
 import { m } from "../paraglide/messages.js";
-import { passportTurnsAtom, shownPassportPagesAtom, turnPassportPageAtom } from "./pages.ts";
+import { passportOpeningOfAtom, turnPassportPageAtom } from "./pages.ts";
 import type { PassportPage } from "./types.ts";
 
 const BUTTON_CLASS_NAME =
@@ -21,20 +21,24 @@ const pageNameOf = (page: PassportPage): string => {
 	return page.kind === "visas" ? m.passport_page_visas(numbers) : m.passport_page_stamps(numbers);
 };
 
+interface Props {
+	/** Whether the passport lies open two pages at a time, which it then turns a spread at a time. */
+	readonly spread: boolean;
+}
+
 /**
  * Turns the passport's pages back and forward, and says which pages it is open at, both of them
  * where it lies open at a spread.
  */
-export const PassportControls: FC = memo(() => {
-	const shown = useAtomValue(shownPassportPagesAtom);
-	const turns = useAtomValue(passportTurnsAtom);
+export const PassportControls: FC<Props> = memo(({ spread }) => {
+	const { shown, turns } = useAtomValue(passportOpeningOfAtom)(spread);
 	const turnPage = useSetAtom(turnPassportPageAtom);
 	const back = useCallback(() => {
-		turnPage(-1);
-	}, [turnPage]);
+		turnPage({ by: -1, spread });
+	}, [spread, turnPage]);
 	const forward = useCallback(() => {
-		turnPage(1);
-	}, [turnPage]);
+		turnPage({ by: 1, spread });
+	}, [spread, turnPage]);
 
 	return (
 		<div className="flex w-full items-center justify-between gap-2">

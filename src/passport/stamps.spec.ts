@@ -69,9 +69,9 @@ describe("passport state", () => {
 		expect.hasAssertions();
 
 		const store = createTestStore();
-		store.set(turnPassportPageAtom, -1);
+		store.set(turnPassportPageAtom, { by: -1, spread: false });
 		const atFront = store.get(passportPageAtom);
-		store.set(turnPassportPageAtom, 10);
+		store.set(turnPassportPageAtom, { by: 10, spread: false });
 
 		expect(atFront).toBe(0);
 		expect(store.get(passportPageCountAtom)).toBe(6);

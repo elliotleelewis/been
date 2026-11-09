@@ -1,6 +1,8 @@
 import { useEffect } from "react";
 import type { RefObject } from "react";
 
+import { useReducedMotion } from "../core/use-match-media.ts";
+
 /** How long the stamp takes to come down onto the page, in milliseconds. */
 const THUD_MS = 420;
 /** How long it sits there before it goes, so it can be read, unless told otherwise. */
@@ -109,6 +111,7 @@ export const useStampFlight = ({
 	stamp,
 	target,
 }: StampFlight): void => {
+	const reduced = useReducedMotion();
 	useEffect(() => {
 		const element = stamp.current;
 		let animations: readonly Animation[] = [];
@@ -117,7 +120,7 @@ export const useStampFlight = ({
 				target.current?.animate(PULSE_FRAMES, { duration: PULSE_MS, easing: "ease-out" });
 				onDone(id);
 			};
-			animations = globalThis.matchMedia("(prefers-reduced-motion: reduce)").matches
+			animations = reduced
 				? []
 				: playStampMoment(
 						element,
@@ -139,5 +142,5 @@ export const useStampFlight = ({
 				animation.cancel();
 			}
 		};
-	}, [hold, id, onDone, stamp, target]);
+	}, [hold, id, onDone, reduced, stamp, target]);
 };

@@ -1,14 +1,26 @@
-import { memo, useRef } from "react";
+import { useSetAtom } from "jotai";
+import { memo, useCallback, useRef } from "react";
 import type { FC } from "react";
 import { useButton, useOverlayTrigger } from "react-aria";
 import { useOverlayTriggerState } from "react-stately";
 
 import { m } from "../paraglide/messages.js";
+import { openPassportAtom } from "./pages.ts";
 import { PassportDialog } from "./passport-dialog.tsx";
 
 /** Opens the passport, of the reader's own map or of a shared one while that is on show. */
 export const PassportButton: FC = memo(() => {
-	const state = useOverlayTriggerState({});
+	const openPassport = useSetAtom(openPassportAtom);
+	// Opened at its cover each time, as it is opened, rather than once it is on screen.
+	const openChange = useCallback(
+		(open: boolean) => {
+			if (open) {
+				openPassport();
+			}
+		},
+		[openPassport],
+	);
+	const state = useOverlayTriggerState({ onOpenChange: openChange });
 	const ref = useRef<HTMLButtonElement>(null);
 	const { overlayProps, triggerProps } = useOverlayTrigger({ type: "dialog" }, state, ref);
 	const { buttonProps } = useButton(triggerProps, ref);

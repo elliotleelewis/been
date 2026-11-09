@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import type { RefObject } from "react";
 
+import { useReducedMotion } from "../core/use-match-media.ts";
 import {
 	RESTING_FOIL,
 	driftingFoilAt,
@@ -121,9 +122,9 @@ const animate = (element: HTMLElement, state: FoilState): (() => void) => {
  * than through React. A reader who has asked for less motion gets the resting light.
  */
 export const useFoil = (ref: RefObject<HTMLElement | null>, enabled: boolean): void => {
+	const reduced = useReducedMotion();
 	useEffect(() => {
 		const element = ref.current;
-		const reduced = globalThis.matchMedia("(prefers-reduced-motion: reduce)").matches;
 		const state: FoilState = {
 			current: RESTING_FOIL,
 			restingBeta: undefined,
@@ -142,7 +143,7 @@ export const useFoil = (ref: RefObject<HTMLElement | null>, enabled: boolean): v
 				unpaint(element);
 			}
 		};
-	}, [enabled, ref]);
+	}, [enabled, reduced, ref]);
 };
 
 /**
