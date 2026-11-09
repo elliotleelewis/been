@@ -93,6 +93,23 @@
   "passport_stamp_undated": "{country}. Show on the globe",
   "passport_visa_dated": "{title} visa: {description}, issued {date}",
   "passport_visa_undated": "{title} visa: {description}",
+  "passport_visa_flip_back": "Turn the {title} visa back over",
+  "passport_visa_countries": "Countries that earned the {title} visa",
+  "passport_visa_clinched_milestone": [
+    {
+      "declarations": ["input count", "local countOrdinal = count: plural type=ordinal"],
+      "selectors": ["countOrdinal"],
+      "match": {
+        "countOrdinal=one": "Your {count}st country",
+        "countOrdinal=two": "Your {count}nd country",
+        "countOrdinal=few": "Your {count}rd country",
+        "countOrdinal=*": "Your {count}th country"
+      }
+    }
+  ],
+  "passport_visa_clinched_area": "The last one in {area}",
+  "passport_visa_clinched": "The one that earned it",
+  "passport_visa_undated_back": "Earned before the passport kept dates",
   "achievement_first_title": "First stamp",
   "achievement_first_description": "The first country in the passport",
   "achievement_count_title": [
@@ -141,6 +158,10 @@
       }
     }
   ],
+  "achievement_north": "North of the equator",
+  "achievement_south": "South of the equator",
+  "achievement_east": "East of Greenwich",
+  "achievement_west": "West of Greenwich",
   "achievement_landlocked_title": "Landlocked",
   "achievement_landlocked_description": [
     {

@@ -1,7 +1,7 @@
 import { ISLAND_NATIONS, LANDLOCKED, MICROSTATES } from "../data/collections.ts";
 import { m } from "../paraglide/messages.js";
 import { M49_REGIONS, M49_REGION_CODES, M49_SUBREGIONS } from "./m49.ts";
-import type { Achievement, CountryData, Requirement, Visits } from "./types.ts";
+import type { Achievement, CountryData, Earners, Requirement, Visits } from "./types.ts";
 
 /** The counts of countries that earn a milestone, short of every country there is. */
 const MILESTONES: readonly number[] = [10, 25, 50, 100, 150];
@@ -12,8 +12,9 @@ const TURN_DEGREES = 360;
 
 /** Every one of `codes`. */
 const allOf = (codes: readonly string[]): Requirement => ({ codes, count: codes.length });
-/** At least one of `codes`. */
-const anyOf = (codes: readonly string[]): Requirement => ({ codes, count: 1 });
+/** At least one of `codes`, which an achievement asking for more than one part of calls `label`. */
+const anyOf = (codes: readonly string[], label?: string): Requirement =>
+	label === undefined ? { codes, count: 1 } : { codes, count: 1, label };
 
 const codesWhere = (
 	countries: readonly CountryData[],
@@ -101,21 +102,26 @@ const geographyOf = (countries: readonly CountryData[]): readonly Achievement[] 
 			description: m.achievement_equator_sides_description(),
 			id: "geography:equator-sides",
 			kind: "geography",
-			requirements: [anyOf(north), anyOf(south)],
+			requirements: [anyOf(north, m.achievement_north()), anyOf(south, m.achievement_south())],
 			title: m.achievement_equator_sides_title(),
 		},
 		{
 			description: m.achievement_meridian_sides_description(),
 			id: "geography:meridian-sides",
 			kind: "geography",
-			requirements: [anyOf(east), anyOf(west)],
+			requirements: [anyOf(east, m.achievement_east()), anyOf(west, m.achievement_west())],
 			title: m.achievement_meridian_sides_title(),
 		},
 		{
 			description: m.achievement_hemispheres_description(),
 			id: "geography:hemispheres",
 			kind: "geography",
-			requirements: [anyOf(north), anyOf(south), anyOf(east), anyOf(west)],
+			requirements: [
+				anyOf(north, m.achievement_north()),
+				anyOf(south, m.achievement_south()),
+				anyOf(east, m.achievement_east()),
+				anyOf(west, m.achievement_west()),
+			],
 			title: m.achievement_hemispheres_title(),
 		},
 		{
@@ -218,6 +224,40 @@ export const earnedOn = ({ requirements }: Achievement, visits: Visits): string 
 	);
 	const last = days.toSorted().at(-1);
 	return last === "" ? undefined : last;
+};
+
+/**
+ * The visited ones of `codes` in the order they were ticked: those ticked before dates were kept
+ * first, as `earnedOn` counts them, and ticks on the same day by code, so the order is stable.
+ */
+const inTickOrder = (codes: readonly string[], visits: Visits): readonly string[] =>
+	codes
+		.filter((code) => Object.hasOwn(visits, code))
+		.toSorted(
+			(one, other) =>
+				(visits[one]?.at ?? "").localeCompare(visits[other]?.at ?? "") || one.localeCompare(other),
+		);
+
+/**
+ * Which visited countries earned an achievement: for each requirement, the first ticks that met it
+ * and the rest that also count, and the one tick that met the last requirement. The countries that
+ * earned it are the ones `earnedOn` dates it by, so the back of a visa agrees with its front.
+ */
+export const earnersOf = (achievement: Achievement, visits: Visits): Earners => {
+	const parts = achievement.requirements.map(({ codes, count }) => {
+		const ticked = inTickOrder(codes, visits);
+		return { count, earned: ticked.slice(0, count), extra: ticked.slice(count) };
+	});
+	const clincher = parts.every(({ count, earned }) => earned.length === count)
+		? inTickOrder(
+				parts.flatMap(({ earned }) => earned.slice(-1)),
+				visits,
+			).at(-1)
+		: undefined;
+	return {
+		clincher: clincher === undefined || visits[clincher]?.at === undefined ? undefined : clincher,
+		requirements: parts.map(({ earned, extra }) => ({ earned, extra })),
+	};
 };
 
 /** The achievements ticking `code` has just earned, which the visits without it had not. */

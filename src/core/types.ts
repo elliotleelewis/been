@@ -53,6 +53,8 @@ export type AchievementKind = "collection" | "geography" | "milestone" | "region
 export interface Requirement {
 	readonly codes: readonly string[];
 	readonly count: number;
+	/** What this part asks for, where an achievement asks for more than one, such as a hemisphere. */
+	readonly label?: string;
 }
 
 /** Something a map can achieve, earned once every one of its requirements is met. */
@@ -66,4 +68,20 @@ export interface Achievement {
 	readonly requirements: readonly Requirement[];
 	/** The region a continent or sub-region achievement is for, whose ink its visa is printed in. */
 	readonly region?: M49Region;
+}
+
+/** Which visited countries earned an achievement, as the back of its visa lists them. */
+export interface Earners {
+	/** For each of the achievement's requirements, in order, the countries ticked for it. */
+	readonly requirements: readonly {
+		/** The ones that met it, in the order they were ticked. */
+		readonly earned: readonly string[];
+		/** The rest of the visited ones it asks for, which it did not need, in the same order. */
+		readonly extra: readonly string[];
+	}[];
+	/**
+	 * The country whose tick met the last requirement, unless the achievement is not earned or that
+	 * tick is older than dates being kept, when there is no telling which one it was.
+	 */
+	readonly clincher: string | undefined;
 }

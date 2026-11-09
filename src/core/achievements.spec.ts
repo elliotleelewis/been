@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 
-import { achievementsOf, earnedOn, isEarned, newlyEarned } from "./achievements.ts";
+import { achievementsOf, earnedOn, earnersOf, isEarned, newlyEarned } from "./achievements.ts";
 import { assertDefined } from "./test.ts";
 import type { CountryData } from "./types.ts";
 
@@ -70,5 +70,37 @@ describe("achievements", () => {
 		const earned = newlyEarned(achievements, { FR: {}, IT: {}, VA: {} }, "VA");
 
 		expect(earned.map(({ id }) => id)).toStrictEqual(["region:150", "subregion:039"]);
+	}, 5000);
+
+	it("should list the countries that earned an achievement, and the tick that clinched it", () => {
+		expect.hasAssertions();
+
+		const visits = { BR: { at: "2025-03-01" }, FR: { at: "2024-01-01" }, IT: { at: "2024-05-05" } };
+
+		expect(earnersOf(achievementOf("milestone:1"), visits)).toStrictEqual({
+			clincher: "FR",
+			requirements: [{ earned: ["FR"], extra: ["IT", "BR"] }],
+		});
+		// One country from each side, the later of which clinched it; the rest only also count.
+		expect(earnersOf(achievementOf("geography:equator-sides"), visits)).toStrictEqual({
+			clincher: "BR",
+			requirements: [
+				{ earned: ["FR"], extra: ["IT"] },
+				{ earned: ["BR"], extra: [] },
+			],
+		});
+	}, 5000);
+
+	it("should name no clincher for an achievement not yet earned, or earned before dates", () => {
+		expect.hasAssertions();
+
+		const europe = achievementOf("region:150");
+
+		expect(earnersOf(europe, { FR: { at: "2024-01-01" }, IT: {} })).toStrictEqual({
+			clincher: undefined,
+			requirements: [{ earned: ["IT", "FR"], extra: [] }],
+		});
+		expect(earnersOf(europe, { FR: {}, IT: {}, VA: {} }).clincher).toBeUndefined();
+		expect(earnersOf(europe, { FR: {}, IT: {}, VA: { at: "2024-01-01" } }).clincher).toBe("VA");
 	}, 5000);
 });

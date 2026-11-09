@@ -7,6 +7,7 @@ import { M49_REGIONS } from "../core/m49.ts";
 import { passportStampsAtom } from "./stamps.ts";
 import { STAMPS_PER_PAGE, VISAS_PER_PAGE } from "./types.ts";
 import type { PassportPage, PassportStats } from "./types.ts";
+import { flippedVisaAtom } from "./visa-backs.ts";
 import { visasAtom } from "./visas.ts";
 
 /** What the identity page says about the map on show. */
@@ -56,9 +57,13 @@ export const passportPageCountAtom = atom((get) => get(passportPagesAtom).length
 /** The page the passport is open at, the cover being the first. */
 export const passportPageAtom = atom(0);
 
-/** Turns the passport's pages by `by`, forwards or back, stopping at either cover. */
+/**
+ * Turns the passport's pages by `by`, forwards or back, stopping at either cover, and turns any visa
+ * that was showing its back over again.
+ */
 export const turnPassportPageAtom = atom(undefined, (get, set, by: number) => {
 	const last = get(passportPageCountAtom) - 1;
 	const page = get(passportPageAtom) + by;
 	set(passportPageAtom, Math.min(Math.max(page, 0), last));
+	set(flippedVisaAtom, null);
 });
