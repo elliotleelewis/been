@@ -7,6 +7,7 @@ import type { OverlayTriggerState } from "react-stately";
 import { Modal } from "../core/modal.tsx";
 import { m } from "../paraglide/messages.js";
 import { PassportBook } from "./passport-book.tsx";
+import { PassportChapters } from "./passport-chapters.tsx";
 import { PassportControls } from "./passport-controls.tsx";
 import { usePageTurns } from "./use-page-turns.ts";
 import { usePassportSpread } from "./use-passport-spread.ts";
@@ -19,7 +20,7 @@ interface Props {
 
 /**
  * The passport for the map on show: opened at its cover each time, its pages turned with the
- * buttons beneath it or the arrow keys.
+ * buttons beneath it or the arrow keys, or opened straight at one of its parts.
  */
 export const PassportDialog: FC<Props> = memo(({ overlayProps, state }) => {
 	const ref = useRef<HTMLDivElement>(null);
@@ -49,6 +50,7 @@ export const PassportDialog: FC<Props> = memo(({ overlayProps, state }) => {
 				</h2>
 				<PassportBook spread={spread} onClose={close} />
 				<PassportControls spread={spread} />
+				<PassportChapters spread={spread} />
 				<button
 					type="button"
 					className="absolute end-2 top-2 rounded-full p-2 hover:bg-zinc-100 focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:outline-none dark:hover:bg-zinc-800"

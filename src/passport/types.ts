@@ -68,6 +68,34 @@ export interface Visa {
 	readonly date: string | undefined;
 }
 
+/** A country a locked visa still asks for, and whether it is one of those recommended next. */
+export interface LockedVisaEntry {
+	readonly country: Country;
+	readonly recommended: boolean;
+}
+
+/** One of a locked visa's requirements still to meet, as its back lists the countries for it. */
+export interface LockedVisaGroup {
+	/** What it asks for, printed above it where the visa asks for more than one thing. */
+	readonly label: string | undefined;
+	/** How many more of its countries it needs. */
+	readonly need: number;
+	/** The countries not yet visited that would count, those recommended next first. */
+	readonly open: readonly LockedVisaEntry[];
+}
+
+/**
+ * An achievement the map on show is part of the way to, as a visa not yet issued: how many more
+ * countries it needs, and which would do.
+ */
+export interface LockedVisa extends Visa {
+	readonly remaining: number;
+	readonly groups: readonly LockedVisaGroup[];
+}
+
+/** How many of the visas nearest to being earned the passport shows, locked, after those earned. */
+export const LOCKED_VISA_COUNT = 4;
+
 /** The width and height of a visa, in SVG units. */
 export const VISA_WIDTH = 300;
 export const VISA_HEIGHT = 190;
@@ -154,12 +182,13 @@ export interface PassportStats {
 }
 
 /**
- * A page of the passport: the cover, the identity page, then its visas, if it has earned any, and
- * its stamps, a page of each numbered from 0 out of how many there are.
+ * A page of the passport: the cover, the identity page, then its visas, if it has earned any, those
+ * within reach, if any are, and its stamps, a page of each numbered from 0 out of how many there are.
  */
 export type PassportPage =
 	| { readonly kind: "cover" }
 	| { readonly kind: "identity" }
+	| { readonly kind: "locked"; readonly index: number; readonly of: number }
 	| { readonly kind: "stamps"; readonly index: number; readonly of: number }
 	| { readonly kind: "visas"; readonly index: number; readonly of: number };
 
@@ -177,6 +206,15 @@ export interface PassportTurn {
 	readonly by: number;
 	/** Whether it lies open two pages at a time. */
 	readonly spread: boolean;
+}
+
+/** The parts of the passport after its identity page, which it can be opened straight at. */
+export type PassportChapter = Extract<PassportPage, { readonly index: number }>["kind"];
+
+/** A part of the passport, and the page it starts at. */
+export interface PassportChapterStart {
+	readonly chapter: PassportChapter;
+	readonly page: number;
 }
 
 /** How many stamps a page of the passport holds. */

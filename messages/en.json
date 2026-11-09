@@ -77,9 +77,14 @@
   "passport_cover_hint": "Tap to open",
   "passport_back": "‹ Back",
   "passport_next": "Next ›",
+  "passport_chapters": "Go to",
+  "passport_chapter_visas": "Visas",
+  "passport_chapter_locked": "Within reach",
+  "passport_chapter_stamps": "Stamps",
   "passport_page_cover": "Cover",
   "passport_page_identity": "Identity",
   "passport_page_visas": "Visas {page} of {pages}",
+  "passport_page_locked": "Within reach {page} of {pages}",
   "passport_page_stamps": "Stamps {page} of {pages}",
   "passport_id_countries": "Countries",
   "passport_id_share": "Of the world",
@@ -108,6 +113,23 @@
   "passport_visa_undated": "{title} visa: {description}",
   "passport_visa_foil": ". A foil visa",
   "passport_visa_legendary": ". A legendary visa",
+  "passport_visa_locked": [
+    {
+      "declarations": [
+        "input count",
+        "input title",
+        "input description",
+        "local countPlural = count: plural"
+      ],
+      "selectors": ["countPlural"],
+      "match": {
+        "countPlural=one": "{title} visa, not yet issued: {description}. One more country to go",
+        "countPlural=*": "{title} visa, not yet issued: {description}. {count} more countries to go"
+      }
+    }
+  ],
+  "passport_visa_locked_countries": "Countries that would earn the {title} visa",
+  "passport_visa_next_up": ", next up",
   "passport_visa_flip_back": "Turn the {title} visa back over",
   "passport_visa_countries": "Countries that earned the {title} visa",
   "passport_visa_clinched_milestone": [

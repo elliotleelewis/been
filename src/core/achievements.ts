@@ -248,6 +248,18 @@ export const achievementsOf = (countries: readonly CountryData[]): readonly Achi
 			);
 };
 
+/** How many more countries an achievement needs, across all its requirements. */
+export const remainingFor = (achievement: Achievement, visits: Visits): number =>
+	achievement.requirements.reduce(
+		(total, { codes, count }) =>
+			total + Math.max(0, count - codes.filter((code) => Object.hasOwn(visits, code)).length),
+		0,
+	);
+
+/** How many countries an achievement asks for in all. */
+export const requiredFor = (achievement: Achievement): number =>
+	achievement.requirements.reduce((total, { count }) => total + count, 0);
+
 /** Whether `visits` meet every one of an achievement's requirements. */
 export const isEarned = ({ requirements }: Achievement, visits: Visits): boolean =>
 	requirements.every(

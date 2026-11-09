@@ -92,8 +92,8 @@ Rules that keep that shape:
   base64. The order comes from the dataset, and a link from any other list reads as no map. It
   opens read-only through `shownVisitsAtom` (`src/core/location.ts` watches the hash). The QR
   encoder loads only when the share dialog opens.
-- **The passport** is pages (`src/passport/pages.ts`): a cover, an identity page, the visas, then
-  stamps six to a page, shown two at a time on wide screens (`src/passport/use-passport-spread.ts`). **Stamps** are generated, not drawn: shape, slant and wording from a stable hash of the code, ink
+- **The passport** is pages (`src/passport/pages.ts`): a cover, an identity page, the visas, those
+  within reach (`src/passport/locked-visas.ts`), then stamps six to a page, each part a tap away, shown two at a time on wide screens (`src/passport/use-passport-spread.ts`). **Stamps** are generated, not drawn: shape, slant and wording from a stable hash of the code, ink
   from the M49 region (`src/passport/stamp-design.ts`), and the outline is the country's home
   landmass from the globe's boundaries (`src/passport/silhouette.ts`). The passport is paper and
   board, the same in either colour scheme.

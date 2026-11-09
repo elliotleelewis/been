@@ -36,7 +36,12 @@ export const VisaBack: FC<Props> = memo(({ back, buttonRef, id, onFlipBack, show
 			style={{ color: visa.design.ink, rotate: `${String(visa.design.rotation)}deg` }}
 			inert={!shown}
 		>
-			<VisaBackBand visa={visa} buttonRef={buttonRef} onFlipBack={onFlipBack} />
+			<VisaBackBand
+				heading="ENTRY RECORD"
+				visa={visa}
+				buttonRef={buttonRef}
+				onFlipBack={onFlipBack}
+			/>
 			<div className="grid min-h-0 flex-1 grid-cols-[36%_1fr] gap-[3cqw] p-[3cqw] text-[#3b3a35]">
 				<VisaBackClincher clincher={back.clincher} />
 				<section

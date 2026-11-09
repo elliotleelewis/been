@@ -1,3 +1,4 @@
+import { remainingFor, requiredFor } from "./achievements.ts";
 import type {
 	Achievement,
 	AchievementTier,
@@ -62,18 +63,6 @@ const sharesOf = (achievement: Achievement, visits: Visits): ReadonlyMap<string,
 	}
 	return shares;
 };
-
-/** How many more countries an achievement needs, across all its requirements. */
-const remainingFor = (achievement: Achievement, visits: Visits): number =>
-	achievement.requirements.reduce(
-		(total, { codes, count }) =>
-			total + Math.max(0, count - codes.filter((code) => isVisited(visits, code)).length),
-		0,
-	);
-
-/** How many countries an achievement asks for in all. */
-const requiredFor = (achievement: Achievement): number =>
-	achievement.requirements.reduce((total, { count }) => total + count, 0);
 
 /**
  * What every achievement not yet earned still asks for, by country: each country's share of it, by
