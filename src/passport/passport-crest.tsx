@@ -7,8 +7,8 @@ interface Props {
 }
 
 const CLASS_NAMES: Readonly<Record<Props["variant"], string>> = {
-	cover: "size-24",
-	page: "size-20 shrink-0 rounded-sm border border-[#3b3a35]/40 p-2 text-[#1d2b4f] dark:border-[#3b3a35]/40 dark:text-[#1d2b4f]",
+	cover: "size-[33.3cqw]",
+	page: "size-[27.8cqw] shrink-0 rounded-sm border border-[#3b3a35]/40 p-[2.8cqw] text-[#1d2b4f] dark:border-[#3b3a35]/40 dark:text-[#1d2b4f]",
 };
 
 /** The passport's crest: a globe of meridians and parallels, drawn in whatever colour it sits in. */

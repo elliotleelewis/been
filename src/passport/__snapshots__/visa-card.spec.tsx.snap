@@ -1,0 +1,230 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`visa card > should turn over to show the countries that earned it 1`] = `
+<div
+  class="absolute inset-0 flex flex-col overflow-hidden rounded-[2cqw] bg-[color-mix(in_oklab,currentColor_7%,#fbf7ec)] shadow-sm ring-1 ring-current/60 backface-hidden motion-safe:rotate-y-180 motion-reduce:transition-opacity motion-reduce:duration-300 "
+  id="_r_2_"
+  style="color: rgb(75, 58, 140); rotate: 1deg;"
+>
+  <div
+    class="flex h-[8.7cqw] shrink-0 items-center gap-[2cqw] bg-current ps-[4cqw] pe-[1.5cqw]"
+  >
+    <span
+      class="text-[3.6cqw] font-extrabold tracking-[0.9cqw] whitespace-nowrap text-[#fbf7ec]"
+    >
+      ENTRY RECORD
+    </span>
+    <span
+      class="ms-auto truncate text-[2.5cqw] font-semibold tracking-[0.3cqw] text-[#fbf7ec]"
+    >
+      CONTINENTAL · No 0547516
+    </span>
+    <button
+      aria-label="Turn the Europe visa back over"
+      class="grid size-[6.5cqw] shrink-0 place-items-center rounded-full text-[#fbf7ec] hover:bg-[#fbf7ec]/20 focus-visible:ring-2 focus-visible:ring-[#fbf7ec] focus-visible:outline-none"
+      type="button"
+    >
+      <svg
+        aria-hidden="true"
+        class="size-[4cqw]"
+        fill="none"
+        stroke="currentColor"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="2.5"
+        viewBox="0 0 24 24"
+      >
+        <path
+          d="M3 12a9 9 0 1 0 3-6.7L3 8"
+        />
+        <path
+          d="M3 3v5h5"
+        />
+      </svg>
+    </button>
+  </div>
+  <div
+    class="grid min-h-0 flex-1 grid-cols-[36%_1fr] gap-[3cqw] p-[3cqw] text-[#3b3a35]"
+  >
+    <div
+      class="flex min-w-0 flex-col items-center text-center"
+    >
+      <span
+        class="text-[2cqw] font-semibold tracking-[0.6cqw] opacity-60"
+      >
+        CLINCHED BY
+      </span>
+      <div
+        class="my-[1cqw] size-[21cqw] mix-blend-multiply"
+      >
+        <svg
+          aria-hidden="true"
+          class="size-full overflow-visible"
+          viewBox="0 0 120 120"
+        >
+          <filter
+            height="120%"
+            id="_r_3_-ink"
+            width="120%"
+            x="-10%"
+            y="-10%"
+          >
+            <feturbulence
+              baseFrequency="0.9"
+              numOctaves="2"
+              result="speckle"
+              seed="542"
+              type="fractalNoise"
+            />
+            <fecolormatrix
+              in="speckle"
+              result="mask"
+              type="matrix"
+              values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 -1.6 0 0 0 1.45"
+            />
+            <fecomposite
+              in="SourceGraphic"
+              in2="mask"
+              operator="in"
+              result="inked"
+            />
+            <feturbulence
+              baseFrequency="0.06"
+              result="warp"
+              seed="543"
+              type="fractalNoise"
+            />
+            <fedisplacementmap
+              in="inked"
+              in2="warp"
+              scale="2.5"
+              xChannelSelector="R"
+              yChannelSelector="G"
+            />
+          </filter>
+          <g
+            color="#4b3a8c"
+            filter="url(#_r_3_-ink)"
+            opacity="0.88"
+            transform="rotate(-7 60 60)"
+          >
+            <rect
+              fill="none"
+              height="80"
+              rx="7"
+              stroke="currentColor"
+              stroke-width="3"
+              width="110"
+              x="5"
+              y="20"
+            />
+            <rect
+              fill="none"
+              height="70"
+              rx="4"
+              stroke="currentColor"
+              stroke-width="1.2"
+              width="100"
+              x="10"
+              y="25"
+            />
+            <text
+              fill="currentColor"
+              font-size="10"
+              font-weight="700"
+              letter-spacing="0.6"
+              text-anchor="middle"
+              x="60"
+              y="39"
+            >
+              MONACO
+            </text>
+            <text
+              fill="currentColor"
+              font-size="6.302521008403361"
+              font-weight="700"
+              letter-spacing="0.6"
+              text-anchor="middle"
+              x="60"
+              y="90"
+            >
+              ARRIVAL · 15 OCT 2026
+            </text>
+          </g>
+        </svg>
+      </div>
+      <span
+        class="w-full truncate text-[3.4cqw] font-extrabold text-current"
+      >
+        MONACO
+      </span>
+      <span
+        class="text-[2.6cqw] font-bold"
+      >
+        15 OCT 2026
+      </span>
+      <span
+        class="text-[2.4cqw] italic opacity-70"
+      >
+        The last one in Europe
+      </span>
+    </div>
+    <section
+      aria-label="Countries that earned the Europe visa"
+      class="min-h-0 overflow-y-auto overscroll-contain rounded-[1cqw] pb-[6cqw] text-[2.9cqw] [mask-image:linear-gradient(to_bottom,#000_calc(100%-6cqw),transparent)] focus-visible:ring-2 focus-visible:ring-primary/60 focus-visible:outline-none"
+      tabindex="0"
+    >
+      <section
+        class="mb-[2cqw]"
+      >
+        <ol>
+          <li
+            class="flex items-baseline gap-[1.5cqw]"
+          >
+            <span
+              class="w-[4.5cqw] shrink-0 text-end tabular-nums opacity-50"
+            >
+              1
+            </span>
+            <span
+              class="min-w-0 flex-1 truncate font-semibold"
+            >
+              France
+            </span>
+            <span
+              class="shrink-0 text-[2.4cqw] tabular-nums opacity-70"
+            >
+              13 OCT 2026
+            </span>
+          </li>
+          <li
+            class="flex items-baseline gap-[1.5cqw]"
+          >
+            <span
+              class="w-[4.5cqw] shrink-0 text-end tabular-nums opacity-50"
+            >
+              2
+            </span>
+            <span
+              class="min-w-0 flex-1 truncate font-semibold"
+            >
+              Monaco
+              <span
+                aria-hidden="true"
+                class="ms-[1cqw] text-current"
+              >
+                ★
+              </span>
+            </span>
+            <span
+              class="shrink-0 text-[2.4cqw] tabular-nums opacity-70"
+            >
+              15 OCT 2026
+            </span>
+          </li>
+        </ol>
+      </section>
+    </section>
+  </div>
+</div>
+`;

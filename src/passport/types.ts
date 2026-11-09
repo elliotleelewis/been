@@ -95,6 +95,32 @@ export const VISA_INKS: Readonly<Record<Exclude<AchievementKind, "region" | "sub
 		milestone: "#8a6d12",
 	};
 
+/** A country on the back of a visa, with the day it was ticked as the passport writes it. */
+export interface VisaEntry {
+	readonly country: Country;
+	readonly date: string | undefined;
+}
+
+/** One of an achievement's requirements, as the back of its visa lists the countries for it. */
+export interface VisaBackGroup {
+	/** What it asks for, printed above it where the visa asks for more than one thing. */
+	readonly label: string | undefined;
+	/** The countries that met it, in the order they were ticked. */
+	readonly earned: readonly VisaEntry[];
+	/** The visited countries it did not need, which also count towards it. */
+	readonly extra: readonly Country[];
+}
+
+/** What the back of a visa says: which countries earned it, and which one clinched it. */
+export interface VisaBack {
+	/**
+	 * The stamp of the country whose tick earned the visa, and a line saying what that tick was,
+	 * unless that tick is older than dates being kept.
+	 */
+	readonly clincher: { readonly stamp: PassportStamp; readonly caption: string } | undefined;
+	readonly groups: readonly VisaBackGroup[];
+}
+
 /** A visa moment: the visas a tick has just earned, played out once its stamp has landed. */
 export interface VisaMoment {
 	readonly ids: readonly string[];

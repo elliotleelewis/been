@@ -100,8 +100,9 @@ Rules that keep that shape:
 - **Achievements** are built from the dataset in `src/core/achievements.ts` (milestones, continents,
   sub-regions, hemispheres, and collections in `src/data/collections.ts`), so any feature can read
   them. Earning one is derived from the visits and not stored; its date is the day of the tick that
-  met its last requirement. The passport shows each earned one as a visa, with generated line-work
-  (`src/passport/guilloche.ts`).
+  met its last requirement, and `earnersOf` says which ticks earned it. The passport shows each earned
+  one as a visa, with generated line-work (`src/passport/guilloche.ts`), which turns over to list
+  those countries (`src/passport/visa-backs.ts`).
 - **Accessibility:** react-aria supplies what is hard to get right by hand (the drawer's handle, the
   toast region). Anything a native tag already makes accessible stays native.
 
