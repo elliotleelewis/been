@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 
-import type { Achievement } from "./types.ts";
+import type { Achievement } from "../core/types.ts";
 import { visaDesignOf, visaMrzOf } from "./visa-design.ts";
 
 const EUROPE: Achievement = {

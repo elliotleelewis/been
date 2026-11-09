@@ -45,3 +45,25 @@ export interface StampMoment {
 	/** Counts up with every stamp, so stamping the same country twice plays the moment twice. */
 	readonly id: number;
 }
+
+/** The kinds of achievement there are, each with a visa of its own colour and type. */
+export type AchievementKind = "collection" | "geography" | "milestone" | "region" | "subregion";
+
+/** One part of what an achievement asks for: at least `count` of `codes` ticked. */
+export interface Requirement {
+	readonly codes: readonly string[];
+	readonly count: number;
+}
+
+/** Something a map can achieve, earned once every one of its requirements is met. */
+export interface Achievement {
+	/** Stable across releases, so a visa keeps its design and serial number. */
+	readonly id: string;
+	readonly kind: AchievementKind;
+	readonly title: string;
+	/** What it took, in a few words, beneath the title on its visa. */
+	readonly description: string;
+	readonly requirements: readonly Requirement[];
+	/** The region a continent or sub-region achievement is for, whose ink its visa is printed in. */
+	readonly region?: M49Region;
+}

@@ -1,10 +1,10 @@
 import { atom } from "jotai";
 
+import { newlyEarned } from "../core/achievements.ts";
+import { achievementsAtom } from "../core/dataset.ts";
 import { visitsAtom } from "../core/selection.ts";
 import { endStampMomentAtom, stampMomentAtom } from "../core/ticking.ts";
-import { newlyEarned } from "./achievements.ts";
 import type { VisaMoment } from "./types.ts";
-import { achievementsAtom } from "./visas.ts";
 
 /** The visas being stuck in after a stamp that earned them, while they are. */
 export const visaMomentAtom = atom<VisaMoment | null>(null);

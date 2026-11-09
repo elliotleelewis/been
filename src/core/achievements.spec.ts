@@ -1,8 +1,8 @@
 import { describe, expect, it } from "vitest";
 
-import { assertDefined } from "../core/test.ts";
-import type { CountryData } from "../core/types.ts";
 import { achievementsOf, earnedOn, isEarned, newlyEarned } from "./achievements.ts";
+import { assertDefined } from "./test.ts";
+import type { CountryData } from "./types.ts";
 
 const COUNTRIES: readonly CountryData[] = [
 	{ bounds: [-5, 42, 8, 51], iso3166: "FR", region: "150", subregion: "155" },

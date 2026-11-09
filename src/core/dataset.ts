@@ -4,7 +4,8 @@ import { unwrap } from "jotai/utils";
 import { loadAtlas } from "../data/atlas.ts";
 import { EMPTY_BOUNDARIES, toBoundaries } from "../data/boundaries.ts";
 import type { CountryBoundaries } from "../data/boundaries.ts";
-import type { CountryData } from "./types.ts";
+import { achievementsOf } from "./achievements.ts";
+import type { Achievement, CountryData } from "./types.ts";
 
 /** The country list, keyed by ISO 3166-1 alpha-2 code, empty until it has loaded. */
 export const rawCountriesAtom = atom<Readonly<Record<string, CountryData>>>({});
@@ -15,6 +16,11 @@ export const rawCountriesAtom = atom<Readonly<Record<string, CountryData>>>({});
  */
 export const countryCodesAtom = atom<readonly string[]>((get) =>
 	Object.keys(get(rawCountriesAtom)).toSorted(),
+);
+
+/** Every achievement there is for the country list, none until it has loaded. */
+export const achievementsAtom = atom<readonly Achievement[]>((get) =>
+	achievementsOf(Object.values(get(rawCountriesAtom))),
 );
 
 /**

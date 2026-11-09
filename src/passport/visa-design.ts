@@ -1,6 +1,7 @@
 import { hashOf } from "../core/hash.ts";
+import type { Achievement } from "../core/types.ts";
 import { STAMP_INKS, VISA_INKS, VISA_TYPES } from "./types.ts";
-import type { Achievement, VisaDesign } from "./types.ts";
+import type { VisaDesign } from "./types.ts";
 
 /** The furthest a visa is turned either way, in tenths of a degree. */
 const MAX_ROTATION_TENTHS = 15;
