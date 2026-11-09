@@ -11,7 +11,8 @@ how to get it running.
 
 ## Prerequisites
 
-- **Node 24**, which is what CI builds on.
+- **Node**, at the major version in [`.node-version`](./.node-version), which
+  is what CI builds on and Renovate keeps current.
 - **pnpm**, enabled with `corepack enable`. The version is pinned by
   `packageManager` in `package.json`.
 - **Chromium**, for the tests. Both test suites drive a real browser.
