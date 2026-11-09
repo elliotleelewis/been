@@ -1,3 +1,4 @@
+import classNames from "classnames";
 import { memo } from "react";
 import type { FC, RefObject } from "react";
 
@@ -26,7 +27,10 @@ interface Props {
 export const LockedVisaBack: FC<Props> = memo(({ buttonRef, id, onFlipBack, shown, visa }) => (
 	<div
 		id={id}
-		className={`absolute inset-0 flex flex-col overflow-hidden rounded-[2cqw] bg-[color-mix(in_oklab,currentColor_7%,#fbf7ec)] shadow-sm ring-1 ring-current/60 backface-hidden motion-safe:rotate-y-180 motion-reduce:transition-opacity motion-reduce:duration-300 ${shown ? "" : "pointer-events-none motion-reduce:opacity-0"}`}
+		className={classNames(
+			"absolute inset-0 flex flex-col overflow-hidden rounded-[2cqw] bg-[color-mix(in_oklab,currentColor_7%,#fbf7ec)] shadow-sm ring-1 ring-current/60 backface-hidden motion-safe:rotate-y-180 motion-reduce:transition-opacity motion-reduce:duration-300",
+			{ "pointer-events-none motion-reduce:opacity-0": !shown },
+		)}
 		style={{ color: visa.design.ink, rotate: `${String(visa.design.rotation)}deg` }}
 		inert={!shown}
 	>

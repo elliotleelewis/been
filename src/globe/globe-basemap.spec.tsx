@@ -17,12 +17,13 @@ const mapBehind = (spy: MockInstance): MapLibreMap | undefined => {
 
 /**
  * `Map` loads MapLibre asynchronously and the fill waits on the style that names its anchor, so
- * the layer landing is what says both have happened.
+ * the layer landing is what says both have happened. The first map a run builds starts MapLibre's
+ * workers cold, alongside every other test file, which on a CI runner has taken longer than 15s.
  */
 const renderGlobe = async (): Promise<MapLibreMap> => {
 	const addLayer = vi.spyOn(MapLibreMap.prototype, "addLayer");
 	render(<Globe />);
-	await vi.waitUntil(() => mapBehind(addLayer)?.getLayer(MapLayerKeys.Been), { timeout: 15_000 });
+	await vi.waitUntil(() => mapBehind(addLayer)?.getLayer(MapLayerKeys.Been), { timeout: 25_000 });
 	return assertDefined(mapBehind(addLayer), "The globe never built a map.");
 };
 

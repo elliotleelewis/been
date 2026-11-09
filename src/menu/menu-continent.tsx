@@ -1,3 +1,4 @@
+import classNames from "classnames";
 import { useSetAtom } from "jotai";
 import { memo, useCallback, useId } from "react";
 import type { FC } from "react";
@@ -33,7 +34,9 @@ export const MenuContinent: FC<Props> = memo(({ continent, expanded }) => {
 					onClick={toggle}
 				>
 					<svg
-						className={`size-4 shrink-0 motion-safe:transition-transform ${expanded ? "rotate-90" : ""}`}
+						className={classNames("size-4 shrink-0 motion-safe:transition-transform", {
+							"rotate-90": expanded,
+						})}
 						xmlns="http://www.w3.org/2000/svg"
 						fill="none"
 						viewBox="0 0 24 24"

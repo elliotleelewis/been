@@ -1,3 +1,4 @@
+import classNames from "classnames";
 import { memo } from "react";
 import type { FC } from "react";
 
@@ -32,7 +33,10 @@ export const ShareLink: FC<Props> = memo(({ onDone, url }) => {
 			<div className="flex w-full flex-wrap justify-center gap-2">
 				<button
 					type="button"
-					className={`${BUTTON_CLASS_NAME} bg-primary text-white hover:bg-primary/90 dark:bg-primary dark:text-white`}
+					className={classNames(
+						BUTTON_CLASS_NAME,
+						"bg-primary text-white hover:bg-primary/90 dark:bg-primary dark:text-white",
+					)}
 					onClick={copy}
 				>
 					{copied ? m.share_copied() : m.share_copy()}
@@ -40,7 +44,10 @@ export const ShareLink: FC<Props> = memo(({ onDone, url }) => {
 				{share === undefined ? null : (
 					<button
 						type="button"
-						className={`${BUTTON_CLASS_NAME} bg-zinc-100 hover:bg-zinc-200 dark:bg-zinc-800 dark:hover:bg-zinc-700`}
+						className={classNames(
+							BUTTON_CLASS_NAME,
+							"bg-zinc-100 hover:bg-zinc-200 dark:bg-zinc-800 dark:hover:bg-zinc-700",
+						)}
 						onClick={share}
 					>
 						{m.share_native()}
@@ -48,7 +55,7 @@ export const ShareLink: FC<Props> = memo(({ onDone, url }) => {
 				)}
 				<button
 					type="button"
-					className={`${BUTTON_CLASS_NAME} hover:bg-zinc-100 dark:hover:bg-zinc-800`}
+					className={classNames(BUTTON_CLASS_NAME, "hover:bg-zinc-100 dark:hover:bg-zinc-800")}
 					onClick={onDone}
 				>
 					{m.share_done()}

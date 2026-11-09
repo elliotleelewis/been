@@ -174,7 +174,7 @@ exports[`menu > should render 1`] = `
         >
           <svg
             aria-hidden="true"
-            class="size-4 shrink-0 motion-safe:transition-transform "
+            class="size-4 shrink-0 motion-safe:transition-transform"
             fill="none"
             stroke="currentColor"
             stroke-width="2"

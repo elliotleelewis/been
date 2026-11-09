@@ -1,3 +1,4 @@
+import classNames from "classnames";
 import { useSetAtom } from "jotai";
 import { memo, useCallback } from "react";
 import type { FC } from "react";
@@ -30,7 +31,12 @@ export const PassportChapterButton: FC<Props> = memo(({ current, start }) => {
 		<li>
 			<button
 				type="button"
-				className={`rounded-full px-3 py-1 text-xs font-medium focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:outline-none ${current ? "bg-primary/15 text-primary dark:bg-primary/25 dark:text-white" : "text-zinc-600 hover:bg-zinc-100 dark:text-zinc-400 dark:hover:bg-zinc-800"}`}
+				className={classNames(
+					"rounded-full px-3 py-1 text-xs font-medium focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:outline-none",
+					current
+						? "bg-primary/15 text-primary dark:bg-primary/25 dark:text-white"
+						: "text-zinc-600 hover:bg-zinc-100 dark:text-zinc-400 dark:hover:bg-zinc-800",
+				)}
 				onClick={open}
 				aria-current={current ? "page" : undefined}
 			>

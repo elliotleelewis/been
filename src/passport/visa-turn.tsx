@@ -1,3 +1,4 @@
+import classNames from "classnames";
 import { useAtom } from "jotai";
 import { memo, useCallback, useId } from "react";
 import type { FC, ReactNode, RefObject } from "react";
@@ -47,12 +48,18 @@ export const VisaTurn: FC<Props> = memo(({ front, id, renderBack }) => {
 	return (
 		<div ref={card} className="@container relative aspect-[300/190] w-full perspective-[1000px]">
 			<div
-				className={`relative size-full transform-3d motion-safe:transition-transform motion-safe:duration-500 motion-safe:ease-out ${flipped ? "motion-safe:rotate-y-180" : ""}`}
+				className={classNames(
+					"relative size-full transform-3d motion-safe:transition-transform motion-safe:duration-500 motion-safe:ease-out",
+					{ "motion-safe:rotate-y-180": flipped },
+				)}
 			>
 				<button
 					ref={frontButton}
 					type="button"
-					className={`absolute inset-0 cursor-pointer rounded-[2cqw] backface-hidden focus-visible:ring-2 focus-visible:ring-primary/60 focus-visible:outline-none motion-safe:transition-transform motion-safe:hover:scale-[1.02] motion-reduce:transition-opacity motion-reduce:duration-300 ${flipped ? "pointer-events-none motion-reduce:opacity-0" : ""}`}
+					className={classNames(
+						"absolute inset-0 cursor-pointer rounded-[2cqw] backface-hidden focus-visible:ring-2 focus-visible:ring-primary/60 focus-visible:outline-none motion-safe:transition-transform motion-safe:hover:scale-[1.02] motion-reduce:transition-opacity motion-reduce:duration-300",
+						{ "pointer-events-none motion-reduce:opacity-0": flipped },
+					)}
 					onClick={flip}
 					aria-expanded={flipped}
 					aria-controls={renderBack === undefined ? undefined : backId}

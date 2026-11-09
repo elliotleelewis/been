@@ -1,3 +1,4 @@
+import classNames from "classnames";
 import { memo } from "react";
 import type { FC } from "react";
 
@@ -10,7 +11,7 @@ interface Props {
 
 /** A country a locked visa still asks for, starred where it is one of those recommended next. */
 export const LockedVisaEntry: FC<Props> = memo(({ entry: { country, recommended } }) => (
-	<li className={`truncate ${recommended ? "font-semibold" : ""}`}>
+	<li className={classNames("truncate", { "font-semibold": recommended })}>
 		{country.name}
 		{recommended ? (
 			<span className="ms-[1cqw] text-current" aria-hidden="true">
