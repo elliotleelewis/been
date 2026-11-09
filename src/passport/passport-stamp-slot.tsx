@@ -3,7 +3,7 @@ import type { FC } from "react";
 
 import type { Country } from "../core/types.ts";
 import { m } from "../paraglide/messages.js";
-import { Stamp } from "./stamp.tsx";
+import { StampPicture } from "./stamp-picture.tsx";
 import type { PassportStamp } from "./types.ts";
 
 interface Props {
@@ -18,7 +18,10 @@ interface Props {
  */
 const PX_PER_CQW = 2.88;
 
-/** One stamp's place on a page, nudged off it by the stamp's design, which shows its country. */
+/**
+ * One stamp's place on a page, nudged off it by the stamp's design, which shows its country. Once
+ * drawn, the stamp is shown as a picture of itself, so the page stays cheap to redraw as it tilts.
+ */
 export const PassportStampSlot: FC<Props> = memo(({ onShow, stamp }) => {
 	const show = useCallback(() => {
 		onShow(stamp.country);
@@ -38,7 +41,11 @@ export const PassportStampSlot: FC<Props> = memo(({ onShow, stamp }) => {
 				onClick={show}
 				aria-label={label}
 			>
-				<Stamp stamp={stamp} />
+				{/* Keyed by what can change on a stamp once it is on a page, so it is pictured afresh. */}
+				<StampPicture
+					key={`${stamp.date ?? ""}:${stamp.silhouette === undefined ? "" : "outlined"}`}
+					stamp={stamp}
+				/>
 			</button>
 		</li>
 	);
