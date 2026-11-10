@@ -1,0 +1,17 @@
+# Been
+
+> A web clone of the "been" travel app: tick off the countries you have been to, and watch them fill in on a globe. It runs entirely in the browser, with no accounts and no server of its own.
+
+The country list is the 193 UN member states, plus the Holy See and Palestine. A reader's map is kept only in their browser's local storage, so nothing about it is sent anywhere, and there is no API to call.
+
+A map can be shared as a link, which carries the map in the URL's fragment, after `#share=`. Browsers never send the fragment to a server. Opening a share link shows that map read-only, compared with the reader's own.
+
+## Pages
+
+- [The map](/): The globe and the country list, where countries are ticked off, with a passport of stamps and visas earned. It needs JavaScript and WebGL. Without them it shows only its loading screen.
+- [Privacy policy](/privacy): What the site collects, which is next to nothing, and what happens to it.
+- [Cookies](/cookies): Everything the site may keep on the reader's device, and how to clear it.
+
+## Optional
+
+- [Source code](https://github.com/elliotleelewis/been): The project on GitHub.

@@ -27,9 +27,11 @@ export default defineConfig(({ command, mode }) => ({
 		}),
 		// The site is static: no server runs it. Start renders every page to HTML when the site is
 		// built, into dist/client/: the small print whole, and the map as its loading screen, as the map
-		// itself is the reader's and renders only in the browser. An unknown path is served the map's
-		// page by Cloudflare Pages, whose router then sends it home. Tests render components on their
-		// own, so they leave it out.
+		// itself is the reader's and renders only in the browser. Start's single-page app shell becomes
+		// 404.html, which Cloudflare Pages serves with a 404 for any path the site has no file at, and
+		// whose router then sends the reader home. Without a 404.html, Pages would answer such paths with
+		// the map's page and a 200, passing it off as robots.txt, llms.txt or an ARD manifest. Tests
+		// render components on their own, so they leave it out.
 		mode === "test"
 			? []
 			: tanstackStart({
@@ -37,6 +39,9 @@ export default defineConfig(({ command, mode }) => ({
 					prerender: { autoStaticPathsDiscovery: false, crawlLinks: false, enabled: true },
 					router: { entry: "app/router.tsx" },
 					sitemap: { enabled: false },
+					// The shell is rendered at the map's path, as one with no route would fail with a 404, but
+					// with a query, as Start skips a path that is already in `pages`.
+					spa: { enabled: true, maskPath: "/?shell", prerender: { outputPath: "/404" } },
 					// Vite's root is src/ already.
 					srcDirectory: ".",
 				}),

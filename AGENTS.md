@@ -31,8 +31,9 @@ One package; `pnpm-workspace.yaml` only holds pnpm's settings. `src/` is Vite's
 root. TanStack Start builds a static site into `dist/client/`, the only thing deployed: the document
 (`src/app/shell.tsx`), the small print, and the map's loading screen (`src/app/app-loading.tsx`) are
 rendered at build time, the map itself only in the browser (`ssr: false`), and `src/client.tsx`
-hydrates it. An inline script (`src/app/before-paint.ts`) sizes the drawer and marks a share link
-before the first paint; the globe's opening disc (`src/globe/globe-backdrop.tsx`) stays behind the map.
+hydrates it. Start's SPA shell becomes `404.html`, which Pages serves for missing paths. An inline
+script (`src/app/before-paint.ts`) sizes the drawer and marks a share link before the first paint;
+the globe's opening disc (`src/globe/globe-backdrop.tsx`) stays behind the map.
 
 | Directory       | Role                                                                                           |
 | --------------- | ---------------------------------------------------------------------------------------------- |
@@ -45,7 +46,7 @@ before the first paint; the globe's opening disc (`src/globe/globe-backdrop.tsx`
 | `src/share/`    | The share button and dialog, with the link's QR code.                                          |
 | `src/legal/`    | The privacy and cookies pages, rendered at build time at `/privacy` and `/cookies`.            |
 | `src/data/`     | The country dataset and the world atlas it is drawn from, plus generated output.               |
-| `src/public/`   | Copied into the build as is: the web app manifest and the app's icons.                         |
+| `src/public/`   | Copied into the build as is: the web app manifest, the icons, `robots.txt` and `llms.txt`.     |
 | `scripts/`      | Node-only tooling run by hand, not part of the bundle.                                         |
 
 Each folder is flat, and a file's kind is in its name: `*.tsx` is a component, `use-*.ts` a hook

@@ -1,0 +1,4 @@
+# Every page is open to every crawler and agent. There is nothing private to keep out: a reader's map
+# never leaves their browser, and a shared one travels in the link's fragment, which is never sent.
+User-agent: *
+Allow: /
