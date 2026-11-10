@@ -7,6 +7,7 @@ import { useOverlayTriggerState } from "react-stately";
 import { viewingSharedMapAtom } from "../core/location.ts";
 import { m } from "../paraglide/messages.js";
 import { ShareDialog } from "./share-dialog.tsx";
+import { ShareIcon } from "./share-icon.tsx";
 
 /**
  * Opens the share dialog. It is not there while a shared map is on show, which is someone else's
@@ -33,21 +34,7 @@ export const ShareButton: FC = memo(() => {
 				className="rounded-full p-2 hover:bg-white/15 focus-visible:ring-2 focus-visible:ring-white/70 focus-visible:outline-none dark:hover:bg-zinc-800 dark:focus-visible:ring-primary/50"
 				aria-label={m.share_open()}
 			>
-				<svg
-					className="size-5"
-					xmlns="http://www.w3.org/2000/svg"
-					fill="none"
-					viewBox="0 0 24 24"
-					stroke="currentColor"
-					strokeWidth="2"
-					aria-hidden="true"
-				>
-					<path
-						strokeLinecap="round"
-						strokeLinejoin="round"
-						d="M12 3v12m0-12 4 4m-4-4-4 4M5 13v6a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-6"
-					/>
-				</svg>
+				<ShareIcon />
 			</button>
 			{state.isOpen ? <ShareDialog overlayProps={overlayProps} state={state} /> : null}
 		</>

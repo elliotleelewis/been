@@ -1,14 +1,15 @@
 import { paraglideVitePlugin } from "@inlang/paraglide-js";
 import tailwindcss from "@tailwindcss/vite";
+import { tanstackStart } from "@tanstack/react-start/plugin/vite";
 import react from "@vitejs/plugin-react";
 import { playwright } from "@vitest/browser-playwright";
 import { defineConfig } from "vite";
 
-export default defineConfig(({ command }) => ({
+export default defineConfig(({ command, mode }) => ({
 	build: {
-		assetsDir: "./",
 		emptyOutDir: true,
-		outDir: "../dist",
+		// Anchored to this file, as Start reads it from where the build runs rather than from the root.
+		outDir: `${import.meta.dirname}/dist`,
 		sourcemap: command === "serve",
 	},
 	envDir: "../",
@@ -24,6 +25,21 @@ export default defineConfig(({ command }) => ({
 			project: `${import.meta.dirname}/project.inlang`,
 			strategy: ["preferredLanguage", "baseLocale"],
 		}),
+		// The site is static: no server runs it. Start renders every page to HTML when the site is
+		// built, into dist/client/: the small print whole, and the map as its loading screen, as the map
+		// itself is the reader's and renders only in the browser. An unknown path is served the map's
+		// page by Cloudflare Pages, whose router then sends it home. Tests render components on their
+		// own, so they leave it out.
+		mode === "test"
+			? []
+			: tanstackStart({
+					pages: [{ path: "/" }, { path: "/privacy" }, { path: "/cookies" }],
+					prerender: { autoStaticPathsDiscovery: false, crawlLinks: false, enabled: true },
+					router: { entry: "app/router.tsx" },
+					sitemap: { enabled: false },
+					// Vite's root is src/ already.
+					srcDirectory: ".",
+				}),
 		react({ compiler: true }),
 		tailwindcss(),
 	],
@@ -38,7 +54,7 @@ export default defineConfig(({ command }) => ({
 		},
 		clearMocks: true,
 		coverage: {
-			exclude: ["./index.tsx", "**/*.spec.{ts,tsx}"],
+			exclude: ["./client.tsx", "./routeTree.gen.ts", "**/*.spec.{ts,tsx}"],
 			provider: "istanbul",
 			reportsDirectory: "../coverage",
 		},

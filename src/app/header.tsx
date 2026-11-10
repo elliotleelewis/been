@@ -5,6 +5,7 @@ import { PassportButton } from "../passport/passport-button.tsx";
 import { StampMoment } from "../passport/stamp-moment.tsx";
 import { VisaMoment } from "../passport/visa-moment.tsx";
 import { ShareButton } from "../share/share-button.tsx";
+import { HeaderBar } from "./header-bar.tsx";
 
 /** The title bar: the app's name, with the passport and sharing at its end. */
 export const Header: FC = memo(() => {
@@ -12,8 +13,7 @@ export const Header: FC = memo(() => {
 	const passportRef = useRef<HTMLSpanElement>(null);
 
 	return (
-		<div className="relative flex h-header items-center justify-center bg-primary text-white md:col-start-1 dark:bg-zinc-950 dark:text-primary">
-			<h1 className="select-none font-bold text-xl tracking-wide">{"been"}</h1>
+		<HeaderBar>
 			<div className="absolute end-2 flex items-center gap-1">
 				<span ref={passportRef} className="inline-flex">
 					<PassportButton />
@@ -22,7 +22,7 @@ export const Header: FC = memo(() => {
 			</div>
 			<StampMoment target={passportRef} />
 			<VisaMoment target={passportRef} />
-		</div>
+		</HeaderBar>
 	);
 });
 Header.displayName = "Header";

@@ -2,14 +2,19 @@ import { useAtomValue } from "jotai";
 import { memo, useId, useMemo } from "react";
 import type { CSSProperties, FC } from "react";
 
+import { GlobeBackdrop } from "../globe/globe-backdrop.tsx";
 import { Globe } from "../globe/globe.tsx";
 import { TapToastRegion } from "../globe/tap-toast-region.tsx";
-import { MenuError } from "../menu/menu-error.tsx";
+import { MenuPanel } from "../menu/menu-panel.tsx";
 import { MenuResizer } from "../menu/menu-resizer.tsx";
-import { Menu } from "../menu/menu.tsx";
 import { menuSizeAtom } from "../menu/size.ts";
-import { useCountries } from "../menu/use-countries.ts";
 import { Header } from "./header.tsx";
+import {
+	APP_GRID_CLASS_NAME,
+	GLOBE_AREA_CLASS_NAME,
+	MENU_AREA_CLASS_NAME,
+	MENU_CONTENT_CLASS_NAME,
+} from "./types.ts";
 
 const PERCENT = 100;
 const PERCENT_PRECISION = 2;
@@ -33,7 +38,6 @@ interface MenuStyle extends CSSProperties {
 export const App: FC = memo(() => {
 	const menuSize = useAtomValue(menuSizeAtom);
 	const menuId = useId();
-	const { error, loading } = useCountries();
 
 	const style = useMemo(
 		(): MenuStyle => ({
@@ -44,21 +48,16 @@ export const App: FC = memo(() => {
 	);
 
 	return (
-		<div
-			className="grid size-full grid-rows-[auto_minmax(0,1fr)_min(var(--menu-height),calc(100%_-_var(--spacing-header)))] md:grid-cols-[var(--menu-width)_minmax(0,1fr)] md:grid-rows-[auto_minmax(0,1fr)] dark:bg-zinc-900 dark:text-white"
-			style={style}
-		>
+		<div className={APP_GRID_CLASS_NAME} style={style}>
 			<Header />
-			<div
-				id={menuId}
-				className="z-10 row-start-3 flex min-h-0 flex-col-reverse overflow-hidden md:col-start-1 md:row-start-2 md:flex-row dark:bg-zinc-900 dark:text-white"
-			>
-				<div className="flex min-h-0 min-w-0 flex-1 flex-col">
-					{error ? <MenuError /> : <Menu loading={loading} />}
+			<div id={menuId} className={MENU_AREA_CLASS_NAME}>
+				<div className={MENU_CONTENT_CLASS_NAME}>
+					<MenuPanel />
 				</div>
 				<MenuResizer controls={menuId} />
 			</div>
-			<div className="relative row-start-2 md:col-start-2 md:row-span-2 md:row-start-1">
+			<div className={GLOBE_AREA_CLASS_NAME}>
+				<GlobeBackdrop />
 				<Globe />
 				<TapToastRegion />
 			</div>

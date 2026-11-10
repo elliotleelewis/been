@@ -47,5 +47,5 @@ jobs:
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: 08bcfcb3f50021eafc9bd1bfb1f06ad0
-          command: pages deploy ./dist --project-name=been --branch=${{ github.head_ref || github.ref_name }}
+          command: pages deploy ./dist/client --project-name=been --branch=${{ github.head_ref || github.ref_name }}
           gitHubToken: ${{ secrets.GITHUB_TOKEN }}

@@ -119,6 +119,26 @@
 	mask-repeat: no-repeat;
 }
 
+/* The globe as it opens, before MapLibre has drawn it (`src/globe/globe-backdrop.tsx`). The camera
+   opens on the globe at zoom 1.8 (`GLOBE_MIN_ZOOM`), whose sphere has a radius of
+   R = 512 × 2^1.8 / 2π ≈ 283.8px, seen through MapLibre's perspective camera from 1.5 times the map's
+   height, h, above its surface. On screen, then, it has a radius of R / √(1 + 2R / 1.5h): it depends
+   on the map's height, not its width. CSS cannot divide one length by another, so 2R / 1.5h is
+   written as the tangent of the angle between them. A pixel less leaves the map's own edge to cover
+   the disc's. The ocean is the CARTO basemap's, in each scheme. */
+.globe-backdrop {
+	container-type: size;
+}
+
+.globe-backdrop-sphere {
+	--globe-radius: calc(283.8px / sqrt(1 + tan(atan2(567.6px, 150cqh))) - 1px);
+	position: absolute;
+	inset-block-start: calc(50% - var(--globe-radius));
+	inset-inline-start: calc(50% - var(--globe-radius));
+	inline-size: calc(2 * var(--globe-radius));
+	block-size: calc(2 * var(--globe-radius));
+}
+
 /* Styles */
 html,
 body {
