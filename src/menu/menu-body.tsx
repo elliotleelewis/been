@@ -50,7 +50,9 @@ export const MenuBody: FC<Props> = memo(({ loading, results }) => {
 					expanded={narrowed || expandedRegions.includes(continent.code)}
 				/>
 			))}
-			<MenuSmallPrint />
+			<li>
+				<MenuSmallPrint />
+			</li>
 		</ul>
 	);
 });
