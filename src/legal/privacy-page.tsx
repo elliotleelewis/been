@@ -30,7 +30,7 @@ export const PrivacyPage: FC = memo(() => (
 			{m.privacy_updated({ date: updated })}
 		</p>
 		<p className="mt-4">
-			<Link to="/cookies" className={LINK_CLASS_NAME}>
+			<Link to="/cookies" hash className={LINK_CLASS_NAME}>
 				{m.privacy_cookies_link()}
 			</Link>
 		</p>

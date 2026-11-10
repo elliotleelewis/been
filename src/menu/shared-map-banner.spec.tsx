@@ -6,7 +6,7 @@ import { rawCountriesAtom } from "../core/dataset.ts";
 import { homeRegionAtom } from "../core/home-region.ts";
 import { InRouter } from "../core/in-router.tsx";
 import { visitsAtom } from "../core/selection.ts";
-import { closeSharedMap, openSharedMap } from "../core/test.ts";
+import { openSharedMap } from "../core/test.ts";
 import type { Visits } from "../core/types.ts";
 import { Menu } from "./menu.tsx";
 
@@ -41,7 +41,6 @@ const listed = (result: ReturnType<typeof render>): readonly string[] =>
 describe("shared map banner", () => {
 	afterEach(() => {
 		cleanup();
-		closeSharedMap();
 		globalThis.localStorage.clear();
 	});
 
@@ -89,7 +88,7 @@ describe("shared map banner", () => {
 
 		const result = renderShared({});
 
-		expect(result.getByRole("button", { name: "Start your own map" })).toBeVisible();
+		expect(result.getByRole("link", { name: "Start your own map" })).toBeVisible();
 		expect(result.queryByRole("button", { name: /in common/u })).toBeNull();
 		expect(result.queryByText("You too")).toBeNull();
 	}, 5000);

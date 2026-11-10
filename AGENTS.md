@@ -56,7 +56,7 @@ data/countries.ts ──▶ rawCountriesAtom ───────────�
                                                         ├─▶ countriesAtom ──▶ continentsAtom ──▶ Menu
 localStorage ──▶ visitsAtom ─────┐                      │         │
                                  ├─▶ shownVisitsAtom ───┤         └───────────────────────────▶ Globe
-share link ──▶ sharedVisitsAtom ─┘                      │
+router ──────▶ sharedVisitsAtom ─┘                      │
                                                         └─▶ selectedCountriesAtom ────────────▶ Globe
 world atlas ──▶ data/boundaries.ts ──▶ boundariesAtom ──────────────────────────────▶ Globe, Passport
 rawCountriesAtom ──▶ achievementsAtom ─┬─▶ visasAtom (with shownVisitsAtom) ─────────────▶ Passport
@@ -90,7 +90,8 @@ Rules that keep that shape:
 - **A share link** carries the map in its hash, which browsers don't send to a server: a format version, a
   fingerprint of the dataset's sorted codes, then one bit per country in that order, as URL-safe
   base64. The order comes from the dataset, and a link from any other list reads as no map. It
-  opens read-only through `shownVisitsAtom` (`src/core/location.ts` watches the hash). The QR
+  opens read-only through `shownVisitsAtom`. The router owns the URL: `src/app/location.ts` mirrors
+  its history's hash into `locationHashAtom`, nothing else writes it, and leaving is a `Link`. The QR
   encoder loads only when the share dialog opens. `src/core/comparison.ts` sets it against the
   reader's own map, giving countries a `standing` that the globe, menu and visa backs show.
 - **The passport** is pages (`src/passport/pages.ts`): a cover, an identity page, the visas, those

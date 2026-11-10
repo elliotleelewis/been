@@ -1,7 +1,13 @@
 import { describe, expect, it } from "vitest";
 
 import { countries } from "../data/countries.ts";
-import { decodeShare, encodeShare, fingerprintOf, shareUrlOf, shareValueOf } from "./share-link.ts";
+import {
+	decodeShare,
+	encodeShare,
+	fingerprintOf,
+	shareHashOf,
+	shareValueOf,
+} from "./share-link.ts";
 
 /** The order share links mark countries in, as the app derives it. */
 const CODES = countries.map(({ iso3166 }) => iso3166).toSorted();
@@ -60,13 +66,14 @@ describe("share", () => {
 		expect(decodeShare("nonsense", CODES)).toBeUndefined();
 	}, 5000);
 
-	it("should find the value in a hash, and build a link around it", () => {
+	it("should put the value in a hash, and find it there again", () => {
 		expect.hasAssertions();
 
-		const url = shareUrlOf("1.AAAA", { href: "https://been.example/path?debug=1#old" });
+		const hash = shareHashOf("1.AAAA");
 
-		expect(url).toBe("https://been.example/path#share=1.AAAA");
-		expect(shareValueOf(new globalThis.URL(url).hash)).toBe("1.AAAA");
+		expect(hash).toBe("share=1.AAAA");
+		expect(shareValueOf(hash)).toBe("1.AAAA");
+		expect(shareValueOf(`#${hash}`)).toBe("1.AAAA");
 		expect(shareValueOf("#something-else")).toBeUndefined();
 	}, 5000);
 });

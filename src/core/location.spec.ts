@@ -1,9 +1,9 @@
 import { createStore } from "jotai";
-import { afterEach, describe, expect, it, vi } from "vitest";
+import { afterEach, describe, expect, it } from "vitest";
 
 import { countries } from "../data/countries.ts";
 import { countryCodesAtom, rawCountriesAtom } from "./dataset.ts";
-import { leaveSharedMapAtom, sharedVisitsAtom, viewingSharedMapAtom } from "./location.ts";
+import { locationHashAtom, viewingSharedMapAtom } from "./location.ts";
 import { selectedCountriesAtom, visitsAtom } from "./selection.ts";
 import { encodeShare } from "./share-link.ts";
 import { addCountryAtom, stampCountryAtom } from "./ticking.ts";
@@ -11,17 +11,14 @@ import type { Visits } from "./types.ts";
 
 const RAW_COUNTRIES = Object.fromEntries(countries.map((country) => [country.iso3166, country]));
 
-/** Opens a share link the way following one would, and returns a store watching the location. */
+/** Opens a share link as the router arriving at one does, through the mirror of its location. */
 const openShareLink = (
 	hash: string,
 	rawCountries: typeof RAW_COUNTRIES = RAW_COUNTRIES,
 ): ReturnType<typeof createStore> => {
 	const store = createStore();
 	store.set(rawCountriesAtom, rawCountries);
-	// The hash is only read again once something is watching it, as a component would be.
-	store.sub(sharedVisitsAtom, vi.fn<() => void>());
-	globalThis.history.replaceState(null, "", hash);
-	globalThis.dispatchEvent(new globalThis.HashChangeEvent("hashchange"));
+	store.set(locationHashAtom, hash);
 	return store;
 };
 
@@ -34,7 +31,6 @@ const linkFor = (visits: Visits): string => {
 
 describe("location", () => {
 	afterEach(() => {
-		globalThis.history.replaceState(null, "", globalThis.location.pathname);
 		globalThis.localStorage.clear();
 	});
 
@@ -76,13 +72,12 @@ describe("location", () => {
 		expect(store.get(visitsAtom)).toStrictEqual({});
 	}, 5000);
 
-	it("should go back to the reader's own map, and take the link off the address", () => {
+	it("should go back to the reader's own map once the router leaves the link", () => {
 		expect.hasAssertions();
 
 		const store = openShareLink(linkFor({ FR: {} }));
-		store.set(leaveSharedMapAtom);
+		store.set(locationHashAtom, "");
 
 		expect(store.get(viewingSharedMapAtom)).toBeFalsy();
-		expect(globalThis.location.hash).toBe("");
 	}, 5000);
 });

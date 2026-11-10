@@ -16,12 +16,14 @@ exports[`shared map banner > should say how a shared map compares with the reade
         </span>
          · 2 countries
       </p>
-      <button
-        class="shrink-0 rounded-full px-3 py-1 font-medium text-primary hover:bg-primary/10 focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:outline-none dark:text-primary dark:hover:bg-primary/20"
-        type="button"
+      <a
+        aria-current="page"
+        class="shrink-0 rounded-full px-3 py-1 font-medium text-primary hover:bg-primary/10 focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:outline-none dark:text-primary dark:hover:bg-primary/20 active"
+        data-status="active"
+        href="/"
       >
         Back to my map
-      </button>
+      </a>
     </div>
     <fieldset
       class="-ms-2.5 flex flex-wrap gap-1"

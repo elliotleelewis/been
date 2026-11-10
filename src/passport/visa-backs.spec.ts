@@ -2,8 +2,9 @@ import { createStore } from "jotai";
 import { afterEach, describe, expect, it } from "vitest";
 
 import { rawCountriesAtom } from "../core/dataset.ts";
+import { locationHashAtom } from "../core/location.ts";
 import { visitsAtom } from "../core/selection.ts";
-import { assertDefined, closeSharedMap, openSharedMap } from "../core/test.ts";
+import { assertDefined, openSharedMap } from "../core/test.ts";
 import { countries } from "../data/countries.ts";
 import type { VisaBack } from "./types.ts";
 import { visaBacksAtom } from "./visa-backs.ts";
@@ -31,7 +32,6 @@ const backOf = (store: ReturnType<typeof createStore>, id: string): VisaBack =>
 
 describe("visaBacksAtom on a shared map", () => {
 	afterEach(() => {
-		closeSharedMap();
 		globalThis.localStorage.clear();
 	});
 
@@ -90,7 +90,7 @@ describe("visaBacksAtom on a shared map", () => {
 		expect.hasAssertions();
 
 		const store = createTestStore();
-		closeSharedMap();
+		store.set(locationHashAtom, "");
 
 		expect(backOf(store, "milestone:1").side.kind).toBe("clincher");
 	}, 5000);

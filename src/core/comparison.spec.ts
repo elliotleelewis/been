@@ -7,7 +7,7 @@ import { countriesAtom } from "./countries.ts";
 import { rawCountriesAtom } from "./dataset.ts";
 import { recommendedCodesAtom } from "./recommended.ts";
 import { visitsAtom } from "./selection.ts";
-import { closeSharedMap, openSharedMap } from "./test.ts";
+import { openSharedMap } from "./test.ts";
 
 const RAW_COUNTRIES = Object.fromEntries(countries.map((country) => [country.iso3166, country]));
 
@@ -21,7 +21,6 @@ const createTestStore = (): ReturnType<typeof createStore> => {
 
 describe("comparison", () => {
 	afterEach(() => {
-		closeSharedMap();
 		globalThis.localStorage.clear();
 	});
 

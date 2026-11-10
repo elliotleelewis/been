@@ -4,18 +4,24 @@ import { memo, useMemo } from "react";
 import type { FC } from "react";
 
 import { m } from "../paraglide/messages.js";
-import { shareSummaryAtom } from "./share.ts";
+import { shareSummaryOfAtom } from "./share.ts";
 import { useSharing } from "./use-sharing.ts";
 
 const BUTTON_CLASS_NAME =
 	"rounded-full px-4 py-2 font-medium text-sm focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:outline-none";
 
+interface Props {
+	/** The link to the map, which the summary ends with. */
+	readonly url: string;
+}
+
 /**
  * The map summed up in emoji, ending with its link, as it will paste, with buttons to copy it or
  * send it through the device's share sheet where there is one.
  */
-export const ShareSummary: FC = memo(() => {
-	const summary = useAtomValue(shareSummaryAtom);
+export const ShareSummary: FC<Props> = memo(({ url }) => {
+	const summaryOf = useAtomValue(shareSummaryOfAtom);
+	const summary = useMemo(() => summaryOf(url), [summaryOf, url]);
 	const data = useMemo(() => ({ text: summary }), [summary]);
 	const { copied, copy, share } = useSharing(summary, data);
 
