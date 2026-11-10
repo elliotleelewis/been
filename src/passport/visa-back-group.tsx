@@ -1,8 +1,9 @@
-import { memo } from "react";
+import { Fragment, memo } from "react";
 import type { FC } from "react";
 
 import type { VisaBackGroup as VisaBackGroupModel } from "./types.ts";
 import { VisaBackEntry } from "./visa-back-entry.tsx";
+import { VisaBackMark } from "./visa-back-mark.tsx";
 
 interface Props {
 	readonly group: VisaBackGroupModel;
@@ -13,7 +14,7 @@ interface Props {
 /**
  * The countries for one of a visa's requirements, as its back lists them: what the requirement is,
  * where the visa asks for more than one thing, the countries that met it, numbered in the order they
- * were ticked, then any others that also count.
+ * were ticked, then any others that also count, each ticked where the reader's own map has it too.
  */
 export const VisaBackGroup: FC<Props> = memo(({ clincher, group: { earned, extra, label } }) => (
 	<section className="mb-[2cqw]">
@@ -38,7 +39,15 @@ export const VisaBackGroup: FC<Props> = memo(({ clincher, group: { earned, extra
 			</h4>
 		)}
 		{extra.length === 0 ? null : (
-			<p className="opacity-80">{extra.map(({ name }) => name).join(", ")}</p>
+			<p className="opacity-80">
+				{extra.map(({ iso3166, name, standing }, index) => (
+					<Fragment key={iso3166}>
+						{index === 0 ? null : ", "}
+						{name}
+						{standing === "both" ? <VisaBackMark /> : null}
+					</Fragment>
+				))}
+			</p>
 		)}
 	</section>
 ));

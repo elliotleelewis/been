@@ -50,7 +50,10 @@ export const MenuContinent: FC<Props> = memo(({ continent, expanded }) => {
 					<span className="text-sm text-zinc-600 tabular-nums dark:text-zinc-400">
 						{m.menu_continent_count({ total: continent.total, visited: continent.visited })}
 					</span>
-					<Progress complete={continent.visited / continent.total} />
+					<Progress
+						complete={continent.visited / continent.total}
+						mine={continent.mine === undefined ? undefined : continent.mine / continent.total}
+					/>
 				</button>
 			</h2>
 			<ul id={contentId} hidden={!expanded}>
@@ -58,7 +61,7 @@ export const MenuContinent: FC<Props> = memo(({ continent, expanded }) => {
 					<li key={region.name}>
 						<div className="sticky top-14 flex items-center justify-between bg-zinc-100 px-4 py-2 text-xs font-medium text-zinc-600 uppercase tracking-wide dark:bg-zinc-900 dark:text-zinc-400">
 							<h3>{region.name}</h3>
-							<Progress complete={region.complete ?? 0} />
+							<Progress complete={region.complete ?? 0} mine={region.mine} />
 						</div>
 						<ul className="divide-y divide-zinc-100 dark:divide-zinc-800">
 							{region.values.map((country) => (

@@ -4,17 +4,12 @@ import { countryCodesAtom } from "./dataset.ts";
 import { decodeShare, shareValueOf } from "./share-link.ts";
 import type { Visits } from "./types.ts";
 
-/** The page's location hash, kept current as the reader follows links or goes back and forward. */
-const hashAtom = atom(globalThis.location.hash);
-hashAtom.onMount = (setHash) => {
-	const update = (): void => {
-		setHash(globalThis.location.hash);
-	};
-	globalThis.addEventListener("hashchange", update);
-	return (): void => {
-		globalThis.removeEventListener("hashchange", update);
-	};
-};
+/**
+ * The hash of the location the router is at, as the app shell mirrors it from the router's history
+ * (`src/app/location.ts`), so atoms can read it. The router owns the URL: nothing else writes this,
+ * and anything that would change the URL navigates through the router instead.
+ */
+export const locationHashAtom = atom("");
 
 /**
  * The map a share link opened the page on, or `null` when it opened on the reader's own. A link
@@ -23,7 +18,7 @@ hashAtom.onMount = (setHash) => {
  * read opens their own map, rather than an empty one that looks like theirs.
  */
 export const sharedVisitsAtom = atom<Visits | null>((get) => {
-	const value = shareValueOf(get(hashAtom));
+	const value = shareValueOf(get(locationHashAtom));
 	const codes = get(countryCodesAtom);
 	if (value === undefined) {
 		return null;
@@ -33,10 +28,3 @@ export const sharedVisitsAtom = atom<Visits | null>((get) => {
 
 /** Whether a shared map is on show, which leaves nothing on screen that can change. */
 export const viewingSharedMapAtom = atom((get) => get(sharedVisitsAtom) !== null);
-
-/** Leaves a shared map for the reader's own, taking the link off the address so a reload stays. */
-export const leaveSharedMapAtom = atom(undefined, (_get, set) => {
-	const { pathname, search } = globalThis.location;
-	globalThis.history.replaceState(globalThis.history.state, "", `${pathname}${search}`);
-	set(hashAtom, "");
-});

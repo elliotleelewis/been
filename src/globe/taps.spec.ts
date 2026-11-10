@@ -1,11 +1,9 @@
 import { createStore } from "jotai";
 import { afterEach, describe, expect, it, vi } from "vitest";
 
-import { countryCodesAtom, rawCountriesAtom } from "../core/dataset.ts";
-import { sharedVisitsAtom } from "../core/location.ts";
+import { rawCountriesAtom } from "../core/dataset.ts";
 import { focusAtom, visitsAtom } from "../core/selection.ts";
-import { encodeShare } from "../core/share-link.ts";
-import { TODAY, freezeToday } from "../core/test.ts";
+import { TODAY, freezeToday, openSharedMap } from "../core/test.ts";
 import { endStampMomentAtom, stampMomentAtom } from "../core/ticking.ts";
 import { lastTapAtom, tapCountryAtom, undoTapAtom } from "./taps.ts";
 
@@ -13,7 +11,6 @@ describe("taps", () => {
 	// `visitsAtom` is backed by local storage, which outlives an individual store.
 	afterEach(() => {
 		vi.useRealTimers();
-		globalThis.history.replaceState(null, "", globalThis.location.pathname);
 		globalThis.localStorage.clear();
 	});
 
@@ -90,10 +87,7 @@ describe("taps", () => {
 
 		const store = createStore();
 		store.set(rawCountriesAtom, { FR: { iso3166: "FR", region: "150", subregion: "155" } });
-		store.sub(sharedVisitsAtom, vi.fn<() => void>());
-		const link = encodeShare({ FR: {} }, store.get(countryCodesAtom));
-		globalThis.history.replaceState(null, "", `#share=${link}`);
-		globalThis.dispatchEvent(new globalThis.HashChangeEvent("hashchange"));
+		openSharedMap(store, { FR: {} });
 		store.set(tapCountryAtom, "FR");
 
 		expect(store.get(visitsAtom)).toStrictEqual({});

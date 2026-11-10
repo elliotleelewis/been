@@ -2,6 +2,7 @@ import { memo } from "react";
 import type { FC } from "react";
 
 import type { VisaEntry } from "./types.ts";
+import { VisaBackMark } from "./visa-back-mark.tsx";
 
 interface Props {
 	readonly entry: VisaEntry;
@@ -11,7 +12,10 @@ interface Props {
 	readonly clincher: boolean;
 }
 
-/** A country in the list on a visa's back: its place in the order, its name and the day. */
+/**
+ * A country in the list on a visa's back: its place in the order, its name and the day, and a tick
+ * where the reader's own map has it too, while a shared map is set against it.
+ */
 export const VisaBackEntry: FC<Props> = memo(({ clincher, entry, place }) => (
 	<li className="flex items-baseline gap-[1.5cqw]">
 		<span className="w-[4.5cqw] shrink-0 text-end tabular-nums opacity-50">{place}</span>
@@ -22,6 +26,7 @@ export const VisaBackEntry: FC<Props> = memo(({ clincher, entry, place }) => (
 					{"★"}
 				</span>
 			) : null}
+			{entry.country.standing === "both" ? <VisaBackMark /> : null}
 		</span>
 		<span className="shrink-0 text-[2.4cqw] tabular-nums opacity-70">{entry.date}</span>
 	</li>

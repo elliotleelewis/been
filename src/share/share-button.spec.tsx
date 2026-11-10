@@ -3,6 +3,7 @@ import { Provider, createStore } from "jotai";
 import { afterEach, describe, expect, it, vi } from "vitest";
 
 import { rawCountriesAtom } from "../core/dataset.ts";
+import { InRouter } from "../core/in-router.tsx";
 import { visitsAtom } from "../core/selection.ts";
 import { decodeShare, shareValueOf } from "../core/share-link.ts";
 import type { Visits } from "../core/types.ts";
@@ -26,7 +27,9 @@ const renderButton = (visits: Visits): ReturnType<typeof render> => {
 	store.set(visitsAtom, visits);
 	return render(
 		<Provider store={store}>
-			<ShareButton />
+			<InRouter>
+				<ShareButton />
+			</InRouter>
 		</Provider>,
 	);
 };
@@ -67,6 +70,7 @@ describe("share button", () => {
 
 		expect(dialog).toHaveTextContent("Anyone with the link sees your 2 countries");
 		expect(sharedVisitsIn(result)).toStrictEqual({ FR: {}, IT: {} });
+		expect(new globalThis.URL(linkIn(result)).pathname).toBe("/");
 		const qrCode = await result.findByRole("img", { name: "QR code for the link to your map" });
 
 		expect(qrCode).toBeInTheDocument();

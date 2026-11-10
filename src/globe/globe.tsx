@@ -58,6 +58,8 @@ export const Globe = memo(
 			hitPaint,
 			hoverFilter,
 			hoverPaint,
+			mineFilter,
+			minePaint,
 			nextFilter,
 			nextPaint,
 		} = useGlobeLayers(hover?.code);
@@ -117,6 +119,14 @@ export const Globe = memo(
 							beforeId={labelsLayerId}
 							filter={hoverFilter}
 							paint={hoverPaint}
+						/>
+						<Layer
+							id={MapLayerKeys.Mine}
+							type="line"
+							source={MapSourceKeys.Countries}
+							beforeId={labelsLayerId}
+							filter={mineFilter}
+							paint={minePaint}
 						/>
 						<Layer
 							id={MapLayerKeys.Next}

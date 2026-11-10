@@ -46,20 +46,31 @@ export const MenuBody: FC<Props> = memo(({ loading, results }) => {
 		);
 	}
 
+	// Narrowing the list by standing is no search, and finding nothing is no miss to suggest for.
+	if (results.continents.length === 0 && results.query === "") {
+		return (
+			<p className="mx-4 mt-6 mb-2 flex-1 text-center font-medium text-zinc-600 dark:text-zinc-400">
+				{m.menu_standing_none()}
+			</p>
+		);
+	}
+
 	if (results.continents.length === 0) {
 		return <MenuNoResults query={results.query} suggestions={results.suggestions} />;
 	}
 
+	const narrowed = results.query !== "" || results.standing !== null;
+
 	return (
 		<ul className="min-h-0 flex-1 overscroll-contain overflow-y-auto">
-			{results.query === "" ? <MenuNextUp /> : null}
+			{narrowed ? null : <MenuNextUp />}
 			{results.continents.map((continent) => (
 				<MenuContinent
 					key={continent.code}
 					continent={continent}
-					// A search opens every continent with a match in it, as a match hidden inside a closed
-					// continent would read as no match at all.
-					expanded={results.query !== "" || expandedRegions.includes(continent.code)}
+					// A search, or narrowing the list, opens every continent with a match in it, as a match
+					// hidden inside a closed continent would read as no match at all.
+					expanded={narrowed || expandedRegions.includes(continent.code)}
 				/>
 			))}
 			<MenuSmallPrint />

@@ -85,10 +85,5 @@ export const decodeShare = (value: string, codes: readonly string[]): Visits | u
 export const shareValueOf = (hash: string): string | undefined =>
 	new globalThis.URLSearchParams(hash.replace(/^#/u, "")).get(SHARE_PARAM) ?? undefined;
 
-/** A link to this page that opens `value`'s map, read-only, in place of the reader's own. */
-export const shareUrlOf = (value: string, location: Pick<Location, "href">): string => {
-	const url = new globalThis.URL(location.href);
-	url.search = "";
-	url.hash = `${SHARE_PARAM}=${value}`;
-	return url.toString();
-};
+/** The hash a link carries `value` in, which opens its map, read-only, in place of the reader's own. */
+export const shareHashOf = (value: string): string => `${SHARE_PARAM}=${value}`;

@@ -18,6 +18,20 @@
       }
     }
   ],
+  "menu_progress_compared": [
+    {
+      "declarations": [
+        "input complete",
+        "input mine",
+        "local completePercent = complete: number style=percent maximumFractionDigits=1",
+        "local minePercent = mine: number style=percent maximumFractionDigits=1"
+      ],
+      "selectors": [],
+      "match": {
+        "": "{completePercent} on this map, {minePercent} on yours."
+      }
+    }
+  ],
   "menu_continent_count": "{visited}/{total}",
   "menu_no_results": "No countries match “{query}”.",
   "menu_did_you_mean": "Did you mean",
@@ -34,7 +48,17 @@
     }
   ],
   "menu_back_to_my_map": "Back to my map",
+  "menu_start_my_map": "Start your own map",
+  "menu_compare_filter": "Show only the countries",
+  "menu_compare_both": "{count} in common",
+  "menu_compare_theirs": "{count} new to you",
+  "menu_compare_mine": "{count} only you",
+  "menu_standing_both": "You too",
+  "menu_standing_theirs": "New to you",
+  "menu_standing_mine": "Only you",
+  "menu_standing_none": "No countries to show.",
   "menu_next_up": "Next up",
+  "menu_from_their_map": "From their map",
   "menu_next_achievement": [
     {
       "declarations": ["input count", "input title", "local countPlural = count: plural"],
@@ -130,6 +154,7 @@
   "passport_visa_undated": "{title} visa: {description}",
   "passport_visa_foil": ". A foil visa",
   "passport_visa_legendary": ". A legendary visa",
+  "passport_visa_held_too": ". You hold it too",
   "passport_visa_locked": [
     {
       "declarations": [
@@ -164,6 +189,30 @@
   "passport_visa_clinched_area": "The last one in {area}",
   "passport_visa_clinched": "The one that earned it",
   "passport_visa_undated_back": "Earned before the passport kept dates",
+  "passport_visa_shared_back": "Shared maps don’t carry dates",
+  "passport_visa_compare_held": "You hold it too",
+  "passport_visa_compare_away": [
+    {
+      "declarations": ["input count", "local countPlural = count: plural"],
+      "selectors": ["countPlural"],
+      "match": {
+        "countPlural=one": "country to go on yours",
+        "countPlural=*": "countries to go on yours"
+      }
+    }
+  ],
+  "passport_visa_compare_countries": "Such as {countries}",
+  "passport_visa_compare_countries_more": [
+    {
+      "declarations": ["input countries", "input count", "local countPlural = count: plural"],
+      "selectors": ["countPlural"],
+      "match": {
+        "countPlural=one": "Such as {countries} and one more",
+        "countPlural=*": "Such as {countries} and {count} more"
+      }
+    }
+  ],
+  "passport_visa_you_too": ", on your map too",
   "achievement_first_title": "First stamp",
   "achievement_first_description": "The first country in the passport",
   "achievement_count_title": [

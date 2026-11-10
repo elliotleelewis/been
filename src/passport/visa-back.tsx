@@ -5,8 +5,8 @@ import type { FC, RefObject } from "react";
 import { m } from "../paraglide/messages.js";
 import type { Visa, VisaBack as VisaBackModel } from "./types.ts";
 import { VisaBackBand } from "./visa-back-band.tsx";
-import { VisaBackClincher } from "./visa-back-clincher.tsx";
 import { VisaBackGroup } from "./visa-back-group.tsx";
+import { VisaBackSide } from "./visa-back-side.tsx";
 
 interface Props {
 	/** Given to the back's root, so the button that turns the visa over can say what it shows. */
@@ -23,12 +23,12 @@ interface Props {
 
 /**
  * The back of a visa, as the entry record a real one carries: on the left, the stamp of the country
- * whose tick earned it, and on the right every country that did, in the order they were ticked,
- * then those that also count. The list scrolls when it is longer than the visa. Sizes are in
+ * whose tick earned it, or on a shared map how the reader's own stands on it, and on the right
+ * every country that did, in the order they were ticked, then those that also count. The list scrolls when it is longer than the visa. Sizes are in
  * fractions of the visa's width, so the back scales with it as the front, an SVG, does.
  */
 export const VisaBack: FC<Props> = memo(({ back, buttonRef, id, onFlipBack, shown, visa }) => {
-	const clincher = back.clincher?.stamp.country.iso3166;
+	const clincher = back.side.kind === "clincher" ? back.side.stamp.country.iso3166 : undefined;
 
 	return (
 		<div
@@ -47,7 +47,7 @@ export const VisaBack: FC<Props> = memo(({ back, buttonRef, id, onFlipBack, show
 				onFlipBack={onFlipBack}
 			/>
 			<div className="grid min-h-0 flex-1 grid-cols-[36%_1fr] gap-[3cqw] p-[3cqw] text-[#3b3a35]">
-				<VisaBackClincher clincher={back.clincher} />
+				<VisaBackSide side={back.side} />
 				<section
 					className="min-h-0 overflow-y-auto overscroll-contain rounded-[1cqw] pb-[6cqw] text-[2.9cqw] [mask-image:linear-gradient(to_bottom,#000_calc(100%-6cqw),transparent)] focus-visible:ring-2 focus-visible:ring-primary/60 focus-visible:outline-none"
 					// A list that scrolls has to take focus, or there is no scrolling it from the keyboard.

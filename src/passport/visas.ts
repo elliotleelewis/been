@@ -1,8 +1,9 @@
 import { atom } from "jotai";
 
 import { earnedOn, isEarned } from "../core/achievements.ts";
+import { comparisonAtom } from "../core/comparison.ts";
 import { achievementsAtom } from "../core/dataset.ts";
-import { shownVisitsAtom } from "../core/selection.ts";
+import { shownVisitsAtom, visitsAtom } from "../core/selection.ts";
 import { passportDateOfAtom } from "./dates.ts";
 import type { Visa } from "./types.ts";
 import { visaDesignOf } from "./visa-design.ts";
@@ -23,4 +24,20 @@ export const visasAtom = atom<readonly Visa[]>((get) => {
 			date: dateOf(at === "" ? undefined : at),
 			design: visaDesignOf(achievement),
 		}));
+});
+
+/**
+ * The achievements the reader's own map has earned, by id, while a shared map is set against it,
+ * so the visas on show that the reader holds too can say so. There are none otherwise.
+ */
+export const heldVisaIdsAtom = atom<ReadonlySet<string>>((get) => {
+	if (get(comparisonAtom) === null) {
+		return new Set();
+	}
+	const mine = get(visitsAtom);
+	return new Set(
+		get(achievementsAtom)
+			.filter((achievement) => isEarned(achievement, mine))
+			.map(({ id }) => id),
+	);
 });

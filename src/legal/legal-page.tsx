@@ -14,13 +14,15 @@ interface Props {
 
 /**
  * A page of the site's small print, with the app's title bar across the top, which leads home, as
- * does the button at its foot. It scrolls itself, as the page under it does not.
+ * does the button at its foot. Both keep the location's hash, so a shared map the reader came from
+ * is still on show when they return. It scrolls itself, as the page under it does not.
  */
 export const LegalPage: FC<Props> = memo(({ children, eyebrow, heading, intro }) => (
 	<div className="size-full overflow-y-auto bg-white text-zinc-900 dark:bg-zinc-900 dark:text-white">
 		<header className="flex h-header items-center justify-center bg-primary text-white dark:bg-zinc-950 dark:text-primary">
 			<Link
 				to="/"
+				hash
 				className="rounded font-bold text-xl tracking-wide focus-visible:ring-2 focus-visible:ring-white focus-visible:outline-none dark:focus-visible:ring-primary"
 			>
 				{"been"}
@@ -34,6 +36,7 @@ export const LegalPage: FC<Props> = memo(({ children, eyebrow, heading, intro })
 			<p className="mt-12">
 				<Link
 					to="/"
+					hash
 					className="inline-block rounded-full bg-primary px-5 py-2.5 font-semibold text-white hover:bg-primary/90 focus-visible:ring-4 focus-visible:ring-primary/50 focus-visible:outline-none dark:text-white"
 				>
 					{m.legal_home()}

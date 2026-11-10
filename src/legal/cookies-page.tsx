@@ -17,7 +17,7 @@ import { BODY_CLASS_NAME, CLOUDFLARE_COOKIES_URL, LINK_CLASS_NAME } from "./type
 export const CookiesPage: FC = memo(() => (
 	<LegalPage eyebrow={m.cookies_eyebrow()} heading={m.cookies_heading()} intro={m.cookies_intro()}>
 		<p className="mt-4">
-			<Link to="/privacy" className={LINK_CLASS_NAME}>
+			<Link to="/privacy" hash className={LINK_CLASS_NAME}>
 				{m.cookies_privacy_link()}
 			</Link>
 		</p>

@@ -1,10 +1,9 @@
 import { createStore } from "jotai";
-import { afterEach, describe, expect, it, vi } from "vitest";
+import { afterEach, describe, expect, it } from "vitest";
 
-import { countryCodesAtom, rawCountriesAtom } from "./dataset.ts";
-import { sharedVisitsAtom } from "./location.ts";
+import { rawCountriesAtom } from "./dataset.ts";
 import { visitsAtom } from "./selection.ts";
-import { encodeShare } from "./share-link.ts";
+import { openSharedMap } from "./test.ts";
 import {
 	announceStampAtom,
 	endStampMomentAtom,
@@ -23,7 +22,6 @@ const createTestStore = (): ReturnType<typeof createStore> => {
 
 describe("stamping", () => {
 	afterEach(() => {
-		globalThis.history.replaceState(null, "", globalThis.location.pathname);
 		globalThis.localStorage.clear();
 	});
 
@@ -51,13 +49,7 @@ describe("stamping", () => {
 		expect.hasAssertions();
 
 		const store = createTestStore();
-		store.sub(sharedVisitsAtom, vi.fn<() => void>());
-		globalThis.history.replaceState(
-			null,
-			"",
-			`#share=${encodeShare({ IT: {} }, store.get(countryCodesAtom))}`,
-		);
-		globalThis.dispatchEvent(new globalThis.HashChangeEvent("hashchange"));
+		openSharedMap(store, { IT: {} });
 		store.set(stampCountryAtom, "FR");
 
 		expect(store.get(stampMomentAtom)).toBeNull();

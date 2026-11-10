@@ -139,13 +139,30 @@ export interface VisaBackGroup {
 	readonly extra: readonly Country[];
 }
 
-/** What the back of a visa says: which countries earned it, and which one clinched it. */
+/**
+ * What the left of a visa's back shows: on the reader's own map, the stamp of the country whose tick
+ * earned it, and a line saying what that tick was, or, where that tick is older than dates being
+ * kept, that there is no telling which it was. A shared map carries no dates, so on one it shows how
+ * the reader's own map stands on the visa instead: held too, on the day it was earned if there is
+ * telling, or so many countries away, and which of the shared map's would do. Without a map of the
+ * reader's own to set against it, it can only say that shared maps carry no dates.
+ */
+export type VisaBackSide =
+	| { readonly kind: "clincher"; readonly stamp: PassportStamp; readonly caption: string }
+	| { readonly kind: "undated" }
+	| { readonly kind: "shared" }
+	| { readonly kind: "held"; readonly date: string | undefined }
+	| {
+			readonly kind: "within";
+			/** How many more countries the reader's own map needs for it. */
+			readonly remaining: number;
+			/** Countries on the shared map that would do, by name, as many as are needed. */
+			readonly countries: readonly Country[];
+	  };
+
+/** What the back of a visa says: which countries earned it, and what its left side shows. */
 export interface VisaBack {
-	/**
-	 * The stamp of the country whose tick earned the visa, and a line saying what that tick was,
-	 * unless that tick is older than dates being kept.
-	 */
-	readonly clincher: { readonly stamp: PassportStamp; readonly caption: string } | undefined;
+	readonly side: VisaBackSide;
 	readonly groups: readonly VisaBackGroup[];
 }
 

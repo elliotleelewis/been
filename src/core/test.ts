@@ -1,8 +1,13 @@
-import type { WritableAtom } from "jotai";
+import type { WritableAtom, createStore } from "jotai";
 import { useHydrateAtoms } from "jotai/utils";
 import type { StyleSpecification } from "maplibre-gl";
 import type { PropsWithChildren, ReactNode } from "react";
 import { vi } from "vitest";
+
+import { countryCodesAtom } from "./dataset.ts";
+import { locationHashAtom } from "./location.ts";
+import { encodeShare, shareHashOf } from "./share-link.ts";
+import type { Visits } from "./types.ts";
 
 // oxlint-disable-next-line no-explicit-any -- Any is required to allow any atom type. Unfortunately cannot be `unknown`.
 type AnyWritableAtom = WritableAtom<unknown, any[], unknown>;
@@ -103,4 +108,14 @@ export const TODAY = "2026-10-13";
 export const freezeToday = (): void => {
 	vi.useFakeTimers({ toFake: ["Date"] });
 	vi.setSystemTime(new Date(`${TODAY}T12:00:00`));
+};
+
+/**
+ * Opens `store` on a share link for `visits`, written against the country list already in it, as
+ * the app shell does when the router arrives at one.
+ */
+// oxlint-disable-next-line no-export -- This is a test utility file.
+export const openSharedMap = (store: ReturnType<typeof createStore>, visits: Visits): void => {
+	const value = encodeShare(visits, store.get(countryCodesAtom));
+	store.set(locationHashAtom, `#${shareHashOf(value)}`);
 };

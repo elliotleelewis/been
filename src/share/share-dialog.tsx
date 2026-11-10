@@ -8,7 +8,8 @@ import type { OverlayTriggerState } from "react-stately";
 import { Modal } from "../core/modal.tsx";
 import { m } from "../paraglide/messages.js";
 import { ShareLink } from "./share-link.tsx";
-import { shareUrlAtom, visitedCountAtom } from "./share.ts";
+import { visitedCountAtom } from "./share.ts";
+import { useShareUrl } from "./use-share-url.ts";
 
 interface Props {
 	/** The props `useOverlayTrigger` hands the dialog, which tie it to the button that opened it. */
@@ -25,7 +26,7 @@ export const ShareDialog: FC<Props> = memo(({ overlayProps, state }) => {
 	const ref = useRef<HTMLDivElement>(null);
 	const { dialogProps, titleProps } = useDialog({}, ref);
 
-	const url = useAtomValue(shareUrlAtom);
+	const url = useShareUrl();
 	const count = useAtomValue(visitedCountAtom);
 	const handleDone = useCallback(() => {
 		state.close();

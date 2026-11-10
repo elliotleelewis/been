@@ -46,7 +46,7 @@ const COUNTRIES: readonly CountryData[] = [
 ];
 
 const recommend = (visits: Visits): ReturnType<typeof recommendationsOf> =>
-	recommendationsOf(COUNTRIES, visits, achievementsOf(COUNTRIES));
+	recommendationsOf({ achievements: achievementsOf(COUNTRIES), countries: COUNTRIES, visits });
 
 describe("recommendations", () => {
 	it("should recommend nothing to a map with no visits yet", () => {
@@ -107,9 +107,11 @@ describe("recommendations", () => {
 			{ area: 811, centre: [173, 1.4], iso3166: "KI", region: "009", subregion: "057" },
 		];
 		const world = [...COUNTRIES, ...oceania];
-		const codes = recommendationsOf(world, { JP: {} }, achievementsOf(world)).map(
-			({ code }) => code,
-		);
+		const codes = recommendationsOf({
+			achievements: achievementsOf(world),
+			countries: world,
+			visits: { JP: {} },
+		}).map(({ code }) => code);
 
 		expect(codes).toContain("AU");
 		expect(codes).not.toContain("KI");
