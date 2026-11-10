@@ -7,8 +7,21 @@ import { createJSONStorage } from "jotai/utils";
 export const STORAGE_KEYS = {
 	countries: "APP_COUNTRIES",
 	expandedRegions: "APP_EXPANDED_REGIONS",
-	menuSize: "APP_MENU_SIZE",
 } as const;
+
+/**
+ * Keys the app once kept things under and no longer does, such as the drawer's size, from before
+ * the drawer opened the same way every time. Nothing reads them, and the cookies page no longer
+ * lists them, so they are cleared rather than left behind.
+ */
+const RETIRED_STORAGE_KEYS: readonly string[] = ["APP_MENU_SIZE"];
+
+/** Clears whatever the app once kept under keys it no longer uses. */
+export const forgetRetiredStorage = (): void => {
+	for (const key of RETIRED_STORAGE_KEYS) {
+		globalThis.localStorage.removeItem(key);
+	}
+};
 
 /** Jotai does not export its storage type, but this overload of `createJSONStorage` returns it. */
 type SyncStorage<Value> = ReturnType<typeof createJSONStorage<Value>>;

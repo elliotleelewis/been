@@ -6,6 +6,11 @@ import { hydrateRoot } from "react-dom/client";
 
 import { mirrorLocation } from "./app/location.ts";
 import type { getRouter } from "./app/router.tsx";
+import { forgetRetiredStorage } from "./core/storage.ts";
+
+// The drawer's size, among others, was once kept in storage. Nothing reads it now, so it is cleared.
+// oxlint-disable-next-line require-hook -- Tidying storage before the app starts is part of starting it, not test setup.
+forgetRetiredStorage();
 
 // The router owns the URL, and atoms read it through a mirror of its location, set before the page
 // comes to life so a share link opens on its map rather than the reader's own.

@@ -357,7 +357,6 @@
   "cookies_storage_body": "Been keeps these in your browser’s local storage, so they’re still there next time. They stay until you clear them, and they’re never sent anywhere. Once you’ve ticked a country, Been also asks your browser to keep them even when it’s short of space, so your map isn’t cleared without you.",
   "cookies_storage_countries": "The countries you’ve ticked, and the day you ticked each: your map",
   "cookies_storage_expanded_regions": "Which continents you’ve opened in the list",
-  "cookies_storage_menu_size": "How big you’ve made the list",
   "cookies_storage_warning": "Clearing it deletes your map for good. To keep a copy, share a link to it first.",
   "cookies_storage_clear": "Clear your map and settings",
   "cookies_storage_confirm": "Tap again to delete your map",

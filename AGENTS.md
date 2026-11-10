@@ -32,7 +32,7 @@ root. TanStack Start builds a static site into `dist/client/`, the only thing de
 (`src/app/shell.tsx`), the small print, and the map's loading screen (`src/app/app-loading.tsx`) are
 rendered at build time, the map itself only in the browser (`ssr: false`), and `src/client.tsx`
 hydrates it. Start's SPA shell becomes `404.html`, which Pages serves for missing paths. An inline
-script (`src/app/before-paint.ts`) sizes the drawer and marks a share link before the first paint;
+script (`src/app/before-paint.ts`) marks a share link before the first paint;
 the globe's opening disc (`src/globe/globe-backdrop.tsx`) stays behind the map.
 
 | Directory       | Role                                                                                           |
@@ -92,7 +92,8 @@ Rules that keep that shape:
   guessed from their time zone (`src/menu/regions.ts`). Search (`src/menu/search.ts`, over pure
   `src/menu/matching.ts`) folds case, accents and punctuation, and goes a tier at a time: code or
   word start, then anywhere, then near misses as suggestions only, which Enter doesn't tick. The
-  drawer's handle is react-aria's `useMove`; `menuSizeAtom` stores a fraction of the viewport per axis.
+  drawer's handle is react-aria's `useMove`; `menuSizeAtom` holds a fraction of the viewport per axis, and isn't stored, so the drawer opens
+  at the size the page is built at.
 - **A share link** carries the map in its hash, which browsers don't send to a server: a format version, a
   fingerprint of the dataset's sorted codes, then one bit per country in that order, as URL-safe
   base64. The order comes from the dataset, and a link from any other list reads as no map. It
