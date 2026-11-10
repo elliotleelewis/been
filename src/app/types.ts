@@ -1,7 +1,8 @@
 /**
  * The page's grid: the title bar, the country drawer and the globe, the drawer a sheet below the
  * globe on narrow screens and a column beside it on wide ones, sized by `--menu-height` and
- * `--menu-width`. The app and its loading screen are laid out by it alike.
+ * `--menu-width`. The app and its loading screen are laid out by it alike, on the page's `main`
+ * element: the map, the list and their title bar are all there is to the page.
  */
 export const APP_GRID_CLASS_NAME =
 	"grid size-full grid-rows-[auto_minmax(0,1fr)_min(var(--menu-height),calc(100%_-_var(--spacing-header)))] md:grid-cols-[var(--menu-width)_minmax(0,1fr)] md:grid-rows-[auto_minmax(0,1fr)] dark:bg-zinc-900 dark:text-white";
