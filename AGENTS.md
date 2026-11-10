@@ -45,7 +45,7 @@ before the first paint; the globe's opening disc (`src/globe/globe-backdrop.tsx`
 | `src/share/`    | The share button and dialog, with the link's QR code.                                          |
 | `src/legal/`    | The privacy and cookies pages, rendered at build time at `/privacy` and `/cookies`.            |
 | `src/data/`     | The country dataset and the world atlas it is drawn from, plus generated output.               |
-| `src/public/`   | Copied into the build as is: the web app manifest and the app's icons.                         |
+| `src/public/`   | Copied as is: the manifest, icons, `robots.txt`, `llms.txt`, and `404.html` (no SPA fallback). |
 | `scripts/`      | Node-only tooling run by hand, not part of the bundle.                                         |
 
 Each folder is flat, and a file's kind is in its name: `*.tsx` is a component, `use-*.ts` a hook
