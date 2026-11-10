@@ -31,8 +31,8 @@ pnpm exec playwright install chromium
 
 ```sh
 pnpm start          # Vite on :5173, hot reload
-pnpm run build      # typecheck, then bundle to dist/
-pnpm run preview    # serves whatever dist/ holds, on :4173
+pnpm run build      # typecheck, then build the site into dist/client/
+pnpm run preview    # serves the last build, on :4173
 ```
 
 One trap worth knowing: `pnpm run e2e` looks for a server on :5173, so leave
@@ -55,8 +55,10 @@ draw fails the run rather than quietly disappearing.
 
 ## Deploying
 
-There is no manual step. Pushing to `main` runs the checks and uploads `dist/`
-to the `been` Cloudflare Pages project. Pull requests deploy too, as Cloudflare
+There is no manual step. Pushing to `main` runs the checks and uploads
+`dist/client/` to the `been` Cloudflare Pages project. It is static files only:
+the build also writes `dist/server/`, which TanStack Start uses to render pages
+ahead of time and `pnpm run preview` serves from, but nothing deploys it. Pull requests deploy too, as Cloudflare
 preview builds, and that job runs whether or not the checks pass — so a green
 preview link is not a green build.
 

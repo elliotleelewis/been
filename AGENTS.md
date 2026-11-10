@@ -28,17 +28,20 @@ fetched from a third party at run time.
 ## Architecture
 
 One package; `pnpm-workspace.yaml` only holds pnpm's settings. `src/` is Vite's
-root: the build reads `src/index.html` and writes `dist/`.
+root. TanStack Start builds a static site into `dist/client/`, the only thing deployed: the document
+(`src/app/shell.tsx`) and the small print are rendered at build time, the map only in the browser
+(`ssr: false`), and `src/client.tsx` hydrates it.
 
 | Directory       | Role                                                                                           |
 | --------------- | ---------------------------------------------------------------------------------------------- |
-| `src/app/`      | The shell: TanStack Router's routes (`router.tsx`), the layout, the header.                    |
+| `src/app/`      | The shell: the document, the router (`router.tsx`), the layout, the header.                    |
+| `src/routes/`   | One file per page, which Start turns into the generated `src/routeTree.gen.ts`.                |
 | `src/core/`     | What every feature reads: the dataset, achievements, the visits, ticking, the share link, M49. |
 | `src/globe/`    | The MapLibre globe: its layers and camera, and ticking by tapping it.                          |
 | `src/menu/`     | The country list: continents, search, progress rings and the drawer's handle.                  |
 | `src/passport/` | The passport: its pages, generated stamps and visas, and their moments.                        |
 | `src/share/`    | The share button and dialog, with the link's QR code.                                          |
-| `src/legal/`    | The privacy and cookies pages, loaded lazily at `/privacy` and `/cookies`.                     |
+| `src/legal/`    | The privacy and cookies pages, rendered at build time at `/privacy` and `/cookies`.            |
 | `src/data/`     | The country dataset and the world atlas it is drawn from, plus generated output.               |
 | `src/public/`   | Copied into the build as is: the web app manifest and the app's icons.                         |
 | `scripts/`      | Node-only tooling run by hand, not part of the bundle.                                         |
@@ -47,7 +50,7 @@ Each folder is flat, and a file's kind is in its name: `*.tsx` is a component, `
 onto something React does not own, `types.ts` the folder's shared types and constants, and every
 other `*.ts` either atoms or pure functions, not both. A feature imports only `core/` and `data/`,
 and `core/` imports no feature; the linter enforces both, so anything two features need moves into
-`core/`. `app/` is the one place that imports features.
+`core/`. `app/` and `routes/` are the only places that import features.
 
 How a selection travels:
 
@@ -125,7 +128,7 @@ fails the build.
   "VISA", stamp captions, visa fields, the machine-readable lines). Countries are named by
   `Intl.DisplayNames`.
 - English is the only language. Adding one is a `messages/{locale}.json` and the locale in
-  `project.inlang/settings.json`. The page's `lang` follows the locale (`src/index.tsx`); its `dir` stays the default until there is a right-to-left one.
+  `project.inlang/settings.json`. The page's `lang` follows the locale (`src/app/shell.tsx`); its `dir` stays the default until there is a right-to-left one.
 
 ## Generated data
 
@@ -135,6 +138,8 @@ fails the build.
   The country list is the script's input as well as its output, so add or drop a country by editing
   it and regenerating. Re-run it after bumping `visionscarto-world-atlas`.
 - `src/public/*.png` come from `src/public/icon.svg`, by `pnpm run generate:icons`.
+- `src/routeTree.gen.ts` comes from `src/routes/`, written by Start's Vite plugin on `start` and `build`.
+  It is committed, as the typecheck runs before the build.
 
 The list is the 193 UN members plus the Holy See and Palestine, as codes: alpha-2, M49 region, and
 the most specific M49 group inside it, which the menu groups by. Names come from `Intl.DisplayNames`
