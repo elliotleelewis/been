@@ -2,7 +2,7 @@
 
 exports[`app > should render 1`] = `
 <DocumentFragment>
-  <div
+  <main
     class="grid size-full grid-rows-[auto_minmax(0,1fr)_min(var(--menu-height),calc(100%_-_var(--spacing-header)))] md:grid-cols-[var(--menu-width)_minmax(0,1fr)] md:grid-rows-[auto_minmax(0,1fr)] dark:bg-zinc-900 dark:text-white"
     style="--menu-height: 40%; --menu-width: 33.33%;"
   >
@@ -171,6 +171,6 @@ exports[`app > should render 1`] = `
         style="position: relative; width: 100%; height: 100%;"
       />
     </div>
-  </div>
+  </main>
 </DocumentFragment>
 `;

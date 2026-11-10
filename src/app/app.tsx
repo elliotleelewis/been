@@ -21,7 +21,7 @@ export const App: FC = memo(() => {
 	const menuId = useId();
 
 	return (
-		<div className={APP_GRID_CLASS_NAME} style={style}>
+		<main className={APP_GRID_CLASS_NAME} style={style}>
 			<Header />
 			<div id={menuId} className={MENU_AREA_CLASS_NAME}>
 				<div className={MENU_CONTENT_CLASS_NAME}>
@@ -34,7 +34,7 @@ export const App: FC = memo(() => {
 				<Globe />
 				<TapToastRegion />
 			</div>
-		</div>
+		</main>
 	);
 });
 App.displayName = "App";

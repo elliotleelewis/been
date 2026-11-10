@@ -31,7 +31,7 @@ const DEFAULT_STYLE = menuStyleOf(MENU_SIZE_DEFAULT);
  * `src/app/before-paint.ts` marks one before the page is painted.
  */
 export const AppLoading: FC = memo(() => (
-	<div className={APP_GRID_CLASS_NAME} style={DEFAULT_STYLE}>
+	<main className={APP_GRID_CLASS_NAME} style={DEFAULT_STYLE}>
 		<HeaderBar>
 			<HeaderPlaceholder />
 		</HeaderBar>
@@ -53,6 +53,6 @@ export const AppLoading: FC = memo(() => (
 		<div className={GLOBE_AREA_CLASS_NAME}>
 			<GlobeBackdrop />
 		</div>
-	</div>
+	</main>
 ));
 AppLoading.displayName = "AppLoading";
