@@ -4,6 +4,7 @@ exports[`app loading > should render the page's frame, with the search box disab
 <DocumentFragment>
   <div
     class="grid size-full grid-rows-[auto_minmax(0,1fr)_min(var(--menu-height),calc(100%_-_var(--spacing-header)))] md:grid-cols-[var(--menu-width)_minmax(0,1fr)] md:grid-rows-[auto_minmax(0,1fr)] dark:bg-zinc-900 dark:text-white"
+    style="--menu-height: 40%; --menu-width: 33.33%;"
   >
     <div
       class="relative flex h-header items-center justify-center bg-primary text-white md:col-start-1 dark:bg-zinc-950 dark:text-primary"

@@ -21,7 +21,6 @@ export interface StoredThing {
 export const STORED_THINGS: readonly StoredThing[] = [
 	{ key: STORAGE_KEYS.countries, what: m.cookies_storage_countries },
 	{ key: STORAGE_KEYS.expandedRegions, what: m.cookies_storage_expanded_regions },
-	{ key: STORAGE_KEYS.menuSize, what: m.cookies_storage_menu_size },
 ];
 
 /** A link in the legal pages' running text. */

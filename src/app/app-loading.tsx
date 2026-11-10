@@ -3,7 +3,13 @@ import type { FC } from "react";
 
 import { GlobeBackdrop } from "../globe/globe-backdrop.tsx";
 import { MenuLoading } from "../menu/menu-loading.tsx";
-import { GRIP_CLASS_NAME, RESIZER_CLASS_NAME, SEARCH_INPUT_CLASS_NAME } from "../menu/types.ts";
+import { menuStyleOf } from "../menu/menu-style.ts";
+import {
+	GRIP_CLASS_NAME,
+	MENU_SIZE_DEFAULT,
+	RESIZER_CLASS_NAME,
+	SEARCH_INPUT_CLASS_NAME,
+} from "../menu/types.ts";
 import { m } from "../paraglide/messages.js";
 import { HeaderBar } from "./header-bar.tsx";
 import { HeaderPlaceholder } from "./header-placeholder.tsx";
@@ -14,15 +20,18 @@ import {
 	MENU_CONTENT_CLASS_NAME,
 } from "./types.ts";
 
+/** The drawer at the size it always opens at, as the app sizes it too. */
+const DEFAULT_STYLE = menuStyleOf(MENU_SIZE_DEFAULT);
+
 /**
  * The map's page before it has loaded, which the build renders into its HTML: the title bar and its
  * icons, the drawer with its search box, a spinner and its handle, and the globe as it opens, laid
- * out as the app is. Nothing in it is the reader's, so it is the same for everyone. The script
- * `src/app/before-paint.ts` runs before it is painted, sizing the drawer as the reader left it and
- * marking a share link, which has no sharing icon.
+ * out as the app is, the drawer at the size it always opens at. Nothing in it is the reader's, so
+ * it is the same for everyone, but for a share link, which has no sharing icon: the script
+ * `src/app/before-paint.ts` marks one before the page is painted.
  */
 export const AppLoading: FC = memo(() => (
-	<div className={APP_GRID_CLASS_NAME}>
+	<div className={APP_GRID_CLASS_NAME} style={DEFAULT_STYLE}>
 		<HeaderBar>
 			<HeaderPlaceholder />
 		</HeaderBar>
