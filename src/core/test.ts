@@ -1,8 +1,13 @@
-import type { WritableAtom } from "jotai";
+import type { WritableAtom, createStore } from "jotai";
 import { useHydrateAtoms } from "jotai/utils";
 import type { StyleSpecification } from "maplibre-gl";
 import type { PropsWithChildren, ReactNode } from "react";
 import { vi } from "vitest";
+
+import { countryCodesAtom } from "./dataset.ts";
+import { sharedVisitsAtom } from "./location.ts";
+import { encodeShare } from "./share-link.ts";
+import type { Visits } from "./types.ts";
 
 // oxlint-disable-next-line no-explicit-any -- Any is required to allow any atom type. Unfortunately cannot be `unknown`.
 type AnyWritableAtom = WritableAtom<unknown, any[], unknown>;
@@ -103,4 +108,27 @@ export const TODAY = "2026-10-13";
 export const freezeToday = (): void => {
 	vi.useFakeTimers({ toFake: ["Date"] });
 	vi.setSystemTime(new Date(`${TODAY}T12:00:00`));
+};
+
+/**
+ * Opens `store` on a share link for `visits`, written against the country list already in it, the
+ * way following one would. `closeSharedMap` takes the link off the address again.
+ */
+// oxlint-disable-next-line no-export -- This is a test utility file.
+export const openSharedMap = (store: ReturnType<typeof createStore>, visits: Visits): void => {
+	// The hash is only read again once something is watching it, as a component would be.
+	store.sub(sharedVisitsAtom, vi.fn<() => void>());
+	globalThis.history.replaceState(
+		null,
+		"",
+		`#share=${encodeShare(visits, store.get(countryCodesAtom))}`,
+	);
+	globalThis.dispatchEvent(new globalThis.HashChangeEvent("hashchange"));
+};
+
+/** Takes a share link `openSharedMap` opened off the address. */
+// oxlint-disable-next-line no-export -- This is a test utility file.
+export const closeSharedMap = (): void => {
+	globalThis.history.replaceState(null, "", globalThis.location.pathname);
+	globalThis.dispatchEvent(new globalThis.HashChangeEvent("hashchange"));
 };

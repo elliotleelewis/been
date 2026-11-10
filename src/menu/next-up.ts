@@ -9,10 +9,10 @@ import { m } from "../paraglide/messages.js";
 /** How many of a recommendation's reasons are given beneath it, the strongest first. */
 const REASONS_SHOWN = 2;
 
-/** A country recommended in the menu, and why, in a few words. */
+/** A country recommended in the menu, and why, in a few words, if there is any reason to give. */
 export interface NextUp {
 	readonly country: Country;
-	readonly why: string;
+	readonly why: string | undefined;
 }
 
 /** A reason to visit a country, as the menu says it, naming countries as `nameOf` does. */
@@ -36,10 +36,13 @@ export const nextUpAtom = atom<readonly NextUp[]>((get) => {
 			: [
 					{
 						country,
-						why: reasons
-							.slice(0, REASONS_SHOWN)
-							.map((reason) => sayReason(reason, nameOf))
-							.join(" · "),
+						why:
+							reasons.length === 0
+								? undefined
+								: reasons
+										.slice(0, REASONS_SHOWN)
+										.map((reason) => sayReason(reason, nameOf))
+										.join(" · "),
 					},
 				];
 	});

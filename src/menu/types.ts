@@ -1,11 +1,13 @@
 import type { M49Region } from "../core/m49.ts";
-import type { Country } from "../core/types.ts";
+import type { Country, Standing } from "../core/types.ts";
 
 /** An M49 sub-region and the countries in it. */
 export interface Region {
 	readonly name: string;
 	readonly values: readonly Country[];
 	readonly complete?: number;
+	/** How much of it the reader's own map has, while a shared map is set against it. */
+	readonly mine?: number | undefined;
 }
 
 /** An M49 region, the continent-sized grouping the menu folds away, and the sub-regions in it. */
@@ -15,6 +17,8 @@ export interface Continent {
 	readonly values: readonly Region[];
 	readonly visited: number;
 	readonly total: number;
+	/** How many of its countries the reader's own map has, while a shared map is set against it. */
+	readonly mine?: number | undefined;
 }
 
 /** What a search of the country list found. */
@@ -27,6 +31,8 @@ export interface SearchResults {
 	readonly matches: readonly Country[];
 	/** Near misses to offer when nothing matches, nearest first. */
 	readonly suggestions: readonly Country[];
+	/** The standing the list is narrowed to, while a shared map is set against the reader's own. */
+	readonly standing: Standing | null;
 }
 
 /**

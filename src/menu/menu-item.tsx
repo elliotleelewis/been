@@ -6,6 +6,7 @@ import { viewingSharedMapAtom } from "../core/location.ts";
 import { pointedCountryAtom, unpointCountryAtom } from "../core/selection.ts";
 import { removeCountryAtom, stampCountryAtom } from "../core/ticking.ts";
 import type { Country } from "../core/types.ts";
+import { StandingBadge } from "./standing-badge.tsx";
 
 interface Props {
 	readonly country: Country;
@@ -62,6 +63,7 @@ export const MenuItem: FC<Props> = memo(({ country, detail }) => {
 						<span className="text-xs text-zinc-500 dark:text-zinc-400">{detail}</span>
 					</span>
 				)}
+				{country.standing === undefined ? null : <StandingBadge standing={country.standing} />}
 			</label>
 		</li>
 	);

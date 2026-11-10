@@ -24,6 +24,17 @@ const selectedIn = (countries: readonly Country[]): number =>
 	countries.filter((country) => country.selected === true).length;
 
 /**
+ * How many of `countries` are on the reader's own map, while a shared map is set against it, which
+ * is while any country has a standing.
+ */
+const mineIn = (countries: readonly Country[]): number =>
+	countries.filter(({ standing }) => standing === "both" || standing === "mine").length;
+
+/** Whether a shared map is being set against the reader's own, as it is once any country has a standing. */
+const comparing = (countries: readonly Country[]): boolean =>
+	countries.some(({ standing }) => standing !== undefined);
+
+/**
  * Groups countries into their M49 regions and, inside those, their sub-regions, ordered as the
  * reader's language would. The reader's home region, when there is a guess at it, comes first.
  */
@@ -32,22 +43,27 @@ export const regionalizer = (
 	collator: Intl.Collator,
 	homeRegion?: M49Region,
 ): readonly Continent[] => {
+	const compared = comparing(countries);
 	const toRegion = (subregion: M49Subregion, values: readonly Country[]): Region => ({
 		complete: selectedIn(values) / values.length,
+		...(compared ? { mine: mineIn(values) / values.length } : {}),
 		name: M49_SUBREGIONS[subregion](),
 		values: values.toSorted((left, right) => collator.compare(left.name, right.name)),
 	});
 
-	const continents = [...groupBy(countries, ({ region }) => region)].map(
-		([code, values]): Continent => ({
-			code,
-			name: M49_REGIONS[code](),
-			total: values.length,
-			values: [...groupBy(values, ({ subregion }) => subregion)]
-				.map(([subregion, members]) => toRegion(subregion, members))
-				.toSorted((left, right) => collator.compare(left.name, right.name)),
-			visited: selectedIn(values),
-		}),
+	const toContinent = (code: M49Region, values: readonly Country[]): Continent => ({
+		code,
+		...(compared ? { mine: mineIn(values) } : {}),
+		name: M49_REGIONS[code](),
+		total: values.length,
+		values: [...groupBy(values, ({ subregion }) => subregion)]
+			.map(([subregion, members]) => toRegion(subregion, members))
+			.toSorted((left, right) => collator.compare(left.name, right.name)),
+		visited: selectedIn(values),
+	});
+
+	const continents = [...groupBy(countries, ({ region }) => region)].map(([code, values]) =>
+		toContinent(code, values),
 	);
 
 	return continents.toSorted(

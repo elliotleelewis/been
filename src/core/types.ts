@@ -18,7 +18,21 @@ export interface CountryData {
 export interface Country extends CountryData {
 	readonly name: string;
 	readonly selected?: boolean;
+	/**
+	 * Where it stands between a shared map and the reader's own, while the two are being compared,
+	 * or nothing when they are not, or neither map has it.
+	 */
+	readonly standing?: Standing;
 }
+
+/**
+ * Where a country stands between a shared map and the reader's own: on both, on the shared one
+ * only, so new to the reader, or on the reader's only.
+ */
+export type Standing = "both" | "mine" | "theirs";
+
+/** A shared map set against the reader's own: the codes of the countries in each standing. */
+export type Comparison = Readonly<Record<Standing, readonly string[]>>;
 
 /**
  * What is kept about a country the reader has been to, keyed by its ISO 3166-1 alpha-2 code. It is

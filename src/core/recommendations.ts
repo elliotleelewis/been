@@ -40,6 +40,15 @@ const FARTHEST_SHARE = 0.5;
 const REPEAT_SHARE = 0.5;
 const RADIANS = Math.PI / 180;
 
+/** What recommendations are made from. */
+export interface RecommendationInputs {
+	readonly countries: readonly CountryData[];
+	readonly visits: Visits;
+	readonly achievements: readonly Achievement[];
+	/** The only countries to recommend, if not any at all. */
+	readonly among?: ReadonlySet<string> | undefined;
+}
+
 /** A reason, and how much it counts towards recommending its country. */
 interface Weighed {
 	readonly code: string;
@@ -177,19 +186,25 @@ const nearnessOf = (
 	);
 };
 
-/** Every reason to visit each country not yet visited, by its code. */
-const reasonsByCode = (
-	countries: readonly CountryData[],
-	visits: Visits,
-	achievements: readonly Achievement[],
-): ReadonlyMap<string, readonly Weighed[]> => {
-	const byCode = new Map<string, Weighed[]>();
+/**
+ * Every reason to visit each country not yet visited, by its code: of those in `among`, where it is
+ * given, each of which is a candidate even with no reason to go.
+ */
+const reasonsByCode = ({
+	achievements,
+	among,
+	countries,
+	visits,
+}: RecommendationInputs): ReadonlyMap<string, readonly Weighed[]> => {
+	const byCode = new Map<string, Weighed[]>(
+		[...(among ?? [])].filter((code) => !isVisited(visits, code)).map((code) => [code, []]),
+	);
 	for (const weighed of [
 		...achievementReasonsOf(achievements, visits),
 		...neighbourReasonsOf(countries, visits),
 		...regionReasonsOf(countries, visits),
 	]) {
-		if (!isVisited(visits, weighed.code)) {
+		if (!isVisited(visits, weighed.code) && (among === undefined || among.has(weighed.code))) {
 			byCode.set(weighed.code, [...(byCode.get(weighed.code) ?? []), weighed]);
 		}
 	}
@@ -220,7 +235,12 @@ const bestOf = (
 			reasons,
 			score: scoreOf(reasons, used, nearness.get(code) ?? 0),
 		}))
-		.toSorted((one, other) => other.score - one.score || one.code.localeCompare(other.code))
+		.toSorted(
+			(one, other) =>
+				other.score - one.score ||
+				(nearness.get(other.code) ?? 0) - (nearness.get(one.code) ?? 0) ||
+				one.code.localeCompare(other.code),
+		)
 		.at(0);
 
 /** A country recommended, its strongest reason first. */
@@ -260,19 +280,13 @@ const picked = (
  * bordering somewhere already visited, and being a continent's first; and all of it counts for more
  * the nearer the country is to somewhere already visited. They are picked one at a time, and a
  * reason counts for less each time one already picked was for it, so they are for different
- * things. Nothing is recommended to a map with no visits yet, as there is nothing yet to say what
- * its reader is after.
+ * things, and of those with as much reason, the nearest first. Given `among`, only those are
+ * recommended, every one of them a candidate, with reason to go or not. Nothing is recommended to a
+ * map with no visits yet, as there is nothing yet to say what its reader is after.
  */
-export const recommendationsOf = (
-	countries: readonly CountryData[],
-	visits: Visits,
-	achievements: readonly Achievement[],
-): readonly Recommendation[] => {
-	if (Object.keys(visits).length === 0) {
+export const recommendationsOf = (inputs: RecommendationInputs): readonly Recommendation[] => {
+	if (Object.keys(inputs.visits).length === 0) {
 		return [];
 	}
-	return picked(
-		new Map(reasonsByCode(countries, visits, achievements)),
-		nearnessOf(countries, visits),
-	);
+	return picked(new Map(reasonsByCode(inputs)), nearnessOf(inputs.countries, inputs.visits));
 };

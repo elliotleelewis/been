@@ -3,12 +3,17 @@ import { atom } from "jotai";
 import { countriesAtom } from "../core/countries.ts";
 import { earnersOf } from "../core/earners.ts";
 import { shownVisitsAtom } from "../core/selection.ts";
-import type { Achievement, Country } from "../core/types.ts";
 import { m } from "../paraglide/messages.js";
 import { passportDateOfAtom } from "./dates.ts";
+import { sharedSidesAtom } from "./shared-sides.ts";
 import { passportStampsAtom } from "./stamps.ts";
-import type { VisaBack } from "./types.ts";
+import type { Visa, VisaBack, VisaBackSide, VisaEntry } from "./types.ts";
 import { visasAtom } from "./visas.ts";
+
+// The achievement and country types are reached through the passport's own, to keep this file's
+// imports few.
+type Achievement = Visa["achievement"];
+type Country = VisaEntry["country"];
 
 /** The visa turned over to show its back, by its achievement's id, if one is. */
 export const flippedVisaAtom = atom<string | null>(null);
@@ -30,20 +35,24 @@ const clinchedCaptionOf = ({ kind, requirements, title }: Achievement): string =
 export const visaBacksAtom = atom<ReadonlyMap<string, VisaBack>>((get) => {
 	const visits = get(shownVisitsAtom);
 	const dateOf = get(passportDateOfAtom);
+	const sharedSides = get(sharedSidesAtom);
 	const countries = new Map(get(countriesAtom).map((country) => [country.iso3166, country]));
 	const stamps = new Map(get(passportStampsAtom).map((stamp) => [stamp.country.iso3166, stamp]));
 	const countriesOf = (codes: readonly string[]): readonly Country[] =>
 		codes.flatMap((code) => countries.get(code) ?? []);
+	const ownSideOf = (achievement: Achievement, clincher: string | undefined): VisaBackSide => {
+		const stamp = clincher === undefined ? undefined : stamps.get(clincher);
+		return stamp === undefined
+			? { kind: "undated" }
+			: { caption: clinchedCaptionOf(achievement), kind: "clincher", stamp };
+	};
 	return new Map(
 		get(visasAtom).map(({ achievement }): [string, VisaBack] => {
 			const { clincher, requirements } = earnersOf(achievement, visits);
-			const stamp = clincher === undefined ? undefined : stamps.get(clincher);
 			const labelled = requirements.length > 1;
 			return [
 				achievement.id,
 				{
-					clincher:
-						stamp === undefined ? undefined : { caption: clinchedCaptionOf(achievement), stamp },
 					groups: requirements.map(({ earned, extra }, index) => ({
 						earned: countriesOf(earned).map((country) => ({
 							country,
@@ -52,6 +61,7 @@ export const visaBacksAtom = atom<ReadonlyMap<string, VisaBack>>((get) => {
 						extra: achievement.kind === "milestone" ? [] : countriesOf(extra),
 						label: labelled ? achievement.requirements[index]?.label : undefined,
 					})),
+					side: sharedSides?.get(achievement.id) ?? ownSideOf(achievement, clincher),
 				},
 			];
 		}),
