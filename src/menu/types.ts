@@ -2,11 +2,11 @@ import type { M49Region } from "../core/m49.ts";
 import type { Country, Standing } from "../core/types.ts";
 
 /**
- * What holds the search box: a pixel of its colour above it, which the list tucks out of sight
+ * What holds the search box: a strip of its colour above it, which the list tucks out of sight
  * behind its own top edge once it scrolls (see `src/menu/menu.tsx`). The page's loading screen
  * draws it too, so the box doesn't move when the list loads.
  */
-export const SEARCH_BOX_CLASS_NAME = "shrink-0 bg-white pt-px dark:bg-zinc-900";
+export const SEARCH_BOX_CLASS_NAME = "shrink-0 bg-white pt-1 dark:bg-zinc-900";
 
 /** The search box at the top of the list, which the page's loading screen shows disabled. */
 export const SEARCH_INPUT_CLASS_NAME =

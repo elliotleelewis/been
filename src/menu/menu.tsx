@@ -38,11 +38,11 @@ export const Menu: FC<Props> = memo(({ loading = false }) => {
 		<>
 			<SharedMapBanner />
 			{/* The search box scrolls with the list, stuck at its top, so the headings stuck under it
-			move with it. It sticks a pixel above the top, into its own pixel of padding: iOS Safari
-			rounds the list's top edge and what is stuck to it to the screen's pixels apart, which
-			would otherwise leave a sliver of the list showing above the box. */}
+			move with it. It sticks its own strip of padding's height above the top: iOS Safari draws
+			what is stuck a pixel or two below the top of the box that scrolls it, which would
+			otherwise leave a sliver of the list showing above the box. */}
 			<div className="flex min-h-0 flex-1 flex-col overflow-y-auto overscroll-contain">
-				<search className={classNames("sticky -top-px z-20", SEARCH_BOX_CLASS_NAME)}>
+				<search className={classNames("sticky -top-1 z-20", SEARCH_BOX_CLASS_NAME)}>
 					<form onSubmit={handleSubmit}>
 						<label id={searchLabelId} htmlFor={searchId} className="sr-only">
 							{m.menu_search_label()}

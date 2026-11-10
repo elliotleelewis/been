@@ -76,7 +76,7 @@ exports[`app loading > should render the page's frame, with the search box disab
         class="flex min-h-0 min-w-0 flex-1 flex-col"
       >
         <div
-          class="shrink-0 bg-white pt-px dark:bg-zinc-900"
+          class="shrink-0 bg-white pt-1 dark:bg-zinc-900"
         >
           <input
             aria-label="Search"

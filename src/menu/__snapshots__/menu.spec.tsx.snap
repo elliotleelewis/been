@@ -6,7 +6,7 @@ exports[`menu > should render 1`] = `
     class="flex min-h-0 flex-1 flex-col overflow-y-auto overscroll-contain"
   >
     <search
-      class="sticky -top-px z-20 shrink-0 bg-white pt-px dark:bg-zinc-900"
+      class="sticky -top-1 z-20 shrink-0 bg-white pt-1 dark:bg-zinc-900"
     >
       <form>
         <label
