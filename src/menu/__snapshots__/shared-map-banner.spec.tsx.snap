@@ -68,289 +68,124 @@ exports[`shared map banner > should say how a shared map compares with the reade
       </button>
     </fieldset>
   </div>
-  <search
-    class="shrink-0"
+  <div
+    class="flex min-h-0 flex-1 flex-col overflow-y-auto overscroll-contain"
   >
-    <form>
-      <label
-        class="sr-only"
-        for="_r_0_"
-        id="_r_1_"
-      >
-        Search
-      </label>
-      <input
-        aria-labelledby="_r_1_"
-        class="w-full border-none bg-white px-4 py-2 text-zinc-900 focus:ring-2 focus:ring-primary/50 focus:ring-inset disabled:hover:cursor-not-allowed dark:bg-zinc-900 dark:text-white"
-        enterkeyhint="done"
-        id="_r_0_"
-        placeholder="Search by name or code..."
-        type="search"
-        value=""
-      />
-    </form>
-  </search>
-  <ul
-    class="min-h-0 flex-1 overscroll-contain overflow-y-auto"
-  >
-    <li>
-      <h2
-        class="sticky top-0 z-10 flex h-14 items-center gap-3 bg-[color-mix(in_oklab,var(--color-primary)_10%,var(--color-white))] px-4 font-medium text-zinc-900 dark:bg-[color-mix(in_oklab,var(--color-primary)_15%,var(--color-zinc-900))] dark:text-white"
-      >
-        <svg
-          aria-hidden="true"
-          class="size-4 shrink-0 text-primary"
-          fill="currentColor"
-          viewBox="0 0 24 24"
+    <search
+      class="sticky top-0 z-20 shrink-0 before:absolute before:inset-x-0 before:bottom-full before:h-2 before:bg-white dark:before:bg-zinc-900"
+    >
+      <form>
+        <label
+          class="sr-only"
+          for="_r_0_"
+          id="_r_1_"
         >
-          <path
-            d="M12 2l2.4 7.2H22l-6 4.6 2.3 7.2-6.3-4.5-6.3 4.5L8 13.8 2 9.2h7.6z"
-          />
-        </svg>
-        From their map
-      </h2>
-      <ul
-        class="divide-y divide-zinc-100 dark:divide-zinc-800"
-      >
-        <li
-          class="hover:bg-zinc-50 dark:hover:bg-zinc-800"
-        >
-          <label
-            class="flex items-center px-4 py-1"
-          >
-            <input
-              checked=""
-              class="my-0 me-2 size-4 rounded border-zinc-400 checked:bg-primary focus:ring-2 focus:ring-primary/50 active:ring-primary dark:border-zinc-600 dark:bg-zinc-900"
-              disabled=""
-              id="IT"
-              type="checkbox"
-            />
-            <span
-              class="flex flex-col py-0.5"
-            >
-              <span>
-                Italy
-              </span>
-              <span
-                class="text-xs text-zinc-500 dark:text-zinc-400"
-              >
-                Completes Europe · Completes Southern Europe
-              </span>
-            </span>
-            <span
-              class="ms-auto shrink-0 ps-2"
-            >
-              <span
-                class="rounded-full px-2 py-0.5 text-xs font-medium whitespace-nowrap bg-theirs/15 text-sky-700 dark:bg-theirs/25 dark:text-sky-300"
-              >
-                New to you
-              </span>
-            </span>
-          </label>
-        </li>
-      </ul>
-    </li>
-    <li>
-      <h2
-        class="sticky top-0 z-10"
-      >
-        <button
-          aria-controls="_r_2_"
-          aria-expanded="true"
-          class="flex h-14 w-full items-center gap-3 bg-zinc-200 px-4 text-start font-medium hover:bg-zinc-300 focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:outline-none focus-visible:ring-inset dark:bg-zinc-800 dark:hover:bg-zinc-700"
-          type="button"
+          Search
+        </label>
+        <input
+          aria-labelledby="_r_1_"
+          class="w-full border-none bg-white px-4 py-2 text-zinc-900 focus:ring-2 focus:ring-primary/50 focus:ring-inset disabled:hover:cursor-not-allowed dark:bg-zinc-900 dark:text-white"
+          enterkeyhint="done"
+          id="_r_0_"
+          placeholder="Search by name or code..."
+          type="search"
+          value=""
+        />
+      </form>
+    </search>
+    <ul>
+      <li>
+        <h2
+          class="sticky top-10 z-10 flex h-14 items-center gap-3 bg-[color-mix(in_oklab,var(--color-primary)_10%,var(--color-white))] px-4 font-medium text-zinc-900 dark:bg-[color-mix(in_oklab,var(--color-primary)_15%,var(--color-zinc-900))] dark:text-white"
         >
           <svg
             aria-hidden="true"
-            class="size-4 shrink-0 motion-safe:transition-transform rotate-90"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
+            class="size-4 shrink-0 text-primary"
+            fill="currentColor"
             viewBox="0 0 24 24"
-            xmlns="http://www.w3.org/2000/svg"
           >
             <path
-              d="m9 5 7 7-7 7"
-              stroke-linecap="round"
-              stroke-linejoin="round"
+              d="M12 2l2.4 7.2H22l-6 4.6 2.3 7.2-6.3-4.5-6.3 4.5L8 13.8 2 9.2h7.6z"
             />
           </svg>
-          <span
-            class="flex-1"
+          From their map
+        </h2>
+        <ul
+          class="divide-y divide-zinc-100 dark:divide-zinc-800"
+        >
+          <li
+            class="hover:bg-zinc-50 dark:hover:bg-zinc-800"
           >
-            Europe
-          </span>
-          <span
-            class="text-sm text-zinc-600 tabular-nums dark:text-zinc-400"
-          >
-            2/3
-          </span>
-          <div
-            class="relative size-5"
-          >
-            <svg
-              class="-rotate-90 size-full"
-              viewBox="0 0 36 36"
-              xmlns="http://www.w3.org/2000/svg"
+            <label
+              class="flex items-center px-4 py-1"
             >
-              <title>
-                66.7% on this map, 66.7% on yours.
-              </title>
-              <circle
-                class="stroke-current text-gray-500 dark:text-neutral-500"
-                cx="18"
-                cy="18"
-                fill="none"
-                r="16"
-                stroke-width="4"
+              <input
+                checked=""
+                class="my-0 me-2 size-4 rounded border-zinc-400 checked:bg-primary focus:ring-2 focus:ring-primary/50 active:ring-primary dark:border-zinc-600 dark:bg-zinc-900"
+                disabled=""
+                id="IT"
+                type="checkbox"
               />
-              <circle
-                class="stroke-current text-primary dark:text-primary"
-                cx="18"
-                cy="18"
-                fill="none"
-                r="16"
-                stroke-dasharray="100"
-                stroke-dashoffset="33.333333333333336"
-                stroke-linecap="round"
-                stroke-width="4"
-              />
-              <circle
-                class="stroke-current text-zinc-700 dark:text-zinc-200"
-                cx="18"
-                cy="18"
-                fill="none"
-                pathLength="100"
-                r="9"
-                stroke-dasharray="100"
-                stroke-dashoffset="33.333333333333336"
-                stroke-linecap="round"
-                stroke-width="3"
-              />
-            </svg>
-          </div>
-        </button>
-      </h2>
-      <ul
-        id="_r_2_"
-      >
-        <li>
-          <div
-            class="sticky top-14 flex items-center justify-between bg-zinc-100 px-4 py-2 text-xs font-medium text-zinc-600 uppercase tracking-wide dark:bg-zinc-900 dark:text-zinc-400"
-          >
-            <h3>
-              Southern Europe
-            </h3>
-            <div
-              class="relative size-5"
-            >
-              <svg
-                class="-rotate-90 size-full"
-                viewBox="0 0 36 36"
-                xmlns="http://www.w3.org/2000/svg"
+              <span
+                class="flex flex-col py-0.5"
               >
-                <title>
-                  50% on this map, 50% on yours.
-                </title>
-                <circle
-                  class="stroke-current text-gray-500 dark:text-neutral-500"
-                  cx="18"
-                  cy="18"
-                  fill="none"
-                  r="16"
-                  stroke-width="4"
-                />
-                <circle
-                  class="stroke-current text-primary dark:text-primary"
-                  cx="18"
-                  cy="18"
-                  fill="none"
-                  r="16"
-                  stroke-dasharray="100"
-                  stroke-dashoffset="50"
-                  stroke-linecap="round"
-                  stroke-width="4"
-                />
-                <circle
-                  class="stroke-current text-zinc-700 dark:text-zinc-200"
-                  cx="18"
-                  cy="18"
-                  fill="none"
-                  pathLength="100"
-                  r="9"
-                  stroke-dasharray="100"
-                  stroke-dashoffset="50"
-                  stroke-linecap="round"
-                  stroke-width="3"
-                />
-              </svg>
-            </div>
-          </div>
-          <ul
-            class="divide-y divide-zinc-100 dark:divide-zinc-800"
-          >
-            <li
-              class="hover:bg-zinc-50 dark:hover:bg-zinc-800"
-            >
-              <label
-                class="flex items-center px-4 py-1"
-              >
-                <input
-                  checked=""
-                  class="my-0 me-2 size-4 rounded border-zinc-400 checked:bg-primary focus:ring-2 focus:ring-primary/50 active:ring-primary dark:border-zinc-600 dark:bg-zinc-900"
-                  disabled=""
-                  id="IT"
-                  type="checkbox"
-                />
                 <span>
                   Italy
                 </span>
                 <span
-                  class="ms-auto shrink-0 ps-2"
+                  class="text-xs text-zinc-500 dark:text-zinc-400"
                 >
-                  <span
-                    class="rounded-full px-2 py-0.5 text-xs font-medium whitespace-nowrap bg-theirs/15 text-sky-700 dark:bg-theirs/25 dark:text-sky-300"
-                  >
-                    New to you
-                  </span>
+                  Completes Europe · Completes Southern Europe
                 </span>
-              </label>
-            </li>
-            <li
-              class="hover:bg-zinc-50 dark:hover:bg-zinc-800"
-            >
-              <label
-                class="flex items-center px-4 py-1"
+              </span>
+              <span
+                class="ms-auto shrink-0 ps-2"
               >
-                <input
-                  class="my-0 me-2 size-4 rounded border-zinc-400 checked:bg-primary focus:ring-2 focus:ring-primary/50 active:ring-primary dark:border-zinc-600 dark:bg-zinc-900"
-                  disabled=""
-                  id="ES"
-                  type="checkbox"
-                />
-                <span>
-                  Spain
-                </span>
                 <span
-                  class="ms-auto shrink-0 ps-2"
+                  class="rounded-full px-2 py-0.5 text-xs font-medium whitespace-nowrap bg-theirs/15 text-sky-700 dark:bg-theirs/25 dark:text-sky-300"
                 >
-                  <span
-                    class="rounded-full px-2 py-0.5 text-xs font-medium whitespace-nowrap text-primary ring-1 ring-primary ring-inset dark:text-primary dark:ring-primary"
-                  >
-                    Only you
-                  </span>
+                  New to you
                 </span>
-              </label>
-            </li>
-          </ul>
-        </li>
-        <li>
-          <div
-            class="sticky top-14 flex items-center justify-between bg-zinc-100 px-4 py-2 text-xs font-medium text-zinc-600 uppercase tracking-wide dark:bg-zinc-900 dark:text-zinc-400"
+              </span>
+            </label>
+          </li>
+        </ul>
+      </li>
+      <li>
+        <h2
+          class="sticky top-10 z-10"
+        >
+          <button
+            aria-controls="_r_2_"
+            aria-expanded="true"
+            class="flex h-14 w-full items-center gap-3 bg-zinc-200 px-4 text-start font-medium hover:bg-zinc-300 focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:outline-none focus-visible:ring-inset dark:bg-zinc-800 dark:hover:bg-zinc-700"
+            type="button"
           >
-            <h3>
-              Western Europe
-            </h3>
+            <svg
+              aria-hidden="true"
+              class="size-4 shrink-0 motion-safe:transition-transform rotate-90"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="m9 5 7 7-7 7"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+            <span
+              class="flex-1"
+            >
+              Europe
+            </span>
+            <span
+              class="text-sm text-zinc-600 tabular-nums dark:text-zinc-400"
+            >
+              2/3
+            </span>
             <div
               class="relative size-5"
             >
@@ -360,7 +195,7 @@ exports[`shared map banner > should say how a shared map compares with the reade
                 xmlns="http://www.w3.org/2000/svg"
               >
                 <title>
-                  100% on this map, 100% on yours.
+                  66.7% on this map, 66.7% on yours.
                 </title>
                 <circle
                   class="stroke-current text-gray-500 dark:text-neutral-500"
@@ -377,7 +212,7 @@ exports[`shared map banner > should say how a shared map compares with the reade
                   fill="none"
                   r="16"
                   stroke-dasharray="100"
-                  stroke-dashoffset="0"
+                  stroke-dashoffset="33.333333333333336"
                   stroke-linecap="round"
                   stroke-width="4"
                 />
@@ -389,139 +224,248 @@ exports[`shared map banner > should say how a shared map compares with the reade
                   pathLength="100"
                   r="9"
                   stroke-dasharray="100"
-                  stroke-dashoffset="0"
+                  stroke-dashoffset="33.333333333333336"
                   stroke-linecap="round"
                   stroke-width="3"
                 />
               </svg>
             </div>
-          </div>
-          <ul
-            class="divide-y divide-zinc-100 dark:divide-zinc-800"
-          >
-            <li
-              class="hover:bg-zinc-50 dark:hover:bg-zinc-800"
-            >
-              <label
-                class="flex items-center px-4 py-1"
-              >
-                <input
-                  checked=""
-                  class="my-0 me-2 size-4 rounded border-zinc-400 checked:bg-primary focus:ring-2 focus:ring-primary/50 active:ring-primary dark:border-zinc-600 dark:bg-zinc-900"
-                  disabled=""
-                  id="FR"
-                  type="checkbox"
-                />
-                <span>
-                  France
-                </span>
-                <span
-                  class="ms-auto shrink-0 ps-2"
-                >
-                  <span
-                    class="rounded-full px-2 py-0.5 text-xs font-medium whitespace-nowrap bg-primary/15 text-primary dark:bg-primary/25 dark:text-primary"
-                  >
-                    You too
-                  </span>
-                </span>
-              </label>
-            </li>
-          </ul>
-        </li>
-      </ul>
-    </li>
-    <li>
-      <h2
-        class="sticky top-0 z-10"
-      >
-        <button
-          aria-controls="_r_3_"
-          aria-expanded="false"
-          class="flex h-14 w-full items-center gap-3 bg-zinc-200 px-4 text-start font-medium hover:bg-zinc-300 focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:outline-none focus-visible:ring-inset dark:bg-zinc-800 dark:hover:bg-zinc-700"
-          type="button"
+          </button>
+        </h2>
+        <ul
+          id="_r_2_"
         >
-          <svg
-            aria-hidden="true"
-            class="size-4 shrink-0 motion-safe:transition-transform"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            viewBox="0 0 24 24"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="m9 5 7 7-7 7"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            />
-          </svg>
-          <span
-            class="flex-1"
-          >
-            Asia
-          </span>
-          <span
-            class="text-sm text-zinc-600 tabular-nums dark:text-zinc-400"
-          >
-            0/1
-          </span>
-          <div
-            class="relative size-5"
+          <li>
+            <div
+              class="sticky top-24 flex items-center justify-between bg-zinc-100 px-4 py-2 text-xs font-medium text-zinc-600 uppercase tracking-wide dark:bg-zinc-900 dark:text-zinc-400"
+            >
+              <h3>
+                Southern Europe
+              </h3>
+              <div
+                class="relative size-5"
+              >
+                <svg
+                  class="-rotate-90 size-full"
+                  viewBox="0 0 36 36"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <title>
+                    50% on this map, 50% on yours.
+                  </title>
+                  <circle
+                    class="stroke-current text-gray-500 dark:text-neutral-500"
+                    cx="18"
+                    cy="18"
+                    fill="none"
+                    r="16"
+                    stroke-width="4"
+                  />
+                  <circle
+                    class="stroke-current text-primary dark:text-primary"
+                    cx="18"
+                    cy="18"
+                    fill="none"
+                    r="16"
+                    stroke-dasharray="100"
+                    stroke-dashoffset="50"
+                    stroke-linecap="round"
+                    stroke-width="4"
+                  />
+                  <circle
+                    class="stroke-current text-zinc-700 dark:text-zinc-200"
+                    cx="18"
+                    cy="18"
+                    fill="none"
+                    pathLength="100"
+                    r="9"
+                    stroke-dasharray="100"
+                    stroke-dashoffset="50"
+                    stroke-linecap="round"
+                    stroke-width="3"
+                  />
+                </svg>
+              </div>
+            </div>
+            <ul
+              class="divide-y divide-zinc-100 dark:divide-zinc-800"
+            >
+              <li
+                class="hover:bg-zinc-50 dark:hover:bg-zinc-800"
+              >
+                <label
+                  class="flex items-center px-4 py-1"
+                >
+                  <input
+                    checked=""
+                    class="my-0 me-2 size-4 rounded border-zinc-400 checked:bg-primary focus:ring-2 focus:ring-primary/50 active:ring-primary dark:border-zinc-600 dark:bg-zinc-900"
+                    disabled=""
+                    id="IT"
+                    type="checkbox"
+                  />
+                  <span>
+                    Italy
+                  </span>
+                  <span
+                    class="ms-auto shrink-0 ps-2"
+                  >
+                    <span
+                      class="rounded-full px-2 py-0.5 text-xs font-medium whitespace-nowrap bg-theirs/15 text-sky-700 dark:bg-theirs/25 dark:text-sky-300"
+                    >
+                      New to you
+                    </span>
+                  </span>
+                </label>
+              </li>
+              <li
+                class="hover:bg-zinc-50 dark:hover:bg-zinc-800"
+              >
+                <label
+                  class="flex items-center px-4 py-1"
+                >
+                  <input
+                    class="my-0 me-2 size-4 rounded border-zinc-400 checked:bg-primary focus:ring-2 focus:ring-primary/50 active:ring-primary dark:border-zinc-600 dark:bg-zinc-900"
+                    disabled=""
+                    id="ES"
+                    type="checkbox"
+                  />
+                  <span>
+                    Spain
+                  </span>
+                  <span
+                    class="ms-auto shrink-0 ps-2"
+                  >
+                    <span
+                      class="rounded-full px-2 py-0.5 text-xs font-medium whitespace-nowrap text-primary ring-1 ring-primary ring-inset dark:text-primary dark:ring-primary"
+                    >
+                      Only you
+                    </span>
+                  </span>
+                </label>
+              </li>
+            </ul>
+          </li>
+          <li>
+            <div
+              class="sticky top-24 flex items-center justify-between bg-zinc-100 px-4 py-2 text-xs font-medium text-zinc-600 uppercase tracking-wide dark:bg-zinc-900 dark:text-zinc-400"
+            >
+              <h3>
+                Western Europe
+              </h3>
+              <div
+                class="relative size-5"
+              >
+                <svg
+                  class="-rotate-90 size-full"
+                  viewBox="0 0 36 36"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <title>
+                    100% on this map, 100% on yours.
+                  </title>
+                  <circle
+                    class="stroke-current text-gray-500 dark:text-neutral-500"
+                    cx="18"
+                    cy="18"
+                    fill="none"
+                    r="16"
+                    stroke-width="4"
+                  />
+                  <circle
+                    class="stroke-current text-primary dark:text-primary"
+                    cx="18"
+                    cy="18"
+                    fill="none"
+                    r="16"
+                    stroke-dasharray="100"
+                    stroke-dashoffset="0"
+                    stroke-linecap="round"
+                    stroke-width="4"
+                  />
+                  <circle
+                    class="stroke-current text-zinc-700 dark:text-zinc-200"
+                    cx="18"
+                    cy="18"
+                    fill="none"
+                    pathLength="100"
+                    r="9"
+                    stroke-dasharray="100"
+                    stroke-dashoffset="0"
+                    stroke-linecap="round"
+                    stroke-width="3"
+                  />
+                </svg>
+              </div>
+            </div>
+            <ul
+              class="divide-y divide-zinc-100 dark:divide-zinc-800"
+            >
+              <li
+                class="hover:bg-zinc-50 dark:hover:bg-zinc-800"
+              >
+                <label
+                  class="flex items-center px-4 py-1"
+                >
+                  <input
+                    checked=""
+                    class="my-0 me-2 size-4 rounded border-zinc-400 checked:bg-primary focus:ring-2 focus:ring-primary/50 active:ring-primary dark:border-zinc-600 dark:bg-zinc-900"
+                    disabled=""
+                    id="FR"
+                    type="checkbox"
+                  />
+                  <span>
+                    France
+                  </span>
+                  <span
+                    class="ms-auto shrink-0 ps-2"
+                  >
+                    <span
+                      class="rounded-full px-2 py-0.5 text-xs font-medium whitespace-nowrap bg-primary/15 text-primary dark:bg-primary/25 dark:text-primary"
+                    >
+                      You too
+                    </span>
+                  </span>
+                </label>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+      <li>
+        <h2
+          class="sticky top-10 z-10"
+        >
+          <button
+            aria-controls="_r_3_"
+            aria-expanded="false"
+            class="flex h-14 w-full items-center gap-3 bg-zinc-200 px-4 text-start font-medium hover:bg-zinc-300 focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:outline-none focus-visible:ring-inset dark:bg-zinc-800 dark:hover:bg-zinc-700"
+            type="button"
           >
             <svg
-              class="-rotate-90 size-full"
-              viewBox="0 0 36 36"
+              aria-hidden="true"
+              class="size-4 shrink-0 motion-safe:transition-transform"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              viewBox="0 0 24 24"
               xmlns="http://www.w3.org/2000/svg"
             >
-              <title>
-                0% on this map, 0% on yours.
-              </title>
-              <circle
-                class="stroke-current text-gray-500 dark:text-neutral-500"
-                cx="18"
-                cy="18"
-                fill="none"
-                r="16"
-                stroke-width="4"
-              />
-              <circle
-                class="stroke-current text-primary dark:text-primary"
-                cx="18"
-                cy="18"
-                fill="none"
-                r="16"
-                stroke-dasharray="100"
-                stroke-dashoffset="100"
+              <path
+                d="m9 5 7 7-7 7"
                 stroke-linecap="round"
-                stroke-width="4"
-              />
-              <circle
-                class="stroke-current text-zinc-700 dark:text-zinc-200"
-                cx="18"
-                cy="18"
-                fill="none"
-                pathLength="100"
-                r="9"
-                stroke-dasharray="100"
-                stroke-dashoffset="100"
-                stroke-linecap="round"
-                stroke-width="3"
+                stroke-linejoin="round"
               />
             </svg>
-          </div>
-        </button>
-      </h2>
-      <ul
-        hidden=""
-        id="_r_3_"
-      >
-        <li>
-          <div
-            class="sticky top-14 flex items-center justify-between bg-zinc-100 px-4 py-2 text-xs font-medium text-zinc-600 uppercase tracking-wide dark:bg-zinc-900 dark:text-zinc-400"
-          >
-            <h3>
-              Eastern Asia
-            </h3>
+            <span
+              class="flex-1"
+            >
+              Asia
+            </span>
+            <span
+              class="text-sm text-zinc-600 tabular-nums dark:text-zinc-400"
+            >
+              0/1
+            </span>
             <div
               class="relative size-5"
             >
@@ -566,50 +510,108 @@ exports[`shared map banner > should say how a shared map compares with the reade
                 />
               </svg>
             </div>
-          </div>
-          <ul
-            class="divide-y divide-zinc-100 dark:divide-zinc-800"
-          >
-            <li
-              class="hover:bg-zinc-50 dark:hover:bg-zinc-800"
+          </button>
+        </h2>
+        <ul
+          hidden=""
+          id="_r_3_"
+        >
+          <li>
+            <div
+              class="sticky top-24 flex items-center justify-between bg-zinc-100 px-4 py-2 text-xs font-medium text-zinc-600 uppercase tracking-wide dark:bg-zinc-900 dark:text-zinc-400"
             >
-              <label
-                class="flex items-center px-4 py-1"
+              <h3>
+                Eastern Asia
+              </h3>
+              <div
+                class="relative size-5"
               >
-                <input
-                  class="my-0 me-2 size-4 rounded border-zinc-400 checked:bg-primary focus:ring-2 focus:ring-primary/50 active:ring-primary dark:border-zinc-600 dark:bg-zinc-900"
-                  disabled=""
-                  id="JP"
-                  type="checkbox"
-                />
-                <span>
-                  Japan
-                </span>
-              </label>
-            </li>
-          </ul>
-        </li>
-      </ul>
-    </li>
-    <li>
-      <nav
-        aria-label="Privacy and cookies"
-        class="flex justify-center gap-4 px-4 py-6 text-xs text-zinc-500 dark:text-zinc-400"
-      >
-        <a
-          class="rounded underline-offset-4 hover:text-zinc-900 hover:underline focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:outline-none dark:hover:text-white"
-          href="/privacy"
+                <svg
+                  class="-rotate-90 size-full"
+                  viewBox="0 0 36 36"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <title>
+                    0% on this map, 0% on yours.
+                  </title>
+                  <circle
+                    class="stroke-current text-gray-500 dark:text-neutral-500"
+                    cx="18"
+                    cy="18"
+                    fill="none"
+                    r="16"
+                    stroke-width="4"
+                  />
+                  <circle
+                    class="stroke-current text-primary dark:text-primary"
+                    cx="18"
+                    cy="18"
+                    fill="none"
+                    r="16"
+                    stroke-dasharray="100"
+                    stroke-dashoffset="100"
+                    stroke-linecap="round"
+                    stroke-width="4"
+                  />
+                  <circle
+                    class="stroke-current text-zinc-700 dark:text-zinc-200"
+                    cx="18"
+                    cy="18"
+                    fill="none"
+                    pathLength="100"
+                    r="9"
+                    stroke-dasharray="100"
+                    stroke-dashoffset="100"
+                    stroke-linecap="round"
+                    stroke-width="3"
+                  />
+                </svg>
+              </div>
+            </div>
+            <ul
+              class="divide-y divide-zinc-100 dark:divide-zinc-800"
+            >
+              <li
+                class="hover:bg-zinc-50 dark:hover:bg-zinc-800"
+              >
+                <label
+                  class="flex items-center px-4 py-1"
+                >
+                  <input
+                    class="my-0 me-2 size-4 rounded border-zinc-400 checked:bg-primary focus:ring-2 focus:ring-primary/50 active:ring-primary dark:border-zinc-600 dark:bg-zinc-900"
+                    disabled=""
+                    id="JP"
+                    type="checkbox"
+                  />
+                  <span>
+                    Japan
+                  </span>
+                </label>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+      <li>
+        <nav
+          aria-label="Privacy and cookies"
+          class="flex justify-center gap-4 px-4 py-6 text-xs text-zinc-500 dark:text-zinc-400"
         >
-          Privacy
-        </a>
-        <a
-          class="rounded underline-offset-4 hover:text-zinc-900 hover:underline focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:outline-none dark:hover:text-white"
-          href="/cookies"
-        >
-          Cookies
-        </a>
-      </nav>
-    </li>
-  </ul>
+          <a
+            class="rounded underline-offset-4 hover:text-zinc-900 hover:underline focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:outline-none dark:hover:text-white"
+            href="/privacy"
+          >
+            Privacy
+          </a>
+          <a
+            class="rounded underline-offset-4 hover:text-zinc-900 hover:underline focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:outline-none dark:hover:text-white"
+            href="/cookies"
+          >
+            Cookies
+          </a>
+        </nav>
+      </li>
+    </ul>
+  </div>
 </DocumentFragment>
 `;

@@ -2,9 +2,7 @@
 
 exports[`menu no results > should say what found nothing, and offer the near misses 1`] = `
 <DocumentFragment>
-  <div
-    class="min-h-0 flex-1 overflow-y-auto"
-  >
+  <div>
     <p
       class="mx-4 mt-6 mb-2 text-center font-medium"
     >

@@ -39,7 +39,7 @@ export const MenuBody: FC<Props> = memo(({ loading, results }) => {
 	const narrowed = results.query !== "" || results.standing !== null;
 
 	return (
-		<ul className="min-h-0 flex-1 overscroll-contain overflow-y-auto">
+		<ul>
 			{narrowed ? null : <MenuNextUp />}
 			{results.continents.map((continent) => (
 				<MenuContinent

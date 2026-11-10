@@ -25,7 +25,7 @@ export const MenuNoResults: FC<Props> = memo(({ query, suggestions }) => {
 	}, [setSearch]);
 
 	return (
-		<div className="min-h-0 flex-1 overflow-y-auto">
+		<div>
 			<p className="mx-4 mt-6 mb-2 text-center font-medium">{m.menu_no_results({ query })}</p>
 			{suggestions.length === 0 ? null : (
 				<>
