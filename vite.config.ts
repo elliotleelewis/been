@@ -25,18 +25,18 @@ export default defineConfig(({ command, mode }) => ({
 			project: `${import.meta.dirname}/project.inlang`,
 			strategy: ["preferredLanguage", "baseLocale"],
 		}),
-		// The site is static: no server runs it. Start renders the document shell, which the map fills
-		// in in the browser, and the small print, which has nothing of the reader's in it, to HTML when
-		// the site is built, all of it into dist/client/. Tests render components on their own, so
-		// they leave it out.
+		// The site is static: no server runs it. Start renders every page to HTML when the site is
+		// built, into dist/client/: the small print whole, and the map as its loading screen, as the map
+		// itself is the reader's and renders only in the browser. An unknown path is served the map's
+		// page by Cloudflare Pages, whose router then sends it home. Tests render components on their
+		// own, so they leave it out.
 		mode === "test"
 			? []
 			: tanstackStart({
-					pages: [{ path: "/privacy" }, { path: "/cookies" }],
+					pages: [{ path: "/" }, { path: "/privacy" }, { path: "/cookies" }],
 					prerender: { autoStaticPathsDiscovery: false, crawlLinks: false, enabled: true },
 					router: { entry: "app/router.tsx" },
 					sitemap: { enabled: false },
-					spa: { enabled: true, prerender: { outputPath: "/index" } },
 					// Vite's root is src/ already.
 					srcDirectory: ".",
 				}),

@@ -1,6 +1,10 @@
 import type { M49Region } from "../core/m49.ts";
 import type { Country, Standing } from "../core/types.ts";
 
+/** The search box at the top of the list, which the page's loading screen shows disabled. */
+export const SEARCH_INPUT_CLASS_NAME =
+	"w-full border-none bg-white px-4 py-2 text-zinc-900 focus:ring-2 focus:ring-primary/50 focus:ring-inset disabled:hover:cursor-not-allowed dark:bg-zinc-900 dark:text-white";
+
 /** An M49 sub-region and the countries in it. */
 export interface Region {
 	readonly name: string;

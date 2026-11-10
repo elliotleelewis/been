@@ -29,8 +29,9 @@ fetched from a third party at run time.
 
 One package; `pnpm-workspace.yaml` only holds pnpm's settings. `src/` is Vite's
 root. TanStack Start builds a static site into `dist/client/`, the only thing deployed: the document
-(`src/app/shell.tsx`) and the small print are rendered at build time, the map only in the browser
-(`ssr: false`), and `src/client.tsx` hydrates it.
+(`src/app/shell.tsx`), the small print, and the map's loading screen (`src/app/app-loading.tsx`) are
+rendered at build time, the map itself only in the browser (`ssr: false`), and `src/client.tsx`
+hydrates it. An inline script (`src/app/menu-size.ts`) sizes the drawer before the first paint.
 
 | Directory       | Role                                                                                           |
 | --------------- | ---------------------------------------------------------------------------------------------- |

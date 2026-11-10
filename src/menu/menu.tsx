@@ -6,6 +6,7 @@ import { m } from "../paraglide/messages.js";
 import { MenuBody } from "./menu-body.tsx";
 import { searchAtom, searchResultsAtom, submitSearchAtom } from "./search.ts";
 import { SharedMapBanner } from "./shared-map-banner.tsx";
+import { SEARCH_INPUT_CLASS_NAME } from "./types.ts";
 
 interface Props {
 	readonly loading?: boolean | undefined;
@@ -42,7 +43,7 @@ export const Menu: FC<Props> = memo(({ loading = false }) => {
 					</label>
 					<input
 						id={searchId}
-						className="w-full border-none bg-white px-4 py-2 text-zinc-900 focus:ring-2 focus:ring-primary/50 focus:ring-inset disabled:hover:cursor-not-allowed dark:bg-zinc-900 dark:text-white"
+						className={SEARCH_INPUT_CLASS_NAME}
 						type="search"
 						placeholder={m.menu_search_placeholder()}
 						value={search}
