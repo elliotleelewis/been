@@ -2,6 +2,7 @@ import { memo } from "react";
 import type { FC } from "react";
 
 import { m } from "../paraglide/messages.js";
+import { GRIP_CLASS_NAME, RESIZER_CLASS_NAME } from "./types.ts";
 import { useMenuResize } from "./use-menu-resize.ts";
 
 interface Props {
@@ -25,7 +26,7 @@ export const MenuResizer: FC<Props> = memo(({ controls }) => {
 			// oxlint-disable-next-line jsx-a11y/prefer-tag-over-role -- An `hr` is a thematic break with nowhere to put the grip, and this separator is focusable.
 			role="separator"
 			tabIndex={0}
-			className="group flex shrink-0 cursor-row-resize touch-none select-none items-center justify-center bg-zinc-200 py-5 focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:ring-inset md:cursor-col-resize md:px-1 md:py-0 dark:bg-zinc-800"
+			className={RESIZER_CLASS_NAME}
 			aria-controls={controls}
 			aria-label={m.menu_resize()}
 			aria-orientation={orientation}
@@ -33,7 +34,7 @@ export const MenuResizer: FC<Props> = memo(({ controls }) => {
 			aria-valuemin={valueMin}
 			aria-valuenow={value}
 		>
-			<div className="h-1 w-10 rounded-full bg-zinc-400 transition-colors group-hover:bg-primary md:h-10 md:w-1 dark:bg-zinc-600" />
+			<div className={GRIP_CLASS_NAME} />
 		</div>
 	);
 });

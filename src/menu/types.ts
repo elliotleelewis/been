@@ -5,6 +5,14 @@ import type { Country, Standing } from "../core/types.ts";
 export const SEARCH_INPUT_CLASS_NAME =
 	"w-full border-none bg-white px-4 py-2 text-zinc-900 focus:ring-2 focus:ring-primary/50 focus:ring-inset disabled:hover:cursor-not-allowed dark:bg-zinc-900 dark:text-white";
 
+/** The drawer's handle, which the page's loading screen draws too, before it can be dragged. */
+export const RESIZER_CLASS_NAME =
+	"group flex shrink-0 cursor-row-resize touch-none select-none items-center justify-center bg-zinc-200 py-5 focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:ring-inset md:cursor-col-resize md:px-1 md:py-0 dark:bg-zinc-800";
+
+/** The grip drawn on the drawer's handle. */
+export const GRIP_CLASS_NAME =
+	"h-1 w-10 rounded-full bg-zinc-400 transition-colors group-hover:bg-primary md:h-10 md:w-1 dark:bg-zinc-600";
+
 /** An M49 sub-region and the countries in it. */
 export interface Region {
 	readonly name: string;

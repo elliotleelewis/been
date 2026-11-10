@@ -13,6 +13,60 @@ exports[`app loading > should render the page's frame, with the search box disab
       >
         been
       </h1>
+      <div
+        aria-hidden="true"
+        class="absolute end-2 flex items-center gap-1"
+      >
+        <span
+          class="inline-flex rounded-full p-2"
+        >
+          <svg
+            aria-hidden="true"
+            class="size-5"
+            fill="none"
+            stroke="currentColor"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            viewBox="0 0 24 24"
+          >
+            <rect
+              height="18"
+              rx="2"
+              width="14"
+              x="5"
+              y="3"
+            />
+            <circle
+              cx="12"
+              cy="10"
+              r="3"
+            />
+            <path
+              d="M9 16h6"
+            />
+          </svg>
+        </span>
+        <span
+          class="inline-flex rounded-full p-2 in-[[data-shared-map]]:hidden"
+        >
+          <svg
+            aria-hidden="true"
+            class="size-5"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M12 3v12m0-12 4 4m-4-4-4 4M5 13v6a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-6"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          </svg>
+        </span>
+      </div>
     </div>
     <div
       class="z-10 row-start-3 flex min-h-0 flex-col-reverse overflow-hidden md:col-start-1 md:row-start-2 md:flex-row dark:bg-zinc-900 dark:text-white"
@@ -55,10 +109,27 @@ exports[`app loading > should render the page's frame, with the search box disab
           </svg>
         </div>
       </div>
+      <div
+        aria-hidden="true"
+        class="group flex shrink-0 cursor-row-resize touch-none select-none items-center justify-center bg-zinc-200 py-5 focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:ring-inset md:cursor-col-resize md:px-1 md:py-0 dark:bg-zinc-800"
+      >
+        <div
+          class="h-1 w-10 rounded-full bg-zinc-400 transition-colors group-hover:bg-primary md:h-10 md:w-1 dark:bg-zinc-600"
+        />
+      </div>
     </div>
     <div
       class="relative row-start-2 md:col-start-2 md:row-span-2 md:row-start-1"
-    />
+    >
+      <div
+        aria-hidden="true"
+        class="globe-backdrop pointer-events-none absolute inset-0 overflow-hidden"
+      >
+        <div
+          class="globe-backdrop-sphere rounded-full bg-[#d4dadc] dark:bg-[#2c353c]"
+        />
+      </div>
+    </div>
   </div>
 </DocumentFragment>
 `;

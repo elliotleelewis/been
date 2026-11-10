@@ -7,6 +7,7 @@ import { useOverlayTriggerState } from "react-stately";
 import { m } from "../paraglide/messages.js";
 import { openPassportAtom } from "./pages.ts";
 import { PassportDialog } from "./passport-dialog.tsx";
+import { PassportIcon } from "./passport-icon.tsx";
 
 /** Opens the passport, of the reader's own map or of a shared one while that is on show. */
 export const PassportButton: FC = memo(() => {
@@ -35,20 +36,7 @@ export const PassportButton: FC = memo(() => {
 				className="rounded-full p-2 hover:bg-white/15 focus-visible:ring-2 focus-visible:ring-white/70 focus-visible:outline-none dark:hover:bg-zinc-800 dark:focus-visible:ring-primary/50"
 				aria-label={m.passport_open()}
 			>
-				<svg
-					className="size-5"
-					viewBox="0 0 24 24"
-					fill="none"
-					stroke="currentColor"
-					strokeWidth="2"
-					strokeLinecap="round"
-					strokeLinejoin="round"
-					aria-hidden="true"
-				>
-					<rect x="5" y="3" width="14" height="18" rx="2" />
-					<circle cx="12" cy="10" r="3" />
-					<path d="M9 16h6" />
-				</svg>
+				<PassportIcon />
 			</button>
 			{state.isOpen ? <PassportDialog overlayProps={overlayProps} state={state} /> : null}
 		</>

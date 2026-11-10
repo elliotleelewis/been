@@ -160,6 +160,14 @@ exports[`app > should render 1`] = `
       class="relative row-start-2 md:col-start-2 md:row-span-2 md:row-start-1"
     >
       <div
+        aria-hidden="true"
+        class="globe-backdrop pointer-events-none absolute inset-0 overflow-hidden"
+      >
+        <div
+          class="globe-backdrop-sphere rounded-full bg-[#d4dadc] dark:bg-[#2c353c]"
+        />
+      </div>
+      <div
         style="position: relative; width: 100%; height: 100%;"
       />
     </div>
