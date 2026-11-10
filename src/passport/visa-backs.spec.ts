@@ -1,7 +1,6 @@
 import { createStore } from "jotai";
 import { afterEach, describe, expect, it } from "vitest";
 
-import { comparingAtom } from "../core/comparison.ts";
 import { rawCountriesAtom } from "../core/dataset.ts";
 import { visitsAtom } from "../core/selection.ts";
 import { assertDefined, closeSharedMap, openSharedMap } from "../core/test.ts";
@@ -81,7 +80,7 @@ describe("visaBacksAtom on a shared map", () => {
 		expect.hasAssertions();
 
 		const store = createTestStore();
-		store.set(comparingAtom, false);
+		store.set(visitsAtom, {});
 
 		expect(backOf(store, "milestone:1").side).toStrictEqual({ kind: "shared" });
 		expect(store.get(heldVisaIdsAtom).size).toBe(0);

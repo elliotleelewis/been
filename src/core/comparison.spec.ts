@@ -2,7 +2,7 @@ import { createStore } from "jotai";
 import { afterEach, describe, expect, it } from "vitest";
 
 import { countries } from "../data/countries.ts";
-import { comparingAtom, comparisonAtom } from "./comparison.ts";
+import { comparisonAtom } from "./comparison.ts";
 import { countriesAtom } from "./countries.ts";
 import { rawCountriesAtom } from "./dataset.ts";
 import { recommendedCodesAtom } from "./recommended.ts";
@@ -72,16 +72,6 @@ describe("comparison", () => {
 		expect(store.get(comparisonAtom)).toBeNull();
 	}, 5000);
 
-	it("should leave the shared map on its own once the reader turns comparing off", () => {
-		expect.hasAssertions();
-
-		const store = createTestStore();
-		openSharedMap(store, { FR: {} });
-		store.set(comparingAtom, false);
-
-		expect(store.get(comparisonAtom)).toBeNull();
-	}, 5000);
-
 	it("should recommend only the shared map's countries new to the reader", () => {
 		expect.hasAssertions();
 
@@ -95,8 +85,8 @@ describe("comparison", () => {
 		expect.hasAssertions();
 
 		const store = createTestStore();
+		store.set(visitsAtom, {});
 		openSharedMap(store, { IT: {} });
-		store.set(comparingAtom, false);
 
 		expect(store.get(recommendedCodesAtom)).toStrictEqual([]);
 	}, 5000);

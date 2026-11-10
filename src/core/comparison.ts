@@ -7,19 +7,13 @@ import { visitsAtom } from "./selection.ts";
 import type { Comparison, Standing } from "./types.ts";
 
 /**
- * Whether the reader wants a shared map set against their own. It starts on, and is theirs to turn
- * off, to see the shared map alone.
- */
-export const comparingAtom = atom(true);
-
-/**
- * A shared map set against the reader's own, while one is on show and being compared. There is
- * nothing to compare with until the reader has a map of their own, so until then there is none.
+ * A shared map set against the reader's own, while one is on show. There is nothing to compare with
+ * until the reader has a map of their own, so until then there is none.
  */
 export const comparisonAtom = atom<Comparison | null>((get) => {
 	const theirs = get(sharedVisitsAtom);
 	const mine = get(visitsAtom);
-	if (theirs === null || !get(comparingAtom) || Object.keys(mine).length === 0) {
+	if (theirs === null || Object.keys(mine).length === 0) {
 		return null;
 	}
 	return compareVisits(theirs, mine, get(countryCodesAtom));

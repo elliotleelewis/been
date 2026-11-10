@@ -53,7 +53,6 @@ describe("shared map banner", () => {
 		expect(result.getByRole("button", { name: "1 in common" })).toBeVisible();
 		expect(result.getByRole("button", { name: "1 new to you" })).toBeVisible();
 		expect(result.getByRole("button", { name: "1 only you" })).toBeVisible();
-		expect(result.getByRole("checkbox", { name: "Compare with mine" })).toBeChecked();
 		expect(result.asFragment()).toMatchSnapshot();
 	}, 5000);
 
@@ -85,24 +84,13 @@ describe("shared map banner", () => {
 		expect(listed(result)).toContain("SpainOnly you");
 	}, 5000);
 
-	it("should leave the shared map on its own once comparing is turned off", () => {
-		expect.hasAssertions();
-
-		const result = renderShared({ ES: {}, FR: {} });
-		act(() => {
-			result.getByRole("checkbox", { name: "Compare with mine" }).click();
-		});
-
-		expect(result.queryByRole("button", { name: "1 in common" })).toBeNull();
-		expect(result.queryByText("You too")).toBeNull();
-	}, 5000);
-
 	it("should offer to start a map of the reader's own when they have none", () => {
 		expect.hasAssertions();
 
 		const result = renderShared({});
 
 		expect(result.getByRole("button", { name: "Start your own map" })).toBeVisible();
-		expect(result.queryByRole("checkbox", { name: "Compare with mine" })).toBeNull();
+		expect(result.queryByRole("button", { name: /in common/u })).toBeNull();
+		expect(result.queryByText("You too")).toBeNull();
 	}, 5000);
 });

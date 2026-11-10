@@ -6,12 +6,11 @@ import { countryCodesAtom } from "../core/dataset.ts";
 import { leaveSharedMapAtom, viewingSharedMapAtom } from "../core/location.ts";
 import { selectedCountriesAtom, visitsAtom } from "../core/selection.ts";
 import { m } from "../paraglide/messages.js";
-import { SharedMapCompare } from "./shared-map-compare.tsx";
+import { StandingFilter } from "./standing-filter.tsx";
 
 /**
  * Says the map on show is someone else's, opened from a share link, and offers the way back to the
- * reader's own. Once the reader has a map of their own, it sets the two side by side, which they can
- * turn off, and says how they compare. It is not there the rest of the time.
+ * reader's own. Once the reader has a map of their own, it says how the two compare. It is not there the rest of the time.
  */
 export const SharedMapBanner: FC = memo(() => {
 	const viewingSharedMap = useAtomValue(viewingSharedMapAtom);
@@ -44,7 +43,7 @@ export const SharedMapBanner: FC = memo(() => {
 					{hasOwnMap ? m.menu_back_to_my_map() : m.menu_start_my_map()}
 				</button>
 			</div>
-			{hasOwnMap && loaded > 0 ? <SharedMapCompare /> : null}
+			<StandingFilter />
 		</div>
 	);
 });
