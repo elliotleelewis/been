@@ -2,35 +2,35 @@
 
 exports[`menu > should render 1`] = `
 <DocumentFragment>
+  <search
+    class="relative z-20 shrink-0 bg-white after:absolute after:inset-x-0 after:top-full after:h-1 after:bg-white dark:bg-zinc-900 dark:after:bg-zinc-900"
+  >
+    <form>
+      <label
+        class="sr-only"
+        for="_r_0_"
+        id="_r_1_"
+      >
+        Search
+      </label>
+      <input
+        aria-labelledby="_r_1_"
+        class="w-full border-none bg-white px-4 py-2 text-zinc-900 focus:ring-2 focus:ring-primary/50 focus:ring-inset disabled:hover:cursor-not-allowed dark:bg-zinc-900 dark:text-white"
+        enterkeyhint="done"
+        id="_r_0_"
+        placeholder="Search by name or code..."
+        type="search"
+        value=""
+      />
+    </form>
+  </search>
   <div
     class="flex min-h-0 flex-1 flex-col overflow-y-auto overscroll-contain"
   >
-    <search
-      class="sticky -top-1 z-20 shrink-0 bg-white pt-1 dark:bg-zinc-900"
-    >
-      <form>
-        <label
-          class="sr-only"
-          for="_r_0_"
-          id="_r_1_"
-        >
-          Search
-        </label>
-        <input
-          aria-labelledby="_r_1_"
-          class="w-full border-none bg-white px-4 py-2 text-zinc-900 focus:ring-2 focus:ring-primary/50 focus:ring-inset disabled:hover:cursor-not-allowed dark:bg-zinc-900 dark:text-white"
-          enterkeyhint="done"
-          id="_r_0_"
-          placeholder="Search by name or code..."
-          type="search"
-          value=""
-        />
-      </form>
-    </search>
     <ul>
       <li>
         <h2
-          class="sticky top-10 z-10"
+          class="sticky top-0 z-10"
         >
           <button
             aria-controls="_r_2_"
@@ -102,7 +102,7 @@ exports[`menu > should render 1`] = `
         >
           <li>
             <div
-              class="sticky top-24 flex items-center justify-between bg-zinc-100 px-4 py-2 text-xs font-medium text-zinc-600 uppercase tracking-wide dark:bg-zinc-900 dark:text-zinc-400"
+              class="sticky top-14 flex items-center justify-between bg-zinc-100 px-4 py-2 text-xs font-medium text-zinc-600 uppercase tracking-wide dark:bg-zinc-900 dark:text-zinc-400"
             >
               <h3>
                 Northern Europe
@@ -165,7 +165,7 @@ exports[`menu > should render 1`] = `
       </li>
       <li>
         <h2
-          class="sticky top-10 z-10"
+          class="sticky top-0 z-10"
         >
           <button
             aria-controls="_r_3_"
@@ -238,7 +238,7 @@ exports[`menu > should render 1`] = `
         >
           <li>
             <div
-              class="sticky top-24 flex items-center justify-between bg-zinc-100 px-4 py-2 text-xs font-medium text-zinc-600 uppercase tracking-wide dark:bg-zinc-900 dark:text-zinc-400"
+              class="sticky top-14 flex items-center justify-between bg-zinc-100 px-4 py-2 text-xs font-medium text-zinc-600 uppercase tracking-wide dark:bg-zinc-900 dark:text-zinc-400"
             >
               <h3>
                 South America

@@ -2,11 +2,22 @@ import type { M49Region } from "../core/m49.ts";
 import type { Country, Standing } from "../core/types.ts";
 
 /**
- * What holds the search box: a strip of its colour above it, which the list tucks out of sight
- * behind its own top edge once it scrolls (see `src/menu/menu.tsx`). The page's loading screen
- * draws it too, so the box doesn't move when the list loads.
+ * What holds the search box, with a band of its colour hanging over the top of the list below it.
+ * iOS Safari draws a heading stuck to the top of the list a pixel or two below that top, leaving a
+ * sliver of the list showing above it; the band is laid out with the search box rather than
+ * scrolled with the list, so it covers that sliver wherever iOS puts what is stuck. The page's
+ * loading screen draws it too, so the box doesn't move when the list loads.
  */
-export const SEARCH_BOX_CLASS_NAME = "shrink-0 bg-white pt-1 dark:bg-zinc-900";
+export const SEARCH_BOX_CLASS_NAME =
+	"relative z-20 shrink-0 bg-white after:absolute after:inset-x-0 after:top-full after:h-1 after:bg-white dark:bg-zinc-900 dark:after:bg-zinc-900";
+
+/**
+ * What scrolls the list, under the search box's band, which covers the top of whatever heading is
+ * at the top of the list, stuck or not. It isn't padded to clear the band, as a stuck heading sticks
+ * inside the padding and would leave the sliver open again.
+ */
+export const LIST_SCROLLER_CLASS_NAME =
+	"flex min-h-0 flex-1 flex-col overflow-y-auto overscroll-contain";
 
 /** The search box at the top of the list, which the page's loading screen shows disabled. */
 export const SEARCH_INPUT_CLASS_NAME =

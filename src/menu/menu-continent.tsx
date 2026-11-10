@@ -24,9 +24,8 @@ export const MenuContinent: FC<Props> = memo(({ continent, expanded }) => {
 
 	return (
 		<li>
-			{/* `top-10` is where the stuck search box ends, which this sticks under, and `top-24` below
-			adds this heading's own height, so each sub-region's heading sticks under both. */}
-			<h2 className="sticky top-10 z-10">
+			{/* `top-14` below is this heading's height, so each sub-region's heading sticks under it. */}
+			<h2 className="sticky top-0 z-10">
 				<button
 					type="button"
 					className="flex h-14 w-full items-center gap-3 bg-zinc-200 px-4 text-start font-medium hover:bg-zinc-300 focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:outline-none focus-visible:ring-inset dark:bg-zinc-800 dark:hover:bg-zinc-700"
@@ -60,7 +59,7 @@ export const MenuContinent: FC<Props> = memo(({ continent, expanded }) => {
 			<ul id={contentId} hidden={!expanded}>
 				{continent.values.map((region) => (
 					<li key={region.name}>
-						<div className="sticky top-24 flex items-center justify-between bg-zinc-100 px-4 py-2 text-xs font-medium text-zinc-600 uppercase tracking-wide dark:bg-zinc-900 dark:text-zinc-400">
+						<div className="sticky top-14 flex items-center justify-between bg-zinc-100 px-4 py-2 text-xs font-medium text-zinc-600 uppercase tracking-wide dark:bg-zinc-900 dark:text-zinc-400">
 							<h3>{region.name}</h3>
 							<Progress complete={region.complete ?? 0} mine={region.mine} />
 						</div>

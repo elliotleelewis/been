@@ -19,7 +19,7 @@ export const MenuNextUp: FC = memo(() => {
 
 	return nextUp.length === 0 ? null : (
 		<li>
-			<h2 className="sticky top-10 z-10 flex h-14 items-center gap-3 bg-[color-mix(in_oklab,var(--color-primary)_10%,var(--color-white))] px-4 font-medium text-zinc-900 dark:bg-[color-mix(in_oklab,var(--color-primary)_15%,var(--color-zinc-900))] dark:text-white">
+			<h2 className="sticky top-0 z-10 flex h-14 items-center gap-3 bg-[color-mix(in_oklab,var(--color-primary)_10%,var(--color-white))] px-4 font-medium text-zinc-900 dark:bg-[color-mix(in_oklab,var(--color-primary)_15%,var(--color-zinc-900))] dark:text-white">
 				<svg
 					className="size-4 shrink-0 text-primary"
 					viewBox="0 0 24 24"

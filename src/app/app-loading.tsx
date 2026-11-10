@@ -6,6 +6,7 @@ import { MenuLoading } from "../menu/menu-loading.tsx";
 import { menuStyleOf } from "../menu/menu-style.ts";
 import {
 	GRIP_CLASS_NAME,
+	LIST_SCROLLER_CLASS_NAME,
 	MENU_SIZE_DEFAULT,
 	RESIZER_CLASS_NAME,
 	SEARCH_BOX_CLASS_NAME,
@@ -47,7 +48,9 @@ export const AppLoading: FC = memo(() => (
 						disabled
 					/>
 				</div>
-				<MenuLoading />
+				<div className={LIST_SCROLLER_CLASS_NAME}>
+					<MenuLoading />
+				</div>
 			</div>
 			<div className={RESIZER_CLASS_NAME} aria-hidden="true">
 				<div className={GRIP_CLASS_NAME} />
