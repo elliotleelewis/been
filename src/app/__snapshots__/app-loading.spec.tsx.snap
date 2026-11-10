@@ -75,13 +75,17 @@ exports[`app loading > should render the page's frame, with the search box disab
       <div
         class="flex min-h-0 min-w-0 flex-1 flex-col"
       >
-        <input
-          aria-label="Search"
-          class="w-full border-none bg-white px-4 py-2 text-zinc-900 focus:ring-2 focus:ring-primary/50 focus:ring-inset disabled:hover:cursor-not-allowed dark:bg-zinc-900 dark:text-white"
-          disabled=""
-          placeholder="Search by name or code..."
-          type="search"
-        />
+        <div
+          class="shrink-0 bg-white pt-px dark:bg-zinc-900"
+        >
+          <input
+            aria-label="Search"
+            class="w-full border-none bg-white px-4 py-2 text-zinc-900 focus:ring-2 focus:ring-primary/50 focus:ring-inset disabled:hover:cursor-not-allowed dark:bg-zinc-900 dark:text-white"
+            disabled=""
+            placeholder="Search by name or code..."
+            type="search"
+          />
+        </div>
         <div
           class="flex min-h-0 flex-1 flex-col"
         >

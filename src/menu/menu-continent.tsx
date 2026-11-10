@@ -24,8 +24,8 @@ export const MenuContinent: FC<Props> = memo(({ continent, expanded }) => {
 
 	return (
 		<li>
-			{/* `top-10` is the search box's height, which this sticks under, and `top-24` below adds this
-			heading's own, so each sub-region's heading sticks under both. */}
+			{/* `top-10` is where the stuck search box ends, which this sticks under, and `top-24` below
+			adds this heading's own height, so each sub-region's heading sticks under both. */}
 			<h2 className="sticky top-10 z-10">
 				<button
 					type="button"

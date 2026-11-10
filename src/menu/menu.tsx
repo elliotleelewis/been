@@ -1,3 +1,4 @@
+import classNames from "classnames";
 import { useAtom, useAtomValue, useSetAtom } from "jotai";
 import { memo, useCallback, useId } from "react";
 import type { ChangeEvent, FC, SubmitEvent } from "react";
@@ -6,7 +7,7 @@ import { m } from "../paraglide/messages.js";
 import { MenuBody } from "./menu-body.tsx";
 import { searchAtom, searchResultsAtom, submitSearchAtom } from "./search.ts";
 import { SharedMapBanner } from "./shared-map-banner.tsx";
-import { SEARCH_INPUT_CLASS_NAME } from "./types.ts";
+import { SEARCH_BOX_CLASS_NAME, SEARCH_INPUT_CLASS_NAME } from "./types.ts";
 
 interface Props {
 	readonly loading?: boolean | undefined;
@@ -36,12 +37,12 @@ export const Menu: FC<Props> = memo(({ loading = false }) => {
 	return (
 		<>
 			<SharedMapBanner />
-			{/* The search box scrolls with the list, stuck at its top, rather than sitting above it: iOS
-			Safari can draw a sticky heading a little below the top of the box that scrolls it, and
-			one stuck under another in the same box moves with it. The strip above it covers that gap
-			above the search box itself. */}
+			{/* The search box scrolls with the list, stuck at its top, so the headings stuck under it
+			move with it. It sticks a pixel above the top, into its own pixel of padding: iOS Safari
+			rounds the list's top edge and what is stuck to it to the screen's pixels apart, which
+			would otherwise leave a sliver of the list showing above the box. */}
 			<div className="flex min-h-0 flex-1 flex-col overflow-y-auto overscroll-contain">
-				<search className="sticky top-0 z-20 shrink-0 before:absolute before:inset-x-0 before:bottom-full before:h-2 before:bg-white dark:before:bg-zinc-900">
+				<search className={classNames("sticky -top-px z-20", SEARCH_BOX_CLASS_NAME)}>
 					<form onSubmit={handleSubmit}>
 						<label id={searchLabelId} htmlFor={searchId} className="sr-only">
 							{m.menu_search_label()}

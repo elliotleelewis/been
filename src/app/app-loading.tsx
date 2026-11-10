@@ -8,6 +8,7 @@ import {
 	GRIP_CLASS_NAME,
 	MENU_SIZE_DEFAULT,
 	RESIZER_CLASS_NAME,
+	SEARCH_BOX_CLASS_NAME,
 	SEARCH_INPUT_CLASS_NAME,
 } from "../menu/types.ts";
 import { m } from "../paraglide/messages.js";
@@ -37,13 +38,15 @@ export const AppLoading: FC = memo(() => (
 		</HeaderBar>
 		<div className={MENU_AREA_CLASS_NAME}>
 			<div className={MENU_CONTENT_CLASS_NAME}>
-				<input
-					className={SEARCH_INPUT_CLASS_NAME}
-					type="search"
-					placeholder={m.menu_search_placeholder()}
-					aria-label={m.menu_search_label()}
-					disabled
-				/>
+				<div className={SEARCH_BOX_CLASS_NAME}>
+					<input
+						className={SEARCH_INPUT_CLASS_NAME}
+						type="search"
+						placeholder={m.menu_search_placeholder()}
+						aria-label={m.menu_search_label()}
+						disabled
+					/>
+				</div>
 				<MenuLoading />
 			</div>
 			<div className={RESIZER_CLASS_NAME} aria-hidden="true">
