@@ -157,6 +157,7 @@ at run time, except M49 areas', which are messages.
 - Every declaration, down to interface members, gets a JSDoc `/** */` saying what it's for. No `@param` or `@returns`: the types carry them. `//` is for comments in a body and suppressions.
 - React: arrow function components in `memo` with a `displayName`, `readonly` props, and callbacks passed down wrapped in `useCallback`.
 - Components are presentational: state is atoms, derived state a read-only atom, and anything that changes more than one atom a write-only atom.
+- `.claude/settings.json` turns on the Chrome team's [Modern Web Guidance](https://developer.chrome.com/docs/modern-web-guidance) plugin. Look things up in it for HTML, CSS and browser APIs, but this file wins where they disagree, such as `dark:` variants. Skip its "Modern Web Guidance" section at the end of replies.
 - Tailwind v4, configured in `src/styles.css`. Use the `primary` theme colour, and give every element its `dark:` variant. Combine classes with `classnames`, not template strings.
 - Tests are Vitest in a real Chromium, co-located as `*.spec.ts(x)`, with snapshots. Update a snapshot in the same commit as the markup change.
 - Commit messages and PR titles follow Conventional Commits; CI checks the title.
