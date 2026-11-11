@@ -1,5 +1,5 @@
 import { useAtomValue } from "jotai";
-import { Suspense, memo, useId } from "react";
+import { memo, useId } from "react";
 import type { FC } from "react";
 
 import { GlobeBackdrop } from "../globe/globe-backdrop.tsx";
@@ -31,11 +31,7 @@ export const App: FC = memo(() => {
 			</div>
 			<div className={GLOBE_AREA_CLASS_NAME}>
 				<GlobeBackdrop />
-				{/* The globe waits for MapLibre's stylesheet on its own, with the backdrop standing in,
-				so the menu does not wait with it. */}
-				<Suspense fallback={null}>
-					<Globe />
-				</Suspense>
+				<Globe />
 				<TapToastRegion />
 			</div>
 		</main>
