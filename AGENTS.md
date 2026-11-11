@@ -83,7 +83,8 @@ Rules that keep that shape:
   colour scheme. Selected countries are one fill layer filtered by code: selecting changes a filter,
   not geometry. A country being stamped fills in on a layer of its own, because MapLibre can fade a
   paint property but not a filter. The ~700kB atlas is fetched at run time and
-  `src/data/countries.ts` imported dynamically, to keep both out of the bundle.
+  `src/data/countries.ts` imported dynamically, to keep both out of the bundle. MapLibre's stylesheet
+  is linked by the globe itself, not imported, so it does not block the loading screen's first paint.
 - **The camera** frames a selected country via `focusAtom`; unselecting the framed one puts it back,
   once, until the reader moves the map. At world view it idles in a slow spin
   (`src/globe/use-idle-spin.ts`) that eases home, but not under reduced motion; any move resets the wait. Tapping a country ticks it through
