@@ -14,10 +14,12 @@ interface Props {
  * messages are in, and its direction stays the default left to right, as is every language there
  * are messages for. iOS paints the strip behind the status bar with the root element's colour, so
  * the root carries the title bar's colour, and the body the app's own surface, which shows anywhere
- * inside the viewport the app leaves uncovered.
+ * inside the viewport the app leaves uncovered. The root also says the page comes in both colour
+ * schemes, so what the browser draws itself, such as scrollbars, form controls and the canvas
+ * before the stylesheet arrives, follows the reader's.
  */
 export const Shell: FC<Props> = memo(({ children }) => (
-	<html lang={getLocale()} className="bg-primary dark:bg-zinc-950">
+	<html lang={getLocale()} className="scheme-light-dark bg-primary dark:bg-zinc-950">
 		<head>
 			<HeadContent />
 			{/* The title bar's colour in each scheme, for the browser's own chrome and an installed
