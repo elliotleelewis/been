@@ -1,9 +1,11 @@
+import { useAtomValue } from "jotai";
 import { setWorkerUrl } from "maplibre-gl";
 import workerUrl from "maplibre-gl/dist/maplibre-gl-worker.mjs?worker&url";
 import { useCallback, useMemo, useState } from "react";
 import type { MapStyleDataEvent } from "react-map-gl/maplibre";
 
 import { useMatchMedia } from "../core/use-match-media.ts";
+import { maplibreStylesLoadedAtom } from "./stylesheet.ts";
 
 // MapLibre parses every tile, vector and GeoJSON alike, in a worker it locates at run time from
 // its own module URL. No bundler can see through that, so the worker file never reaches the build
@@ -27,6 +29,8 @@ export interface Basemap {
 	 */
 	readonly labelsLayerId: string | undefined;
 	readonly onStyleData: (event: MapStyleDataEvent) => void;
+	/** Whether MapLibre's own stylesheet has loaded, which the map waits for before it is built. */
+	readonly stylesLoaded: boolean;
 	readonly styleUrl: string;
 }
 
@@ -38,6 +42,7 @@ export interface Basemap {
  */
 export const useBasemap = (): Basemap => {
 	const prefersDark = useMatchMedia("(prefers-color-scheme: dark)");
+	const stylesLoaded = useAtomValue(maplibreStylesLoadedAtom);
 	const [labelsLayerId, setLabelsLayerId] = useState<string>();
 
 	// Every style load, not just the first: switching between the light and dark basemaps builds
@@ -49,7 +54,7 @@ export const useBasemap = (): Basemap => {
 	const styleUrl = prefersDark ? DARK_STYLE_URL : LIGHT_STYLE_URL;
 
 	return useMemo(
-		() => ({ labelsLayerId, onStyleData, styleUrl }),
-		[labelsLayerId, onStyleData, styleUrl],
+		() => ({ labelsLayerId, onStyleData, styleUrl, stylesLoaded }),
+		[labelsLayerId, onStyleData, styleUrl, stylesLoaded],
 	);
 };

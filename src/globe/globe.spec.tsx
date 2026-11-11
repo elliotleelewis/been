@@ -9,6 +9,7 @@ import type { CountryBoundaries } from "../data/boundaries.ts";
 import { countries } from "../data/countries.ts";
 import { Globe } from "./globe.tsx";
 import type { MapForwardedRef } from "./globe.tsx";
+import { loadMaplibreStyles } from "./test.ts";
 import { MapSourceKeys } from "./types.ts";
 
 /**
@@ -31,16 +32,18 @@ describe("globe", () => {
 		vi.spyOn(globalThis, "matchMedia").mockReturnValue(mockMediaQueryList());
 	});
 
-	it("should render", () => {
+	it("should render", async () => {
 		expect.hasAssertions();
+		await loadMaplibreStyles();
 
 		const result = render(<Globe />);
 
 		expect(result.asFragment()).toMatchSnapshot();
 	}, 5000);
 
-	it("should accept a ref", () => {
+	it("should accept a ref", async () => {
 		expect.hasAssertions();
+		await loadMaplibreStyles();
 
 		const map = createRef<MapForwardedRef>();
 		const result = render(<Globe ref={map} />);

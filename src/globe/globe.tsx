@@ -11,8 +11,6 @@ import { useCountryPointer } from "./use-country-pointer.ts";
 import { useGlobeCamera } from "./use-globe-camera.ts";
 import { useGlobeLayers } from "./use-globe-layers.ts";
 
-import "maplibre-gl/dist/maplibre-gl.css";
-
 /** The layer every country is drawn on, which is what clicks and the pointer are tested against. */
 const INTERACTIVE_LAYER_IDS = [MapLayerKeys.Hit];
 
@@ -26,7 +24,7 @@ export const Globe = memo(
 		const internalRef = useRef<MapRef>(null);
 
 		const boundaries = useCountryBoundaries();
-		const { labelsLayerId, onStyleData: handleStyleData, styleUrl } = useBasemap();
+		const { labelsLayerId, onStyleData: handleStyleData, styleUrl, stylesLoaded } = useBasemap();
 
 		useImperativeHandle(
 			ref,
@@ -63,6 +61,11 @@ export const Globe = memo(
 			nextFilter,
 			nextPaint,
 		} = useGlobeLayers(hover?.code);
+
+		// The backdrop behind it stands in until MapLibre's stylesheet has loaded.
+		if (!stylesLoaded) {
+			return null;
+		}
 
 		return (
 			<Map
