@@ -55,7 +55,7 @@
     "dotenv": "^18.0.0",
     "globals": "^17.0.0",
     "i18n-iso-countries": "^7.0.0",
-    "oxc-transform-react": "^0.157.0",
+    "oxc-transform-react": "^0.158.0",
     "oxfmt": "~0.77.0",
     "oxlint": "~1.92.0",
     "oxlint-tsgolint": "^7.0.0",
