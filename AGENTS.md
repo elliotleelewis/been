@@ -131,7 +131,8 @@ fails the build.
   `passport_…`, `achievement_…`, `privacy_…`, `cookies_…`, `legal_…`, `meta_…` for link previews, and `m49_…` for M49 areas (`src/core/m49.ts`).
 - Counts use plural variants (`share_summary`), shares `: number` (`menu_progress`), not code.
 - All text is in messages except the app's name and the passport's own lettering ("PASSPORT",
-  "VISA", stamp captions, visa fields, the machine-readable lines). Countries are named by
+  "VISA", stamp captions, visa fields, the machine-readable lines), and the headline drawn into
+  `src/public/social.svg`, which says what `meta_title` does. Countries are named by
   `Intl.DisplayNames`.
 - English is the only language. Adding one is a `messages/{locale}.json` and the locale in
   `project.inlang/settings.json`. The page's `lang` follows the locale (`src/app/shell.tsx`); its `dir` stays the default until there is a right-to-left one.

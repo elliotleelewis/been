@@ -1,12 +1,24 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630">
-	<!-- The picture a link to the site is previewed with: the icon's globe, drawn as an orthographic
-		graticule every 30°, with a scatter of its cells filled in, as a map being ticked off. It has
-		no words, as the preview's title and description sit beside it. Each cell is the strip
-		between two meridians' ellipses, cut to the band between two parallels by a nested viewport.
-		The globe has a radius of 230 about (600, 315): the meridians 30° and 60° from the middle
-		are ellipses 115 and 199 wide, and the parallels 30° and 60° from the equator lie 115 and 199
-		from it. -->
+	<!-- The picture a link to the site is previewed with, laid out for previews: everything inside
+		an 80px margin, clear of where platforms crop; one question as the headline, bold and large
+		enough to read in a thumbnail; the icon and name small in the top-left corner and the address
+		in the bottom-left; and the globe as the one picture. It is on the app's dark surface, which
+		white and the orange both stand out against, where white on the orange would not.
+
+		The headline is set in Inter where it is installed, and the system's sans-serif otherwise.
+		The PNG is what is served, so a font only matters when it is redrawn: check it after. -->
 	<defs>
+		<!-- The icon, from icon.svg, for the corner. -->
+		<clipPath id="icon-square"><rect width="512" height="512" rx="112" /></clipPath>
+		<clipPath id="icon-globe"><circle cx="256" cy="256" r="150" /></clipPath>
+		<mask id="icon-beyond-meridian">
+			<rect width="512" height="512" fill="#fff" />
+			<ellipse cx="256" cy="256" rx="62" ry="150" />
+		</mask>
+		<!-- The globe: an orthographic graticule every 30°, of radius 230 about (600, 315). The
+			meridians 30° and 60° from the middle are ellipses 115 and 199 wide, and the parallels 30°
+			and 60° from the equator lie 115 and 199 from it. Each filled cell is the strip between two
+			meridians' ellipses, cut to the band between two parallels by a nested viewport. -->
 		<ellipse id="strip-0" cx="600" cy="315" rx="115" ry="230" />
 		<path
 			id="strip-1"
@@ -19,37 +31,72 @@
 			d="M370 315a230 230 0 1 0 460 0a230 230 0 1 0-460 0ZM401 315a199 230 0 1 0 398 0a199 230 0 1 0-398 0Z"
 		/>
 	</defs>
-	<rect width="1200" height="630" fill="#ff6c00" />
-	<g fill="#fff">
-		<svg x="600" y="200" width="230" height="115" viewBox="600 200 230 115">
-			<use href="#strip-0" />
-		</svg>
-		<svg x="600" y="200" width="230" height="115" viewBox="600 200 230 115">
-			<use href="#strip-1" />
-		</svg>
-		<svg x="370" y="315" width="230" height="115" viewBox="370 315 230 115">
-			<use href="#strip-1" />
-		</svg>
-		<svg x="600" y="430" width="230" height="84" viewBox="600 430 230 84">
-			<use href="#strip-0" />
-		</svg>
+	<rect width="1200" height="630" fill="#18181b" />
+
+	<g transform="translate(80 80) scale(0.125)" clip-path="url(#icon-square)">
+		<rect width="512" height="512" fill="#ff6c00" />
+		<rect
+			x="256"
+			y="181"
+			width="150"
+			height="75"
+			fill="#fff"
+			clip-path="url(#icon-globe)"
+			mask="url(#icon-beyond-meridian)"
+		/>
+		<g fill="none" stroke="#fff" stroke-width="14" stroke-linecap="round">
+			<circle cx="256" cy="256" r="150" />
+			<ellipse cx="256" cy="256" rx="62" ry="150" />
+			<path d="M106 256h300M126 181h260M126 331h260" />
+		</g>
 	</g>
-	<!-- A few more, half filled, as the passport's stamps ink a country in as they land. -->
-	<g fill="#fff" fill-opacity="0.45">
-		<svg x="600" y="116" width="230" height="84" viewBox="600 116 230 84">
-			<use href="#strip-0" />
-		</svg>
-		<svg x="370" y="200" width="230" height="115" viewBox="370 200 230 115">
-			<use href="#strip-2" />
-		</svg>
-		<svg x="600" y="315" width="230" height="115" viewBox="600 315 230 115">
-			<use href="#strip-2" />
-		</svg>
+
+	<g font-family="Inter, ui-sans-serif, system-ui, sans-serif" fill="#fff">
+		<text x="160" y="126" font-size="40" font-weight="700">Been</text>
+		<text font-size="80" font-weight="800" letter-spacing="-2">
+			<tspan x="80" y="272">How much of</tspan>
+			<tspan x="80" y="364" fill="#ff6c00">the world</tspan>
+			<tspan x="80" y="456">have you seen?</tspan>
+		</text>
+		<text x="80" y="550" font-size="28" font-weight="500" fill="#a1a1aa">
+			been.elliotleelewis.com
+		</text>
 	</g>
-	<g fill="none" stroke="#fff" stroke-width="10" stroke-linecap="round">
-		<circle cx="600" cy="315" r="230" />
-		<ellipse cx="600" cy="315" rx="115" ry="230" />
-		<ellipse cx="600" cy="315" rx="199" ry="230" />
-		<path d="M600 85v460M370 315h460M401 200h398M401 430h398M485 116h230M485 514h230" />
+
+	<!-- The globe, at a radius of 210 about (910, 315), clear of the headline. -->
+	<g transform="translate(910 315) scale(0.913) translate(-600 -315)">
+		<circle cx="600" cy="315" r="230" fill="#27272a" />
+		<g fill="#ff6c00">
+			<svg x="600" y="200" width="230" height="115" viewBox="600 200 230 115">
+				<use href="#strip-0" />
+			</svg>
+			<svg x="600" y="200" width="230" height="115" viewBox="600 200 230 115">
+				<use href="#strip-1" />
+			</svg>
+			<svg x="370" y="315" width="230" height="115" viewBox="370 315 230 115">
+				<use href="#strip-1" />
+			</svg>
+			<svg x="600" y="430" width="230" height="84" viewBox="600 430 230 84">
+				<use href="#strip-0" />
+			</svg>
+		</g>
+		<!-- A few more, half filled, as the passport's stamps ink a country in as they land. -->
+		<g fill="#ff6c00" fill-opacity="0.45">
+			<svg x="600" y="116" width="230" height="84" viewBox="600 116 230 84">
+				<use href="#strip-0" />
+			</svg>
+			<svg x="370" y="200" width="230" height="115" viewBox="370 200 230 115">
+				<use href="#strip-2" />
+			</svg>
+			<svg x="600" y="315" width="230" height="115" viewBox="600 315 230 115">
+				<use href="#strip-2" />
+			</svg>
+		</g>
+		<g fill="none" stroke="#fff" stroke-width="10" stroke-linecap="round">
+			<circle cx="600" cy="315" r="230" />
+			<ellipse cx="600" cy="315" rx="115" ry="230" />
+			<ellipse cx="600" cy="315" rx="199" ry="230" />
+			<path d="M600 85v460M370 315h460M401 200h398M401 430h398M485 116h230M485 514h230" />
+		</g>
 	</g>
 </svg>
