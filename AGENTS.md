@@ -103,6 +103,8 @@ Rules that keep that shape:
   its history's hash into `locationHashAtom`, nothing else writes it, and leaving is a `Link`. The QR
   encoder loads only when the share dialog opens. `src/core/comparison.ts` sets it against the
   reader's own map, giving countries a `standing` that the globe, menu and visa backs show.
+  The last link opened is remembered in memory (`openedShareValueAtom`), so a reader who leaves it to
+  start a map can come back to compare, and reply with a summary saying how the two compare.
 - **The passport** is pages (`src/passport/pages.ts`): a cover, an identity page, the visas, those
   within reach (`src/passport/locked-visas.ts`), then stamps six to a page, each part a tap away, shown two at a time on wide screens (`src/passport/use-passport-spread.ts`). **Stamps** are generated, not drawn: shape, slant and wording from a stable hash of the code, ink
   from the M49 region (`src/passport/stamp-design.ts`), and the outline is the country's home

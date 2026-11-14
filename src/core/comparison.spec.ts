@@ -2,12 +2,12 @@ import { createStore } from "jotai";
 import { afterEach, describe, expect, it } from "vitest";
 
 import { countries } from "../data/countries.ts";
-import { comparisonAtom } from "./comparison.ts";
+import { comparisonAtom, replyComparisonAtom } from "./comparison.ts";
 import { countriesAtom } from "./countries.ts";
 import { rawCountriesAtom } from "./dataset.ts";
 import { recommendedCodesAtom } from "./recommended.ts";
 import { visitsAtom } from "./selection.ts";
-import { openSharedMap } from "./test.ts";
+import { leaveSharedMap, openSharedMap } from "./test.ts";
 
 const RAW_COUNTRIES = Object.fromEntries(countries.map((country) => [country.iso3166, country]));
 
@@ -88,5 +88,37 @@ describe("comparison", () => {
 		openSharedMap(store, { IT: {} });
 
 		expect(store.get(recommendedCodesAtom)).toStrictEqual([]);
+	}, 5000);
+
+	it("should keep the shared map the reader opened to reply to, after they leave it", () => {
+		expect.hasAssertions();
+
+		const store = createTestStore();
+		openSharedMap(store, { FR: {}, IT: {}, JP: {} });
+		leaveSharedMap(store);
+
+		expect(store.get(comparisonAtom)).toBeNull();
+		expect(store.get(replyComparisonAtom)).toStrictEqual({
+			both: ["FR"],
+			mine: ["ES"],
+			theirs: ["IT", "JP"],
+		});
+	}, 5000);
+
+	it("should have nothing to reply to before the reader has a map, or on their own map", () => {
+		expect.hasAssertions();
+
+		const store = createTestStore();
+
+		expect(store.get(replyComparisonAtom)).toBeNull();
+
+		openSharedMap(store, { ES: {}, FR: {} });
+
+		expect(store.get(replyComparisonAtom)).toBeNull();
+
+		store.set(visitsAtom, {});
+		openSharedMap(store, { IT: {} });
+
+		expect(store.get(replyComparisonAtom)).toBeNull();
 	}, 5000);
 });

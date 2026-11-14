@@ -1,6 +1,6 @@
 import { M49_REGIONS, M49_REGION_CODES } from "../core/m49.ts";
 import type { M49Region } from "../core/m49.ts";
-import type { AchievementTier, CountryData, Visits } from "../core/types.ts";
+import type { AchievementTier, Comparison, CountryData, Visits } from "../core/types.ts";
 import { m } from "../paraglide/messages.js";
 import { BAR_LENGTH, EMPTY_SQUARE, REGION_SQUARES } from "./types.ts";
 
@@ -53,6 +53,15 @@ const visaLineOf = (tiers: readonly AchievementTier[]): readonly string[] => {
 	return tiers.length === 0 ? [] : ["", parts.join(" · ")];
 };
 
+/**
+ * The line saying how the map compares with the one the reader opened, from the side of whoever
+ * sent it, as a reply to them reads: what the two have in common, and what is new to them.
+ */
+const replyLineOf = (comparison: Comparison | null): readonly string[] =>
+	comparison === null
+		? []
+		: ["", m.share_emoji_reply({ both: comparison.both.length, mine: comparison.mine.length })];
+
 /** What a map's summary is made from. */
 export interface SummaryInput {
 	/** Every country there is, which each continent's share is of. */
@@ -62,14 +71,17 @@ export interface SummaryInput {
 	readonly tiers: readonly AchievementTier[];
 	/** The link to the map, which it ends with. */
 	readonly url: string;
+	/** The map set against the last shared map the reader opened, when it is a reply to one. */
+	readonly comparison: Comparison | null;
 }
 
 /**
  * A map summed up in a few lines of text and emoji, to paste anywhere: how many countries of the
- * world, a bar for each continent in its stamps' ink, how many visas, and the link, which shows
- * the whole map to whoever opens it.
+ * world, a bar for each continent in its stamps' ink, how many visas, and how it compares with the
+ * map it replies to, if it does. It ends asking whoever reads it to answer with a map of their own,
+ * or to see how the two compare, then the link, which shows the whole map to whoever opens it.
  */
-export const summaryOf = ({ countries, tiers, url, visits }: SummaryInput): string => {
+export const summaryOf = ({ comparison, countries, tiers, url, visits }: SummaryInput): string => {
 	const visited = countries.filter(({ iso3166 }) => Object.hasOwn(visits, iso3166)).length;
 	return [
 		m.share_emoji_headline({
@@ -83,7 +95,9 @@ export const summaryOf = ({ countries, tiers, url, visits }: SummaryInput): stri
 				`${barOf(progress)} ${M49_REGIONS[progress.region]()} ${String(progress.visited)}/${String(progress.total)}`,
 		),
 		...visaLineOf(tiers),
+		...replyLineOf(comparison),
 		"",
+		comparison === null ? m.share_emoji_invite() : m.share_emoji_reply_invite(),
 		url,
 	].join("\n");
 };

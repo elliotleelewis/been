@@ -20,6 +20,7 @@ describe("summary", () => {
 		expect.hasAssertions();
 
 		const summary = summaryOf({
+			comparison: null,
 			countries: COUNTRIES,
 			tiers: [],
 			url: "https://been.example/#map",
@@ -34,6 +35,7 @@ describe("summary", () => {
 				"🟥🟥🟥🟥🟥⬜⬜⬜⬜⬜ Asia 1/2",
 				"⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜ Oceania 0/1",
 				"",
+				"How many have you been to?",
 				"https://been.example/#map",
 			].join("\n"),
 		);
@@ -49,6 +51,7 @@ describe("summary", () => {
 			subregion: "014",
 		}));
 		const summary = summaryOf({
+			comparison: null,
 			countries: [...COUNTRIES, ...many],
 			tiers: [],
 			url: "https://been.example/#map",
@@ -60,19 +63,40 @@ describe("summary", () => {
 		expect(summary).toContain("🟩⬜⬜⬜⬜⬜⬜⬜⬜⬜ Africa 1/30");
 	}, 5000);
 
-	it("should count the visas, and the rare ones among them, before the link", () => {
+	it("should count the visas, and the rare ones among them, before the invitation", () => {
 		expect.hasAssertions();
 
 		const summary = summaryOf({
+			comparison: null,
 			countries: COUNTRIES,
 			tiers: ["standard", "foil", "foil", "legendary", "standard"],
 			url: "https://been.example/#map",
 			visits: { FR: {} },
 		});
 
-		expect(summary.split("\n").slice(-3)).toStrictEqual([
+		expect(summary.split("\n").slice(-4)).toStrictEqual([
 			"🛂 5 visas · ✨ 2 foil · 🌟 1 legendary",
 			"",
+			"How many have you been to?",
+			"https://been.example/#map",
+		]);
+	}, 5000);
+
+	it("should say how a reply compares with the map it answers, and invite a look", () => {
+		expect.hasAssertions();
+
+		const summary = summaryOf({
+			comparison: { both: ["FR", "IT"], mine: ["JP"], theirs: ["ES", "DE", "NL"] },
+			countries: COUNTRIES,
+			tiers: [],
+			url: "https://been.example/#map",
+			visits: { FR: {}, IT: {}, JP: {} },
+		});
+
+		expect(summary.split("\n").slice(-4)).toStrictEqual([
+			"🆚 Yours and mine: 🤝 2 in common · ✈️ 1 new to you",
+			"",
+			"Open it to see how we compare.",
 			"https://been.example/#map",
 		]);
 	}, 5000);

@@ -3,6 +3,7 @@ import { memo, useCallback, useId } from "react";
 import type { ChangeEvent, FC, SubmitEvent } from "react";
 
 import { m } from "../paraglide/messages.js";
+import { CompareBanner } from "./compare-banner.tsx";
 import { MenuBody } from "./menu-body.tsx";
 import { searchAtom, searchResultsAtom, submitSearchAtom } from "./search.ts";
 import { SharedMapBanner } from "./shared-map-banner.tsx";
@@ -36,6 +37,7 @@ export const Menu: FC<Props> = memo(({ loading = false }) => {
 	return (
 		<>
 			<SharedMapBanner />
+			<CompareBanner />
 			<search className="shrink-0">
 				<form onSubmit={handleSubmit}>
 					<label id={searchLabelId} htmlFor={searchId} className="sr-only">

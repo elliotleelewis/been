@@ -6,7 +6,7 @@ import { vi } from "vitest";
 
 import { countryCodesAtom } from "./dataset.ts";
 import { locationHashAtom } from "./location.ts";
-import { encodeShare, shareHashOf } from "./share-link.ts";
+import { decodeShare, encodeShare, shareHashOf, shareValueOf } from "./share-link.ts";
 import type { Visits } from "./types.ts";
 
 // oxlint-disable-next-line no-explicit-any -- Any is required to allow any atom type. Unfortunately cannot be `unknown`.
@@ -118,4 +118,17 @@ export const freezeToday = (): void => {
 export const openSharedMap = (store: ReturnType<typeof createStore>, visits: Visits): void => {
 	const value = encodeShare(visits, store.get(countryCodesAtom));
 	store.set(locationHashAtom, `#${shareHashOf(value)}`);
+};
+
+/** Leaves the shared map `store` is on for the reader's own, as the router does on the way back. */
+// oxlint-disable-next-line no-export -- This is a test utility file.
+export const leaveSharedMap = (store: ReturnType<typeof createStore>): void => {
+	store.set(locationHashAtom, "");
+};
+
+/** The map a share link `url` carries, read against the country list `codes`. */
+// oxlint-disable-next-line no-export -- This is a test utility file.
+export const visitsInLink = (url: string, codes: readonly string[]): Visits | undefined => {
+	const value = shareValueOf(new globalThis.URL(url).hash);
+	return value === undefined ? undefined : decodeShare(value, codes);
 };

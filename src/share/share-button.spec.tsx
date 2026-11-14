@@ -5,7 +5,7 @@ import { afterEach, describe, expect, it, vi } from "vitest";
 import { rawCountriesAtom } from "../core/dataset.ts";
 import { InRouter } from "../core/in-router.tsx";
 import { visitsAtom } from "../core/selection.ts";
-import { decodeShare, shareValueOf } from "../core/share-link.ts";
+import { openSharedMap, visitsInLink } from "../core/test.ts";
 import type { Visits } from "../core/types.ts";
 import { countries } from "../data/countries.ts";
 import { ShareButton } from "./share-button.tsx";
@@ -16,7 +16,8 @@ const CODES = countries.map(({ iso3166 }) => iso3166).toSorted();
 /** A map with two countries ticked. */
 const FRANCE_AND_ITALY: Visits = { FR: {}, IT: {} };
 
-const renderButton = (visits: Visits): ReturnType<typeof render> => {
+/** Renders the share button on the reader's map of `visits`, or on a shared map of `shared`. */
+const renderButton = (visits: Visits, shared?: Visits): ReturnType<typeof render> => {
 	const store = createStore();
 	store.set(
 		rawCountriesAtom,
@@ -25,6 +26,9 @@ const renderButton = (visits: Visits): ReturnType<typeof render> => {
 		),
 	);
 	store.set(visitsAtom, visits);
+	if (shared !== undefined) {
+		openSharedMap(store, shared);
+	}
 	return render(
 		<Provider store={store}>
 			<InRouter>
@@ -50,10 +54,8 @@ const linkIn = (result: ReturnType<typeof render>): string =>
 	summaryIn(result).split("\n").at(-1) ?? "";
 
 /** The map the link in the dialog carries. */
-const sharedVisitsIn = (result: ReturnType<typeof render>): Visits | undefined => {
-	const value = shareValueOf(new globalThis.URL(linkIn(result)).hash);
-	return value === undefined ? undefined : decodeShare(value, CODES);
-};
+const sharedVisitsIn = (result: ReturnType<typeof render>): Visits | undefined =>
+	visitsInLink(linkIn(result), CODES);
 
 describe("share button", () => {
 	// Auto-cleanup is not registered as the suite does not run with `globals`.
@@ -122,5 +124,24 @@ describe("share button", () => {
 		const result = renderButton({ FR: {} });
 
 		expect(openDialog(result)).toHaveTextContent("Anyone with the link sees your 1 country,");
+	}, 5000);
+
+	it("should be there on a shared map only once the reader has one of their own", () => {
+		expect.hasAssertions();
+
+		expect(
+			renderButton({}, FRANCE_AND_ITALY).queryByRole("button", { name: "Share your map" }),
+		).toBeNull();
+	}, 5000);
+
+	it("should reply to a shared map with the reader's own, saying how the two compare", () => {
+		expect.hasAssertions();
+
+		const result = renderButton({ FR: {}, JP: {} }, FRANCE_AND_ITALY);
+		openDialog(result);
+
+		expect(summaryIn(result)).toContain("🆚 Yours and mine: 🤝 1 in common · ✈️ 1 new to you");
+		expect(summaryIn(result)).toContain("Open it to see how we compare.");
+		expect(sharedVisitsIn(result)).toStrictEqual({ FR: {}, JP: {} });
 	}, 5000);
 });

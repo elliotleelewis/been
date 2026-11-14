@@ -6,12 +6,15 @@ import { rawCountriesAtom } from "../core/dataset.ts";
 import { homeRegionAtom } from "../core/home-region.ts";
 import { InRouter } from "../core/in-router.tsx";
 import { visitsAtom } from "../core/selection.ts";
-import { openSharedMap } from "../core/test.ts";
+import { leaveSharedMap, openSharedMap } from "../core/test.ts";
 import type { Visits } from "../core/types.ts";
 import { Menu } from "./menu.tsx";
 
-/** Renders the menu on a shared map of France and Italy, against the reader's own `mine`. */
-const renderShared = (mine: Visits): ReturnType<typeof render> => {
+/**
+ * Renders the menu on a shared map of France and Italy, against the reader's own `mine`, or on the
+ * reader's own map after leaving it, if `left`.
+ */
+const renderShared = (mine: Visits, left = false): ReturnType<typeof render> => {
 	const store = createStore();
 	store.set(homeRegionAtom, "150");
 	store.set(rawCountriesAtom, {
@@ -22,6 +25,9 @@ const renderShared = (mine: Visits): ReturnType<typeof render> => {
 	});
 	store.set(visitsAtom, mine);
 	openSharedMap(store, { FR: {}, IT: {} });
+	if (left) {
+		leaveSharedMap(store);
+	}
 	return render(
 		<Provider store={store}>
 			<InRouter>
@@ -89,7 +95,27 @@ describe("shared map banner", () => {
 		const result = renderShared({});
 
 		expect(result.getByRole("link", { name: "Start your own map" })).toBeVisible();
+		expect(result.getByText(/then come back to see how your map compares/u)).toBeVisible();
 		expect(result.queryByRole("button", { name: /in common/u })).toBeNull();
 		expect(result.queryByText("You too")).toBeNull();
+	}, 5000);
+
+	it("should offer the way back to compare, once the reader has left with a map of their own", () => {
+		expect.hasAssertions();
+
+		const result = renderShared({ ES: {} }, true);
+		const compare = result.getByRole("link", { name: "Compare" });
+
+		expect(compare).toBeVisible();
+		expect(compare.getAttribute("href")).toMatch(/#share=/u);
+		expect(result.queryByText("Viewing a shared map")).toBeNull();
+	}, 5000);
+
+	it("should not offer to compare a shared map with no map of the reader's own", () => {
+		expect.hasAssertions();
+
+		const result = renderShared({}, true);
+
+		expect(result.queryByRole("link", { name: "Compare" })).toBeNull();
 	}, 5000);
 });

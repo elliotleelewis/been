@@ -15,7 +15,8 @@ const INCLUDE_HASH: ActiveOptions = { includeHash: true };
 
 /**
  * Says the map on show is someone else's, opened from a share link, and offers the way back to the
- * reader's own. Once the reader has a map of their own, it says how the two compare. It is not there the rest of the time.
+ * reader's own. Until the reader has a map of their own, it invites them to start one and come back
+ * to compare; once they do, it says how the two compare. It is not there the rest of the time.
  */
 export const SharedMapBanner: FC = memo(() => {
 	const viewingSharedMap = useAtomValue(viewingSharedMapAtom);
@@ -48,7 +49,11 @@ export const SharedMapBanner: FC = memo(() => {
 					{hasOwnMap ? m.menu_back_to_my_map() : m.menu_start_my_map()}
 				</Link>
 			</div>
-			<StandingFilter />
+			{hasOwnMap ? (
+				<StandingFilter />
+			) : (
+				<p className="text-zinc-700 dark:text-zinc-300">{m.menu_compare_invite()}</p>
+			)}
 		</div>
 	);
 });

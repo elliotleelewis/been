@@ -5,22 +5,25 @@ import { useButton, useOverlayTrigger } from "react-aria";
 import { useOverlayTriggerState } from "react-stately";
 
 import { viewingSharedMapAtom } from "../core/location.ts";
+import { visitsAtom } from "../core/selection.ts";
 import { m } from "../paraglide/messages.js";
 import { ShareDialog } from "./share-dialog.tsx";
 import { ShareIcon } from "./share-icon.tsx";
 
 /**
- * Opens the share dialog. It is not there while a shared map is on show, which is someone else's
- * map, not the reader's to share.
+ * Opens the share dialog, which shares the reader's own map. While someone else's map is on show,
+ * it is there only once the reader has a map of their own, to send back to them, and is not
+ * otherwise, as there is nothing of the reader's to share.
  */
 export const ShareButton: FC = memo(() => {
 	const viewingSharedMap = useAtomValue(viewingSharedMapAtom);
+	const hasOwnMap = Object.keys(useAtomValue(visitsAtom)).length > 0;
 	const state = useOverlayTriggerState({});
 	const ref = useRef<HTMLButtonElement>(null);
 	const { overlayProps, triggerProps } = useOverlayTrigger({ type: "dialog" }, state, ref);
 	const { buttonProps } = useButton(triggerProps, ref);
 
-	if (viewingSharedMap) {
+	if (viewingSharedMap && !hasOwnMap) {
 		return null;
 	}
 
