@@ -3,6 +3,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { AppLoading } from "../app/app-loading.tsx";
 import { App } from "../app/app.tsx";
 import { BEFORE_PAINT_SCRIPT } from "../app/before-paint.ts";
+import { m } from "../paraglide/messages.js";
 
 import maplibreStyles from "maplibre-gl/dist/maplibre-gl.css?url";
 
@@ -14,6 +15,7 @@ import maplibreStyles from "maplibre-gl/dist/maplibre-gl.css?url";
  * The globe can draw nothing until it has the basemap's style and tiles from CARTO, so the page
  * opens connections to both hosts while its scripts load. MapLibre fetches them with CORS, which
  * a preconnect has to say as well, or the browser opens a second connection for the real requests.
+ * A link to it, a share link above all, is previewed with a question rather than the page's title.
  * MapLibre's stylesheet is preloaded rather than linked: the globe links it when it renders, and
  * linked here it would hold up the first paint of a loading screen that does not use it.
  */
@@ -25,7 +27,7 @@ export const Route = createFileRoute("/")({
 			{ crossOrigin: "anonymous", href: "https://tiles.basemaps.cartocdn.com", rel: "preconnect" },
 			{ as: "style", href: maplibreStyles, rel: "preload" },
 		],
-		meta: [{ title: "Been" }],
+		meta: [{ title: "Been" }, { content: m.meta_title(), property: "og:title" }],
 		scripts: [{ children: BEFORE_PAINT_SCRIPT }],
 	}),
 	pendingComponent: AppLoading,

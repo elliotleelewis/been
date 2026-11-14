@@ -128,10 +128,11 @@ like `m.menu_retry()` from `../paraglide/messages.js`, compiled into the uncommi
 fails the build.
 
 - Keys are `snake_case`, named by where they're shown: `menu_…`, `globe_…`, `share_…`,
-  `passport_…`, `achievement_…`, `privacy_…`, `cookies_…`, `legal_…`, and `m49_…` for M49 areas (`src/core/m49.ts`).
+  `passport_…`, `achievement_…`, `privacy_…`, `cookies_…`, `legal_…`, `meta_…` for link previews, and `m49_…` for M49 areas (`src/core/m49.ts`).
 - Counts use plural variants (`share_summary`), shares `: number` (`menu_progress`), not code.
 - All text is in messages except the app's name and the passport's own lettering ("PASSPORT",
-  "VISA", stamp captions, visa fields, the machine-readable lines). Countries are named by
+  "VISA", stamp captions, visa fields, the machine-readable lines), and the headline drawn into
+  `src/public/social.svg`, which says what `meta_title` does. Countries are named by
   `Intl.DisplayNames`.
 - English is the only language. Adding one is a `messages/{locale}.json` and the locale in
   `project.inlang/settings.json`. The page's `lang` follows the locale (`src/app/shell.tsx`); its `dir` stays the default until there is a right-to-left one.
@@ -143,7 +144,7 @@ fails the build.
 - `src/data/countries.ts` (bounds, centres, areas, neighbours) and `src/data/boundary-codes.ts` come from `pnpm run generate:countries`.
   The country list is the script's input as well as its output, so add or drop a country by editing
   it and regenerating. Re-run it after bumping `visionscarto-world-atlas`.
-- `src/public/*.png` come from `src/public/icon.svg`, by `pnpm run generate:icons`.
+- `src/public/*.png` come from `src/public/icon.svg`, and `social.png`, the link preview's picture, from `social.svg`, by `pnpm run generate:icons`.
 - `src/routeTree.gen.ts` comes from `src/routes/`, written by Start's Vite plugin on `start` and `build`.
   It is committed, as the typecheck runs before the build.
 
