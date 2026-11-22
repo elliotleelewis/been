@@ -37,7 +37,7 @@
     "@inlang/plugin-message-format": "^4.0.0",
     "@playwright/test": "~1.65.0",
     "@tailwindcss/vite": "^4.0.0",
-    "@testing-library/jest-dom": "^7.0.0",
+    "@testing-library/jest-dom": "^8.0.0",
     "@testing-library/react": "^16.0.0",
     "@tsconfig/strictest": "^2.0.0",
     "@tsconfig/vite-react": "^8.0.0",
