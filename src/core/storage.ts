@@ -36,7 +36,7 @@ export const validatedStorage = <Value>(
 ): SyncStorage<Value> => {
 	const storage = createJSONStorage<unknown>();
 	return {
-		getItem: (key, initialValue) => {
+		getItem: (key, initialValue): Value => {
 			// Handed back in place of a value that is missing or is not JSON at all, which the JSON
 			// storage does not otherwise tell apart from a stored value equal to the initial one.
 			const unreadable = Symbol("unreadable");
@@ -47,10 +47,10 @@ export const validatedStorage = <Value>(
 			storage.removeItem(key);
 			return initialValue;
 		},
-		removeItem: (key) => {
+		removeItem: (key): void => {
 			storage.removeItem(key);
 		},
-		setItem: (key, value) => {
+		setItem: (key, value): void => {
 			storage.setItem(key, value);
 		},
 		subscribe: (key, callback, initialValue) =>
